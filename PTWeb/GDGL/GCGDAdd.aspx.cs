@@ -527,5 +527,53 @@ public partial class GDGL_GCGDAdd : PageBase
     protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
     {
         GridView1.EditIndex = e.NewEditIndex;
+        Load_GridView1();
+    }
+
+    protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    {
+        GridView1.EditIndex = -1;
+        Load_GridView1();
+    }
+
+    protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {///更新数据
+        int iid = Convert.ToInt32(e.Keys[0]);
+        string strTemp = string.Empty;
+        if (iid > -1)
+        {
+            string DB_AZWZ = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[0].Controls[0])).Text;
+            string DB_SBBH = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[1].Controls[0])).Text;
+            string DB_SBMC = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[2].Controls[0])).Text;
+            string DB_SBPP = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[3].Controls[0])).Text;
+            string DB_SBXH = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[4].Controls[0])).Text;
+            string DB_JLDW = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[5].Controls[0])).Text;
+            double DB_sl = Convert.ToDouble(((TextBox)(GridView1.Rows[e.RowIndex].Cells[6].Controls[0])).Text);
+            string DB_Remark = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[7].Controls[0])).Text;
+            int DB_BXFS = Convert.ToInt32(((TextBox)(GridView1.Rows[e.RowIndex].Cells[8].Controls[0])).Text);
+            int DB_AZFS = Convert.ToInt32(((TextBox)(GridView1.Rows[e.RowIndex].Cells[10].Controls[0])).Text);
+
+            if (DB_AZWZ.Length <= 0 || DB_SBBH.Length <= 0 || DB_SBBH.Length <= 0 || DB_SBPP.Length <= 0 || DB_JLDW.Length <= 0 || DB_BXFS < 0 || DB_AZFS < 0)
+            {
+                MessageBox("", "各个字段均不允许为空，积分不允许<0,请认真检查。<br>更新失败。");
+                return;
+            }
+            else
+            {
+                string strSQL = "Update W_GCGD2 Set AZWZ='" + DB_AZWZ + "',SBBH='" + DB_SBBH + "',SBMC='" + DB_SBMC + "',SBPP='" + DB_SBPP + "',SBXH='" + DB_SBXH + "',JLDW='" + DB_JLDW + "',SL=" + DB_sl + ",FS=" + DB_BXFS + ",AZFS=" + DB_AZFS + ",YQSM='" + DB_Remark + "',LTime=Getdate() Where ID=" + iid;
+
+                if (!OP_Mode.SQLRUN(strSQL))
+                {
+                    MessageBox("", "更新错误。<br/>错误：" + OP_Mode.strErrMsg);
+                }
+                else
+                {
+                    MessageBox("", "数据更新成功。");
+                }
+            }
+        }
+        MessageBox("", strTemp);
+        GridView1.EditIndex = -1;
+        Load_GridView1();
     }
 }
