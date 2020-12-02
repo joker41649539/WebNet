@@ -44,22 +44,22 @@ public partial class BGGL_GCWXDList : PageBase
         {
             if (this.GridView_WXD_Label_tj.Text.Length > 0)
             {
-                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id and wxry="+DefaultUser+" and  " + this.GridView_WXD_Label_tj.Text.Trim() + " ORDER BY ltime desc";
+                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id and wxry="+DefaultUser+" and  " + this.GridView_WXD_Label_tj.Text.Trim() + " and del=0 ORDER BY ltime desc";
             }
             else
             {
-                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id and wxry=" + DefaultUser + " ORDER BY ltime desc";
+                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id and wxry=" + DefaultUser + " and del=0 ORDER BY ltime desc";
             }
         }
         else
         {
             if (this.GridView_WXD_Label_tj.Text.Length > 0)
             {
-                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id and  " + this.GridView_WXD_Label_tj.Text.Trim() + " ORDER BY ltime desc";
+                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id and  " + this.GridView_WXD_Label_tj.Text.Trim() + " and del=0 ORDER BY ltime desc";
             }
             else
             {
-                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id ORDER BY ltime desc";
+                strSQL = "SELECT w_wxd.*,CNAME FROM w_wxd,S_USERINFO where wxry=s_userinfo.id  and del=0 ORDER BY ltime desc";
             }
         }
 
