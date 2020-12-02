@@ -66,9 +66,11 @@ public partial class GDGL_GCBX : PageBase
 
                 if (bUser == false)
                 {/// 如果积分>0 并且 自己没有干过活，则把剩下的赋值给文本框
-
-                    TextBox1.Text = (100 - sumSL).ToString();
-                    HiddenField_SYFS.Value = (100 - sumSL).ToString();// 记录剩余分数百分比
+                    if (sumSL > 0)
+                    {/// 超过0分才设置默认值，否则不设置默认值。
+                        TextBox1.Text = (100 - sumSL).ToString();
+                        HiddenField_SYFS.Value = (100 - sumSL).ToString();// 记录剩余分数百分比
+                    }
                 }
                 else
                 {

@@ -67,7 +67,10 @@ public partial class GDGL_GCAZ : PageBase
                 if (bUser == false)
                 {/// 如果积分>0 并且 自己没有干过活，则把剩下的赋值给文本框
 
-                    TextBox3.Text = (100 - sumSL).ToString();
+                    if (sumSL > 0)
+                    {// 如果不是有人干过活了，则默认值还是0，否则为剩下的。
+                        TextBox3.Text = (100 - sumSL).ToString();
+                    }
                     HiddenField_SYFS.Value = (100 - sumSL).ToString();// 记录剩余分数百分比
                 }
                 else

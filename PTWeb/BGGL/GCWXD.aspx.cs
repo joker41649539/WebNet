@@ -140,11 +140,10 @@ public partial class GDGL_GCWXD : PageBase
         try
         {
             int iid = Convert.ToInt32(Request["ID"]);
-            //if (iid > 0)
-            //{
-            if (SaveData(iid))
+            int NewID = SaveData(iid);
+            if (NewID > 0)
             {
-                MessageBox("", "单据保存成功。");
+                MessageBox("", "单据保存成功。", "/BGGL/GCWXD.aspx?ID=" + NewID);
             }
             // }
 
@@ -158,12 +157,12 @@ public partial class GDGL_GCWXD : PageBase
     /// <summary>
     /// 保存数据
     /// </summary>
-    private bool SaveData(int ID)
+    private int SaveData(int ID)
     {
         if (Hidden_WXRY.Value != DefaultUser)
         {
             MessageBox("", "您无权操作别人的单据，仅可以操作自己本人的单据。");
-            return false;
+            return 0;
         }
 
         string strSQL = string.Empty;
@@ -236,7 +235,7 @@ public partial class GDGL_GCWXD : PageBase
         if (strMSG.Length > 0)
         {
             MessageBox("", strMSG);
-            return false;
+            return 0;
         }
 
         if (ID > 0)
@@ -244,33 +243,33 @@ public partial class GDGL_GCWXD : PageBase
             strSQL = "Update w_wxd set YHMC='" + DB_YH + "',ZHMC='" + DB_FLC + "',GZXX='" + DB_GZ + "',WXNR='" + DB_WX + "',WXFY='" + DB_FY + "',GZJY=" + iDB_GZ + ",SBJC=" + iDB_SBJC + ",GZTD=" + IDB_GZTD + ",WXJG=" + IDB_WXJG + ",REMARK='" + DB_Remark + "',LXDH='" + DB_LXDH + "',QM='" + DB_QM + "',LTime=getdate() WHERE ID=" + ID;
             if (OP_Mode.SQLRUN(strSQL))
             {
-                return true;
+                return ID;
                 //MessageBox("", "维修单修改成功。");
             }
             else
             {
                 MessageBox("", "错误：" + OP_Mode.strErrMsg);
-                return false;
+                return 0;
             }
         }
         else
         {
             strSQL = "Insert into w_wxd (DWMC,WXDH,WXRY,WXSJ,YHMC,ZHMC,GZXX,WXNR,WXFY,GZJY,SBJC,GZTD,WXJG,REMARK,LXDH,QM,FLAG,DEL) ";
-            strSQL += " values ('" + DB_DW + "',(SELECT 'SF' + CONVERT(VARCHAR(10), GETDATE(), 120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(WXDH, 4)), '0000') + 1 AS VARCHAR), 4) FROM w_wxd WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10), CTIME, 120)),'" + DB_WXRY + "','" + DB_WXSJ + "','" + DB_YH + "','" + DB_FLC + "','" + DB_GZ + "','" + DB_WX + "','" + DB_WXFY + "'," + iDB_GZ + ",";
+            strSQL += " values ('" + DB_DW + "',(SELECT 'SF' + CONVERT(VARCHAR(10), GETDATE(), 120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(WXDH, 4)), '0000') + 1 AS VARCHAR), 4) FROM w_wxd WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10), CTIME, 120)),'" + DB_WXRY + "','" + DB_WXSJ + "','" + DB_YH + "','" + DB_FLC + "','" + DB_GZ + "','" + DB_WX + "','" + DB_FY + "'," + iDB_GZ + ",";
             strSQL += iDB_SBJC + "," + IDB_GZTD + "," + IDB_WXJG + ",'" + DB_Remark + "','" + DB_LXDH + "','" + DB_QM + "',0,0) ";
             strSQL += " DECLARE @TNO int  SET @TNO = @@IDENTITY ";
             strSQL += " Select W_WXD.*,CNAME from W_WXD,S_USERINFO where WXRY = S_USERINFO.ID and W_WXD.id = @TNO";
 
             if (OP_Mode.SQLRUN(strSQL))
             {
-                return true;
+                return Convert.ToInt32(OP_Mode.Dtv[0]["ID"]);
                 // MessageBox("", "维修单保存成功。", "/BGGL/GCWXD.ASPX?ID=" + OP_Mode.Dtv[0]["ID"].ToString());
                 //  LoadWXDByID(Convert.ToInt32(OP_Mode.Dtv[0]["ID"]));
             }
             else
             {
                 MessageBox("", "错误：" + OP_Mode.strErrMsg);
-                return false;
+                return 0;
             }
         }
     }
@@ -294,7 +293,7 @@ public partial class GDGL_GCWXD : PageBase
             {
                 int iid = Convert.ToInt32(Request["ID"]);
 
-                if (SaveData(iid))
+                if (SaveData(iid) > 0)
                 {
 
                     if (Image_Sign.ImageUrl.Length > 0)
