@@ -136,7 +136,7 @@
         <div class="widget-box transparent">
             <div class="widget-body">
                 <div class="widget-main no-padding">
-                    <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDeleting="GridView1_RowDeleting">
+                    <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing">
                         <Columns>
                             <asp:BoundField DataField="AZWZ" SortExpression="AZWZ" HeaderText="安装位置"></asp:BoundField>
                             <asp:BoundField DataField="SBBH" SortExpression="SBBH" HeaderText="设备编号"></asp:BoundField>
@@ -152,6 +152,7 @@
                             <asp:BoundField DataField="YAZ" SortExpression="YAZ" HeaderText="安装已完成"></asp:BoundField>
                             <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCMXADD.ASPX?MXID={0}" DataTextField="ID" Text="修改" HeaderText="修改" DataTextFormatString="修改"></asp:HyperLinkField>
                             <asp:ButtonField DataTextField="ID" DataTextFormatString="删除" HeaderText="删除" CommandName="Delete" SortExpression="ID" Text="按钮" />
+                            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
                         </Columns>
                     </asp:GridView>
                 </div>

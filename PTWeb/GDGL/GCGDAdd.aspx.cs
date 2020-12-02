@@ -518,4 +518,14 @@ public partial class GDGL_GCGDAdd : PageBase
     {
         Response.Redirect("/GDGL/GCGDINFO.ASPX?GCDH=" + Label_GCBH.Text);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+    {
+        GridView1.EditIndex = e.NewEditIndex;
+    }
 }
