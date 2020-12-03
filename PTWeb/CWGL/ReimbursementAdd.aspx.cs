@@ -24,6 +24,23 @@ public partial class CWGL_Default2 : PageBase
     private void LoadDefaultData()
     {
         TextBoxSTime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
+        try
+        {
+            int IID = Convert.ToInt32(Request["ID"]);
+            if (IID > 0)
+            {
+                // label
+            }
+            else
+            {
+                Label_No.Text = "等待生成编号";
+            }
+        }
+        catch
+        {
+            Label_No.Text = "待生成编号";
+        }
+
         Label_CName.Text = UserNAME;
     }
     /// <summary>
@@ -50,24 +67,32 @@ public partial class CWGL_Default2 : PageBase
     /// <summary>
     /// 添加图片显示
     /// </summary>
-    private void AddImagesShow(String strURL)
+    private void AddImagesShow(String imageName)
     {
-        UpdateImages.InnerHtml += "<img src=\"" + strURL + "\" style =\"height:40px;\" />";
+        if (imageName.Length > 0)
+        {
+            string newpath = "/BxImages/" + imageName;
+            UpdateImages.InnerHtml += "<img src=\"" + newpath + "\" style =\"height:40px;\" />";
+        }
 
-        WellList.InnerHtml += "";
+        //if (WellList.InnerHtml.Length == 0)
+        //{
+        //    WellList.InnerHtml = " ";
+        //}
+
         WellList.InnerHtml += " <div class=\"well\">";
         WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">交通费及补助</h4>";
         WellList.InnerHtml += "    2020-12-03 40 元 ";
         WellList.InnerHtml += " </div>";
-
     }
 
 
-protected void LinkButton3_Click(object sender, EventArgs e)
+    protected void LinkButton3_Click(object sender, EventArgs e)
     {///上传图片，并且显示出来
         String imageName = UploadTP(FileUpload1);
-        string newpath = "/BxImages/" + imageName;
-        AddImagesShow(newpath);
+
+        AddImagesShow(imageName);
+
     }
 
     private string UploadTP(FileUpload fileName)

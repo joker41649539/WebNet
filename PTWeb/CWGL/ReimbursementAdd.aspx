@@ -50,12 +50,14 @@
             </div>
         </div>
     </div>
+    <div class="col-xs-12" runat="server" id="WellList"/>
     <div class="col-xs-12">
         <div class="form-group">
             <label runat="server" id="Label1" class="col-sm-3 control-label no-padding-right" for="form-field-1">开支项目：</label>
             <div class="col-sm-9">
                 <asp:DropDownList ID="DropDownList1" runat="server">
-                    <asp:ListItem Selected="True">交通费及补助</asp:ListItem>
+                    <asp:ListItem Selected="True">交通费</asp:ListItem>
+                    <asp:ListItem>补助</asp:ListItem>
                     <asp:ListItem>采购物资</asp:ListItem>
                     <asp:ListItem>运输费</asp:ListItem>
                     <asp:ListItem>租脚手架</asp:ListItem>
@@ -69,13 +71,6 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12" runat="server" id="WellList">
-        <div class="well">
-            <h4 class="green smaller lighter">Normal Well</h4>
-            Use the well as a simple effect on an element to give it an inset effect.
-        </div>
-    </div>
-    <!-- /span -->
     <div class="col-xs-12">
         <div class="form-group">
             <label runat="server" id="Label2" class="col-sm-3 control-label no-padding-right" for="form-field-1">发生日期：</label>
@@ -112,7 +107,7 @@
         <div class="form-group">
             <label runat="server" id="Label6" class="col-sm-3 control-label no-padding-right" for="form-field-1">备注说明：</label>
             <div class="col-sm-9">
-                <asp:TextBox ID="TextBox_Remark2" ClientIDMode="Static" runat="server" placeholder="请输入备注说明" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <asp:TextBox ID="TextBox_Remark2" ClientIDMode="Static" runat="server" placeholder="请输入备注说明" class="col-xs-12 col-sm-12" TextMode="MultiLine"></asp:TextBox>
             </div>
         </div>
     </div>
