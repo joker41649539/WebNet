@@ -40,8 +40,61 @@ public partial class CWGL_Default2 : PageBase
         {
             Label_No.Text = "待生成编号";
         }
+        /// 依据选择显示文本框
+        ShowTextBox();
 
         Label_CName.Text = UserNAME;
+    }
+
+    /// <summary>
+    /// 依据条件显示可用的TextBox
+    /// </summary>
+    private void ShowTextBox()
+    {
+        if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
+        {
+            TBreakfirst.Visible = false;
+            TZC.Visible = false;
+            TWC.Visible = false;
+            TZS.Visible = false;
+            TDRZS.Visible = false;
+            TMC.Visible = false;
+            TCFDD.Visible = true;
+            TDDDD.Visible = true;
+        }
+        else if (DropDownList1.SelectedValue == "补助")
+        {
+            TBreakfirst.Visible = true;
+            TZC.Visible = true;
+            TWC.Visible = true;
+            TZS.Visible = true;
+            TDRZS.Visible = true;
+            TMC.Visible = false;
+            TCFDD.Visible = false;
+            TDDDD.Visible = false;
+        }
+        else if (DropDownList1.SelectedValue == "采购物资")
+        {
+            TBreakfirst.Visible = false;
+            TZC.Visible = false;
+            TWC.Visible = false;
+            TZS.Visible = false;
+            TDRZS.Visible = false;
+            TMC.Visible = true;
+            TCFDD.Visible = true;
+            TDDDD.Visible = true;
+        }
+        else
+        {
+            TBreakfirst.Visible = false;
+            TZC.Visible = false;
+            TWC.Visible = false;
+            TZS.Visible = false;
+            TDRZS.Visible = false;
+            TMC.Visible = false;
+            TCFDD.Visible = false;
+            TDDDD.Visible = false;
+        }
     }
     /// <summary>
     ///  
@@ -75,24 +128,103 @@ public partial class CWGL_Default2 : PageBase
             UpdateImages.InnerHtml += "<img src=\"" + newpath + "\" style =\"height:40px;\" />";
         }
 
-        //if (WellList.InnerHtml.Length == 0)
-        //{
-        //    WellList.InnerHtml = " ";
-        //}
-
         WellList.InnerHtml += " <div class=\"well\">";
-        WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">交通费及补助</h4>";
+        WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">" + DropDownList1.SelectedValue + "</h4>";
         WellList.InnerHtml += "    2020-12-03 40 元 ";
+        WellList.InnerHtml += "   <h6 class=\"red smaller lighter\"><a href=\"#\">删 除</a></h6>";
         WellList.InnerHtml += " </div>";
     }
 
-
+    /// <summary>
+    /// 添加下一条
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void LinkButton3_Click(object sender, EventArgs e)
     {///上传图片，并且显示出来
-        String imageName = UploadTP(FileUpload1);
 
-        AddImagesShow(imageName);
+        if (SaveData())
+        {
+            String imageName = UploadTP(FileUpload1);
+            AddImagesShow(imageName);
+        }
+    }
 
+    /// <summary>
+    /// 保存数据
+    /// </summary>
+    private bool SaveData()
+    {
+        bool rValue = false;
+        /// 1、输入判断
+        string ErrMsg = string.Empty;
+        int i = 0;
+        if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
+        {
+            TCFDD.Visible = true;
+            TDDDD.Visible = true;
+            if (TextBox_Becity.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、出发地点必须填写。<br>";
+            }
+            if (TextBox_Arrival.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、到达地点必须填写。<br>";
+            }
+        }
+        else if (DropDownList1.SelectedValue == "补助")
+        {
+            TBreakfirst.Visible = true;
+            TZC.Visible = true;
+            TWC.Visible = true;
+            TZS.Visible = true;
+            TDRZS.Visible = true;
+            if (TextBox_Breakfirst.Text.Length <= 0 && TextBox_ZC.Text.Length <= 0 && TextBox_WC.Text.Length <= 0 && TextBox_ZS.Text.Length <= 0 && TextBox_DRZS.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、早餐、晚餐、住宿或者多人住宿补助至少选填一个。<br>";
+            }
+            if (TextBox_DRZS.Text.Length > 0 && TextBox_TXR.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、多人住宿必须填写同行人。<br>";
+            }
+        }
+        else if (DropDownList1.SelectedValue == "采购物资")
+        {
+            TMC.Visible = true;
+            TCFDD.Visible = true;
+            TDDDD.Visible = true;
+            if (TextBox_MC.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、物资名称必须填写。<br>";
+            }
+            if (TextBox_Becity.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、出发地点必须填写。<br>";
+            }
+            if (TextBox_Arrival.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、到达地点必须填写。<br>";
+            }
+        }
+
+        if (ErrMsg.Length > 0)
+        {
+            MessageBox("", ErrMsg);
+            rValue = false;
+        }
+        else
+        {
+            rValue = true;
+        }
+
+        return rValue;
     }
 
     private string UploadTP(FileUpload fileName)
@@ -220,5 +352,15 @@ public partial class CWGL_Default2 : PageBase
         }
 
         return retIci;
+    }
+
+    /// <summary>
+    /// 单选框选择变化
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        ShowTextBox();
     }
 }

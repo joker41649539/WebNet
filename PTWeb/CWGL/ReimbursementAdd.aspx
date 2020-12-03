@@ -8,7 +8,7 @@
                 <a href="/">首页</a>
             </li>
             <li><a href="/CWGL/">财务管理</a></li>
-            <li class="active">新建立报销单</li>
+            <li class="active">新建报销单</li>
         </ul>
     </div>
     <div class="hr-10"></div>
@@ -20,6 +20,7 @@
             <label runat="server" id="Label8" class="col-sm-3 control-label no-padding-right" for="form-field-1">报销单号：</label>
             <div class="col-sm-9">
                 <asp:Label ID="Label_No" runat="server" Text="BX2020-12-01-0001" Font-Bold="true"></asp:Label>
+                <asp:Label ID="Label_Flag" runat="server" Text="待提交" Font-Bold="true" ForeColor="Green"></asp:Label>
             </div>
         </div>
     </div>
@@ -50,12 +51,12 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12" runat="server" id="WellList"/>
+    <div class="col-xs-12" runat="server" id="WellList" />
     <div class="col-xs-12">
         <div class="form-group">
             <label runat="server" id="Label1" class="col-sm-3 control-label no-padding-right" for="form-field-1">开支项目：</label>
             <div class="col-sm-9">
-                <asp:DropDownList ID="DropDownList1" runat="server">
+                <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
                     <asp:ListItem Selected="True">交通费</asp:ListItem>
                     <asp:ListItem>补助</asp:ListItem>
                     <asp:ListItem>采购物资</asp:ListItem>
@@ -79,7 +80,56 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12" runat="server" id="TBreakfirst">
+        <div class="form-group">
+            <label runat="server" id="Label10" class="col-sm-3 control-label no-padding-right" for="form-field-1">早餐：</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox_Breakfirst" ClientIDMode="Static" runat="server" placeholder="早餐参考价10元" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" runat="server" id="TZC">
+        <div class="form-group">
+            <label runat="server" id="Label11" class="col-sm-3 control-label no-padding-right" for="form-field-1">中餐：</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox_ZC" ClientIDMode="Static" runat="server" placeholder="中餐参考价20元" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" runat="server" id="TWC">
+        <div class="form-group">
+            <label runat="server" id="Label12" class="col-sm-3 control-label no-padding-right" for="form-field-1">晚餐：</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox_WC" ClientIDMode="Static" runat="server" placeholder="晚餐参考价20元" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" runat="server" id="TZS">
+        <div class="form-group">
+            <label runat="server" id="Label13" class="col-sm-3 control-label no-padding-right" for="form-field-1">单人住宿：</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox_ZS" ClientIDMode="Static" runat="server" placeholder="单人住宿参考价80元" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" runat="server" id="TDRZS">
+        <div class="form-group">
+            <label runat="server" id="Label14" class="col-sm-3 control-label no-padding-right" for="form-field-1">多人住宿：</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox_DRZS" ClientIDMode="Static" runat="server" placeholder="多人住宿参考价100元" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <asp:TextBox ID="TextBox_TXR" ClientIDMode="Static" runat="server" placeholder="请输入同行人姓名" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" runat="server" id="TMC">
+        <div class="form-group">
+            <label runat="server" id="Label15" class="col-sm-3 control-label no-padding-right" for="form-field-1">名称：</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox_MC" ClientIDMode="Static" runat="server" placeholder="请输入货物名称" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" runat="server" id="TCFDD">
         <div class="form-group">
             <label runat="server" id="Label3" class="col-sm-3 control-label no-padding-right" for="form-field-1">出发地点：</label>
             <div class="col-sm-9">
@@ -87,7 +137,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12" runat="server" id="TDDDD">
         <div class="form-group">
             <label runat="server" id="Label4" class="col-sm-3 control-label no-padding-right" for="form-field-1">到达地点：</label>
             <div class="col-sm-9">
@@ -122,14 +172,15 @@
     <div class="col-xs-12">
         <div class="form-group">
             <div runat="server" id="UpdateImages"></div>
-            <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-mini" runat="server" OnClick="LinkButton3_Click"><b>+</b></asp:LinkButton>
+            <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-mini" runat="server" OnClick="LinkButton3_Click"><b>添加下一条</b></asp:LinkButton>
         </div>
     </div>
     <div class="hr-10"></div>
-    <div class="col-xs-12">
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-ok bigger-110"></i> 保  存</asp:LinkButton>
-        &nbsp; &nbsp;                        
-         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn bt1n-small btn-purple no-border" runat="server"> <i class=" icon-barcode bigger-130"></i> 返 回</asp:LinkButton>
+    <div class="btn-group">
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-save bigger-110"></i> 保  存</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-success" runat="server"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton4" class="btn btn-pink" runat="server"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-danger" runat="server"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
     </div>
 
     <script type="text/javascript" src="/assets/timepicker/js/jquery-1.7.2.min.js"></script>
