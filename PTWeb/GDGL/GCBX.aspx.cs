@@ -40,7 +40,7 @@ public partial class GDGL_GCBX : PageBase
                 Label7.Text = OP_Mode.Dtv[0]["SL"].ToString();
                 Label8.Text = OP_Mode.Dtv[0]["YQSM"].ToString();
                 Label9.Text = OP_Mode.Dtv[0]["FS"].ToString();
-
+                TextBox2.Text= OP_Mode.Dtv[0]["XH"].ToString();
                 /// 加载已经安装的人员
                 strSQL = "Select CNAME,FS,AZFS,S_USERINFO.ID,Remark from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
                 if (OP_Mode.SQLRUN(strSQL))
@@ -69,8 +69,9 @@ public partial class GDGL_GCBX : PageBase
                     if (sumSL > 0)
                     {/// 超过0分才设置默认值，否则不设置默认值。
                         TextBox1.Text = (100 - sumSL).ToString();
-                        HiddenField_SYFS.Value = (100 - sumSL).ToString();// 记录剩余分数百分比
                     }
+                    HiddenField_SYFS.Value = (100 - sumSL).ToString();// 记录剩余分数百分比
+
                 }
                 else
                 {
