@@ -35,6 +35,7 @@ public partial class CWGL_Default2 : PageBase
                     if (OP_Mode.Dtv.Count > 0)
                     {
                         Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
+                        TextBox_Remark.Text = OP_Mode.Dtv[0]["Remark"].ToString();
                         if (OP_Mode.Dtv[0]["FLAG"].ToString() == "0")
                         {
                             Label_Flag.Text = "待提交";
@@ -162,8 +163,7 @@ public partial class CWGL_Default2 : PageBase
 
         if (SaveData())
         {
-            String imageName = UploadTP(FileUpload1);
-            AddImagesShow(imageName);
+
         }
     }
 
@@ -243,31 +243,49 @@ public partial class CWGL_Default2 : PageBase
 
         if (rValue)
         {
-            string strSQL = string.Empty;
-            if (Label_No.Text.Length == "BXD2020-12-01-0001".Length)
-            {/// 更新主表数据
-                strSQL = " Update w_bxd1 set BXLX='" + RadioButtonList1.SelectedValue + "',Remark='" + TextBox_Remark.Text.Replace("'", "") + "',LTIME=getdate() where BXDH='" + Label_No.Text + "'";
+            String imageName = UploadTP(FileUpload1);
 
-                strSQL += " SELECT * FROM w_bxd1 WHERE BXDH='" + Label_No.Text + "'";
+            if (imageName.Length > 0)
+            {/// 图片上传成功
+
+                string strSQL = string.Empty;
+                if (Label_No.Text.Length == "BXD2020-12-01-0001".Length)
+                {/// 更新主表数据
+                    strSQL = " Update w_bxd1 set BXLX='" + RadioButtonList1.SelectedValue + "',Remark='" + TextBox_Remark.Text.Replace("'", "") + "',LTIME=getdate() where BXDH='" + Label_No.Text + "'";
+
+                    strSQL += " SELECT * FROM w_bxd1 WHERE BXDH='" + Label_No.Text + "'";
+                }
+                else
+                {/// 插入数据 
+                    //1、插入主表数据
+                    strSQL = " Insert into w_bxd1 (UserName,BXDH,FLAG,BXLX,Remark) values ('" + UserNAME + "',(SELECT  'BXD'+CONVERT(VARCHAR(10),GETDATE(),120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(BXDH,4)),'0000') + 1 AS VARCHAR),4) FROM w_bxd1 WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10),CTIME,120)),0," + RadioButtonList1.SelectedValue + ",'" + TextBox_Remark.Text.Replace("'", "") + "')";
+
+                    /// 查询主表数据（用来显示新插入的报销单编号
+                    strSQL += " SELECT * FROM w_bxd1 WHERE ID=SCOPE_IDENTITY()";
+                }
+
+                /// 运行脚本
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    rValue = true;
+
+                    Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
+
+                    /// 插入明细数据
+                  //  strSQL = "Insert into w_bxd2 (BXDH,) values ()";
+                }
+                else
+                {
+                    MessageBox("", "报销单保存错误：<br/>" + OP_Mode.strErrMsg);
+                    rValue = false;
+                }
+
+                /// 
+                //AddImagesShow(imageName);
+
             }
             else
-            {/// 插入数据 
-                //1、插入主表数据
-                strSQL = " Insert into w_bxd1 (UserName,BXDH,FLAG,BXLX,Remark) values ('" + UserNAME + "',(SELECT  'BXD'+CONVERT(VARCHAR(10),GETDATE(),120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(BXDH,4)),'0000') + 1 AS VARCHAR),4) FROM w_bxd1 WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10),CTIME,120)),0," + RadioButtonList1.SelectedValue + ",'" + TextBox_Remark.Text.Replace("'", "") + "')";
-
-                /// 查询主表数据（用来显示新插入的报销单编号
-                strSQL += " SELECT * FROM w_bxd1 WHERE ID=SCOPE_IDENTITY()";
-            }
-            /// 运行脚本
-            if (OP_Mode.SQLRUN(strSQL))
-            {
-                rValue = true;
-
-                Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
-            }
-            else
-            {
-                MessageBox("", "报销单保存错误：<br/>" + OP_Mode.strErrMsg);
+            {// 
                 rValue = false;
             }
         }

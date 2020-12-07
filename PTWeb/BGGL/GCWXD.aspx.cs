@@ -87,7 +87,7 @@ public partial class GDGL_GCWXD : PageBase
                 TextBox_GZ.Text = OP_Mode.Dtv[0]["GZXX"].ToString();
                 TextBox_WX.Text = OP_Mode.Dtv[0]["WXNR"].ToString();
 
-                if (OP_Mode.Dtv[0]["WXFY"].ToString() == "0")
+                if (OP_Mode.Dtv[0]["WXFY"].ToString() == "0.00")
                 {
                     TextBox_FY.Text = "";
                 }
@@ -205,6 +205,11 @@ public partial class GDGL_GCWXD : PageBase
             DB_QM = Image_Sign.ImageUrl;
         }
 
+        if (DB_FY.Length == 0)
+        {
+            DB_FY = "0";
+        }
+
         string strMSG = string.Empty;
         int i = 0;
 
@@ -240,7 +245,7 @@ public partial class GDGL_GCWXD : PageBase
 
         if (ID > 0)
         {
-            strSQL = "Update w_wxd set YHMC='" + DB_YH + "',ZHMC='" + DB_FLC + "',GZXX='" + DB_GZ + "',WXNR='" + DB_WX + "',WXFY='" + DB_FY + "',GZJY=" + iDB_GZ + ",SBJC=" + iDB_SBJC + ",GZTD=" + IDB_GZTD + ",WXJG=" + IDB_WXJG + ",REMARK='" + DB_Remark + "',LXDH='" + DB_LXDH + "',QM='" + DB_QM + "',LTime=getdate() WHERE ID=" + ID;
+            strSQL = "Update w_wxd set YHMC='" + DB_YH + "',ZHMC='" + DB_FLC + "',GZXX='" + DB_GZ + "',WXNR='" + DB_WX + "',WXFY=" + DB_FY + ",GZJY=" + iDB_GZ + ",SBJC=" + iDB_SBJC + ",GZTD=" + IDB_GZTD + ",WXJG=" + IDB_WXJG + ",REMARK='" + DB_Remark + "',LXDH='" + DB_LXDH + "',QM='" + DB_QM + "',LTime=getdate() WHERE ID=" + ID;
             if (OP_Mode.SQLRUN(strSQL))
             {
                 return ID;
@@ -255,7 +260,7 @@ public partial class GDGL_GCWXD : PageBase
         else
         {
             strSQL = "Insert into w_wxd (DWMC,WXDH,WXRY,WXSJ,YHMC,ZHMC,GZXX,WXNR,WXFY,GZJY,SBJC,GZTD,WXJG,REMARK,LXDH,QM,FLAG,DEL) ";
-            strSQL += " values ('" + DB_DW + "',(SELECT 'SF' + CONVERT(VARCHAR(10), GETDATE(), 120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(WXDH, 4)), '0000') + 1 AS VARCHAR), 4) FROM w_wxd WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10), CTIME, 120)),'" + DB_WXRY + "','" + DB_WXSJ + "','" + DB_YH + "','" + DB_FLC + "','" + DB_GZ + "','" + DB_WX + "','" + DB_FY + "'," + iDB_GZ + ",";
+            strSQL += " values ('" + DB_DW + "',(SELECT 'SF' + CONVERT(VARCHAR(10), GETDATE(), 120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(WXDH, 4)), '0000') + 1 AS VARCHAR), 4) FROM w_wxd WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10), CTIME, 120)),'" + DB_WXRY + "','" + DB_WXSJ + "','" + DB_YH + "','" + DB_FLC + "','" + DB_GZ + "','" + DB_WX + "'," + DB_FY + "," + iDB_GZ + ",";
             strSQL += iDB_SBJC + "," + IDB_GZTD + "," + IDB_WXJG + ",'" + DB_Remark + "','" + DB_LXDH + "','" + DB_QM + "',0,0) ";
             strSQL += " DECLARE @TNO int  SET @TNO = @@IDENTITY ";
             strSQL += " Select W_WXD.*,CNAME from W_WXD,S_USERINFO where WXRY = S_USERINFO.ID and W_WXD.id = @TNO";
