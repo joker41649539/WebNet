@@ -272,7 +272,7 @@ public partial class CWGL_Default2 : PageBase
                     Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
 
                     /// 插入明细数据
-                  //  strSQL = "Insert into w_bxd2 (BXDH,) values ()";
+                    strSQL = "Insert into w_bxd2 (BXDH,) values ()";
                 }
                 else
                 {
