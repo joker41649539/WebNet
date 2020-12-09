@@ -269,10 +269,68 @@ public partial class CWGL_Default2 : PageBase
                 {
                     rValue = true;
 
-                    Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
+                    double db_Bk, Db_ZC, DB_WC, Db_ZS, DB_DRZS;
 
+                    if (TextBox_Breakfirst.Text.Replace("'", "").Length == 0)
+                    {
+                        db_Bk = 0;
+                    }
+                    else
+                    {
+                        db_Bk = Convert.ToDouble(TextBox_Breakfirst.Text.Replace("'", ""));
+                    }
+                    if (TextBox_ZC.Text.Replace("'", "").Length == 0)
+                    {
+                        Db_ZC = 0;
+                    }
+                    else
+                    {
+                        Db_ZC = Convert.ToDouble(TextBox_ZC.Text.Replace("'", ""));
+                    }
+
+                    if (TextBox_WC.Text.Replace("'", "").Length == 0)
+                    {
+                        DB_WC = 0;
+                    }
+                    else
+                    {
+                        DB_WC = Convert.ToDouble(TextBox_WC.Text.Replace("'", ""));
+                    }
+                    if (TextBox_ZC.Text.Replace("'", "").Length == 0)
+                    {
+                        Db_ZS = 0;
+                    }
+                    else
+                    {
+                        Db_ZS = Convert.ToDouble(TextBox_ZC.Text.Replace("'", ""));
+                    }
+                    if (TextBox_DRZS.Text.Replace("'", "").Length == 0)
+                    {
+                        DB_DRZS = 0;
+                    }
+                    else
+                    {
+                        DB_DRZS = Convert.ToDouble(TextBox_DRZS.Text.Replace("'", ""));
+                    }
+
+                    Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
+                    imageName = "\\BxImages\\" + imageName;
                     /// 插入明细数据
-                    strSQL = "Insert into w_bxd2 (BXDH,) values ()";
+                    strSQL = "Insert into w_bxd2 (BXDH,KZXM,Occurrence,BreakFirst,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,Becity,Arrival,BXJE,Remark,Image)";
+                    strSQL += " values ('" + Label_No.Text.Replace("'", "") + "','" + DropDownList1.SelectedValue.Replace("'", "") + "','" + TextBoxSTime.Text.Replace("'", "") + "',";
+                    strSQL += " " + db_Bk + "," + Db_ZC + "," + DB_WC + ", ";
+                    strSQL += " " + Db_ZS + "," + DB_DRZS + ",'" + TextBox_TXR.Text.Replace("'", "") + "',";
+                    strSQL += " '" + TextBox_MC.Text.Replace("'", "") + "','" + TextBox_Becity.Text.Replace("'", "") + "','" + TextBox_Arrival.Text.Replace("'", "") + "'," + TextBox_Num.Text.Replace("'", "") + ",'" + TextBox_Remark2.Text.Replace("'", "") + "','" + imageName + "')";
+
+                    if (OP_Mode.SQLRUN(strSQL))
+                    {
+
+                    }
+                    else
+                    {
+                        MessageBox("", "报销单明细保存错误：<br/>" + strSQL);
+                        rValue = false;
+                    }
                 }
                 else
                 {

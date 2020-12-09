@@ -8,12 +8,12 @@
                 <a href="/">首页</a>
             </li>
             <li><a href="/CWGL/">财务管理</a></li>
-            <li class="active">新建报销单</li>
+            <li class="active">报销填报</li>
         </ul>
     </div>
     <div class="hr-10"></div>
     <div class="page-header">
-        <h1>报销单								<small><i class="icon-double-angle-right"></i>&nbsp;添加新的报销单                               </small></h1>
+        <h1>报销单								<small><i class="icon-double-angle-right"></i>&nbsp;报销填报                               </small></h1>
     </div>
     <div class="col-xs-12">
         <div class="form-group">
