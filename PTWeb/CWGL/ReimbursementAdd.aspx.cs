@@ -29,11 +29,12 @@ public partial class CWGL_Default2 : PageBase
             int IID = Convert.ToInt32(Request["ID"]);
             if (IID > 0)
             {
-                string strSQL = "Select * from w_BXD1 where ID=" + IID;
+                string strSQL = "Select UserName,BXLX,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark,W_BXD1.FLAG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     if (OP_Mode.Dtv.Count > 0)
                     {
+                        bool bDel = true;
                         Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
                         TextBox_Remark.Text = OP_Mode.Dtv[0]["Remark"].ToString();
                         if (OP_Mode.Dtv[0]["FLAG"].ToString() == "0")
@@ -43,8 +44,26 @@ public partial class CWGL_Default2 : PageBase
                         }
                         else if (OP_Mode.Dtv[0]["FLAG"].ToString() == "1")
                         {
+                            bDel = false;
                             Label_Flag.Text = "已完成";
                             Label_Flag.ForeColor = Color.Red;
+                        }
+
+                        RadioButtonList1.SelectedValue = OP_Mode.Dtv[0]["BXLX"].ToString();
+                        RadioChanged();
+
+                        Label_CName.Text = OP_Mode.Dtv[0]["UserName"].ToString();
+                        Label_Sumje.Text = OP_Mode.Dtv[0]["ZJE"].ToString();
+
+                        if (Convert.ToDouble(OP_Mode.Dtv[0]["ZJE"]) > 0)
+                        {
+                            RadioButtonList1.Enabled = false;
+                            TextBox_Remark.Enabled = false;
+                        }
+                        // 生成明细
+                        for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                        {
+                            AddImagesShow(OP_Mode.Dtv[i]["Image"].ToString(), Convert.ToDateTime(OP_Mode.Dtv[i]["Occurrence"]).ToString("yyyy-MM-dd"), OP_Mode.Dtv[i]["KZXM"].ToString(), OP_Mode.Dtv[i]["TXR"].ToString(), OP_Mode.Dtv[i]["MC"].ToString(), OP_Mode.Dtv[i]["Becity"].ToString(), OP_Mode.Dtv[i]["Arrival"].ToString(), Convert.ToDouble(OP_Mode.Dtv[i]["BXJE"]), OP_Mode.Dtv[i]["Remark"].ToString(), Convert.ToDouble(OP_Mode.Dtv[i]["BreakFirst"]), Convert.ToDouble(OP_Mode.Dtv[i]["ZCBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["WCBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["ZSBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["DRZS"]), Convert.ToInt32(OP_Mode.Dtv[i]["ID"]), bDel);
                         }
                     }
                 }
@@ -122,6 +141,11 @@ public partial class CWGL_Default2 : PageBase
 
     protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
     {
+        RadioChanged();
+    }
+
+    private void RadioChanged()
+    {
         if (RadioButtonList1.SelectedValue == "0")
         {
             LabelRadioText.InnerText = "施工编号：";
@@ -134,23 +158,85 @@ public partial class CWGL_Default2 : PageBase
         {
             LabelRadioText.InnerText = "事由：";
         }
+
     }
+
     /// <summary>
     /// 添加图片显示
     /// </summary>
-    private void AddImagesShow(String imageName)
+    private void AddImagesShow(String imageName, String strSTime, String strKZXM, String strTXR, String strMC, String strBecity, String strArrival, Double strNum, String strRemark2, double db_Bk, double Db_ZC, double DB_WC, double Db_ZS, double DB_DRZS, int MXID, bool del)
     {
-        if (imageName.Length > 0)
-        {
-            string newpath = "/BxImages/" + imageName;
-            UpdateImages.InnerHtml += "<img src=\"" + newpath + "\" style =\"height:40px;\" />";
-        }
 
         WellList.InnerHtml += " <div class=\"well\">";
         WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">" + DropDownList1.SelectedValue + "</h4>";
-        WellList.InnerHtml += "    2020-12-03 40 元 ";
-        WellList.InnerHtml += "   <h6 class=\"red smaller lighter\"><a href=\"#\">删 除</a></h6>";
+        WellList.InnerHtml += " <img src=\"" + imageName + "\" style =\"height:40px;\" />";
+        WellList.InnerHtml += " 发生时间：" + strSTime + " ";
+
+        if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
+        {
+            WellList.InnerHtml += " 路程：" + strBecity.ToString() + " - " + strArrival.ToString() + " ";
+        }
+        else if (DropDownList1.SelectedValue == "补助")
+        {
+            if (db_Bk > 0)
+            {
+                WellList.InnerHtml += " 早餐补助：" + db_Bk + " ";
+            }
+            if (Db_ZC > 0)
+            {
+                WellList.InnerHtml += " 午餐补助：" + Db_ZC + " ";
+            }
+            if (DB_WC > 0)
+            {
+                WellList.InnerHtml += " 晚餐补助：" + DB_WC + " ";
+            }
+            if (Db_ZS > 0)
+            {
+                WellList.InnerHtml += " 住宿补助：" + Db_ZS + " ";
+            }
+            if (DB_DRZS > 0)
+            {
+                WellList.InnerHtml += " 多人住宿：" + DB_DRZS + " ";
+            }
+            if (strTXR.Length > 0)
+            {
+                WellList.InnerHtml += "  同行人：" + strTXR + " ";
+            }
+        }
+        else if (DropDownList1.SelectedValue == "采购物资")
+        {
+            WellList.InnerHtml += " 货物名称：" + strMC + " ";
+            WellList.InnerHtml += " 路径：" + strBecity + "-" + strArrival + " ";
+        }
+        WellList.InnerHtml += " <br/>总金额：" + strNum + " ";
+        if (strRemark2.Length > 0)
+        {
+            WellList.InnerHtml += " 备注说明：" + strRemark2 + " ";
+        }
+        if (del)
+        {
+            WellList.InnerHtml += "   <a href=\"\\CWGL\\BXDMXDel.aspx?MXID=" + MXID + "\"><h4 class=\"red smaller lighter\">删 除</h4></a>";
+        }
         WellList.InnerHtml += " </div>";
+    }
+
+    /// <summary>
+    /// 清除文本框
+    /// </summary>
+    private void ClearTextbox()
+    {
+      //  TextBoxSTime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
+        TextBox_Breakfirst.Text = string.Empty;
+        TextBox_ZC.Text = string.Empty;
+        TextBox_WC.Text = string.Empty;
+        TextBox_ZS.Text = string.Empty;
+        TextBox_DRZS.Text = string.Empty;
+        TextBox_TXR.Text = string.Empty;
+        TextBox_MC.Text = string.Empty;
+        TextBox_Becity.Text = string.Empty;
+        TextBox_Arrival.Text = string.Empty;
+        TextBox_Num.Text = string.Empty;
+        TextBox_Remark2.Text = string.Empty;
     }
 
     /// <summary>
@@ -296,13 +382,13 @@ public partial class CWGL_Default2 : PageBase
                     {
                         DB_WC = Convert.ToDouble(TextBox_WC.Text.Replace("'", ""));
                     }
-                    if (TextBox_ZC.Text.Replace("'", "").Length == 0)
+                    if (TextBox_ZS.Text.Replace("'", "").Length == 0)
                     {
                         Db_ZS = 0;
                     }
                     else
                     {
-                        Db_ZS = Convert.ToDouble(TextBox_ZC.Text.Replace("'", ""));
+                        Db_ZS = Convert.ToDouble(TextBox_ZS.Text.Replace("'", ""));
                     }
                     if (TextBox_DRZS.Text.Replace("'", "").Length == 0)
                     {
@@ -313,18 +399,31 @@ public partial class CWGL_Default2 : PageBase
                         DB_DRZS = Convert.ToDouble(TextBox_DRZS.Text.Replace("'", ""));
                     }
 
-                    Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
+                    string strKZXM, strSTime, strTXR, strMC, strBecity, strArrival, strRemark2;
+                    double strNum;
+                    strKZXM = DropDownList1.SelectedValue.Replace("'", "");// 报销项目
+                    strSTime = TextBoxSTime.Text.Replace("'", "");//报销时间
+                    strTXR = TextBox_TXR.Text.Replace("'", "");// 同行人
+                    strMC = TextBox_MC.Text.Replace("'", "");// 名称
+                    strBecity = TextBox_Becity.Text.Replace("'", "");// 出发地点
+                    strArrival = TextBox_Arrival.Text.Replace("'", "");//到达地点
+                    strNum = Convert.ToDouble(TextBox_Num.Text);// 报销金额
+                    strRemark2 = TextBox_Remark2.Text.Replace("'", "");//报销说明信息
+
+                    Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();// 订单号
                     imageName = "\\BxImages\\" + imageName;
                     /// 插入明细数据
                     strSQL = "Insert into w_bxd2 (BXDH,KZXM,Occurrence,BreakFirst,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,Becity,Arrival,BXJE,Remark,Image)";
-                    strSQL += " values ('" + Label_No.Text.Replace("'", "") + "','" + DropDownList1.SelectedValue.Replace("'", "") + "','" + TextBoxSTime.Text.Replace("'", "") + "',";
+                    strSQL += " values ('" + Label_No.Text.Replace("'", "") + "','" + strKZXM + "','" + strSTime + "',";
                     strSQL += " " + db_Bk + "," + Db_ZC + "," + DB_WC + ", ";
-                    strSQL += " " + Db_ZS + "," + DB_DRZS + ",'" + TextBox_TXR.Text.Replace("'", "") + "',";
-                    strSQL += " '" + TextBox_MC.Text.Replace("'", "") + "','" + TextBox_Becity.Text.Replace("'", "") + "','" + TextBox_Arrival.Text.Replace("'", "") + "'," + TextBox_Num.Text.Replace("'", "") + ",'" + TextBox_Remark2.Text.Replace("'", "") + "','" + imageName + "')";
+                    strSQL += " " + Db_ZS + "," + DB_DRZS + ",'" + strTXR + "',";
+                    strSQL += " '" + strMC + "','" + strBecity + "','" + strArrival + "'," + strNum + ",'" + strRemark2 + "','" + imageName + "')";
+                    strSQL += " SELECT * FROM w_bxd2 WHERE ID=SCOPE_IDENTITY()";
 
                     if (OP_Mode.SQLRUN(strSQL))
                     {
-
+                        AddImagesShow(imageName, strSTime, strKZXM, strTXR, strMC, strBecity, strArrival, strNum, strRemark2, db_Bk, Db_ZC, DB_WC, Db_ZS, DB_DRZS, Convert.ToInt32(OP_Mode.Dtv[0]["ID"]), true);
+                        ClearTextbox();
                     }
                     else
                     {
@@ -337,10 +436,6 @@ public partial class CWGL_Default2 : PageBase
                     MessageBox("", "报销单保存错误：<br/>" + OP_Mode.strErrMsg);
                     rValue = false;
                 }
-
-                /// 
-                //AddImagesShow(imageName);
-
             }
             else
             {// 

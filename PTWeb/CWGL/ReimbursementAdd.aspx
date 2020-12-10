@@ -45,12 +45,21 @@
     </div>
     <div class="col-xs-12">
         <div class="form-group">
+            <label runat="server" id="Label16" class="col-sm-3 control-label no-padding-right" for="form-field-1">总报销金额：</label>
+            <div class="col-sm-9">
+                <asp:Label ID="Label_Sumje" runat="server" Text="0" Font-Bold="true"></asp:Label>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
             <label runat="server" id="LabelRadioText" class="col-sm-3 control-label no-padding-right" for="form-field-1">工程编号：</label>
             <div class="col-sm-9">
                 <asp:TextBox ID="TextBox_Remark" runat="server" placeholder="请输入内容" class="col-xs-12 col-sm-12"></asp:TextBox>
             </div>
         </div>
     </div>
+    <br />
     <div class="col-xs-12" runat="server" id="WellList" />
     <div class="col-xs-12">
         <div class="form-group">
