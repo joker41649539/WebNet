@@ -118,8 +118,8 @@ public partial class CWGL_Default2 : PageBase
             TZS.Visible = false;
             TDRZS.Visible = false;
             TMC.Visible = true;
-            TCFDD.Visible = true;
-            TDDDD.Visible = true;
+            TCFDD.Visible = false;
+            TDDDD.Visible = false;
         }
         else
         {
@@ -166,10 +166,9 @@ public partial class CWGL_Default2 : PageBase
     /// </summary>
     private void AddImagesShow(String imageName, String strSTime, String strKZXM, String strTXR, String strMC, String strBecity, String strArrival, Double strNum, String strRemark2, double db_Bk, double Db_ZC, double DB_WC, double Db_ZS, double DB_DRZS, int MXID, bool del)
     {
-
         WellList.InnerHtml += " <div class=\"well\">";
         WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">" + DropDownList1.SelectedValue + "</h4>";
-        WellList.InnerHtml += " <img src=\"" + imageName + "\" style =\"height:40px;\" />";
+        WellList.InnerHtml += " <a href='" + imageName + "'><img src=\"" + imageName + "\" style =\"height:40px;\" /></a>";
         WellList.InnerHtml += " 发生时间：" + strSTime + " ";
 
         if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
@@ -215,7 +214,7 @@ public partial class CWGL_Default2 : PageBase
         }
         if (del)
         {
-            WellList.InnerHtml += "   <a href=\"\\CWGL\\BXDMXDel.aspx?MXID=" + MXID + "\"><h4 class=\"red smaller lighter\">删 除</h4></a>";
+            WellList.InnerHtml += "   <a href=\"\\CWGL\\BXDMXDel.aspx?MXID=" + MXID + "&ID=" + Label_No.Text + "\"><h3 class=\"red smaller lighter\">删 除</h3></a>";
         }
         WellList.InnerHtml += " </div>";
     }
@@ -225,7 +224,7 @@ public partial class CWGL_Default2 : PageBase
     /// </summary>
     private void ClearTextbox()
     {
-      //  TextBoxSTime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
+        TextBoxSTime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
         TextBox_Breakfirst.Text = string.Empty;
         TextBox_ZC.Text = string.Empty;
         TextBox_WC.Text = string.Empty;
@@ -298,22 +297,24 @@ public partial class CWGL_Default2 : PageBase
         else if (DropDownList1.SelectedValue == "采购物资")
         {
             TMC.Visible = true;
-            TCFDD.Visible = true;
-            TDDDD.Visible = true;
             if (TextBox_MC.Text.Length <= 0)
             {
                 i = i + 1;
                 ErrMsg += i + "、物资名称必须填写。<br>";
             }
-            if (TextBox_Becity.Text.Length <= 0)
+        }
+
+        if (TextBox_Num.Text.Length <= 0)
+        {
+            i = i + 1;
+            ErrMsg += i + "、报销金额必须填写。<br>";
+        }
+        else
+        {
+            if (Convert.ToDouble(TextBox_Num.Text) <= 0)
             {
                 i = i + 1;
-                ErrMsg += i + "、出发地点必须填写。<br>";
-            }
-            if (TextBox_Arrival.Text.Length <= 0)
-            {
-                i = i + 1;
-                ErrMsg += i + "、到达地点必须填写。<br>";
+                ErrMsg += i + "、报销金额必须大于0。<br>";
             }
         }
 
@@ -335,6 +336,7 @@ public partial class CWGL_Default2 : PageBase
             {/// 图片上传成功
 
                 string strSQL = string.Empty;
+                int newID = 0;
                 if (Label_No.Text.Length == "BXD2020-12-01-0001".Length)
                 {/// 更新主表数据
                     strSQL = " Update w_bxd1 set BXLX='" + RadioButtonList1.SelectedValue + "',Remark='" + TextBox_Remark.Text.Replace("'", "") + "',LTIME=getdate() where BXDH='" + Label_No.Text + "'";
@@ -354,7 +356,7 @@ public partial class CWGL_Default2 : PageBase
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     rValue = true;
-
+                    newID = Convert.ToInt32(OP_Mode.Dtv[0]["ID"]);
                     double db_Bk, Db_ZC, DB_WC, Db_ZS, DB_DRZS;
 
                     if (TextBox_Breakfirst.Text.Replace("'", "").Length == 0)
@@ -424,6 +426,7 @@ public partial class CWGL_Default2 : PageBase
                     {
                         AddImagesShow(imageName, strSTime, strKZXM, strTXR, strMC, strBecity, strArrival, strNum, strRemark2, db_Bk, Db_ZC, DB_WC, Db_ZS, DB_DRZS, Convert.ToInt32(OP_Mode.Dtv[0]["ID"]), true);
                         ClearTextbox();
+                        Label_Sumje.Text = (Convert.ToDouble(Label_Sumje.Text) + strNum).ToString();
                     }
                     else
                     {
@@ -439,6 +442,7 @@ public partial class CWGL_Default2 : PageBase
             }
             else
             {// 
+                MessageBox("", "必须上传图片信息。");
                 rValue = false;
             }
         }

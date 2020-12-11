@@ -40,23 +40,28 @@ public partial class GDGL_GCBX : PageBase
                 Label7.Text = OP_Mode.Dtv[0]["SL"].ToString();
                 Label8.Text = OP_Mode.Dtv[0]["YQSM"].ToString();
                 Label9.Text = OP_Mode.Dtv[0]["FS"].ToString();
-                TextBox2.Text= OP_Mode.Dtv[0]["XH"].ToString();
+                // TextBox2.Text= OP_Mode.Dtv[0]["XH"].ToString();
                 /// 加载已经安装的人员
-                strSQL = "Select CNAME,FS,AZFS,S_USERINFO.ID,Remark from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
+                strSQL = "Select CNAME,FS,AZFS,S_USERINFO.ID,Remark,XH from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     string strTemp = string.Empty;
                     for (int i = 0; i < OP_Mode.Dtv.Count; i++)
                     {
                         sumSL += Convert.ToInt16(OP_Mode.Dtv[i]["FS"]);
-
                         if (Convert.ToInt16(OP_Mode.Dtv[i]["ID"]) == Convert.ToInt16(DefaultUser))
                         {/// 如果是本用户，则绑定文本框的值
                             TextBox1.Text = OP_Mode.Dtv[i]["FS"].ToString();
                             TextBox_Remark.Text = OP_Mode.Dtv[i]["Remark"].ToString();
+                            TextBox2.Text = OP_Mode.Dtv[i]["XH"].ToString();
                             bUser = true;
                         }
-                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 布线【" + OP_Mode.Dtv[i]["FS"].ToString() + " %】<br/>";
+                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 布线【" + OP_Mode.Dtv[i]["FS"].ToString() + " %】";
+                        if (Convert.ToDouble(OP_Mode.Dtv[i]["XH"]) > 0)
+                        {
+                            strTemp += "消耗【" + OP_Mode.Dtv[i]["XH"].ToString() + " 米】";
+                        }
+                        strTemp += "<br/>";
                     }
                     if (strTemp.Length > 0)
                     {

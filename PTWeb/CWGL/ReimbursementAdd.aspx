@@ -47,7 +47,7 @@
         <div class="form-group">
             <label runat="server" id="Label16" class="col-sm-3 control-label no-padding-right" for="form-field-1">总报销金额：</label>
             <div class="col-sm-9">
-                <asp:Label ID="Label_Sumje" runat="server" Text="0" Font-Bold="true"></asp:Label>
+                <asp:Label ID="Label_Sumje" runat="server" Text="0" Font-Bold="true"></asp:Label> 元
             </div>
         </div>
     </div>
@@ -186,7 +186,7 @@
     </div>
     <div class="hr-10"></div>
     <div class="btn-group">
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-save bigger-110"></i> 保  存</asp:LinkButton>
+<%--        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-save bigger-110"></i> 保  存</asp:LinkButton>--%>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-success" runat="server"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton4" class="btn btn-pink" runat="server"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-danger" runat="server"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
