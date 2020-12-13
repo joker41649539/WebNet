@@ -544,6 +544,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 {
                     if (OP_Mode.Dtv.Count > 0)
                     {
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
+                        {
+                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
+                            return;
+                        }
+
                         /// 如果数据库有ID，则直接登录。
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
                         Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
@@ -716,6 +722,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 {
                     if (OP_Mode.Dtv.Count > 0)
                     {
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
+                        {
+                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
+                            return;
+                        }
                         /// 如果数据库有ID，则直接登录。
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
                         Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();

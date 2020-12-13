@@ -71,6 +71,7 @@ public partial class CWGL_Default2 : PageBase
             else
             {
                 Label_No.Text = "等待生成编号";
+                Label_CName.Text = UserNAME;
             }
         }
         catch
@@ -79,8 +80,6 @@ public partial class CWGL_Default2 : PageBase
         }
         /// 依据选择显示文本框
         ShowTextBox();
-
-        Label_CName.Text = UserNAME;
     }
 
     /// <summary>
@@ -261,60 +260,74 @@ public partial class CWGL_Default2 : PageBase
         /// 1、输入判断
         string ErrMsg = string.Empty;
         int i = 0;
-        if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
-        {
-            TCFDD.Visible = true;
-            TDDDD.Visible = true;
-            if (TextBox_Becity.Text.Length <= 0)
-            {
-                i = i + 1;
-                ErrMsg += i + "、出发地点必须填写。<br>";
-            }
-            if (TextBox_Arrival.Text.Length <= 0)
-            {
-                i = i + 1;
-                ErrMsg += i + "、到达地点必须填写。<br>";
-            }
-        }
-        else if (DropDownList1.SelectedValue == "补助")
-        {
-            TBreakfirst.Visible = true;
-            TZC.Visible = true;
-            TWC.Visible = true;
-            TZS.Visible = true;
-            TDRZS.Visible = true;
-            if (TextBox_Breakfirst.Text.Length <= 0 && TextBox_ZC.Text.Length <= 0 && TextBox_WC.Text.Length <= 0 && TextBox_ZS.Text.Length <= 0 && TextBox_DRZS.Text.Length <= 0)
-            {
-                i = i + 1;
-                ErrMsg += i + "、早餐、晚餐、住宿或者多人住宿补助至少选填一个。<br>";
-            }
-            if (TextBox_DRZS.Text.Length > 0 && TextBox_TXR.Text.Length <= 0)
-            {
-                i = i + 1;
-                ErrMsg += i + "、多人住宿必须填写同行人。<br>";
-            }
-        }
-        else if (DropDownList1.SelectedValue == "采购物资")
-        {
-            TMC.Visible = true;
-            if (TextBox_MC.Text.Length <= 0)
-            {
-                i = i + 1;
-                ErrMsg += i + "、物资名称必须填写。<br>";
-            }
-        }
-
-        if (TextBox_Num.Text.Length <= 0)
+        if (Label_CName.Text != UserNAME)
         {
             i = i + 1;
-            ErrMsg += i + "、报销金额必须填写。<br>";
+            ErrMsg += i + "、您只能编辑您自己的单据。<br>";
         }
-        else
+        if (Label_Flag.Text != "待提交")
         {
-            if (Convert.ToDouble(TextBox_Num.Text) <= 0)
+            i = i + 1;
+            ErrMsg += i + "、已经提交的单据是不允许保存的。<br>";
+        }
+
+        if (ErrMsg.Length == 0)
+        {
+            if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
+            {
+                TCFDD.Visible = true;
+                TDDDD.Visible = true;
+                if (TextBox_Becity.Text.Length <= 0)
+                {
+                    i = i + 1;
+                    ErrMsg += i + "、出发地点必须填写。<br>";
+                }
+                if (TextBox_Arrival.Text.Length <= 0)
+                {
+                    i = i + 1;
+                    ErrMsg += i + "、到达地点必须填写。<br>";
+                }
+            }
+            else if (DropDownList1.SelectedValue == "补助")
+            {
+                TBreakfirst.Visible = true;
+                TZC.Visible = true;
+                TWC.Visible = true;
+                TZS.Visible = true;
+                TDRZS.Visible = true;
+                if (TextBox_Breakfirst.Text.Length <= 0 && TextBox_ZC.Text.Length <= 0 && TextBox_WC.Text.Length <= 0 && TextBox_ZS.Text.Length <= 0 && TextBox_DRZS.Text.Length <= 0)
+                {
+                    i = i + 1;
+                    ErrMsg += i + "、早餐、晚餐、住宿或者多人住宿补助至少选填一个。<br>";
+                }
+                if (TextBox_DRZS.Text.Length > 0 && TextBox_TXR.Text.Length <= 0)
+                {
+                    i = i + 1;
+                    ErrMsg += i + "、多人住宿必须填写同行人。<br>";
+                }
+            }
+            else if (DropDownList1.SelectedValue == "采购物资")
+            {
+                TMC.Visible = true;
+                if (TextBox_MC.Text.Length <= 0)
+                {
+                    i = i + 1;
+                    ErrMsg += i + "、物资名称必须填写。<br>";
+                }
+            }
+
+            if (TextBox_Num.Text.Length <= 0)
             {
                 i = i + 1;
-                ErrMsg += i + "、报销金额必须大于0。<br>";
+                ErrMsg += i + "、报销金额必须填写。<br>";
+            }
+            else
+            {
+                if (Convert.ToDouble(TextBox_Num.Text) <= 0)
+                {
+                    i = i + 1;
+                    ErrMsg += i + "、报销金额必须大于0。<br>";
+                }
             }
         }
 
