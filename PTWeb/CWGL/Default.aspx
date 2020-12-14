@@ -13,7 +13,7 @@
     </div>
     <div class="hr-10"></div>
     <div class="page-header">
-        <h1>报销单								<small></h1>
+        <h1>报销单							</h1>
     </div>
     <div class="vspace-sm"></div>
     <div class="col-sm-12">
