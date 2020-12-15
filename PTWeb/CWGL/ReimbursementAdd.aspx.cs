@@ -29,7 +29,7 @@ public partial class CWGL_Default2 : PageBase
             int IID = Convert.ToInt32(Request["ID"]);
             if (IID > 0)
             {
-                string strSQL = "Select UserName,BXLX,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark,W_BXD1.FLAG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
+                string strSQL = "Select UserName,BXLX,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark,W_BXD1.FLAG,(Select top 1 Remark from w_examine where djbh=W_BXD1.BXDH and ireturn<>0 order by ltime desc) ReturnMSG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     if (OP_Mode.Dtv.Count > 0)
@@ -37,16 +37,29 @@ public partial class CWGL_Default2 : PageBase
                         bool bDel = true;
                         Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
                         TextBox_Remark.Text = OP_Mode.Dtv[0]["Remark"].ToString();
+
+                        if (OP_Mode.Dtv[0]["ReturnMSG"].ToString().Length > 0)
+                        { /// 被退回单据
+                            ReturnMsg.InnerHtml += " <div class=\"well\">";
+                            ReturnMsg.InnerHtml += "   <h4 class=\"red smaller lighter\">单据被退回</h4>";
+                            ReturnMsg.InnerHtml += " <h2>" + OP_Mode.Dtv[0]["ReturnMSG"].ToString() + "</h2>";
+                            ReturnMsg.InnerHtml += " </div>";
+                        }
+
+                        Label_Flag.Text = FlagToName(Convert.ToInt32(OP_Mode.Dtv[0]["FLAG"]));
+
                         if (OP_Mode.Dtv[0]["FLAG"].ToString() == "0")
                         {
-                            Label_Flag.Text = "待提交";
                             Label_Flag.ForeColor = Color.Green;
                         }
                         else if (OP_Mode.Dtv[0]["FLAG"].ToString() == "1")
                         {
                             bDel = false;
-                            Label_Flag.Text = "已完成";
                             Label_Flag.ForeColor = Color.Red;
+                        }
+                        else
+                        {
+                            bDel = false;
                         }
 
                         RadioButtonList1.SelectedValue = OP_Mode.Dtv[0]["BXLX"].ToString();
@@ -60,6 +73,7 @@ public partial class CWGL_Default2 : PageBase
                             RadioButtonList1.Enabled = false;
                             TextBox_Remark.Enabled = false;
                         }
+                        HiddenField1.Value = iClass(OP_Mode.Dtv[0]["KZXM"].ToString()).ToString(); // 设置单据类型
                         // 生成明细
                         for (int i = 0; i < OP_Mode.Dtv.Count; i++)
                         {
@@ -87,6 +101,30 @@ public partial class CWGL_Default2 : PageBase
     /// </summary>
     private void ShowTextBox()
     {
+        if (Label_Flag.Text != "待提交")
+        {
+            AddHtml.Visible = false;
+        }
+
+        if (Label_Flag.Text == "已完结")
+        {
+            LinkButton_Del.Visible = false;
+            LinkButton_Next.Visible = false;
+            LinkButton_Return.Visible = false;
+        }
+        else if (Label_Flag.Text == "待提交")
+        {
+            LinkButton_Del.Visible = true;
+            LinkButton_Next.Visible = true;
+            LinkButton_Return.Visible = false;
+        }
+        else
+        {
+            LinkButton_Del.Visible = false;
+            LinkButton_Next.Visible = true;
+            LinkButton_Return.Visible = true;
+        }
+
         if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
         {
             TBreakfirst.Visible = false;
@@ -166,15 +204,19 @@ public partial class CWGL_Default2 : PageBase
     private void AddImagesShow(String imageName, String strSTime, String strKZXM, String strTXR, String strMC, String strBecity, String strArrival, Double strNum, String strRemark2, double db_Bk, double Db_ZC, double DB_WC, double Db_ZS, double DB_DRZS, int MXID, bool del)
     {
         WellList.InnerHtml += " <div class=\"well\">";
-        WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">" + DropDownList1.SelectedValue + "</h4>";
-        WellList.InnerHtml += " <a href='" + imageName + "'><img src=\"" + imageName + "\" style =\"height:40px;\" /></a>";
+        WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">" + strKZXM + "</h4>";
+
+        if (imageName.Length > 10)//"\BxImages\"
+        {
+            WellList.InnerHtml += " <a href='" + imageName + "'><img src=\"" + imageName + "\" style =\"height:40px;\" /></a>";
+        }
         WellList.InnerHtml += " 发生时间：" + strSTime + " ";
 
-        if (DropDownList1.SelectedValue == "交通费" || DropDownList1.SelectedValue == "运输费")
+        if (strKZXM == "交通费" || strKZXM == "运输费")
         {
             WellList.InnerHtml += " 路程：" + strBecity.ToString() + " - " + strArrival.ToString() + " ";
         }
-        else if (DropDownList1.SelectedValue == "补助")
+        else if (strKZXM == "补助")
         {
             if (db_Bk > 0)
             {
@@ -201,7 +243,7 @@ public partial class CWGL_Default2 : PageBase
                 WellList.InnerHtml += "  同行人：" + strTXR + " ";
             }
         }
-        else if (DropDownList1.SelectedValue == "采购物资")
+        else if (strKZXM == "采购物资")
         {
             WellList.InnerHtml += " 货物名称：" + strMC + " ";
             WellList.InnerHtml += " 路径：" + strBecity + "-" + strArrival + " ";
@@ -216,6 +258,34 @@ public partial class CWGL_Default2 : PageBase
             WellList.InnerHtml += "   <a href=\"\\CWGL\\BXDMXDel.aspx?MXID=" + MXID + "&ID=" + Label_No.Text + "\"><h3 class=\"red smaller lighter\">删 除</h3></a>";
         }
         WellList.InnerHtml += " </div>";
+    }
+
+    /// <summary>
+    /// 依据报销类别返回类型，同一张单据不允许报销多类型内容
+    /// </summary>
+    private int iClass(string strFYLX)
+    {
+        //交通费、补助  类别1
+        //采购物资、运输费  类别2
+        //租脚手架、开槽费、开孔费、停车费、加油费、招待费、其他 类别3
+        int rValue = 0;
+
+        int intClass = Convert.ToInt32(HiddenField1.Value);
+
+        if (strFYLX == "交通费" || strFYLX == "补助")
+        {
+            rValue = 1;
+        }
+        else if (strFYLX == "运输费" || strFYLX == "采购物资")
+        {
+            rValue = 2;
+        }
+        else
+        {
+            rValue = 3;
+        }
+
+        return rValue;
     }
 
     /// <summary>
@@ -269,6 +339,18 @@ public partial class CWGL_Default2 : PageBase
         {
             i = i + 1;
             ErrMsg += i + "、已经提交的单据是不允许保存的。<br>";
+        }
+        if (Convert.ToInt32(HiddenField1.Value) > 0)
+        {
+            if (iClass(DropDownList1.SelectedValue) != Convert.ToInt32(HiddenField1.Value))
+            {
+                i = i + 1;
+                ErrMsg += i + "、不同费用类型请不要填写在同一张单据上。<br>";
+            }
+        }
+        else
+        {
+            HiddenField1.Value = iClass(DropDownList1.SelectedValue).ToString(); // 设置单据类型
         }
 
         if (ErrMsg.Length == 0)
@@ -345,7 +427,7 @@ public partial class CWGL_Default2 : PageBase
         {
             String imageName = UploadTP(FileUpload1);
 
-            if (imageName.Length > 0)
+            if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助")
             {/// 图片上传成功
 
                 string strSQL = string.Empty;
@@ -598,5 +680,260 @@ public partial class CWGL_Default2 : PageBase
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         ShowTextBox();
+    }
+
+    /// <summary>
+    /// 提交状态
+    /// </summary>
+    private void SaveFlag()
+    {
+        if (Label_No.Text.Length < 18)
+        {/// 单据编号不对，不允许提交
+            return;
+        }
+        // 保存记录表  W_Examine
+
+        int oldFlag = NameToFlag(Label_Flag.Text);// 当前状态
+        int NewFlag = NextFlag(oldFlag);// 提交后他状态
+
+        if (Label_Flag.Text == "综合部")
+        {
+            if (!QXBool(39, Convert.ToInt32(DefaultUser)))
+            {
+                MessageBox("", "您没有审核的权限。", Defaut_QX_URL);
+                return;
+            }
+        }
+        else if (Label_Flag.Text == "物资部")
+        {
+            if (!QXBool(40, Convert.ToInt32(DefaultUser)))
+            {
+                MessageBox("", "您没有审核的权限。", Defaut_QX_URL);
+                return;
+            }
+        }
+        else if (Label_Flag.Text == "工程部")
+        {
+            if (!QXBool(41, Convert.ToInt32(DefaultUser)))
+            {
+                MessageBox("", "您没有审核的权限。", Defaut_QX_URL);
+                return;
+            }
+        }
+        else if (Label_Flag.Text == "待放款" || Label_Flag.Text == "待收票")
+        {
+            if (!QXBool(42, Convert.ToInt32(DefaultUser)))
+            {
+                MessageBox("", "您没有审核的权限。", Defaut_QX_URL);
+                return;
+            }
+        }
+        else if (Label_Flag.Text == "待提交")
+        {
+            if (UserNAME != Label_CName.Text)
+            {
+                MessageBox("", "您不允许提交别人的单据。");
+                return;
+            }
+        }
+
+        string strSQL = " Insert into W_Examine(Class,DJBH,UserName,OldFlag,NewFlag) values ('BXD','" + Label_No.Text + "','" + UserNAME + "'," + oldFlag + "," + NewFlag + ")";
+
+        strSQL += " Update W_BXD1 Set Flag=" + NewFlag + ",LTime=getdate() where BXDH='" + Label_No.Text + "'";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            MessageBox("", "单据提交成功。", "/CWGL/");
+        }
+        else
+        {
+            MessageBox("", "单据提交失败。<br>错误：" + OP_Mode.strErrMsg);
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 报销流程走向
+    /// </summary>
+    /// <returns></returns>
+    private int NextFlag(int NowFlag)
+    {
+        int rValue = 0;
+
+        if (NowFlag == 0)
+        {
+            if (HiddenField1.Value == "1")
+            {// 到综合部
+                rValue = 2;
+            }
+            else if (HiddenField1.Value == "2")
+            {// 到物资岗
+                rValue = 3;
+            }
+            else if (HiddenField1.Value == "3")
+            {// 到工程岗
+                rValue = 4;
+            }
+        }
+        else if (NowFlag == 2)
+        {/// 综合部 到 代放款
+            rValue = 5;
+        }
+        else if (NowFlag == 3)
+        {/// 物资岗 到 综合部
+            rValue = 2;
+        }
+        else if (NowFlag == 4)
+        {/// 工程岗 到 综合部
+            rValue = 2;
+        }
+        else if (NowFlag == 5)
+        {/// 待放款 到 待收票
+            rValue = 6;
+        }
+        else if (NowFlag == 6)
+        {/// 待收票 到 已完结
+            rValue = 1;
+        }
+        else if (NowFlag == 1)
+        {/// 已完结 到 已完结
+            rValue = 1;
+        }
+
+        return rValue;
+    }
+
+    /// <summary>
+    /// 依据状态名称转换成数字
+    /// </summary>
+    /// <returns></returns>
+    private int NameToFlag(string strFlag)
+    {
+        int rValue = 0;
+
+        if (strFlag == "待提交")
+        {
+            rValue = 0;
+        }
+        else if (strFlag == "综合部")
+        {
+            rValue = 2;
+        }
+        else if (strFlag == "物资部")
+        {
+            rValue = 3;
+        }
+        else if (strFlag == "工程部")
+        {
+            rValue = 4;
+        }
+        else if (strFlag == "待放款")
+        {
+            rValue = 5;
+        }
+        else if (strFlag == "待收票")
+        {
+            rValue = 6;
+        }
+        else if (strFlag == "已完结")
+        {
+            rValue = 1;
+        }
+        return rValue;
+    }
+    /// <summary>
+    /// 状态数字转换成名字
+    /// </summary>
+    /// <param name="strFlag"></param>
+    /// <returns></returns>
+    private string FlagToName(int strFlag)
+    {
+        string rValue = "待提交";
+
+        if (strFlag == 0)
+        {
+            rValue = "待提交";
+        }
+        else if (strFlag == 2)
+        {
+            rValue = "综合部";
+        }
+        else if (strFlag == 3)
+        {
+            rValue = "物资部";
+        }
+        else if (strFlag == 4)
+        {
+            rValue = "工程部";
+        }
+        else if (strFlag == 5)
+        {
+            rValue = "待放款";
+        }
+        else if (strFlag == 6)
+        {
+            rValue = "待收票";
+        }
+        else if (strFlag == 1)
+        {
+            rValue = "已完结";
+        }
+        return rValue;
+    }
+
+    /// <summary>
+    /// 单据退回
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton4_Click(object sender, EventArgs e)
+    {
+        Response.Write("<script language='javascript'>window.location='/CWGL/ReturnMSG.aspx?ID=" + Request["ID"] + "'</script>");
+    }
+
+    /// <summary>
+    /// 单据状态提交
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton2_Click(object sender, EventArgs e)
+    {
+        SaveFlag();
+    }
+
+    /// <summary>
+    /// 整单删除
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        if (Label_No.Text.Length < 18)
+        {
+            return;
+        }
+        if (UserNAME != Label_CName.Text)
+        {
+            MessageBox("", "您不允许删除别人的单据。");
+            return;
+        }
+        if (Label_Flag.Text != "待提交")
+        {
+            MessageBox("", "已经提交的单据是不允许删除的。");
+            return;
+        }
+        string strSQL = "Delete w_bxd2 from w_bxd1,w_bxd2 where w_bxd1.BXDH=w_bxd2.BXDH and w_bxd1.bxdh='" + Label_No.Text + "' ";
+        strSQL += " Delete from w_bxd1 where bxdh='" + Label_No.Text + "'";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            MessageBox("", "单据删除成功。", "/CWGL/");
+            return;
+        }
+        else
+        {
+            MessageBox("", "单据删除错误。<br>" + OP_Mode.strErrMsg);
+            return;
+        }
     }
 }

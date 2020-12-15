@@ -19,14 +19,14 @@
     <div class="col-sm-12">
         <div class="tabbable">
             <ul id="myTab" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
-                <li class="pull-right">
+               <%-- <li class="pull-right">
                     <a href="/CWGL/ReimbursementAdd.ASPX" class="btn-new-mail">
                         <span class="btn bt1n-small btn-purple no-border">
                             <i class=" icon-envelope bigger-130"></i>
                             <span class="bigger-110">填报报销单</span>
                         </span>
                     </a>
-                </li>
+                </li>--%>
                 <li class="active">
                     <a href="/CWGL/?flag=0">
                         <i class="green icon-inbox bigger-130"></i>
@@ -55,6 +55,12 @@
                     <a href="/CWGL/?flag=5">
                         <i class="pink icon-inbox bigger-130"></i>
                         <span class="bigger-110">待放款</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/CWGL/?flag=6">
+                        <i class="pink icon-inbox bigger-130"></i>
+                        <span class="bigger-110">待收票</span>
                     </a>
                 </li>
                 <li>
@@ -145,10 +151,19 @@
                 mtd.html(" <span class=\"label label-danger\">已完结</span>");
             }
             else if (mtd.text() == 2) {
-                mtd.html(" <span class=\"label label-info\">待审核</span>");
+                mtd.html(" <span class=\"label label-info\">综合部</span>");
             }
             else if (mtd.text() == 3) {
+                mtd.html(" <span class=\"label label-info\">物资部</span>");
+            }
+            else if (mtd.text() == 4) {
+                mtd.html(" <span class=\"label label-info\">工程部</span>");
+            }
+            else if (mtd.text() == 5) {
                 mtd.html(" <span class=\"label label-pink\">待放款</span>");
+            }
+            else if (mtd.text() == 6) {
+                mtd.html(" <span class=\"label label-pink\">待收票</span>");
             }
         });
     </script>
