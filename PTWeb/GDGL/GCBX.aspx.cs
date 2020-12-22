@@ -98,7 +98,11 @@ public partial class GDGL_GCBX : PageBase
         try
         {
             int iFS = Convert.ToInt32(TextBox1.Text);
-            int iAZFS = 0;
+            if (iFS <= 0)
+            {
+                MessageBox("", "安装百分比必须 >0 。请认真填写。");
+                return;
+            }
             if (iFS > Convert.ToInt32(HiddenField_SYFS.Value))
             {
                 MessageBox("", "布线百分比不允许大于 [" + HiddenField_SYFS.Value + "]。");
@@ -122,7 +126,7 @@ public partial class GDGL_GCBX : PageBase
             strSQL += " End";
             if (OP_Mode.SQLRUN(strSQL))
             {
-                MessageBox("", "安装信息录入成功，您辛苦了。", "/GDGL/GCBXList.ASPX?ID=" + Request["ID"]);
+                MessageBox("", "布线信息录入成功，您辛苦了。", "/GDGL/GCBXList.ASPX?ID=" + Request["ID"]);
             }
             else
             {
@@ -132,7 +136,7 @@ public partial class GDGL_GCBX : PageBase
         }
         catch (Exception ex)
         {
-            MessageBox("", "安装失败。<BR>错误：" + ex.ToString() + "<br>请重试。");
+            MessageBox("", "布线信息输入失败。<BR>错误：" + ex.ToString() + "<br>请重试。");
         }
     }
 }

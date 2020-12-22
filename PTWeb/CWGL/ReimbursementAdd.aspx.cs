@@ -29,14 +29,14 @@ public partial class CWGL_Default2 : PageBase
             int IID = Convert.ToInt32(Request["ID"]);
             if (IID > 0)
             {
-                string strSQL = "Select UserName,BXLX,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark,W_BXD1.FLAG,(Select top 1 Remark from w_examine where djbh=W_BXD1.BXDH and ireturn<>0 order by ltime desc) ReturnMSG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
+                string strSQL = "Select UserName,BXLX,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark RemarkSum,W_BXD1.FLAG,(Select top 1 Remark from w_examine where djbh=W_BXD1.BXDH and ireturn<>0 order by ltime desc) ReturnMSG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     if (OP_Mode.Dtv.Count > 0)
                     {
                         bool bDel = true;
                         Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
-                        TextBox_Remark.Text = OP_Mode.Dtv[0]["Remark"].ToString();
+                        TextBox_Remark.Text = OP_Mode.Dtv[0]["RemarkSum"].ToString();
 
                         if (OP_Mode.Dtv[0]["ReturnMSG"].ToString().Length > 0)
                         { /// 被退回单据
@@ -340,6 +340,11 @@ public partial class CWGL_Default2 : PageBase
             i = i + 1;
             ErrMsg += i + "、已经提交的单据是不允许保存的。<br>";
         }
+        if (TextBox_Remark.Text.Length <= 0)
+        {
+            i = i + 1;
+            ErrMsg += i + "、工程编号或事由必须填写。<br>";
+        }
         if (Convert.ToInt32(HiddenField1.Value) > 0)
         {
             if (iClass(DropDownList1.SelectedValue) != Convert.ToInt32(HiddenField1.Value))
@@ -427,7 +432,7 @@ public partial class CWGL_Default2 : PageBase
         {
             String imageName = UploadTP(FileUpload1);
 
-            if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助")
+            if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助" || DropDownList1.SelectedValue == "交通费")
             {/// 图片上传成功
 
                 string strSQL = string.Empty;
@@ -888,7 +893,7 @@ public partial class CWGL_Default2 : PageBase
     /// <param name="e"></param>
     protected void LinkButton4_Click(object sender, EventArgs e)
     {
-        Response.Write("<script language='javascript'>window.location='/CWGL/ReturnMSG.aspx?ID=" + Request["ID"] + "'</script>");
+        Response.Write("<script language='javascript'>window.location='/CWGL/ReturnMSG.aspx?ID=" + Request["ID"] + "&Flag=" + NameToFlag(Label_Flag.Text) + "'</script>");
     }
 
     /// <summary>

@@ -9,7 +9,14 @@ public partial class CWGL_ReturnMSG : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            if (!THQXPD())
+            {
+                MessageBox("", "您没有退回的权限。", Defaut_QX_URL);
+                return;
+            }
+        }
     }
 
     /// <summary>
@@ -22,12 +29,78 @@ public partial class CWGL_ReturnMSG : PageBase
     {
         if (TextBox_ReturnMSG.Text.Length > 0)
         {
-            SaveFlag();
+            if (THQXPD())
+            {
+                SaveFlag();
+            }
+            else
+            {
+                MessageBox("", "您没有退回的权限。", Defaut_QX_URL);
+                return;
+            }
         }
         else
         {
             MessageBox("", "请输入退回原因。");
         }
+    }
+
+    /// <summary>
+    /// 退回权限判断 返回True 允许退回。
+    /// </summary>
+    /// <returns></returns>
+    private bool THQXPD()
+    {
+        bool rValue = true;
+        int ID = Convert.ToInt32(Request["ID"]);
+        int Flag = Convert.ToInt32(Request["Flag"]);
+        string strSQL = string.Empty;
+        if (ID > 0)
+        {/// 检查状态，看用户是否有此状态权限
+            if (Flag == 2)
+            {
+                if (!QXBool(39, Convert.ToInt32(DefaultUser)))
+                {
+                    rValue = false;
+                    return rValue;
+                }
+            }
+            else if (Flag == 3)
+            {
+                if (!QXBool(40, Convert.ToInt32(DefaultUser)))
+                {
+                    rValue = false;
+                    return rValue;
+                }
+            }
+            else if (Flag == 4)
+            {
+                if (!QXBool(41, Convert.ToInt32(DefaultUser)))
+                {
+                    rValue = false;
+                    return rValue;
+                }
+            }
+            else if (Flag == 5 || Flag == 6)
+            {
+                if (!QXBool(42, Convert.ToInt32(DefaultUser)))
+                {
+                    rValue = false;
+                    return rValue;
+                }
+            }
+            else
+            {
+                rValue = false;
+                return rValue;
+            }
+        }
+        else
+        {
+            rValue = false;
+            return rValue;
+        }
+        return rValue;
     }
 
     /// <summary>
@@ -57,7 +130,7 @@ public partial class CWGL_ReturnMSG : PageBase
         }
         else
         {
-            MessageBox("", "单据提交失败。<br>错误：参数错误。");
+            MessageBox("", "单据退回失败。<br>错误：参数错误。");
             return;
         }
     }

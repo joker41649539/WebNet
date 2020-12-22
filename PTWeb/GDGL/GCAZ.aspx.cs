@@ -90,6 +90,11 @@ public partial class GDGL_GCAZ : PageBase
         try
         {
             int iFS = Convert.ToInt32(TextBox3.Text);
+            if (iFS <= 0)
+            {
+                MessageBox("", "安装百分比必须 >0 。请认真填写。");
+                return;
+            }
             if (iFS > Convert.ToInt32(HiddenField_SYFS.Value))
             {
                 MessageBox("", "安装百分比不允许大于 [" + HiddenField_SYFS.Value + "]。");
