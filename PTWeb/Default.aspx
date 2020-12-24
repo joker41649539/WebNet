@@ -29,6 +29,19 @@
                             </a>
                         </div>
                     </div>
+                    <div class="infobox infobox-pink">
+                        <div class="infobox-icon">
+                            <i class="icon-coffee"></i>
+                        </div>
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">费用报销</span>
+                            <a href="/CWGL/ReimbursementAdd.aspx">
+                                <div class="infobox-content">
+                                    <asp:Label ID="Label1" runat="server" Text="我要报销"></asp:Label>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <div class="infobox infobox-blue2" runat="server" id="DivGCWXD">
                         <div class="infobox-icon">
                             <i class="icon-edit"></i>

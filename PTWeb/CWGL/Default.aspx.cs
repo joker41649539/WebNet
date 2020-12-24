@@ -12,7 +12,15 @@ public partial class CWGL_Default : PageBase
     {
         if (!IsPostBack)
         {
-            Load_GridView_BXD();
+            if (!QXBool(43, Convert.ToInt32(DefaultUser)))
+            {
+                MessageBox("", "您没有查看报销单的权限。", Defaut_QX_URL);
+                return;
+            }
+            else
+            {
+                Load_GridView_BXD();
+            }
         }
     }
 
@@ -41,22 +49,22 @@ public partial class CWGL_Default : PageBase
         {
             if (this.GridView_BXD_Label_tj.Text.Length > 0)
             {
-                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2 WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " " + this.GridView_BXD_Label_tj.Text.Trim() + " GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=2 group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " " + this.GridView_BXD_Label_tj.Text.Trim() + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "') GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
             }
             else
             {
-                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2 WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=2 group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "')  GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
             }
         }
         else
         {
             if (this.GridView_BXD_Label_tj.Text.Length > 0)
             {
-                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2 WHERE W_BXD1.BXDH=W_BXD2.BXDH " + this.GridView_BXD_Label_tj.Text.Trim() + " GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=2 group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH " + this.GridView_BXD_Label_tj.Text.Trim() + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "')  GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
             }
             else
             {
-                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2 WHERE W_BXD1.BXDH=W_BXD2.BXDH GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,SUM(W_BXD2.BXJE) ZJE ,FLAG,W_BXD1.LTIME from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=2 group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "') GROUP BY  W_BXD1.ID,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
             }
         }
         if (OP_Mode.SQLRUN(strSQL))

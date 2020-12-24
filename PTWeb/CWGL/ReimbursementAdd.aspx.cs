@@ -13,7 +13,15 @@ public partial class CWGL_Default2 : PageBase
     {
         if (!IsPostBack)
         {
-            LoadDefaultData();
+            if (!QXBool(38, Convert.ToInt32(DefaultUser)))
+            {
+                MessageBox("", "您没有填写报销单的权限。", Defaut_QX_URL);
+                return;
+            }
+            else
+            {
+                LoadDefaultData();
+            }
         }
     }
 
