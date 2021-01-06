@@ -60,14 +60,22 @@ public partial class WeChat_WorkKQ : PageBase
     private void SaveData()
     {
         string Image1 = UploadTP(FileUpload_TP);
-        string Image2 = UploadTP(FileUpload_TP2);
-        string Image3 = UploadTP(FileUpload_TP3);
-        string Image4 = UploadTP(FileUpload_TP4);
-        string Image5 = UploadTP(FileUpload_TP5);
-        string Image6 = UploadTP(FileUpload_TP6);
-        string Image7 = UploadTP(FileUpload_TP7);
-        string Image8 = UploadTP(FileUpload_TP8);
-        string Image9 = UploadTP(FileUpload_TP9);
+        //string Image2 = UploadTP(FileUpload_TP2);
+        //string Image3 = UploadTP(FileUpload_TP3);
+        //string Image4 = UploadTP(FileUpload_TP4);
+        //string Image5 = UploadTP(FileUpload_TP5);
+        //string Image6 = UploadTP(FileUpload_TP6);
+        //string Image7 = UploadTP(FileUpload_TP7);
+        //string Image8 = UploadTP(FileUpload_TP8);
+        //string Image9 = UploadTP(FileUpload_TP9);
+        string Image2 = string.Empty;
+        string Image3 = string.Empty;
+        string Image4 = string.Empty;
+        string Image5 = string.Empty;
+        string Image6 = string.Empty;
+        string Image7 = string.Empty;
+        string Image8 = string.Empty;
+        string Image9 = string.Empty;
 
         string strRemark = TextBox_Remark.Text.Replace("'", "\"");
 

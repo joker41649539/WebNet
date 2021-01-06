@@ -153,11 +153,12 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片1</label>
                                     <div class="col-sm-9" id="preview1">
                                         <asp:FileUpload ID="FileUpload_TP" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image1" ClientIDMode="Static" runat="server" />
+                                        <asp:Image ID="Image1" Width="100px" ClientIDMode="Static" runat="server" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12">
+                            <div class="col-xs-12" runat="server" id="WellList" />
+                            <%-- <div class="col-xs-12">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片2</label>
                                     <div class="col-sm-9" id="preview2">
@@ -228,7 +229,7 @@
                                         <asp:Image ID="Image9" ClientIDMode="Static" runat="server" />
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
                         </div>
                         <div class="clearfix form-actions">
                             <div class="col-md-offset-3 col-md-9">

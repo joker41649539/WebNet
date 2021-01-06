@@ -14,7 +14,7 @@ public partial class _Default : PageBase
         if (!IsPostBack)
         {
             LoadQX();
-            LoadMyJF();
+           // LoadMyJF();
             LoadGCNum();
         }
     }
@@ -52,15 +52,15 @@ public partial class _Default : PageBase
     }
     private void LoadMyJF()
     {
-        string strSQL = "SELECT isnull(SUM(W_GCGD_FS.AZFS*W_GCGD2.AZFS/100),0)+isnull(SUM(W_GCGD_FS.FS*W_GCGD2.FS/100),0) SumFZ FROM W_GCGD_FS,W_GCGD2,W_GCGD1 WHERE GCMXID=W_GCGD2.ID AND USERID=" + DefaultUser + " AND W_GCGD1.GCDH=W_GCGD2.GCDH ";
-        strSQL += " AND W_GCGD_FS.LTIME>'" + System.DateTime.Now.ToString("yyyy-MM") + "-01'";
-        if (OP_Mode.SQLRUN(strSQL))
-        {
-            if (OP_Mode.Dtv.Count > 0)
-            {
-                Label_MyJF.Text= OP_Mode.Dtv[0]["SumFZ"].ToString();
-            }
-        }
+        //string strSQL = "SELECT isnull(SUM(W_GCGD_FS.AZFS*W_GCGD2.AZFS/100),0)+isnull(SUM(W_GCGD_FS.FS*W_GCGD2.FS/100),0) SumFZ FROM W_GCGD_FS,W_GCGD2,W_GCGD1 WHERE GCMXID=W_GCGD2.ID AND USERID=" + DefaultUser + " AND W_GCGD1.GCDH=W_GCGD2.GCDH ";
+        //strSQL += " AND W_GCGD_FS.LTIME>'" + System.DateTime.Now.ToString("yyyy-MM") + "-01'";
+        //if (OP_Mode.SQLRUN(strSQL))
+        //{
+        //    if (OP_Mode.Dtv.Count > 0)
+        //    {
+        //        Label_MyJF.Text= OP_Mode.Dtv[0]["SumFZ"].ToString();
+        //    }
+        //}
     }
 
 }

@@ -152,11 +152,13 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片1</label>
                                     <div class="col-sm-9" id="preview1">
                                         <asp:FileUpload ID="FileUpload_TP" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image1" ClientIDMode="Static" runat="server" />
+                                        <asp:Image ID="Image1" Width="100px" ClientIDMode="Static" runat="server" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-12">
+                            <div class="col-xs-12" runat="server" id="WellList" />
+
+                            <%-- <div class="col-xs-12">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片2</label>
                                     <div class="col-sm-9" id="preview2">
@@ -228,17 +230,17 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="clearfix form-actions">
-                            <div class="col-md-offset-3 col-md-9">
-                                <asp:LinkButton usesubmitbehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_JG_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_JG_LinkButton1_Click"><i class="icon-ok bigger-110"></i>签到打卡</asp:LinkButton>
+                        </div>--%>
+                            <div class="clearfix form-actions">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <asp:LinkButton usesubmitbehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_JG_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_JG_LinkButton1_Click"><i class="icon-ok bigger-110"></i>签到打卡</asp:LinkButton>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="sent" class="tab-pane">
-                    <div class="page-content">
-                        <%--<div class="row">
+                    <div id="sent" class="tab-pane">
+                        <div class="page-content">
+                            <%--<div class="row">
                             <div class="widget-header widget-header-flat">
                                 <h4 class="lighter"><i class="icon-inbox"></i>查询条件</h4>
                                 <asp:DropDownList ID="GridView_MSG_DropDownList1" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
@@ -261,9 +263,9 @@
                                     <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="GridView_FXX_LinkButton4" OnClick="GridView_FXX_LinkButton4_Click"><i class="icon-search">&nbsp;查 询</i></asp:LinkButton>
                                 </div>
                             </div>--%>
-                        <div class="hr-10"></div>
-                        <div id="QDList" runat="server" class="timeline-container">
-                            <%--<div class="timeline-container">
+                            <div class="hr-10"></div>
+                            <div id="QDList" runat="server" class="timeline-container">
+                                <%--<div class="timeline-container">
                                 <div class="timeline-label">
                                     <span class="label label-primary arrowed-in-right label-lg">
                                         <b>2020-03-22</b>
@@ -364,140 +366,140 @@
                                 </div>
                             </div>
                             <!-- /.timeline-container -->--%>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript">
-        var eleFile = document.querySelector('#FileUpload_TP');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image1.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP2');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image2.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP3');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image3.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP4');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image4.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP5');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image5.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP6');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image6.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP7');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image7.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP8');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image8.src = newUrl;
-                };
-            }
-        });
-        var eleFile = document.querySelector('#FileUpload_TP9');
-        eleFile.addEventListener('change', function () {
-            var file = this.files[0];
-            // 确认选择的文件是图片                
-            if (file.type.indexOf("image") == 0) {
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    // 图片base64化
-                    var newUrl = this.result;
-                    Image9.src = newUrl;
-                };
-            }
-        });
+        <script type="text/javascript">
+            var eleFile = document.querySelector('#FileUpload_TP');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image1.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP2');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image2.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP3');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image3.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP4');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image4.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP5');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image5.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP6');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image6.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP7');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image7.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP8');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image8.src = newUrl;
+                    };
+                }
+            });
+            var eleFile = document.querySelector('#FileUpload_TP9');
+            eleFile.addEventListener('change', function () {
+                var file = this.files[0];
+                // 确认选择的文件是图片                
+                if (file.type.indexOf("image") == 0) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function (e) {
+                        // 图片base64化
+                        var newUrl = this.result;
+                        Image9.src = newUrl;
+                    };
+                }
+            });
 
-    </script>
+        </script>
 </asp:Content>
 

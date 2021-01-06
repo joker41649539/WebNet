@@ -61,15 +61,15 @@ public partial class WeChat_KQ : PageBase
     /// </summary>
     private void SaveData()
     {
-        string Image1 = UploadTP(FileUpload_TP);
-        string Image2 = UploadTP(FileUpload_TP2);
-        string Image3 = UploadTP(FileUpload_TP3);
-        string Image4 = UploadTP(FileUpload_TP4);
-        string Image5 = UploadTP(FileUpload_TP5);
-        string Image6 = UploadTP(FileUpload_TP6);
-        string Image7 = UploadTP(FileUpload_TP7);
-        string Image8 = UploadTP(FileUpload_TP8);
-        string Image9 = UploadTP(FileUpload_TP9);
+        string Image1 =  UploadTP(FileUpload_TP);
+        string Image2 = string.Empty;// UploadTP(FileUpload_TP2);
+        string Image3 = string.Empty;// UploadTP(FileUpload_TP3);
+        string Image4 = string.Empty;// UploadTP(FileUpload_TP4);
+        string Image5 = string.Empty;// UploadTP(FileUpload_TP5);
+        string Image6 = string.Empty;// UploadTP(FileUpload_TP6);
+        string Image7 = string.Empty;// UploadTP(FileUpload_TP7);
+        string Image8 = string.Empty;// UploadTP(FileUpload_TP8);
+        string Image9 = string.Empty;// UploadTP(FileUpload_TP9);
 
         string strRemark = TextBox_Remark.Text.Replace("'", "\"");
 
@@ -522,83 +522,4 @@ public partial class WeChat_KQ : PageBase
     }
 
     #endregion 压缩图片
-
-    ///// <summary>
-    ///// 清除查询条件
-    ///// </summary>
-    ///// <param name="sender"></param>
-    ///// <param name="e"></param>
-    //protected void GridView_FXX_LinkButton3_Click(object sender, EventArgs e)
-    //{
-
-    //    this.GridView_MSG_TextBox_CXTJ.Text = string.Empty;
-
-    //    this.GridView_MSG_Label1.Text = string.Empty;
-
-    //    this.GridView_MSG_Label_tj.Text = string.Empty;
-
-    //    this.GridView_FXX_alerts_tj.Visible = false;
-
-    //    LoadQDList();
-    //}
-    ///// <summary>
-    ///// 查询
-    ///// </summary>
-    ///// <param name="sender"></param>
-    ///// <param name="e"></param>
-    //protected void GridView_FXX_LinkButton4_Click(object sender, EventArgs e)
-    //{
-    //    LoadQDList();
-    //}
-    ///// <summary>
-    ///// 查询条件添加
-    ///// </summary>
-    ///// <param name="sender"></param>
-    ///// <param name="e"></param>
-    //protected void GridView_MSG_TJADD_Click(object sender, EventArgs e)
-    //{
-
-    //    string strDiv = string.Empty;
-
-    //    if (this.GridView_MSG_TextBox_CXTJ.Text.Length == 0)
-
-    //    {
-    //        this.GridView_MSG_TextBox_CXTJ.Text = string.Empty;
-    //        this.GridView_FXX_alerts_tj.Visible = false;
-
-    //    }
-
-    //    if (this.GridView_MSG_Label1.Text.Length > 0)
-
-    //    {
-
-    //        this.GridView_MSG_Label1.Text += "<b>并且</b><br />";
-
-    //        this.GridView_MSG_Label_tj.Text += " and ";
-
-    //    }
-
-    //    this.GridView_MSG_Label1.Text += this.GridView_MSG_DropDownList1.SelectedItem.Text + "&nbsp;" + this.GridView_MSG_DropDownList_SF.SelectedItem.Text + "&nbsp;" + this.GridView_MSG_TextBox_CXTJ.Text + "&nbsp;";
-
-    //    if (this.GridView_MSG_DropDownList_SF.SelectedValue == "LIKE")
-
-    //    {
-
-    //        this.GridView_MSG_Label_tj.Text += " " + this.GridView_MSG_DropDownList1.SelectedValue + " " + this.GridView_MSG_DropDownList_SF.SelectedValue + " " + "'%" + this.GridView_MSG_TextBox_CXTJ.Text.Trim() + "%'";
-
-    //    }
-
-    //    else
-
-    //    {
-
-    //        this.GridView_MSG_Label_tj.Text += " " + this.GridView_MSG_DropDownList1.SelectedValue + " " + this.GridView_MSG_DropDownList_SF.SelectedValue + " " + "'" + this.GridView_MSG_TextBox_CXTJ.Text.Trim() + "'";
-
-    //    }
-
-    //    this.GridView_MSG_TextBox_CXTJ.Text = string.Empty;
-
-    //    this.GridView_FXX_alerts_tj.Visible = true;
-
-    //}
 }

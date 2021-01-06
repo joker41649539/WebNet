@@ -21,10 +21,62 @@
                             <i class="icon-edit"></i>
                         </div>
                         <div class="infobox-data">
-                            <span class="infobox-data-number">签到管理</span>
+                            <span class="infobox-data-number">考勤签到</span>
                             <a href="/WeChat/WorkKQ.ASPX">
                                 <div class="infobox-content">
                                     我要签到
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="infobox infobox-blue2" runat="server" id="DivGCWXD">
+                        <div class="infobox-icon">
+                            <i class="icon-edit"></i>
+                        </div>
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">维修报告</span>
+                            <a href="/BGGL/GCWXDList.ASPX">
+                                <div class="infobox-content">
+                                    维修服务单
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="infobox infobox-green2">
+                        <div class="infobox-icon">
+                            <i class="icon-edit"></i>
+                        </div>
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">布线填报</span>
+                            <a href="/GDGL/MyBXGD.ASPX">
+                                <div class="infobox-data-number">
+                                    <asp:Label ID="Label_MyBXNum" runat="server" Text="0"></asp:Label>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="infobox infobox-red">
+                        <div class="infobox-icon">
+                            <i class="icon-edit"></i>
+                        </div>
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">安装填报</span>
+                            <a href="/GDGL/MyAZGD.ASPX">
+                                <div class="infobox-data-number">
+                                    <asp:Label ID="Label_MyAZNum" runat="server" Text="0"></asp:Label>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="infobox infobox-blue3">
+                        <div class="infobox-icon">
+                            <i class="icon-edit"></i>
+                        </div>
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">工作汇报</span>
+                            <a href="/GDGL/MyAZGD.ASPX">
+                                <div class="infobox-data-number">
+                                    <asp:Label ID="Label2" runat="server" Text="填报工作汇报"></asp:Label>
                                 </div>
                             </a>
                         </div>
@@ -42,58 +94,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="infobox infobox-blue2" runat="server" id="DivGCWXD">
-                        <div class="infobox-icon">
-                            <i class="icon-edit"></i>
-                        </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">报告管理</span>
-                            <a href="/BGGL/GCWXDList.ASPX">
-                                <div class="infobox-content">
-                                    工程维修单
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="infobox infobox-orange">
-                        <div class="infobox-icon">
-                            <i class="icon-bar-chart"></i>
-                        </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">我的积分</span>
-                            <a href="/MyJF.aspx">
-                                <div class="infobox-content">
-                                    <asp:Label ID="Label_MyJF" runat="server" Text="0"></asp:Label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="infobox infobox-green2">
-                        <div class="infobox-icon">
-                            <i class="icon-edit"></i>
-                        </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">我的布线工程</span>
-                            <a href="/GDGL/MyBXGD.ASPX">
-                                <div class="infobox-data-number">
-                                    <asp:Label ID="Label_MyBXNum" runat="server" Text="0"></asp:Label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="infobox infobox-red">
-                        <div class="infobox-icon">
-                            <i class="icon-edit"></i>
-                        </div>
-                        <div class="infobox-data">
-                            <span class="infobox-data-number">我的安装工程</span>
-                            <a href="/GDGL/MyAZGD.ASPX">
-                                <div class="infobox-data-number">
-                                    <asp:Label ID="Label_MyAZNum" runat="server" Text="0"></asp:Label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
