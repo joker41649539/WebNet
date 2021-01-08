@@ -521,7 +521,7 @@ public partial class CWGL_Default2 : PageBase
                     strRemark2 = TextBox_Remark2.Text.Replace("'", "");//报销说明信息
 
                     Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();// 订单号
-                    imageName = "\\BxImages\\" + imageName;
+                    imageName = "/BxImages/" + imageName;
                     /// 插入明细数据
                     strSQL = "Insert into w_bxd2 (BXDH,KZXM,Occurrence,BreakFirst,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,Becity,Arrival,BXJE,Remark,Image)";
                     strSQL += " values ('" + Label_No.Text.Replace("'", "") + "','" + strKZXM + "','" + strSTime + "',";
