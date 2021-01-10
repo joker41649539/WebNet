@@ -38,8 +38,9 @@
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" OnClick="GridView1_TJADD_Click" ID="GridView1_TJADD"><i class="icon-plus-sign">&nbsp;条件添加</i></asp:LinkButton>
                 <div class="widget-toolbar"><a href="#" data-action="collapse"><i class="icon-chevron-up"></i></a></div>
             </div>
-            <asp:CheckBoxList ID="CheckBoxList1" runat="server" CssClass="ace" RepeatColumns="10" RepeatLayout="Flow">
-                <asp:ListItem Text="&nbsp;交通费及补助&nbsp;"></asp:ListItem>
+            <asp:CheckBoxList ID="CheckBoxList1" runat="server" CssClass="ace" RepeatColumns="11" RepeatLayout="Flow">
+                <asp:ListItem Text="&nbsp;交通费&nbsp;"></asp:ListItem>
+                <asp:ListItem Text="&nbsp;补助&nbsp;"></asp:ListItem>
                 <asp:ListItem Text="&nbsp;采购物资&nbsp;"></asp:ListItem>
                 <asp:ListItem Text="&nbsp;运输费&nbsp;"></asp:ListItem>
                 <asp:ListItem Text="&nbsp;租脚手架&nbsp;"></asp:ListItem>
