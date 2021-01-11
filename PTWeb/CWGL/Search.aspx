@@ -72,7 +72,7 @@
                             <asp:BoundField DataField="WCBZ" SortExpression="WCBZ" HeaderText="晚餐补助"></asp:BoundField>
                             <asp:BoundField DataField="ZSBZ" SortExpression="ZSBZ" HeaderText="住宿补助"></asp:BoundField>
                             <asp:BoundField DataField="DRZS" SortExpression="DRZS" HeaderText="多人住宿"></asp:BoundField>
-                            <asp:BoundField DataField="TXR" SortExpression="TXR" HeaderText="通行人"></asp:BoundField>
+                            <asp:BoundField DataField="TXR" SortExpression="TXR" HeaderText="同行人"></asp:BoundField>
                             <asp:BoundField DataField="MC" SortExpression="MC" HeaderText="名称(开支项目)"></asp:BoundField>
                             <asp:BoundField DataField="BECITY" SortExpression="BECITY" HeaderText="出发城市"></asp:BoundField>
                             <asp:BoundField DataField="ARRIVAL" SortExpression="ARRIVAL" HeaderText="到达城市"></asp:BoundField>
@@ -137,6 +137,43 @@
                 mtd.html(" <span class=\"label label-pink\">待收票</span>");
             }
         });
+
+        // 字符替换
+        $("#GridView1 tr").each(function () {
+            var mtd = $(this).children("td:eq(6)");
+            if (mtd.text() == 0.00) {
+                mtd.html(" ");
+            }
+        });
+        // 字符替换
+        $("#GridView1 tr").each(function () {
+            var mtd = $(this).children("td:eq(7)");
+            if (mtd.text() == 0.00) {
+                mtd.html(" ");
+            }
+        });
+        // 字符替换
+        $("#GridView1 tr").each(function () {
+            var mtd = $(this).children("td:eq(8)");
+            if (mtd.text() == 0.00) {
+                mtd.html(" ");
+            }
+        });
+        // 字符替换
+        $("#GridView1 tr").each(function () {
+            var mtd = $(this).children("td:eq(9)");
+            if (mtd.text() == 0.00) {
+                mtd.html(" ");
+            }
+        });
+        // 字符替换
+        $("#GridView1 tr").each(function () {
+            var mtd = $(this).children("td:eq(10)");
+            if (mtd.text() == 0.00) {
+                mtd.html(" ");
+            }
+        });
+
     </script>
 
 </asp:Content>

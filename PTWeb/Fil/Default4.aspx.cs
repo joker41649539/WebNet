@@ -106,6 +106,6 @@ public partial class Default4 : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        GetTotal(TextBox1.Text);
+        GetTotal("https://filfox.info/zh/address/f063628");
     }
 }
