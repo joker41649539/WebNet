@@ -16,7 +16,6 @@
         <h1>报销单查询							</h1>
     </div>
     <div class="vspace-sm"></div>
-    <div class="vspace-sm"></div>
     <div class="col-sm-12">
         <div class="widget-box transparent">
             <div class="widget-header widget-header-flat">
