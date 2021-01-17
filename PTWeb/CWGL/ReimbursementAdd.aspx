@@ -178,7 +178,7 @@
             <div class="form-group">
                 <label runat="server" id="Label7" class="col-sm-3 control-label no-padding-right" for="form-field-1">上传图片：</label>
                 <div class="col-sm-9">
-                    <asp:FileUpload ID="FileUpload1" runat="server" />
+                    <asp:FileUpload ID="FileUpload1" runat="server" capture="camera" value="拍照" accept="image/*" />
                 </div>
             </div>
         </div>

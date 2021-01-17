@@ -29,6 +29,19 @@
                             </a>
                         </div>
                     </div>
+                    <div class="infobox infobox-green" runat="server" id="Div2">
+                        <div class="infobox-icon">
+                            <i class="icon-edit"></i>
+                        </div>
+                        <div class="infobox-data">
+                            <span class="infobox-data-number">我的积分</span>
+                            <a href="/MyJF.aspx">
+                                <div class="infobox-content">
+                                    查看积分
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     <div class="infobox infobox-blue2" runat="server" id="DivGCWXD">
                         <div class="infobox-icon">
                             <i class="icon-edit"></i>

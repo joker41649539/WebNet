@@ -15247,6 +15247,8 @@ th[aria-selected=true] {
 
 .btn {
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
+    top: 0px;
+    left: 0px;
 }
 
 .progress, .progress .bar {

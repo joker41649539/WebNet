@@ -1,6 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ReportAdd.aspx.cs" Inherits="Report_ReportAdd" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+
+    <script type="text/javascript">
+        var i = 1
+        function addFile() {
+            if (i < 8) {
+                var str = '<BR><input type="file" name="File" runat="server" capture="camera" accept="image/*" />'
+                document.getElementById('MyFile').insertAdjacentHTML("beforeEnd", str)
+            }
+            else {
+                alert("您一次最多只能上传8张图片！")
+            }
+            i++
+        }
+    </script>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -36,7 +50,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">报告类型：</label>
             &nbsp;&nbsp;
-            <asp:DropDownList ID="DropDownList1" runat="server">
+            <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
                 <asp:ListItem>现场勘察</asp:ListItem>
                 <asp:ListItem>方案论证</asp:ListItem>
                 <asp:ListItem>质检查验</asp:ListItem>
@@ -78,167 +92,182 @@
             <div class="form-group">
                 <label runat="server" id="Label4" class="col-sm-3 control-label no-padding-right" for="form-field-1">现场照片：</label>
                 <div class="col-sm-9">
+                    <p id="MyFile">
+                        <input type="file" id="img-upload" capture="camera" accept="image/*" />
+                    </p>
+                    <br />
+                    <input onclick="addFile()" type="button" class="btn btn-success" value="+" /><br />
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label runat="server" id="Label5" class="col-sm-3 control-label no-padding-right" for="form-field-1">审核阅读：</label>
+            <div class="col-sm-9">
+                <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatColumns="3">
+                    <asp:ListItem>运管部经理</asp:ListItem>
+                    <asp:ListItem>工程部经理</asp:ListItem>
+                    <asp:ListItem>总经理</asp:ListItem>
+                </asp:CheckBoxList>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <!-- 时间轴循环开始 //-->
+        <div class="timeline-container">
+            <!-- 日期循环开始 //-->
+            <div class="timeline-label">
+                <span class="label label-primary arrowed-in-right label-lg">
+                    <b>2021-01-13</b>
+                </span>
+            </div>
+            <div class="timeline-items">
+                <div class="timeline-item clearfix">
+                    <div class="timeline-info">
+                        <span class="label label-info label-sm">16:22</span>
+                    </div>
+
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h5 class="smaller">
+                                <a href="#" class="blue">陆总</a>
+                            </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                                    非常不好，重来
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item clearfix">
+                    <div class="timeline-info">
+                        <span class="label label-info label-sm">18:22</span>
+                    </div>
+
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h5 class="smaller">
+                                <a href="#" class="blue">鹏总</a>
+                            </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                非常好。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item clearfix">
+                    <div class="timeline-info">
+                        <span class="label label-info label-sm">18:22</span>
+                    </div>
+
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h5 class="smaller">
+                                <a href="#" class="blue">鹏总</a>
+                            </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                非常好。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item clearfix">
+                    <div class="timeline-info">
+                        <span class="label label-info label-sm">18:22</span>
+                    </div>
+
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h5 class="smaller">
+                                <a href="#" class="blue">鹏总</a>
+                            </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                非常好。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 日期循环结束 //-->
+            <!-- 日期循环开始 //-->
+            <div class="timeline-label">
+                <span class="label label-primary arrowed-in-right label-lg">
+                    <b>2021-01-13</b>
+                </span>
+            </div>
+            <div class="timeline-items">
+                <div class="timeline-item clearfix">
+                    <div class="timeline-info">
+                        <span class="label label-info label-sm">16:22</span>
+                    </div>
+
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h5 class="smaller">
+                                <a href="#" class="blue">陆总</a>
+                            </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                非常不好，重来
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item clearfix">
+                    <div class="timeline-info">
+                        <span class="label label-info label-sm">18:22</span>
+                    </div>
+
+                    <div class="widget-box transparent">
+                        <div class="widget-header widget-header-small">
+                            <h5 class="smaller">
+                                <a href="#" class="blue">鹏总</a>
+                            </h5>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                非常好。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 日期循环结束 //-->
+        </div>
+        <!-- 时间轴循环结束 //-->
         <div class="col-xs-12">
             <div class="form-group">
-                <label runat="server" id="Label5" class="col-sm-3 control-label no-padding-right" for="form-field-1">审核阅读：</label>
+                <label runat="server" id="Label6" class="col-sm-3 control-label no-padding-right" for="form-field-1">审阅意见：</label>
                 <div class="col-sm-9">
-                    <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatColumns="3">
-                        <asp:ListItem>运管部经理</asp:ListItem>
-                        <asp:ListItem>工程部经理</asp:ListItem>
-                        <asp:ListItem>总经理</asp:ListItem>
-                    </asp:CheckBoxList>
+                    <asp:TextBox ID="TextBox1" ClientIDMode="Static" runat="server" TextMode="MultiLine" placeholder="请输入您的审阅意见" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
             </div>
         </div>
-        <div class="col-xs-12">
-            <!-- 时间轴循环开始 //-->
-            <div class="timeline-container">
-                <!-- 日期循环开始 //-->
-                <div class="timeline-label">
-                    <span class="label label-primary arrowed-in-right label-lg">
-                        <b>2021-01-13</b>
-                    </span>
-                </div>
-                <div class="timeline-items">
-                    <div class="timeline-item clearfix">
-                        <div class="timeline-info">
-                            <span class="label label-info label-sm">16:22</span>
-                        </div>
 
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h5 class="smaller">
-                                    <a href="#" class="blue">陆总</a>
-                                </h5>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    非常不好，重来
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item clearfix">
-                        <div class="timeline-info">
-                            <span class="label label-info label-sm">18:22</span>
-                        </div>
-
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h5 class="smaller">
-                                    <a href="#" class="blue">鹏总</a>
-                                </h5>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    非常好。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item clearfix">
-                        <div class="timeline-info">
-                            <span class="label label-info label-sm">18:22</span>
-                        </div>
-
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h5 class="smaller">
-                                    <a href="#" class="blue">鹏总</a>
-                                </h5>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    非常好。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item clearfix">
-                        <div class="timeline-info">
-                            <span class="label label-info label-sm">18:22</span>
-                        </div>
-
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h5 class="smaller">
-                                    <a href="#" class="blue">鹏总</a>
-                                </h5>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    非常好。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 日期循环结束 //-->
-                <!-- 日期循环开始 //-->
-                <div class="timeline-label">
-                    <span class="label label-primary arrowed-in-right label-lg">
-                        <b>2021-01-13</b>
-                    </span>
-                </div>
-                <div class="timeline-items">
-                    <div class="timeline-item clearfix">
-                        <div class="timeline-info">
-                            <span class="label label-info label-sm">16:22</span>
-                        </div>
-
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h5 class="smaller">
-                                    <a href="#" class="blue">陆总</a>
-                                </h5>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    非常不好，重来
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="timeline-item clearfix">
-                        <div class="timeline-info">
-                            <span class="label label-info label-sm">18:22</span>
-                        </div>
-
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-small">
-                                <h5 class="smaller">
-                                    <a href="#" class="blue">鹏总</a>
-                                </h5>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main">
-                                    非常好。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 日期循环结束 //-->
-            </div>
-            <!-- 时间轴循环结束 //-->
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label runat="server" id="Label6" class="col-sm-3 control-label no-padding-right" for="form-field-1">审阅意见：</label>
-                    <div class="col-sm-9">
-                        <asp:TextBox ID="TextBox1" ClientIDMode="Static" runat="server" placeholder="请输入您的审阅意见" class="col-xs-12 col-sm-12"></asp:TextBox>
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </div>
     <div class="hr-10"></div>
     <div class="btn-group">
-        <%--        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-save bigger-110"></i> 保  存</asp:LinkButton>--%>
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Next" class="btn btn-success" runat="server"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton_Next_Click"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Return" class="btn btn-pink" runat="server"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
     </div>
@@ -247,9 +276,9 @@
     <script type="text/javascript" src="/assets/timepicker/js/jquery-ui.js"></script>
     <script type="text/javascript" src="/assets/timepicker/js/jquery-ui-slide.min.js"></script>
     <script type="text/javascript" src="/assets/timepicker/js/jquery-ui-timepicker-addon.js"></script>
+
     <script type="text/javascript">
         $(function () { $('#TextBox_KCRQ').datepicker(); });
     </script>
-
 </asp:Content>
 
