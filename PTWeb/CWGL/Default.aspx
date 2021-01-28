@@ -75,7 +75,7 @@
             <div class="widget-header widget-header-flat">
                 <h4 class="lighter"><i class="icon-user"></i>报销单                </h4>
                 <asp:DropDownList ID="GridView_BXD_DropDownList1" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
-                    <asp:ListItem Value="UserName,ZJE,FLAG,LTIME">报销人</asp:ListItem>
+                    <asp:ListItem Value="UserName">报销人</asp:ListItem>
                     <asp:ListItem Value="ZJE">总金额</asp:ListItem>
                     <asp:ListItem Value="FLAG">状态</asp:ListItem>
                 </asp:DropDownList>
@@ -100,6 +100,7 @@
                 <div class="widget-main no-padding">
                     <asp:GridView ID="GridView_BXD" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" OnPageIndexChanging="GridView_BXD_PageIndexChanging" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView_BXD_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView_BXD_SelectedIndexChanging" OnRowCommand="GridView_BXD_RowCommand">
                         <Columns>
+                            <asp:ButtonField DataTextField="BXDH" HeaderText="单据号" CommandName="Select" SortExpression="BXDH" Text="按钮" />
                             <asp:ButtonField DataTextField="UserName" HeaderText="报销人" CommandName="Select" SortExpression="UserName" Text="按钮" />
                             <asp:BoundField DataField="ZJE" SortExpression="ZJE" HeaderText="总金额"></asp:BoundField>
                             <asp:BoundField DataField="FLAG" SortExpression="FLAG" HeaderText="状态"></asp:BoundField>
@@ -143,7 +144,7 @@
     <script>
         // 字符替换
         $("#GridView_BXD tr").each(function () {
-            var mtd = $(this).children("td:eq(2)");
+            var mtd = $(this).children("td:eq(3)");
             if (mtd.text() == 0) {
                 mtd.html(" <span class=\"label label-success\">待提交</span>");
             }

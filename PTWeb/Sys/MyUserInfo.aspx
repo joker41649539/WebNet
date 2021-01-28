@@ -145,6 +145,12 @@
                         </div>
                     </div>
                     <div class="profile-info-row">
+                        <div class="profile-info-name">徽商银行卡号</div>
+                        <div class="profile-info-value">
+                            <asp:TextBox ID="TextBox_KH" runat="server" placeholder="请输入徽商银行卡号" ></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
                         <div class="profile-info-name">创建时间 </div>
                         <div class="profile-info-value">
                             <asp:Label CssClass="editable" ID="Label_Ctime" runat="server" Text="创建时间"></asp:Label>

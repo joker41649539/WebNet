@@ -21,7 +21,7 @@ public partial class Sys_MyUserInfo : PageBase
     /// </summary>
     private void LoadUserInfo()
     {
-        string strSql = "Select CNAME,ZMC,LTIME,CTIME,HEADURL,ZJHM,XB,SSDW,SSDZ from S_USERINFO left join (Select ZMC,USERID from S_QXZ,S_YH_QXZ where S_QXZ.ID=S_YH_QXZ.QXZID) a on ID=a.USERID Where ID=" + DefaultUser;
+        string strSql = "Select CNAME,ZMC,LTIME,CTIME,HEADURL,ZJHM,XB,SSDW,SSDZ,BankID from S_USERINFO left join (Select ZMC,USERID from S_QXZ,S_YH_QXZ where S_QXZ.ID=S_YH_QXZ.QXZID) a on ID=a.USERID Where ID=" + DefaultUser;
 
         if (OP_Mode.SQLRUN(strSql))
         {
@@ -31,6 +31,7 @@ public partial class Sys_MyUserInfo : PageBase
                 this.TextBox_Name.Text = OP_Mode.Dtv[0]["CNAME"].ToString();
                 this.Label_Ctime.Text = OP_Mode.Dtv[0]["CTIME"].ToString();
                 this.Label_Ltime.Text = OP_Mode.Dtv[0]["LTIME"].ToString();
+                TextBox_KH.Text = OP_Mode.Dtv[0]["BankID"].ToString();
                 TextBox_ZJNo.Text = OP_Mode.Dtv[0]["ZJHM"].ToString();
 
                 TextBox_LXDH.Text = OP_Mode.Dtv[0]["SSDZ"].ToString();
@@ -194,6 +195,7 @@ public partial class Sys_MyUserInfo : PageBase
         string strZJNo = TextBox_ZJNo.Text.Replace("'", "\"");
         string strLXDH = TextBox_LXDH.Text.Replace("'", "\"");
         string strName = TextBox_Name.Text.Replace("'", "\"");
+        string strBankID = TextBox_KH.Text.Replace("'", "\"");
 
         if (strZJNo.Length != 18)
         {
@@ -207,7 +209,7 @@ public partial class Sys_MyUserInfo : PageBase
             return;
         }
 
-        strSQL = " Update S_UserInfo Set XB=" + strSex + ",CName='" + strName + "',ZJHM='" + strZJNo + "',SSDZ='" + strLXDH + "',LTime=getdate() Where ID=" + DefaultUser;
+        strSQL = " Update S_UserInfo Set XB=" + strSex + ",BankID='" + strBankID + "',CName='" + strName + "',ZJHM='" + strZJNo + "',SSDZ='" + strLXDH + "',LTime=getdate() Where ID=" + DefaultUser;
         if (OP_Mode.SQLRUN(strSQL))
         {
             MessageBox("", "个人信息修改成功！");

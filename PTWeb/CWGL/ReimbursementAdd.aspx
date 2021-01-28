@@ -29,7 +29,7 @@
         <div class="form-group">
             <label runat="server" id="Label9" class="col-sm-3 control-label no-padding-right" for="form-field-1">报销人：</label>
             <div class="col-sm-9">
-                <asp:Label ID="Label_CName" runat="server" Text="报销人" Font-Bold="true">></asp:Label>
+                <asp:Label ID="Label_CName" runat="server" Text="报销人" Font-Bold="true"></asp:Label>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
         <div class="form-group">
             <label runat="server" id="LabelRadioText" class="col-sm-3 control-label no-padding-right" for="form-field-1">工程编号：</label>
             <div class="col-sm-9">
-                <asp:TextBox ID="TextBox_Remark" runat="server" placeholder="请输入内容" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <asp:TextBox ID="TextBox_Remark" runat="server" placeholder="请输入内容" class="col-xs-12 col-sm-12" TextMode="MultiLine"></asp:TextBox>
             </div>
         </div>
     </div>
@@ -178,7 +178,7 @@
             <div class="form-group">
                 <label runat="server" id="Label7" class="col-sm-3 control-label no-padding-right" for="form-field-1">上传图片：</label>
                 <div class="col-sm-9">
-                    <asp:FileUpload ID="FileUpload1" runat="server" capture="camera" value="拍照" accept="image/*" />
+                    <asp:FileUpload ID="FileUpload1" runat="server" accept="image/*" />
                 </div>
             </div>
         </div>
