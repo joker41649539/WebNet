@@ -1,6 +1,21 @@
 ﻿<%@ Page Title="财务管理" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="CWGL_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script>
+        function method1(tableid) {//整个表格拷贝到EXCEL中
+            var date = new Date();
+            var exportFileContent = document.getElementById(tableid).outerHTML;
+            var blob = new Blob([exportFileContent], { type: "text/plain;charset=utf-8" });         //解决中文乱码问题
+            blob = new Blob([String.fromCharCode(0xFEFF), blob], { type: blob.type });
+            var link = window.URL.createObjectURL(blob);
+            var a = document.createElement("a");    //创建a标签
+            a.download = "报销单" + date.getFullYear() + date.getMonth() + date.getDay() + ".xls";  //设置被下载的超链接目标（文件名）
+            a.href = link;                            //设置a标签的链接
+            document.body.appendChild(a);            //a标签添加到页面
+            a.click();                                //设置a标签触发单击事件
+            document.body.removeChild(a);            //移除a标签
+        }
+    </script>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -19,7 +34,7 @@
     <div class="col-sm-12">
         <div class="tabbable">
             <ul id="myTab" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
-               <%-- <li class="pull-right">
+                <%-- <li class="pull-right">
                     <a href="/CWGL/ReimbursementAdd.ASPX" class="btn-new-mail">
                         <span class="btn bt1n-small btn-purple no-border">
                             <i class=" icon-envelope bigger-130"></i>
@@ -54,11 +69,17 @@
                 <li>
                     <a href="/CWGL/?flag=5">
                         <i class="pink icon-inbox bigger-130"></i>
-                        <span class="bigger-110">待放款</span>
+                        <span class="bigger-110">财务部</span>
                     </a>
                 </li>
                 <li>
                     <a href="/CWGL/?flag=6">
+                        <i class="pink icon-inbox bigger-130"></i>
+                        <span class="bigger-110">待放款</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/CWGL/?flag=7">
                         <i class="pink icon-inbox bigger-130"></i>
                         <span class="bigger-110">待收票</span>
                     </a>
@@ -76,7 +97,8 @@
                 <h4 class="lighter"><i class="icon-user"></i>报销单                </h4>
                 <asp:DropDownList ID="GridView_BXD_DropDownList1" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
                     <asp:ListItem Value="UserName">报销人</asp:ListItem>
-                    <asp:ListItem Value="ZJE">总金额</asp:ListItem>
+                    <asp:ListItem Value="w_bxd1.remark">施工编号（事由）</asp:ListItem>
+                    <asp:ListItem Value="w_bxd1.LTime">审核时间</asp:ListItem>
                     <asp:ListItem Value="FLAG">状态</asp:ListItem>
                 </asp:DropDownList>
                 <asp:DropDownList ID="GridView_BXD_DropDownList_SF" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
@@ -88,6 +110,7 @@
                 </asp:DropDownList>
                 <asp:TextBox ID="GridView_BXD_TextBox_CXTJ" placeholder="条件内容" runat="server"></asp:TextBox>
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" OnClick="GridView_BXD_TJADD_Click" ID="GridView_BXD_TJADD"><i class="icon-plus-sign">&nbsp;条件添加</i></asp:LinkButton>
+                <button onclick="javascript:method1('GridView_BXD');" class="btn btn-white btn-sm"><i class="icon-plus-sign">&nbsp;导出Excel</i></button>
                 <div class="widget-toolbar"><a href="#" data-action="collapse"><i class="icon-chevron-up"></i></a></div>
             </div>
             <div id="GridView_BXD_alerts_tj" runat="server" class="alert alert-success" visible="false">
@@ -104,7 +127,8 @@
                             <asp:ButtonField DataTextField="UserName" HeaderText="报销人" CommandName="Select" SortExpression="UserName" Text="按钮" />
                             <asp:BoundField DataField="ZJE" SortExpression="ZJE" HeaderText="总金额"></asp:BoundField>
                             <asp:BoundField DataField="FLAG" SortExpression="FLAG" HeaderText="状态"></asp:BoundField>
-                            <asp:BoundField DataField="LTIME" SortExpression="LTIME" HeaderText="最后时间"></asp:BoundField>
+                            <asp:BoundField DataField="remark" SortExpression="remark" HeaderText="施工编号（事由）"></asp:BoundField>
+                            <asp:BoundField DataField="LTIME" SortExpression="LTIME" HeaderText="审核时间"></asp:BoundField>
                         </Columns>
                         <PagerTemplate>
                             <div>
@@ -158,12 +182,15 @@
                 mtd.html(" <span class=\"label label-info\">物资部</span>");
             }
             else if (mtd.text() == 4) {
-                mtd.html(" <span class=\"label label-info\">工程部</span>");
+                mtd.html(" <span class=\"label label-pink\">工程部</span>");
             }
             else if (mtd.text() == 5) {
-                mtd.html(" <span class=\"label label-pink\">待放款</span>");
+                mtd.html(" <span class=\"label label-info\">财务部</span>");
             }
             else if (mtd.text() == 6) {
+                mtd.html(" <span class=\"label label-pink\">待放款</span>");
+            }
+            else if (mtd.text() == 7) {
                 mtd.html(" <span class=\"label label-pink\">待收票</span>");
             }
         });

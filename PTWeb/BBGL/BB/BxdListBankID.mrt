@@ -340,7 +340,7 @@
       <Components isList="true" count="2">
         <ReportTitleBand1 Ref="27" type="ReportTitleBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,0.4,19,2.8</ClientRectangle>
+          <ClientRectangle>0,0.4,27.7,2.8</ClientRectangle>
           <Components isList="true" count="2">
             <Text1 Ref="28" type="Text" isKey="true">
               <Brush>Transparent</Brush>
@@ -380,12 +380,12 @@
         <Table主数据 Ref="30" type="Stimulsoft.Report.Components.Table.StiTable" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,4,19,2.4</ClientRectangle>
+          <ClientRectangle>0,4,27.7,2.4</ClientRectangle>
           <Components isList="true" count="15">
             <Table主数据_Cell1 Ref="31" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,4,0.8</ClientRectangle>
+              <ClientRectangle>0,0,8.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -404,7 +404,7 @@
             <Table主数据_Cell2 Ref="32" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4,0,4,0.8</ClientRectangle>
+              <ClientRectangle>8.8,0,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -423,7 +423,7 @@
             <Table主数据_Cell3 Ref="33" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8,0,4,0.8</ClientRectangle>
+              <ClientRectangle>12.2,0,4.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -442,7 +442,7 @@
             <Table主数据_Cell4 Ref="34" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,0,3.8,0.8</ClientRectangle>
+              <ClientRectangle>16.8,0,4.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -461,7 +461,7 @@
             <Table主数据_Cell5 Ref="35" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0,3.2,0.8</ClientRectangle>
+              <ClientRectangle>21.2,0,6.5,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -480,7 +480,7 @@
             <Table主数据_Cell6 Ref="36" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.8,4,0.8</ClientRectangle>
+              <ClientRectangle>0,0.8,8.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -499,7 +499,7 @@
             <Table主数据_Cell7 Ref="37" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4,0.8,4,0.8</ClientRectangle>
+              <ClientRectangle>8.8,0.8,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -519,7 +519,7 @@
             <Table主数据_Cell8 Ref="38" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8,0.8,4,0.8</ClientRectangle>
+              <ClientRectangle>12.2,0.8,4.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -539,11 +539,11 @@
             <Table主数据_Cell9 Ref="39" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,0.8,3.8,0.8</ClientRectangle>
+              <ClientRectangle>16.8,0.8,4.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HideZeros>True</HideZeros>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <ID>16</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
@@ -559,7 +559,7 @@
             <Table主数据_Cell10 Ref="40" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,0.8,3.2,0.8</ClientRectangle>
+              <ClientRectangle>21.2,0.8,6.5,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -578,7 +578,7 @@
             <Table主数据_Cell11 Ref="41" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,1.6,4,0.8</ClientRectangle>
+              <ClientRectangle>0,1.6,8.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -597,7 +597,7 @@
             <Table主数据_Cell12 Ref="42" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4,1.6,4,0.8</ClientRectangle>
+              <ClientRectangle>8.8,1.6,3.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -616,7 +616,7 @@
             <Table主数据_Cell13 Ref="43" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8,1.6,4,0.8</ClientRectangle>
+              <ClientRectangle>12.2,1.6,4.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -635,11 +635,11 @@
             <Table主数据_Cell14 Ref="44" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,1.6,3.8,0.8</ClientRectangle>
+              <ClientRectangle>16.8,1.6,4.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <HideZeros>True</HideZeros>
-              <HorAlignment>Center</HorAlignment>
+              <HorAlignment>Right</HorAlignment>
               <ID>17</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
@@ -655,7 +655,7 @@
             <Table主数据_Cell15 Ref="45" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15.8,1.6,3.2,0.8</ClientRectangle>
+              <ClientRectangle>21.2,1.6,6.5,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -688,8 +688,10 @@
       <Guid>4b9d193cb90f4c9c9d17f3864284c6f3</Guid>
       <Margins>1,1,1,1</Margins>
       <Name>Page1</Name>
-      <PageHeight>29.7</PageHeight>
-      <PageWidth>21</PageWidth>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.7</PageWidth>
+      <PaperSize>A4</PaperSize>
       <Report isRef="0" />
       <Watermark Ref="46" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
@@ -709,10 +711,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>1/24/2021 10:20:04 PM</ReportChanged>
+  <ReportChanged>2/9/2021 4:06:22 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
   <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdListBankID.mrt</ReportFile>
-  <ReportGuid>c3a338f361c74e4ca1fff792ad3a6dd5</ReportGuid>
+  <ReportGuid>6afd14167c4a4392a0594d21c08183dc</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

@@ -57,7 +57,7 @@
         <div class="form-group">
             <label runat="server" id="LabelRadioText" class="col-sm-3 control-label no-padding-right" for="form-field-1">工程编号：</label>
             <div class="col-sm-9">
-                <asp:TextBox ID="TextBox_Remark" runat="server" placeholder="请输入内容" class="col-xs-12 col-sm-12" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="TextBox_Remark" runat="server" placeholder="请输入内容" class="col-xs-12 col-sm-12" Width="100%" TextMode="MultiLine"></asp:TextBox>
             </div>
         </div>
     </div>

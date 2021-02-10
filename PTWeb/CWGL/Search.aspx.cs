@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -36,7 +39,7 @@ public partial class CWGL_Search : PageBase
         string sortDirection = this.GridView1.Attributes["SortDirection"];
 
         string strSQL;
-        strSQL = "Select w_bxd1.id,username,W_BXD1.bxdh,Occurrence,KZXM,W_BXD1.Remark SY,flag,FLAG,W_BXD2.BREAKFIRST,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,BECITY,ARRIVAL,BXJE,W_BXD2.REMARK,IMAGE from W_BXD1,W_BXD2 where w_bxd1.bxdh=w_bxd2.bxdh";
+        strSQL = "Select w_bxd1.id,username,W_BXD1.bxdh,Occurrence,KZXM,W_BXD1.Remark SY,flag,FLAG,W_BXD2.BREAKFIRST,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,BECITY,ARRIVAL,BXJE,W_BXD2.REMARK,IMAGE from W_BXD1,W_BXD2 where w_bxd1.bxdh=w_bxd2.bxdh and flag>0 ";
 
         if (this.GridView1_Label_tj.Text.Length > 0)
         {
@@ -376,7 +379,7 @@ public partial class CWGL_Search : PageBase
     {
         //MessageBox("", "[" + GridView1.DataKeys[e.NewSelectedIndex].Value.ToString() + "]");
 
-         Response.Write("<script language='javascript'>window.location='/CWGL/ReimbursementAdd.aspx?ID=" + GridView1.DataKeys[e.NewSelectedIndex].Value.ToString() + "'</script>"); ;
+        Response.Write("<script language='javascript'>window.location='/CWGL/ReimbursementAdd.aspx?ID=" + GridView1.DataKeys[e.NewSelectedIndex].Value.ToString() + "'</script>"); ;
 
         //GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#CAD3E4");
 
@@ -387,6 +390,62 @@ public partial class CWGL_Search : PageBase
         //GridView1.Rows[e.NewSelectedIndex].Cells[3].BackColor = Color.FromName("#CAD3E4");
 
     }
-
     #endregion
+
+    //Excel文件名称
+    string ExcelName = System.DateTime.Now.ToString("yyMMdd") + "退款结算单.xlsx";
+
+
+    private void ExportGridView(GridView GV)
+    {
+        /**
+         * 如果打印全部数据，则加上注视的代码
+         * */
+        //GVExport.AllowPaging = false;
+        //GVExport.AllowSorting = false;
+        //GVExport.DataSource = null;
+        //GVExport.DataBind();
+        DateTime dt = DateTime.Now;
+        Response.ClearContent();
+        Response.Buffer = true;
+        Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");
+        string filename = "XX_" + dt.ToString("yyyyMMddHHmm") + ".xls";
+        string[] browsers = { "Firefox", "AppleMAC-Safari", "Opera" }; //针对FF、Safari、Opera 设置编码
+        string browser = Request.Browser.Browser;
+        string attachment = string.Empty;
+        if (Array.IndexOf<string>(browsers, browser) != -1)
+        {
+            attachment = "attachment; filename=" + filename;
+        }
+        else
+        {
+            attachment = "attachment; filename=" + Server.UrlEncode(filename);
+        }
+        Response.AddHeader("content-disposition", attachment);
+        Response.Write("<meta http-equiv=Content-Type content=text/html;charset=utf-8>");
+        Response.ContentType = "application/ms-excel";
+        StringWriter sw = new StringWriter();
+        HtmlTextWriter htw = new HtmlTextWriter(sw);
+        GV.RenderControl(htw);
+
+
+        Response.Output.Write(sw.ToString());
+        Response.Flush();
+        Response.End();
+    }
+    public override void VerifyRenderingInServerForm(Control control)
+    {
+        //base.VerifyRenderingInServerForm(control);
+    }
+    protected void GridView1_DC_Click(object sender, EventArgs e)
+    {
+        Response.ClearContent(); Response.AddHeader("content-disposition", "attachment; filename=MyExcelFile.xls");
+        Response.ContentType = "application/excel"; 
+        StringWriter sw = new StringWriter(); 
+        HtmlTextWriter htw = new HtmlTextWriter(sw); 
+       this.GridView1.RenderControl(htw); 
+        Response.Write(sw.ToString()); 
+        Response.End();
+       // ExportGridView(this.GridView1);
+    }
 }

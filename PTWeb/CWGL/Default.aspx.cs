@@ -49,22 +49,22 @@ public partial class CWGL_Default : PageBase
         {
             if (this.GridView_BXD_Label_tj.Text.Length > 0)
             {
-                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE ,FLAG,W_BXD1.LTIME,w_bxd1.BXDH from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " and " + this.GridView_BXD_Label_tj.Text.Trim() + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "') GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE ,FLAG,W_BXD1.LTIME,w_bxd1.BXDH,w_bxd1.remark from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " and " + this.GridView_BXD_Label_tj.Text.Trim() + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "') GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME,w_bxd1.remark ORDER BY LTIME DESC";
             }
             else
             {
-                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE,FLAG,W_BXD1.LTIME,w_bxd1.BXDH from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "')  GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE,FLAG,W_BXD1.LTIME,w_bxd1.BXDH,w_bxd1.remark from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and flag=" + Request["flag"] + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "')  GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME,w_bxd1.remark ORDER BY LTIME DESC";
             }
         }
         else
         {
             if (this.GridView_BXD_Label_tj.Text.Length > 0)
             {
-                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE,FLAG,W_BXD1.LTIME,w_bxd1.BXDH from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and " + this.GridView_BXD_Label_tj.Text.Trim() + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "')  GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE,FLAG,W_BXD1.LTIME,w_bxd1.BXDH,w_bxd1.remark from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and " + this.GridView_BXD_Label_tj.Text.Trim() + " and flag>0 and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "')  GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME,w_bxd1.remark ORDER BY LTIME DESC";
             }
             else
             {
-                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE,FLAG,W_BXD1.LTIME,w_bxd1.BXDH from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "') GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME ORDER BY LTIME DESC";
+                strSQL = "Select W_BXD1.ID,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE,FLAG,W_BXD1.LTIME,w_bxd1.BXDH,w_bxd1.remark from w_bxd1,W_BXD2,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=W_BXD2.BXDH and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "') and flag>0 GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME,w_bxd1.remark ORDER BY LTIME DESC";
             }
         }
         if (OP_Mode.SQLRUN(strSQL))

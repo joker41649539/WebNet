@@ -85,11 +85,11 @@ public partial class CWGL_Default2 : PageBase
                         Label_CName.Text = OP_Mode.Dtv[0]["UserName"].ToString();
                         Label_Sumje.Text = OP_Mode.Dtv[0]["ZJE"].ToString();
 
-                        if (Convert.ToDouble(OP_Mode.Dtv[0]["ZJE"]) > 0)
-                        {
-                            RadioButtonList1.Enabled = false;
-                            //TextBox_Remark.Enabled = false;
-                        }
+                        //if (Convert.ToDouble(OP_Mode.Dtv[0]["ZJE"]) > 0)
+                        //{/// 总金额大于0 也允许修改报销类型。
+                        //    RadioButtonList1.Enabled = false;
+                        //    //TextBox_Remark.Enabled = false;
+                        //}
                         HiddenField1.Value = iClass(OP_Mode.Dtv[0]["KZXM"].ToString()).ToString(); // 设置单据类型
                         // 生成明细
                         for (int i = 0; i < OP_Mode.Dtv.Count; i++)
@@ -484,11 +484,22 @@ public partial class CWGL_Default2 : PageBase
             rValue = true;
         }
 
+        int MXID = 0;
+        try
+        {
+            MXID = Convert.ToInt32(Request["MXID"].Length);
+        }
+        catch
+        {
+
+        }
+
+
         if (rValue)
         {
             String imageName = UploadTP(FileUpload1);
 
-            if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助" || DropDownList1.SelectedValue == "交通费")
+            if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助" || DropDownList1.SelectedValue == "交通费" || MXID > 0)
             {/// 图片上传成功
 
                 string strSQL = string.Empty;
@@ -562,9 +573,9 @@ public partial class CWGL_Default2 : PageBase
                     }
 
                     if (db_Bk > 0 || DB_WC > 0 || Db_ZC > 0)
-                    { // 如果报销餐费补助和住宿补助 则检查是不是通行人报销过。
+                    { // 如果报销餐费补助和住宿补助 则检查是不是本人报销过。
 
-                        strSQL = "Select * from W_BXD1,W_BXD2 where W_BXD1.bxdh=W_BXD2.BXDH and UserName='" + UserNAME + "' and Occurrence='" + TextBoxSTime.Text.Replace("'", "") + " 00:00:00.000' and (breakfirst>0 or ZCBZ>0 or WCBZ>0)";// 查询是否是通行人
+                        strSQL = "Select * from W_BXD1,W_BXD2 where W_BXD1.bxdh=W_BXD2.BXDH and UserName='" + UserNAME + "' and W_BXD1.BXDH<>'" + Label_No.Text + "' and Occurrence='" + TextBoxSTime.Text.Replace("'", "") + " 00:00:00.000' and (breakfirst>0 or ZCBZ>0 or WCBZ>0)";// 查询是否是通行人
 
                         if (OP_Mode.SQLRUN(strSQL))
                         {
@@ -615,16 +626,6 @@ public partial class CWGL_Default2 : PageBase
 
 
                     imageName = "/BxImages/" + imageName;
-                    int MXID = 0;
-                    try
-                    {
-                        MXID = Convert.ToInt32(Request["MXID"].Length);
-                    }
-                    catch
-                    {
-
-                    }
-
                     if (MXID > 0)
                     {
                         strSQL = " update w_bxd2 set KZXM='" + strKZXM + "',";
@@ -640,7 +641,7 @@ public partial class CWGL_Default2 : PageBase
                         strSQL += " Arrival='" + strArrival + "',";
                         strSQL += " BXJE='" + strNum + "',";
                         strSQL += " Remark='" + strRemark2 + "'";
-                        if (imageName.Length > 10)
+                        if (imageName != "/BxImages/")
                         {
                             strSQL += " ,Image='" + imageName + "'";
                         }
@@ -826,7 +827,30 @@ public partial class CWGL_Default2 : PageBase
     {
         ShowTextBox();
     }
+    private void SedMsg(int IZID)
+    {
+        int iQXZ = IZID;// 判断需要发送的群组的权限组ID
 
+        string strSQL = "Select isnull(cOpenID,'') from S_YH_QXZ,S_USERINFO where QXZID=" + iQXZ.ToString() + " and USERID=id";
+
+        string strUsers = string.Empty; // 需要发送的用户列表用 “|”分割；
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                {
+                    strUsers += OP_Mode.Dtv[i][0].ToString() + "|";
+                }
+            }
+        }
+
+        if (strUsers.Length > 0)
+        {
+            SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "#");
+        }
+    }
     /// <summary>
     /// 提交状态
     /// </summary>
@@ -865,7 +889,7 @@ public partial class CWGL_Default2 : PageBase
                 return;
             }
         }
-        else if (Label_Flag.Text == "待放款" || Label_Flag.Text == "待收票")
+        else if (Label_Flag.Text == "待放款" || Label_Flag.Text == "待收票" || Label_Flag.Text == "财务部")
         {
             if (!QXBool(42, Convert.ToInt32(DefaultUser)))
             {
@@ -884,10 +908,42 @@ public partial class CWGL_Default2 : PageBase
 
         string strSQL = " Insert into W_Examine(Class,DJBH,UserName,OldFlag,NewFlag) values ('BXD','" + Label_No.Text + "','" + UserNAME + "'," + oldFlag + "," + NewFlag + ")";
 
-        strSQL += " Update W_BXD1 Set Flag=" + NewFlag + ",LTime=getdate() where BXDH='" + Label_No.Text + "'";
-
+        if (Label_Flag.Text == "待提交")
+        {
+            strSQL += " Update W_BXD1 Set Flag=" + NewFlag + ",Remark='" + TextBox_Remark.Text + "',LTime=getdate() where BXDH='" + Label_No.Text + "'";
+        }
+        else
+        {
+            strSQL += " Update W_BXD1 Set Flag=" + NewFlag + ",LTime=getdate() where BXDH='" + Label_No.Text + "'";
+        }
         if (OP_Mode.SQLRUN(strSQL))
         {
+
+            if (NewFlag == 2)
+            {//综合部
+                SedMsg(11);
+            }
+            else if (NewFlag == 3)
+            {//物资部
+                SedMsg(12);
+            }
+            else if (NewFlag == 4)
+            {//工程部
+                SedMsg(2);
+            }
+            else if (NewFlag == 5)
+            {//财务部
+                SedMsg(10);
+            }
+            else if (NewFlag == 6)
+            {//待放款
+                SedMsg(10);
+            }
+            else if (NewFlag == 7)
+            {// 待收票
+                SedMsg(10);
+            }
+
             MessageBox("", "单据提交成功。", "/CWGL/");
         }
         else
@@ -921,7 +977,7 @@ public partial class CWGL_Default2 : PageBase
             }
         }
         else if (NowFlag == 2)
-        {/// 综合部 到 代放款
+        {/// 综合部 到 财务部
             rValue = 5;
         }
         else if (NowFlag == 3)
@@ -933,10 +989,14 @@ public partial class CWGL_Default2 : PageBase
             rValue = 2;
         }
         else if (NowFlag == 5)
-        {/// 待放款 到 待收票
+        {///财务部 到 待放款
             rValue = 6;
         }
         else if (NowFlag == 6)
+        {/// 待放款 到 待收票
+            rValue = 7;
+        }
+        else if (NowFlag == 7)
         {/// 待收票 到 已完结
             rValue = 1;
         }

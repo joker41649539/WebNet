@@ -63,7 +63,16 @@ public partial class BBGL_BBShow : PageBase
                                     }
                                     else
                                     {
-                                        string Ttime = Convert.ToDateTime(((TextBox)DIVSearch.FindControl("TextBox" + i.ToString())).Text).ToString("yyyy-MM-dd");
+                                        string Ttime;//= Convert.ToDateTime(((TextBox)DIVSearch.FindControl("TextBox" + i.ToString())).Text).ToString("yyyy-MM-dd");
+
+                                        if (OP_Mode.Dtv[i - 1]["CNAME"].ToString().Trim().Contains("截止"))
+                                        {
+                                            Ttime = Convert.ToDateTime(((TextBox)DIVSearch.FindControl("TextBox" + i.ToString())).Text).ToString("yyyy-MM-dd" + " 23:59:59");
+                                        }
+                                        else
+                                        {
+                                            Ttime = Convert.ToDateTime(((TextBox)DIVSearch.FindControl("TextBox" + i.ToString())).Text).ToString("yyyy-MM-dd" + " 00:00:00");
+                                        }
 
                                         report.Dictionary.Variables.Add(OP_Mode.Dtv[i - 1]["CENAME"].ToString().Trim(), Ttime);
                                     }

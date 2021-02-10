@@ -1,6 +1,21 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Search.aspx.cs" Inherits="CWGL_Search" %>
+﻿<%@ Page Title="" Language="C#" EnableEventValidation="false" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Search.aspx.cs" Inherits="CWGL_Search" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script>
+        function method1(tableid) {//整个表格拷贝到EXCEL中
+            var date = new Date();
+            var exportFileContent = document.getElementById(tableid).outerHTML;
+            var blob = new Blob([exportFileContent], { type: "text/plain;charset=utf-8" });         //解决中文乱码问题
+            blob = new Blob([String.fromCharCode(0xFEFF), blob], { type: blob.type });
+            var link = window.URL.createObjectURL(blob);
+            var a = document.createElement("a");    //创建a标签
+            a.download = "报销单" + date.getFullYear() + date.getMonth() + date.getDay() + ".xls";  //设置被下载的超链接目标（文件名）
+            a.href = link;                            //设置a标签的链接
+            document.body.appendChild(a);            //a标签添加到页面
+            a.click();                                //设置a标签触发单击事件
+            document.body.removeChild(a);            //移除a标签
+        }
+    </script>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -24,6 +39,7 @@
                     <asp:ListItem Value="USERNAME">姓名</asp:ListItem>
                     <asp:ListItem Value="W_BXD1.REMARK">施工编号(事由)</asp:ListItem>
                     <asp:ListItem Value="Occurrence">发生日期</asp:ListItem>
+                    <asp:ListItem Value="FLAG">状态</asp:ListItem>
                     <asp:ListItem Value=""></asp:ListItem>
                 </asp:DropDownList>
                 <asp:DropDownList ID="GridView1_DropDownList_SF" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
@@ -35,6 +51,7 @@
                 </asp:DropDownList>
                 <asp:TextBox ID="GridView1_TextBox_CXTJ" placeholder="条件内容" runat="server"></asp:TextBox>
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" OnClick="GridView1_TJADD_Click" ID="GridView1_TJADD"><i class="icon-plus-sign">&nbsp;条件添加</i></asp:LinkButton>
+                <button onclick="javascript:method1('GridView1');" class="btn btn-white btn-sm"><i class="icon-plus-sign">&nbsp;导出Excel</i></button>
                 <div class="widget-toolbar"><a href="#" data-action="collapse"><i class="icon-chevron-up"></i></a></div>
             </div>
             <asp:CheckBoxList ID="CheckBoxList1" runat="server" CssClass="ace" RepeatColumns="11" RepeatLayout="Flow">
@@ -55,10 +72,11 @@
                 <asp:Label ID="GridView1_Label1" runat="server" Text=""></asp:Label><asp:Label ID="GridView1_Label_tj" runat="server" Text="" Visible="false"></asp:Label>
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="GridView1_LinkButton3" OnClick="GridView1_LinkButton3_Click"><i class="icon-remove">&nbsp;清除条件</i></asp:LinkButton>
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="GridView1_LinkButton4" OnClick="GridView1_LinkButton4_Click"><i class="icon-search">&nbsp;查 询</i></asp:LinkButton>
-            </div>
+         《状态说明:2 综合部；3 物资部; 4 工程部；5 财务部；6 待放款；7 待收票；》
+                </div>
             <div class="widget-body">
                 <div class="widget-main no-padding">
-                    <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" OnPageIndexChanging="GridView1_PageIndexChanging" AllowSorting="True" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" AutoGenerateColumns="False">
+                    <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView1_PageIndexChanging" AllowSorting="True" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" AutoGenerateColumns="False">
                         <Columns>
                             <asp:ButtonField DataTextField="BXDH" HeaderText="ID" CommandName="Select" SortExpression="ID" Text="报销单号" />
                             <asp:BoundField DataField="FLAG" SortExpression="FLAG" HeaderText="状态"></asp:BoundField>
@@ -77,8 +95,8 @@
                             <asp:BoundField DataField="ARRIVAL" SortExpression="ARRIVAL" HeaderText="到达城市"></asp:BoundField>
                             <asp:BoundField DataField="BXJE" SortExpression="BXJE" HeaderText="报销金额"></asp:BoundField>
                             <asp:BoundField DataField="REMARK" SortExpression="REMARK" HeaderText="报销说明"></asp:BoundField>
-                            <asp:ImageField DataImageUrlField="image" ItemStyle-Width="100px">
-                            </asp:ImageField>
+                            <%--                            <asp:ImageField DataImageUrlField="image" ItemStyle-Width="100px">
+                            </asp:ImageField>--%>
                         </Columns>
                         <PagerTemplate>
                             <div>
@@ -127,12 +145,15 @@
                 mtd.html(" <span class=\"label label-info\">物资部</span>");
             }
             else if (mtd.text() == 4) {
-                mtd.html(" <span class=\"label label-info\">工程部</span>");
+                mtd.html(" <span class=\"label label-pink\">工程部</span>");
             }
             else if (mtd.text() == 5) {
-                mtd.html(" <span class=\"label label-pink\">待放款</span>");
+                mtd.html(" <span class=\"label label-info\">财务部</span>");
             }
             else if (mtd.text() == 6) {
+                mtd.html(" <span class=\"label label-pink\">待放款</span>");
+            }
+            else if (mtd.text() == 7) {
                 mtd.html(" <span class=\"label label-pink\">待收票</span>");
             }
         });
