@@ -5,7 +5,8 @@
         <div class="widget-box">
             <div class="widget-header widget-header-flat widget-header-small">
                 <h3 class="green"><i class="icon-facebook-sign icon-2x green"></i>
-                    FIL值：<asp:Label ID="Label_Fil" runat="server" Text="0"></asp:Label> $</h3>
+                    FIL值：<asp:Label ID="Label_Fil" runat="server" Text="0"></asp:Label>
+                    $</h3>
                 <h3><i class="icon-facebook-sign icon-2x blue"></i>
                     总产出：<b><asp:Label ID="Label_SumFil" runat="server" Text="0"></asp:Label></b>
                     (FIL)
@@ -32,7 +33,6 @@
                             <h3 class="bigger pull-right">
                                 <asp:Label ID="Label_SumPower" runat="server" Text="0"></asp:Label></h3>
                         </div>
-
                         <div class="grid2">
                             <span class="grey">
                                 <i class="icon-heart icon-2x red"></i>
@@ -69,8 +69,8 @@
         </div>
         <asp:GridView ID="GridView_Info" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView_Info_Sorting" OnSelectedIndexChanging="GridView_Info_SelectedIndexChanging">
             <Columns>
-                <asp:BoundField DataField="LTime" SortExpression="LTime" HeaderText="日 期"></asp:BoundField>
-                <asp:BoundField DataField="DayRelease" SortExpression="Balance" ControlStyle-CssClass="pull-right" HeaderText="日产出"></asp:BoundField>
+                <asp:BoundField DataField="every_time" SortExpression="every_time" DataFormatString="{0:yyyy-MM-dd}" HeaderText="日 期"></asp:BoundField>
+                <asp:BoundField DataField="Release" SortExpression="DayRelease" DataFormatString="{0:0.0000}" ControlStyle-CssClass="pull-right" HeaderText="日产出"></asp:BoundField>
             </Columns>
             <PagerTemplate>
                 <div>

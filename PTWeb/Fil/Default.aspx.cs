@@ -12,12 +12,12 @@ public partial class Fil_Default : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            Label_DayNow.Text = System.DateTime.Now.ToString("yyyy-MM-dd") + " 汇总";
-            LoadData();
-            Label_YL.Text = (Convert.ToDecimal(Label_YE.Text) + Convert.ToDecimal(Label_RMB.Text) - Convert.ToDecimal(450000)).ToString();
-        }
+        //if (!IsPostBack)
+        //{
+        Label_DayNow.Text = System.DateTime.Now.ToString("yyyy-MM-dd") + " 汇总";
+        LoadData();
+        Label_YL.Text = (Convert.ToDecimal(Label_YE.Text) + Convert.ToDecimal(Label_RMB.Text) - Convert.ToDecimal(450000)).ToString();
+        //}
     }
 
     /// <summary>
@@ -80,6 +80,10 @@ public partial class Fil_Default : PageBase
         if (!OP_Mode.SQLRUN(strSQL))
         {
             MessageBox("", "错误：" + OP_Mode.strErrMsg);
+        }
+        else
+        {
+            DataInsert();// 插入每天所有用户的明细数据
         }
     }
 
@@ -237,8 +241,57 @@ public partial class Fil_Default : PageBase
             MessageBox("", ex.ToString());
         }
     }
+
+    /// <summary>
+    /// 获得天数
+    /// </summary>
+    /// <param name="finish"></param>
+    /// <param name="start"></param>
+    /// <returns></returns>
     protected int GetDuration(DateTime finish, DateTime start)
     {
         return (finish - start).Days;
     }
+
+    /// <summary>
+    /// 数据处理
+    /// </summary>
+    private void DataInsert()
+    {
+        //1、删除当天数据
+        //2、插入当天算力数据
+        string strSQL = "Delete  from Fil_ComputerRelease where CONVERT(varchar(100),CTIME, 23) =CONVERT(varchar(100),getdate(), 23)";
+        strSQL += " insert into Fil_ComputerRelease(SumReleaseFil, NowReleaseFil, WaitReleaseFil, ReleasePower, ReleaseDays, PowerComputerID, InvestmentYuan, ProduceYuan, Ctime, LTime)";
+        strSQL += " Select Average*Power sumpower,Average* Power*0.25 + Average * Power * 0.75 / 180 * DATEDIFF(DAY, Fil_Summary.CTIME, getdate()),Average* Power-(Average * Power * 0.25 + Average * Power * 0.75 / 180 * DATEDIFF(DAY, Fil_Summary.CTIME, getdate())),Power,DATEDIFF(DAY, Fil_Summary.CTIME, getdate()),Fil_PowerComputer.ID,0,0, CONVERT(varchar(100), Fil_Summary.CTIME, 23) ,getdate()";
+        strSQL += " from Fil_Summary, Fil_PowerComputer where Average> 0 and CONVERT(varchar(100),Fil_Summary.CTIME, 23) = CONVERT(varchar(100), getdate(), 23) and Fil_PowerComputer.EffectiveTime<getdate() and Fil_PowerComputer.EndTime>getdate() order by Fil_Summary.CTime";
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            /// 2、插入当天算力数据
+            strSQL = " Delete from FIL_UserReleaseInfo where CONVERT(varchar(100), CTIME, 23) = CONVERT(varchar(100), getdate(), 23) ";
+            strSQL += " insert into FIL_UserReleaseInfo(UserID, DayRelease, DayAverage)";
+            strSQL += " Select Fil_PowerComputer.userid,sum(SumReleaseFil * 0.25 + SumReleaseFil * 0.75 / 180 * DATEDIFF(DAY, Fil_Summary.CTIME, getdate())) + a.Release,Average from Fil_ComputerRelease,Fil_PowerComputer,Fil_Summary ,";
+            strSQL += " (Select sum(SumReleaseFil * 0.75 / 180 * DATEDIFF(DAY, Fil_ComputerRelease.CTIME, getdate())) Release,UserID from Fil_ComputerRelease,Fil_PowerComputer";
+            strSQL += " where Fil_PowerComputer.ID = PowerComputerID";
+            strSQL += " and CONVERT(varchar(100),Fil_ComputerRelease.CTIME, 23) != CONVERT(varchar(100), getdate(), 23) and DATEDIFF(DAY,Fil_ComputerRelease.CTIME,getdate())<180";
+            strSQL += " group by UserID) a";
+            strSQL += " where Fil_PowerComputer.ID = PowerComputerID";
+            strSQL += " and CONVERT(varchar(100),Fil_ComputerRelease.CTIME, 23) = CONVERT(varchar(100), Fil_Summary.CTIME, 23)";
+            strSQL += " and CONVERT(varchar(100),Fil_ComputerRelease.CTIME, 23) = CONVERT(varchar(100), getdate(), 23)";
+            strSQL += " and a.UserID = Fil_PowerComputer.UserID";
+            strSQL += " group by Fil_PowerComputer.UserID,Average,a.Release";
+
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+
+            }
+        }
+
+        /// 插入所有有效数据
+
+        //        insert into Fil_ComputerRelease(SumReleaseFil, NowReleaseFil, WaitReleaseFil, ReleasePower, ReleaseDays, PowerComputerID, InvestmentYuan, ProduceYuan, Ctime, LTime)
+        //Select Average*Power sumpower,Average* Power*0.25 + Average * Power * 0.75 / 180 * DATEDIFF(DAY, Fil_Summary.CTIME, getdate()),Average* Power-(Average * Power * 0.25 + Average * Power * 0.75 / 180 * DATEDIFF(DAY, Fil_Summary.CTIME, getdate())),Power,DATEDIFF(DAY, Fil_Summary.CTIME, getdate()),Fil_PowerComputer.ID,0,0, CONVERT(varchar(100), Fil_Summary.CTIME, 23) ,getdate()
+        //from Fil_Summary, Fil_PowerComputer where Average> 0 and Fil_PowerComputer.EffectiveTime < getdate() and Fil_PowerComputer.EndTime > getdate() and Fil_Summary.CTIME >= Fil_PowerComputer.EffectiveTime and Fil_Summary.CTIME <= Fil_PowerComputer.EndTime  order by Fil_Summary.CTime
+
+    }
+
 }

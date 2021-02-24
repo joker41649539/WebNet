@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -106,6 +107,80 @@ public partial class Fil_Default2 : PageBase
     private void Load_GridView_Info()
 
     {
+
+        LoadDayGrid(Convert.ToDateTime("2021-01-08"), 1);
+        //int iUserID = 0;
+        //try
+        //{
+        //    iUserID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+        //}
+        //catch
+        //{
+
+        //}
+        //if (iUserID == 0)
+        //{
+        //    return;
+        //}
+
+        //// 获取GridView排序数据列及排序方向
+
+        //string sortExpression = this.GridView_Info.Attributes["SortExpression"];
+
+        //string sortDirection = this.GridView_Info.Attributes["SortDirection"];
+
+        //string strSQL;
+
+        //strSQL = "Select Top 100 LTime,DayRelease,ID from FIL_UserReleaseInfo where UserID = " + iUserID + " order by LTime desc";
+
+        //if (OP_Mode.SQLRUN(strSQL))
+
+        //{
+
+        //    /// 设置排序
+
+        //    if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+
+        //    {
+
+        //        OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+
+        //    }
+
+        //    /// 设置翻页层始终显示
+
+
+
+        //    if (OP_Mode.Dtv.Count == 0)
+
+        //    {
+
+        //        OP_Mode.Dtv.AddNew();
+
+        //    }
+
+
+
+        //    this.GridView_Info.DataSource = OP_Mode.Dtv;
+
+        //    this.GridView_Info.DataBind();
+
+        //}
+
+        //else
+
+        //{
+
+        //    MessageBox("", strSQL + "<br/>" + OP_Mode.strErrMsg);
+
+        //    return;
+
+        //}
+
+    }
+
+    private void LoadDayGrid(DateTime startTime, int SumPower)
+    {
         int iUserID = 0;
         try
         {
@@ -120,60 +195,56 @@ public partial class Fil_Default2 : PageBase
             return;
         }
 
-        // 获取GridView排序数据列及排序方向
+        string strSQL = " declare @StartDate DATETIME = (Select min(EffectiveTime) from Fil_PowerComputer where UserID=" + iUserID + ")";
+        strSQL += " declare @EndDate DATETIME = getdate()";// +System.DateTime.Now.add;
+        //strSQL += " declare @EndDate DATETIME = '2021-08-16'";
+        strSQL += " SELECT CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) AS every_time, a.*,(Select isnull(Sum(round(power/SumPower*Gift/180,4)),0) from vfil_gift where DATEDIFF(DAY, LTime,  CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))<180 and UserID=" + iUserID + " and LTime<CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))+isnull(a.DayRelease,0) Release FROM";
+        strSQL += " master..spt_values n left join(Select gift, sumpower, ltime, sum(POWER) power, sum(Round(POWER / sumpower * Gift * 0.25, 4)) DayRelease, sum(Round(POWER / sumpower * Gift, 4)) SumRelease from vfil_gift where userid = " + iUserID.ToString() + " group by gift, sumpower, ltime) a on a.ltime = CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23)";
+        strSQL += " WHERE n.type = 'p' AND n.number <= DATEDIFF(day, @StartDate, @EndDate)";
 
-        string sortExpression = this.GridView_Info.Attributes["SortExpression"];
-
-        string sortDirection = this.GridView_Info.Attributes["SortDirection"];
-
-        string strSQL;
-
-        strSQL = "Select Top 100 LTime,DayRelease,ID from FIL_UserReleaseInfo where UserID = " + iUserID + " order by LTime desc";
-
+        // OP_Mode.Dtv = new;
         if (OP_Mode.SQLRUN(strSQL))
-
         {
-
-            /// 设置排序
-
-            if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
-
-            {
-
-                OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
-
+            double SumBalance = 0;
+            double SumRelease = 0;
+            for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+            { // 计算合计信息
+                if (OP_Mode.Dtv[i]["Release"].ToString().Length > 0)
+                {
+                    SumBalance += Convert.ToDouble(OP_Mode.Dtv[i]["Release"]);
+                }
+                if (OP_Mode.Dtv[i]["SumRelease"].ToString().Length > 0)
+                {
+                    SumRelease += Convert.ToDouble(OP_Mode.Dtv[i]["SumRelease"]);
+                }
             }
+            //if (OP_Mode.Dtv.Count > 0)
+            //{
+            //    DataRowView rowView = OP_Mode.Dtv.AddNew();
+            //    rowView["every_time"] = SumRelease.ToString();
+            //    rowView["Release"] = SumBalance.ToString();
+            //    OP_Mode.Dtv.AddNew();
+            //}
+            Label_Release.Text = SumBalance.ToString();
+            Label_Lock.Text = (SumRelease - SumBalance).ToString();
+            Label_SumFil.Text = SumRelease.ToString();
+            //for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+            //{
 
-            /// 设置翻页层始终显示
+            //}
 
-
-
-            if (OP_Mode.Dtv.Count == 0)
-
-            {
-
-                OP_Mode.Dtv.AddNew();
-
-            }
-
-
-
-            this.GridView_Info.DataSource = OP_Mode.Dtv;
-
-            this.GridView_Info.DataBind();
-
+            //for (DateTime dt = new DateTime(System.DateTime.Now.Year, System.DateTime.Now.Month, System.DateTime.Now.Day); dt >= new DateTime(startTime.Year, startTime.Month, startTime.Day); dt = dt.AddDays(-1))
+            //{
+            //    DataRowView rowView = OP_Mode.Dtv.AddNew();
+            //    rowView["LTime"] = dt.ToString("yyyy-MM-dd");
+            //    rowView["DayRelease"] = 0;
+            //}
         }
 
-        else
+        OP_Mode.Dtv.Sort = "every_time desc";
+        this.GridView_Info.DataSource = OP_Mode.Dtv;
 
-        {
-
-            MessageBox("", strSQL + "<br/>" + OP_Mode.strErrMsg);
-
-            return;
-
-        }
-
+        this.GridView_Info.DataBind();
     }
 
     protected void GridView_Info_Sorting(object sender, GridViewSortEventArgs e)

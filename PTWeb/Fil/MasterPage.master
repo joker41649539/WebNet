@@ -84,7 +84,7 @@
                 <ul class="footer-nav text-center">
                     <li><a class="btn btn-app btn-white btn-xs" href="/Fil/Info.aspx"><i class="icon-home"></i>汇总信息</a></li>
                     <li><a class="btn btn-app btn-white btn-xs" href="/fIL/Withdrawal.aspx"><i class="icon-credit-card"></i>我要提现</a></li>
-                    <li><a class="btn btn-app btn-white btn-xs" href="/Fil/MyInfo.aspx"><i class="icon-desktop"></i>我的算力</a></li>
+                    <li><a class="btn btn-app btn-white btn-xs" href="/Fil/MyInfo.aspx"><i class="icon-desktop"></i>我的信息</a></li>
                     <li><a class="btn btn-app btn-white btn-xs" href="/Fil/Help.aspx"><i class=" icon-exclamation-sign"></i>帮助信息</a></li>
                 </ul>
             </div>
