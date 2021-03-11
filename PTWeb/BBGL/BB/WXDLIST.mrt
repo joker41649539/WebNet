@@ -33,7 +33,7 @@ and W_WXD.FLAG=1
 and CNAME like '%{WXR}%'
 AND YHMC LIKE '%{YHMC}%'
 AND ZHMC LIKE '%{ZHMC}%'
-AND WXSJ BETWEEN  CONVERT(datetime,CONVERT(varchar(100), '{ETIME}', 23)+' 00:00:00') and CONVERT(datetime,CONVERT(varchar(100), '{STIME}', 23)+' 23:59:59')</SqlCommand>
+AND WXSJ BETWEEN  CONVERT(datetime,CONVERT(varchar(100), '{STIME}', 23)) and CONVERT(datetime,CONVERT(varchar(100), '{ETIME}', 23))</SqlCommand>
       </主数据>
     </DataSources>
     <Relations isList="true" count="0" />
@@ -385,10 +385,10 @@ AND WXSJ BETWEEN  CONVERT(datetime,CONVERT(varchar(100), '{ETIME}', 23)+' 00:00:
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>10/27/2020 8:44:23 PM</ReportChanged>
+  <ReportChanged>3/12/2021 7:50:08 AM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
   <ReportFile>D:\WebNet\PTWeb\BBGL\BB\WXDLIST.mrt</ReportFile>
-  <ReportGuid>1ab4df586f6e4e918111758e2c913976</ReportGuid>
+  <ReportGuid>da313acf3461457b8474c87e1cf46c6f</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>
@@ -411,7 +411,7 @@ namespace Reports
         }
 
         #region StiReport Designer generated code - do not modify
-        #endregion StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
     }
 }
 </Script>
