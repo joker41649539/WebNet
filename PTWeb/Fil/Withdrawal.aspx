@@ -6,17 +6,17 @@
         <div class="profile-contact-links align-left">
             <a class="btn btn-link" href="#">
                 <i class="icon-leaf bigger-120 pink"></i>
-                安徽黑瞳信息科技有限责任公司
+                f16obnrgqx7iidpikwwajzoero4dbgg52pbq2gini
             </a>
 
             <a class="btn btn-link" href="#">
                 <i class="icon-comments bigger-120 green"></i>
-                18019961118
+                招商银行 陆晓钧
             </a>
 
             <a class="btn btn-link" href="#">
                 <i class="icon-globe bigger-125 blue"></i>
-                合肥市财富广场2006室
+                4392 2583 1101 4700
             </a>
         </div>
     </div>
@@ -25,7 +25,8 @@
             <div class="hr hr12 dotted"></div>
             <div class="clearfix">
                 <div class="grid2">
-                    <span class="bigger-175 blue">5</span>
+                    <span class="bigger-175 blue">
+                        <asp:Label ID="Label_Release" runat="server" Text="0"></asp:Label></span>
                     <br />
                     可提现
                 </div>
@@ -40,13 +41,32 @@
     </div>
     <div class="user-profile row height-auto">
         <div class="page-header">
-            <h1>我要提现								<small><i class="icon-double-angle-right"></i>&nbsp;添写提现申请                                </small></h1>
+            <h1>提现申请</h1>
         </div>
         <div class="col-xs-12">
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">手工编号</label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">单据编号</label>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="TextBox_SGBH" runat="server" placeholder="请输入手工编号" class="col-xs-12 col-sm-12"></asp:TextBox>
+                        <label runat="server" class="green" id="label_DH">TXD2021-02-24-0002</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">提取数量</label>
+                <div class="col-sm-9">
+                    <asp:TextBox ID="TextBox1" runat="server" placeholder="请输入提现数量" class="col-xs-12 col-sm-12"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">提取方式</label>
+                <div class="col-sm-9">
+                    <asp:RadioButtonList ID="RadioButtonList1" RepeatColumns="2" runat="server">
+                        <asp:ListItem Selected="True">&nbsp;FIL&nbsp;</asp:ListItem>
+                        <asp:ListItem>&nbsp;RMB(单价以实际交易金额为准)&nbsp;</asp:ListItem>
+                    </asp:RadioButtonList>
                 </div>
             </div>
         </div>

@@ -63,7 +63,8 @@ public partial class Fil_Default2 : PageBase
     {
         try
         {
-            string HQUrl = "https://filfox.info/zh"; //行情信息
+           // string HQUrl = "https://filfox.info/zh"; //行情信息
+            string HQUrl = "https://www.mytokencap.com/currency/fil/821765876"; //行情信息
 
             List<string> result = new List<string>();
 
@@ -78,7 +79,7 @@ public partial class Fil_Default2 : PageBase
             string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
 
             /// 总余额
-            string strHQ = "$";
+            string strHQ = "≈¥";
 
             int startIndex = content.IndexOf(strHQ);
             int length = content.IndexOf("</div>", startIndex) - startIndex;

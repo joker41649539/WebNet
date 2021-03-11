@@ -114,12 +114,17 @@ public partial class CWGL_ReturnMSG : PageBase
             // 保存记录表  W_Examine
             int NewFlag = 0;// 提交后他状态
 
-            string strSQL = " Insert into W_Examine(Class,DJBH,UserName,OldFlag,NewFlag,Remark,iReturn) values ('BXD',(Select BXDH From w_bxd1 where ID=" + ID + "),'" + UserNAME + "',(Select flag From w_bxd1 where ID=" + ID + ")," + NewFlag + ",'" + TextBox_ReturnMSG.Text.Replace("'", "") + "',1)";
+            string strSQL = " Insert into W_Examine(Class,DJBH,UserName,OldFlag,NewFlag,Remark,iReturn) values ('BXD',(Select BXDH From w_bxd1 where ID=" + ID + "),'" + UserNAME + "',(Select flag From w_bxd1 where ID=" + ID + ")," + NewFlag + ",'" + UserNAME + ":" + TextBox_ReturnMSG.Text.Replace("'", "") + "',1)";
 
             strSQL += " Update W_BXD1 Set Flag=" + NewFlag + ",LTime=getdate() where ID=" + ID;
+            strSQL += " Select cOpenID from W_BXD1,S_USERINFO where W_BXD1.UserName=S_USERINFO.CNAME and W_BXD1.ID=" + ID;
 
             if (OP_Mode.SQLRUN(strSQL))
             {
+                if (OP_Mode.Dtv.Count > 0)
+                {
+                    SendWorkMsgCard(OP_Mode.Dtv[0][0].ToString(), "报销单退回提示", " 您的报销单被退回，请修改后重新提交。", "ptweb.x76.com.cn/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
+                }
                 MessageBox("", "单据退回成功。", "/CWGL/");
             }
             else

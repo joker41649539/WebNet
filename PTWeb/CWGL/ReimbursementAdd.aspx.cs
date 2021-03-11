@@ -572,16 +572,54 @@ public partial class CWGL_Default2 : PageBase
                         Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();// 订单号
                     }
 
-                    if (db_Bk > 0 || DB_WC > 0 || Db_ZC > 0)
+                    if (db_Bk > 0)
                     { // 如果报销餐费补助和住宿补助 则检查是不是本人报销过。
 
-                        strSQL = "Select * from W_BXD1,W_BXD2 where W_BXD1.bxdh=W_BXD2.BXDH and UserName='" + UserNAME + "' and W_BXD1.BXDH<>'" + Label_No.Text + "' and Occurrence='" + TextBoxSTime.Text.Replace("'", "") + " 00:00:00.000' and (breakfirst>0 or ZCBZ>0 or WCBZ>0)";// 查询是否是通行人
+                        strSQL = "Select * from W_BXD1,W_BXD2 where W_BXD1.bxdh=W_BXD2.BXDH and UserName='" + UserNAME + "' and Occurrence='" + TextBoxSTime.Text.Replace("'", "") + " 00:00:00.000' and breakfirst>0";// 查询是否是通行人
 
                         if (OP_Mode.SQLRUN(strSQL))
                         {
                             if (OP_Mode.Dtv.Count > 0)
                             {
-                                MessageBox("", "您当天已经报销过餐费补助了。<br/> 您不能再报销该费用了。");
+                                MessageBox("", "您当天已经报销过早餐补助了。<br/> 您不能再报销该费用了。");
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox("", "明细保存错误。<br/>错误：" + OP_Mode.strErrMsg);
+                            return false;
+                        }
+                    }
+                    if (Db_ZC > 0)
+                    { // 如果报销餐费补助和住宿补助 则检查是不是本人报销过。
+
+                        strSQL = "Select * from W_BXD1,W_BXD2 where W_BXD1.bxdh=W_BXD2.BXDH and UserName='" + UserNAME + "' and Occurrence='" + TextBoxSTime.Text.Replace("'", "") + " 00:00:00.000' and ZCBZ>0";// 查询是否是通行人
+
+                        if (OP_Mode.SQLRUN(strSQL))
+                        {
+                            if (OP_Mode.Dtv.Count > 0)
+                            {
+                                MessageBox("", "您当天已经报销过午餐补助了。<br/> 您不能再报销该费用了。");
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox("", "明细保存错误。<br/>错误：" + OP_Mode.strErrMsg);
+                            return false;
+                        }
+                    }
+                    if (DB_WC > 0)
+                    { // 如果报销餐费补助和住宿补助 则检查是不是本人报销过。
+
+                        strSQL = "Select * from W_BXD1,W_BXD2 where W_BXD1.bxdh=W_BXD2.BXDH and UserName='" + UserNAME + "' and Occurrence='" + TextBoxSTime.Text.Replace("'", "") + " 00:00:00.000' and WCBZ>0";// 查询是否是通行人
+
+                        if (OP_Mode.SQLRUN(strSQL))
+                        {
+                            if (OP_Mode.Dtv.Count > 0)
+                            {
+                                MessageBox("", "您当天已经报销过晚餐补助了。<br/> 您不能再报销该费用了。");
                                 return false;
                             }
                         }
@@ -848,7 +886,15 @@ public partial class CWGL_Default2 : PageBase
 
         if (strUsers.Length > 0)
         {
-            SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "#");
+            try
+            {
+                int ID = Convert.ToInt32(Request["ID"]);
+
+                SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "ptweb.x76.com.cn/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
+            }
+            catch
+            {
+            }
         }
     }
     /// <summary>
@@ -1032,13 +1078,17 @@ public partial class CWGL_Default2 : PageBase
         {
             rValue = 4;
         }
-        else if (strFlag == "待放款")
+        else if (strFlag == "财务部")
         {
             rValue = 5;
         }
-        else if (strFlag == "待收票")
+        else if (strFlag == "待放款")
         {
             rValue = 6;
+        }
+        else if (strFlag == "待收票")
+        {
+            rValue = 7;
         }
         else if (strFlag == "已完结")
         {
@@ -1073,9 +1123,13 @@ public partial class CWGL_Default2 : PageBase
         }
         else if (strFlag == 5)
         {
-            rValue = "待放款";
+            rValue = "财务部";
         }
         else if (strFlag == 6)
+        {
+            rValue = "待放款";
+        }
+        else if (strFlag == 7)
         {
             rValue = "待收票";
         }

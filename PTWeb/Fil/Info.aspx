@@ -5,8 +5,8 @@
         <div class="widget-box">
             <div class="widget-header widget-header-flat widget-header-small">
                 <h3 class="green"><i class="icon-facebook-sign icon-2x green"></i>
-                    FIL值：<asp:Label ID="Label_Fil" runat="server" Text="0"></asp:Label>
-                    $</h3>
+                    FIL值：≈<asp:Label ID="Label_Fil" runat="server" Text="0"></asp:Label>
+                    (￥)</h3>
                 <h3><i class="icon-facebook-sign icon-2x blue"></i>
                     总产出：<b><asp:Label ID="Label_SumFil" runat="server" Text="0"></asp:Label></b>
                     (FIL)
