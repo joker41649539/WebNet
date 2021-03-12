@@ -123,7 +123,7 @@ public partial class CWGL_ReturnMSG : PageBase
             {
                 if (OP_Mode.Dtv.Count > 0)
                 {
-                    SendWorkMsgCard(OP_Mode.Dtv[0][0].ToString(), "报销单退回提示", " 您的报销单被退回，请修改后重新提交。", "ptweb.x76.com.cn/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
+                    SendWorkMsgCard(OP_Mode.Dtv[0][0].ToString(), "报销单退回提示", " 您的报销单被[" + UserNAME + "]退回，请修改后重新提交。", "http://ptweb.x76.com.cn/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
                 }
                 MessageBox("", "单据退回成功。", "/CWGL/");
             }

@@ -131,7 +131,7 @@ public partial class CWGL_Default2 : PageBase
                             }
                             else
                             {
-                                AddImagesShow(OP_Mode.Dtv[i]["Image"].ToString(), Convert.ToDateTime(OP_Mode.Dtv[i]["Occurrence"]).ToString("yyyy-MM-dd"), OP_Mode.Dtv[i]["KZXM"].ToString(), OP_Mode.Dtv[i]["TXR"].ToString(), OP_Mode.Dtv[i]["MC"].ToString(), OP_Mode.Dtv[i]["Becity"].ToString(), OP_Mode.Dtv[i]["Arrival"].ToString(), Convert.ToDouble(OP_Mode.Dtv[i]["BXJE"]), OP_Mode.Dtv[i]["Remark"].ToString(), Convert.ToDouble(OP_Mode.Dtv[i]["BreakFirst"]), Convert.ToDouble(OP_Mode.Dtv[i]["ZCBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["WCBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["ZSBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["DRZS"]), Convert.ToInt32(OP_Mode.Dtv[i]["ID"]), bDel);
+                                AddImagesShow(OP_Mode.Dtv[i]["Image"].ToString(), OP_Mode.Dtv[i]["Image2"].ToString(), OP_Mode.Dtv[i]["Image3"].ToString(), Convert.ToDateTime(OP_Mode.Dtv[i]["Occurrence"]).ToString("yyyy-MM-dd"), OP_Mode.Dtv[i]["KZXM"].ToString(), OP_Mode.Dtv[i]["TXR"].ToString(), OP_Mode.Dtv[i]["MC"].ToString(), OP_Mode.Dtv[i]["Becity"].ToString(), OP_Mode.Dtv[i]["Arrival"].ToString(), Convert.ToDouble(OP_Mode.Dtv[i]["BXJE"]), OP_Mode.Dtv[i]["Remark"].ToString(), Convert.ToDouble(OP_Mode.Dtv[i]["BreakFirst"]), Convert.ToDouble(OP_Mode.Dtv[i]["ZCBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["WCBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["ZSBZ"]), Convert.ToDouble(OP_Mode.Dtv[i]["DRZS"]), Convert.ToInt32(OP_Mode.Dtv[i]["ID"]), bDel);
                             }
                         }
                     }
@@ -256,7 +256,7 @@ public partial class CWGL_Default2 : PageBase
     /// <summary>
     /// 添加图片显示
     /// </summary>
-    private void AddImagesShow(String imageName, String strSTime, String strKZXM, String strTXR, String strMC, String strBecity, String strArrival, Double strNum, String strRemark2, double db_Bk, double Db_ZC, double DB_WC, double Db_ZS, double DB_DRZS, int MXID, bool del)
+    private void AddImagesShow(String imageName, String imageName2, String imageName3, String strSTime, String strKZXM, String strTXR, String strMC, String strBecity, String strArrival, Double strNum, String strRemark2, double db_Bk, double Db_ZC, double DB_WC, double Db_ZS, double DB_DRZS, int MXID, bool del)
     {
         WellList.InnerHtml += " <div class=\"well\">";
         WellList.InnerHtml += "   <h4 class=\"green smaller lighter\">" + strKZXM + "</h4>";
@@ -264,6 +264,14 @@ public partial class CWGL_Default2 : PageBase
         if (imageName.Length > 10)//"\BxImages\"
         {
             WellList.InnerHtml += " <a href='" + imageName + "'><img src=\"" + imageName + "\" style =\"height:40px;\" /></a>";
+        }
+        if (imageName2.Length > 10)//"\BxImages\"
+        {
+            WellList.InnerHtml += " <a href='" + imageName2 + "'><img src=\"" + imageName2 + "\" style =\"height:40px;\" /></a>";
+        }
+        if (imageName3.Length > 10)//"\BxImages\"
+        {
+            WellList.InnerHtml += " <a href='" + imageName3 + "'><img src=\"" + imageName3 + "\" style =\"height:40px;\" /></a>";
         }
         WellList.InnerHtml += " 发生时间：" + strSTime + " ";
 
@@ -498,6 +506,8 @@ public partial class CWGL_Default2 : PageBase
         if (rValue)
         {
             String imageName = UploadTP(FileUpload1);
+            String imageName2 = UploadTP(FileUpload2);
+            String imageName3 = UploadTP(FileUpload3);
 
             if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助" || DropDownList1.SelectedValue == "交通费" || MXID > 0)
             {/// 图片上传成功
@@ -664,6 +674,8 @@ public partial class CWGL_Default2 : PageBase
 
 
                     imageName = "/BxImages/" + imageName;
+                    imageName2 = "/BxImages/" + imageName2;
+                    imageName3 = "/BxImages/" + imageName3;
                     if (MXID > 0)
                     {
                         strSQL = " update w_bxd2 set KZXM='" + strKZXM + "',";
@@ -683,17 +695,25 @@ public partial class CWGL_Default2 : PageBase
                         {
                             strSQL += " ,Image='" + imageName + "'";
                         }
+                        if (imageName2 != "/BxImages/")
+                        {
+                            strSQL += " ,Image2='" + imageName2 + "'";
+                        }
+                        if (imageName3 != "/BxImages/")
+                        {
+                            strSQL += " ,Image3='" + imageName3 + "'";
+                        }
                         strSQL += " Where ID=" + Request["MXID"] + "";
                         strSQL += " SELECT * FROM w_bxd2 WHERE ID=" + Request["MXID"];
                     }
                     else
                     {
                         /// 插入明细数据
-                        strSQL = "Insert into w_bxd2 (BXDH,KZXM,Occurrence,BreakFirst,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,Becity,Arrival,BXJE,Remark,Image)";
+                        strSQL = "Insert into w_bxd2 (BXDH,KZXM,Occurrence,BreakFirst,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,Becity,Arrival,BXJE,Remark,Image,Image2,Image3)";
                         strSQL += " values ('" + Label_No.Text.Replace("'", "") + "','" + strKZXM + "','" + strSTime + "',";
                         strSQL += " " + db_Bk + "," + Db_ZC + "," + DB_WC + ", ";
                         strSQL += " " + Db_ZS + "," + DB_DRZS + ",'" + strTXR + "',";
-                        strSQL += " '" + strMC + "','" + strBecity + "','" + strArrival + "'," + strNum + ",'" + strRemark2 + "','" + imageName + "')";
+                        strSQL += " '" + strMC + "','" + strBecity + "','" + strArrival + "'," + strNum + ",'" + strRemark2 + "','" + imageName + "','" + imageName2 + "','" + imageName3 + "')";
                         strSQL += " SELECT * FROM w_bxd2 WHERE ID=SCOPE_IDENTITY()";
                     }
                     if (OP_Mode.SQLRUN(strSQL))
@@ -703,7 +723,7 @@ public partial class CWGL_Default2 : PageBase
                         {
                             MessageBox("", "明细修改成功。", "/CWGL/ReimbursementAdd.ASPX?ID=" + Request["ID"]);
                         }
-                        AddImagesShow(imageName, strSTime, strKZXM, strTXR, strMC, strBecity, strArrival, strNum, strRemark2, db_Bk, Db_ZC, DB_WC, Db_ZS, DB_DRZS, Convert.ToInt32(OP_Mode.Dtv[0]["ID"]), true);
+                        AddImagesShow(imageName, imageName2, imageName3, strSTime, strKZXM, strTXR, strMC, strBecity, strArrival, strNum, strRemark2, db_Bk, Db_ZC, DB_WC, Db_ZS, DB_DRZS, Convert.ToInt32(OP_Mode.Dtv[0]["ID"]), true);
                         ClearTextbox();
                         Label_Sumje.Text = (Convert.ToDouble(Label_Sumje.Text) + strNum).ToString();
                     }
