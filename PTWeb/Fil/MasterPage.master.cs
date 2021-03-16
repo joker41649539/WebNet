@@ -20,6 +20,8 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
     {
         if (!IsPostBack)
         {
+            WeChatLoad();
+
             LoadUserInfo();
             // MessageBox("消息提示","测试信息");
         }
@@ -29,41 +31,54 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
     {
         bool rValue = false;
 
-        string strSQL = "Select * from Fil_Users Where ID=2";
-        if (OP_Mode.SQLRUN(strSQL))
+        int iWeChatID = 0;
+
+        try
         {
-            if (OP_Mode.Dtv.Count > 0)
-            {
-                // 临时登录
-                /// 如果数据库有ID，则直接登录。
-                Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["COPENID"] = "";
-                Response.Cookies["WeChat_Yanwo"]["CNAME"] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+            iWeChatID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+        }
+        catch
+        {
 
-                Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
-
-                Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
-                Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
-
-                ///设置COOKIE最长时间
-                Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
-
-
-                /// 给用户ID赋值
-                HiddenField_UserID.Value = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                Label_Nick.Text = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
-                if (OP_Mode.Dtv[0]["HeadImage"].ToString().Trim().Length > 0)
-                {
-                    Image_Header.ImageUrl = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
-                }
-                /// 更新登录时间
-                OP_Mode.SQLRUN("Update Fil_Users set Ltime=getdate() where ID=2");
-            }
         }
 
+        if (iWeChatID > 0)
+        {
+            string strSQL = "Select * from Fil_Users Where ID=" + iWeChatID;
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                if (OP_Mode.Dtv.Count > 0)
+                {
+                    // 临时登录
+                    /// 如果数据库有ID，则直接登录。
+                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+
+                    Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+
+                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+
+                    ///设置COOKIE最长时间
+                    Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+
+
+                    /// 给用户ID赋值
+                    HiddenField_UserID.Value = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    Label_Nick.Text = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    if (OP_Mode.Dtv[0]["HeadImage"].ToString().Trim().Length > 0)
+                    {
+                        Image_Header.ImageUrl = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+                    }
+                    /// 更新登录时间
+                    OP_Mode.SQLRUN("Update Fil_Users set Ltime=getdate() where ID=" + iWeChatID);
+                }
+            }
+        }
 
         return rValue;
     }
@@ -74,9 +89,9 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
     {
         string accessToken = string.Empty;
         string DeBugMsg = string.Empty;
-
-        string AppId = WebConfigurationManager.AppSettings["CorpId"];//与微信公众账号后台的AppId设置保持一致，区分大小写。
-        string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+        // 黑瞳账号密码
+        string AppId = "wxd78bac9aa2b77eec";//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        string AppSecret = "a7a3a066532e3916307fa426dd39a3ca";
 
         var code = string.Empty;
         var opentid = string.Empty;
@@ -89,7 +104,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         {
 
         }
-
+        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd78bac9aa2b77eec&redirect_uri=http://ptweb.x76.com.cn/Fil&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
         if (string.IsNullOrEmpty(code))
         {
 
@@ -155,7 +170,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
 
                 string strSQL;
-                strSQL = " Select * from S_USERINFO where COPENID='" + opentid.ToString() + "'";
+                strSQL = " Select * from Fil_Users where WeChatOpenID='" + opentid.ToString() + "'";
 
                 if (OP_Mode.SQLRUN(strSQL))
                 {
@@ -183,7 +198,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                         Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
 
                         /// 更新登录时间
-                        OP_Mode.SQLRUN("Update S_USERINFO set Ltime=getdate(),HEADURL='" + HeadUserUrl + "',XB=" + vsex + " where COPENID='" + opentid.ToString() + "'");
+                        OP_Mode.SQLRUN("Update Fil_Users set Ltime=getdate(),HEADImage='" + HeadUserUrl + "' where WeChatOpenID='" + opentid.ToString() + "'");
 
                         return;
                     }
@@ -192,9 +207,9 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                         try
                         {
 
-                            strSQL = " INSERT INTO S_USERINFO (LOGINNAME,PASSWORD,COPENID,CNAME,HEADURL,XB) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "','" + UserName + "','" + HeadUserUrl + "'," + vsex + ")";
+                            strSQL = " INSERT INTO Fil_Users (Nick,HEADImage,WeChatOpenID,WeChatName) VALUES ('" + UserName + "','" + HeadUserUrl + "','" + opentid + "','" + UserName + "')";
 
-                            strSQL += " Select * from S_USERINFO where COPENID='" + opentid + "'";
+                            strSQL += " Select * from Fil_Users where WeChatOpenID='" + opentid + "'";
 
                             DeBugMsg += "+" + strSQL + "+";
 
@@ -204,13 +219,13 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                                 {
                                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
                                     Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["COPENID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["WeChatName"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
                                     Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
 
-                                    Response.Cookies["WeChat_Yanwo"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["CNAME"].ToString().Trim();
-                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
+                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
 
                                     Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
                                     Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
@@ -219,7 +234,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
                                     string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
 
-                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADURL"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["CNAME"].ToString() + " 注册成功。<br/>祝您生活愉快。";
+                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADImage"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["CNAME"].ToString() + " 注册成功。<br/>祝您生活愉快。";
 
                                     MessageBox("", MSG);
 
@@ -240,6 +255,10 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                     MessageBox("", "5：" + DeBugMsg);
                 }
 
+            }
+            if (DeBugMsg.Length > 0)
+            {
+                MessageBox("", DeBugMsg);
             }
         }
 
