@@ -233,6 +233,8 @@
         <asp:Button ID="Button3" runat="server" Text="查看PDF" class="btn btn-warning" OnClick="Button3_Click" />
         &nbsp;
         <asp:Button ID="Button4" runat="server" Text="删除表单" class="btn btn-danger" OnClick="Button4_Click" />
+        &nbsp;
+        <asp:Button ID="Button5" runat="server" Text="查看图片" class="btn btn-warning" OnClick="Button5_Click" />
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

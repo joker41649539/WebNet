@@ -183,6 +183,131 @@
 
         <script src="/js/jquery.min.js" type="text/javascript"></script>
         <script src="/js/masonry-docs.min.js"></script>
+
+        <script>
+            $("#GoodsList").resize(function () {
+                var $grid = $('#GoodsList');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+
+            $("#GoodsList2").resize(function () {
+                var $grid = $('#GoodsList2');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList2');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+
+            $("#GoodsList3").resize(function () {
+                var $grid = $('#GoodsList3');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList3');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+            $("#GoodsList4").resize(function () {
+                var $grid = $('#GoodsList4');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList4');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+            $("#GoodsList5").resize(function () {
+                var $grid = $('#GoodsList5');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList5');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+            $("#GoodsList6").resize(function () {
+                var $grid = $('#GoodsList6');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList6');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+            $("#GoodsList7").resize(function () {
+                var $grid = $('#GoodsList7');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList7');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+            $("#GoodsList8").resize(function () {
+                var $grid = $('#GoodsList8');
+                $grid.masonry();
+            });
+            $(function () {
+                var $container = $('#GoodsList8');
+                $container.imagesLoaded(function () {
+                    $container.masonry({
+                        itemSelector: '.box',
+                        gutter: 0,
+                        isAnimated: true,
+                        percentPosition: true
+                    });
+                });
+            });
+        </script>
     </form>
 </body>
 </html>

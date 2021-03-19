@@ -225,7 +225,7 @@ public partial class WeChat_KQ : PageBase
     private string UploadTP(FileUpload fileName)
     {
         string name = fileName.PostedFile.FileName;//获取文件名称
-
+      //  fileName.PostedFile.ge.GetCreationTime
         if (name.Length > 0)
         {
             if (fileName.HasFile)

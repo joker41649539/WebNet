@@ -7,7 +7,7 @@
                 <div class="widget-header red">
                     <h4 class="lighter smaller">
                         <i class="icon-calendar red"></i>
-                        预约中
+                        <asp:Label ID="Label_DataTime" runat="server" Text="2021-03-19 星期五"></asp:Label>
                     </h4>
                 </div>
                 <div class="widget-body">
@@ -21,25 +21,39 @@
                                 <div class="body">
                                     <div class="time">
                                         <i class="icon-time"></i>
-                                        <span class="green">2021-03-14 14:00-15:00</span>
+                                        <span class="green">
+                                            <asp:Label ID="Label_Time" runat="server" Text="14:00-15:00"></asp:Label></span>
                                     </div>
 
                                     <div class="name">
-                                        <a href="#">戈老师</a>
+                                        <a href="#">
+                                            <asp:Label ID="Label_Teacher" runat="server" Text="老师"></asp:Label>
+                                        </a>
                                     </div>
-                                    <div class="text">正位哈地 (5/10)</div>
+                                    <div class="text">
+                                        <asp:Label ID="Label_ClassName" runat="server" Text="瑜伽"></asp:Label>&nbsp;&nbsp;[<asp:Label ID="Label_NowNo" runat="server" Text="0"></asp:Label>/<asp:Label ID="Label_MaxNo" runat="server" Text="10"></asp:Label>]
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!-- /widget-main -->
                 </div>
                 <hr />
                 <p>
-                    <asp:Button ID="Button1" runat="server" class="btn btn-danger btn-block" Text="确定预约" />
+                    <asp:Button ID="Button1" runat="server" class="btn btn-danger btn-block" Text="确定预约" OnClick="Button1_Click" />
                 </p>
                 <!-- /widget-body -->
+            </div>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main no-padding">
+                <asp:GridView ID="GridView_List" runat="server" AutoGenerateColumns="false" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+                    <Columns>
+                        <asp:BoundField DataField="Nick" SortExpression="Nick" HeaderText="昵称"></asp:BoundField>
+                        <asp:BoundField DataField="LTime" SortExpression="LTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="预约时间"></asp:BoundField>
+                    </Columns>
+                </asp:GridView>
             </div>
         </div>
     </div>

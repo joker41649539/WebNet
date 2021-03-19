@@ -5,17 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Dance_Default2 : PageBase
+public partial class Dance_Default3 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
-    {
-        if (!IsPostBack)
-        {
-            LoadArrange();
-        }
-    }
-
-    private void LoadArrange()
     {
 
     }

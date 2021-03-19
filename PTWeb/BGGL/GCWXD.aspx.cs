@@ -676,4 +676,18 @@ public partial class GDGL_GCWXD : PageBase
             }
         }
     }
+
+    /// <summary>
+    /// 查看图片
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Button5_Click(object sender, EventArgs e)
+    {
+        int iid = Convert.ToInt32(Request["ID"]);
+        if (iid > 0)
+        {
+            Response.Redirect("/BGGL/WXDImage.ASPX?id=" + iid);
+        }
+    }
 }
