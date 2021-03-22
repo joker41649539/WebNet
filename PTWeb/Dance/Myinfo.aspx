@@ -11,27 +11,7 @@
                     </h4>
                 </div>
                 <div class="widget-body">
-                    <div class="widget-main no-padding">
-                        <div class="dialogs">
-                            <div class="itemdiv dialogdiv">
-                                <div class="user">
-                                    <img src="/images/DanceLogo.jpg" />
-                                </div>
-
-                                <div class="body">
-                                    <div class="time">
-                                        <i class="icon-time"></i>
-                                        <span class="green">2021-03-14 14:00-15:00</span>
-                                    </div>
-
-                                    <div class="name">
-                                        <a href="#">戈老师</a>
-                                    </div>
-                                    <div class="text">正位哈地 (5/10)</div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="widget-main no-padding" runat="server" id="ArrangeList">
                     </div>
                     <!-- /widget-main -->
                 </div>
@@ -40,102 +20,12 @@
                     <div class="widget-header green">
                         <h4 class="lighter smaller">
                             <i class="icon-calendar"></i>
-                            已上课
+                            已上课程
                         </h4>
                     </div>
                     <div class="widget-body">
-                        <div class="widget-main no-padding">
-                            <div class="dialogs">
-                                <div class="itemdiv dialogdiv">
-                                    <div class="user">
-                                        <img src="/images/DanceLogo.jpg" />
-                                    </div>
-
-                                    <div class="body">
-                                        <div class="time">
-                                            <i class="icon-time"></i>
-                                            <span class="green">2021-03-10 14:00-15:00</span>
-                                        </div>
-
-                                        <div class="name">
-                                            <a href="#">戈老师</a>
-                                        </div>
-                                        <div class="text">正位哈地 (5/10)</div>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div class="widget-main no-padding" runat="server" id="AttendList">
                         </div>
-                        <!-- /widget-main -->
-                        <div class="widget-main no-padding">
-                            <div class="dialogs">
-                                <div class="itemdiv dialogdiv">
-                                    <div class="user">
-                                        <img src="/images/DanceLogo.jpg" />
-                                    </div>
-
-                                    <div class="body">
-                                        <div class="time">
-                                            <i class="icon-time"></i>
-                                            <span class="green">2021-03-10 14:00-15:00</span>
-                                        </div>
-
-                                        <div class="name">
-                                            <a href="#">戈老师</a>
-                                        </div>
-                                        <div class="text">正位哈地 (5/10)</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /widget-main -->
-                        <div class="widget-main no-padding">
-                            <div class="dialogs">
-                                <div class="itemdiv dialogdiv">
-                                    <div class="user">
-                                        <img src="/images/DanceLogo.jpg" />
-                                    </div>
-
-                                    <div class="body">
-                                        <div class="time">
-                                            <i class="icon-time"></i>
-                                            <span class="green">2021-03-10 14:00-15:00</span>
-                                        </div>
-
-                                        <div class="name">
-                                            <a href="#">戈老师</a>
-                                        </div>
-                                        <div class="text">正位哈地 (5/10)</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /widget-main -->
-                        <div class="widget-main no-padding">
-                            <div class="dialogs">
-                                <div class="itemdiv dialogdiv">
-                                    <div class="user">
-                                        <img src="/images/DanceLogo.jpg" />
-                                    </div>
-
-                                    <div class="body">
-                                        <div class="time">
-                                            <i class="icon-time"></i>
-                                            <span class="green">2021-03-10 14:00-15:00</span>
-                                        </div>
-
-                                        <div class="name">
-                                            <a href="#">戈老师</a>
-                                        </div>
-                                        <div class="text">正位哈地 (5/10)</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /widget-main -->
                     </div>
                 </div>
             </div>

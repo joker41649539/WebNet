@@ -58,7 +58,7 @@ public partial class Dance_Default2 : PageBase
     private void LoadUserList(int iid)
     {
         DateTime Days = Convert.ToDateTime(Label_DataTime.Text);
-        string strSQL = "Select Dance_Arrange.ID,Nick,HeadImage,Dance_Arrange.LTime from Dance_Arrange,Dance_User where classID = " + iid + " and ArrangeTime = '" + Days.ToString("yyyy-MM-dd") + "' and userid = Dance_User.id";
+        string strSQL = "Select Dance_Arrange.ID,Nick,HeadImage,Dance_Arrange.LTime,ArrangeTime from Dance_Arrange,Dance_User where classID = " + iid + " and ArrangeTime = '" + Days.ToString("yyyy-MM-dd") + "' and userid = Dance_User.id";
         if (OP_Mode.SQLRUN(strSQL))
         {
             this.GridView_List.DataSource = OP_Mode.Dtv;
@@ -172,7 +172,13 @@ public partial class Dance_Default2 : PageBase
         try
         {
             int iClassID = Convert.ToInt32(Request["ID"]);
-            int iUserID = Convert.ToInt32(Response.Cookies["Dance"]["USERID"]);
+            int iUserID = Convert.ToInt32(Request.Cookies["Dance"]["USERID"]);
+
+            if (iUserID <= 0)
+            {
+                MessageBox("", "用户信息获取失败，请重试。", "/Dance/");
+                return;
+            }
 
             DateTime Days = Convert.ToDateTime(Label_DataTime.Text);
 

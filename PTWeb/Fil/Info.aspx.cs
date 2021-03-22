@@ -61,41 +61,76 @@ public partial class Fil_Default2 : PageBase
     /// </summary>
     public void GetTotal()
     {
-        try
-        {
-           // string HQUrl = "https://filfox.info/zh"; //行情信息
-            string HQUrl = "https://www.mytokencap.com/currency/fil/821765876"; //行情信息
+        //try
+        //{
+        //   // string HQUrl = "https://filfox.info/zh"; //行情信息
+        //    string HQUrl = "https://www.mytokencap.com/currency/fil/821765876"; //行情信息
 
-            List<string> result = new List<string>();
+        //    List<string> result = new List<string>();
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"" + HQUrl + "");
-            request.Timeout = 4000;
-            request.ReadWriteTimeout = 4000;
-            WebResponse response = request.GetResponse();
-            Stream resStream = response.GetResponseStream();
-            StreamReader sr = new StreamReader(resStream, Encoding.UTF8);
-            string content = sr.ReadToEnd();
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"" + HQUrl + "");
+        //    request.Timeout = 4000;
+        //    request.ReadWriteTimeout = 4000;
+        //    WebResponse response = request.GetResponse();
+        //    Stream resStream = response.GetResponseStream();
+        //    StreamReader sr = new StreamReader(resStream, Encoding.UTF8);
+        //    string content = sr.ReadToEnd();
 
-            string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
+        //    string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
 
-            /// 总余额
-            string strHQ = "≈¥";
+        //    /// 总余额
+        //    string strHQ = "≈¥";
 
-            int startIndex = content.IndexOf(strHQ);
-            int length = content.IndexOf("</div>", startIndex) - startIndex;
+        //    int startIndex = content.IndexOf(strHQ);
+        //    int length = content.IndexOf("</div>", startIndex) - startIndex;
 
-            /// 获得 总余额
-            totalDataStr = content.Substring(startIndex, length);
+        //    /// 获得 总余额
+        //    totalDataStr = content.Substring(startIndex, length);
 
-            /// 获得 总余额
-            double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
-            // 行情
-            Label_Fil.Text = (NumHQ).ToString();
-        }
-        catch (Exception ex)
-        {
-            MessageBox("", ex.ToString());
-        }
+        //    /// 获得 总余额
+        //    double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
+        //    // 行情
+        //    Label_Fil.Text = (NumHQ).ToString();
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox("", ex.ToString());
+        //}
+
+        /// https://www.ztpay.org/  账号： 41649539@qq.com  joK121
+        /// 
+        string Appid = "ztpayj44ocmpkavmgs";
+        string AppSecret = "vOAF74hUzs9pGgpNovXNM8jqzuYrG8H2";
+        string Url = "https://sapi.ztpay.org/api/v2";
+
+        var client = new System.Net.WebClient();
+        client.Encoding = System.Text.Encoding.UTF8;
+
+        string stringSignTemp = "appid=" + Appid + "&method=market&key=" + AppSecret;
+
+        string strMakeSign = "appid=" + Appid + "&method=market&sign=" + GetMD5(stringSignTemp).ToUpper();
+
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+        request.Method = "POST";
+
+        byte[] bytes = Encoding.UTF8.GetBytes(strMakeSign);
+        request.ContentType = "application/x-www-form-urlencoded";
+        request.ContentLength = bytes.Length;
+        Stream myResponseStream = request.GetRequestStream();
+        myResponseStream.Write(bytes, 0, bytes.Length);
+
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        StreamReader myStreamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+        string retString = myStreamReader.ReadToEnd();
+
+        myStreamReader.Close();
+        myResponseStream.Close();
+
+        string strTemp = retString.ToString().Substring(retString.IndexOf("fil"));
+
+        // { "code":0,"message":"行情获取成功","data":{"fil":{ "gains":-0.57,"cny":540.68,"usd":82.7361,"high":85.7288,"high_cny":560.24,"low":81.372,"low_cny":531.77} },"time":"2021-03-20 22:06:16"}
+        Label_Fil.Text  = strTemp.Substring(strTemp.IndexOf("cny") + 5, strTemp.IndexOf(",") - 13);
+
     }
 
     #region "GridView_Info 读取产出明细 相关代码"

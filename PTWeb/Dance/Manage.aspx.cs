@@ -5,16 +5,17 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Dance_Default : PageBase
+public partial class Dance_Default3 : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            //MessageBox("", "[" + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetShortestDayName(Convert.ToDateTime("2021-03-21").DayOfWeek) + "]");
             LoadClass();
         }
+
     }
+
     /// <summary>
     /// 加载课程列表
     /// </summary>
@@ -25,7 +26,7 @@ public partial class Dance_Default : PageBase
         string strWeek2 = string.Empty;
         // 当前星期几
         string strWeek_Now = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetShortestDayName(DateTime.Now.DayOfWeek);
-        string strSQL = "Select ID,classname,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,MaxMen,(Select Count(ID) from Dance_Arrange where classID=Dance_Class.ID) ArrAngeCount from Dance_Class where Flag=0 order by PX,ClassTimeStart";
+        string strSQL = "Select Dance_Arrange.ID,ArrangeTime,ClassName,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,Nick,HeadImage from Dance_Arrange,Dance_Class,dance_user where classid=Dance_Class.ID and userid=dance_user.id order by ArrangeTime,ClassTimeStart";
         if (OP_Mode.SQLRUN(strSQL))
         {
             for (int i = 0; i < OP_Mode.Dtv.Count; i++)
@@ -64,7 +65,14 @@ public partial class Dance_Default : PageBase
                 }
                 strTemp += "            <div class=\"itemdiv dialogdiv\">";
                 strTemp += "               <div class=\"user\">";
-                strTemp += "                   <img src =\"/images/DanceLogo.jpg\" />";
+                if (OP_Mode.Dtv[i]["HeadImage"].ToString().Length > 10)
+                {
+                    strTemp += "                   <img src =\"" + OP_Mode.Dtv[i]["HeadImage"].ToString() + "\" />";
+                }
+                else
+                {
+                    strTemp += "                   <img src =\"/images/DanceLogo.jpg\" />";
+                }
                 strTemp += "               </div >";
                 strTemp += "               <div class=\"body\">";
                 strTemp += "                 <div class=\"time\">";
@@ -74,14 +82,14 @@ public partial class Dance_Default : PageBase
 
                 strTemp += "                  </div>";
                 strTemp += "                  <div class=\"name\">";
-                strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["ClassTeacher"].ToString() + " </a>";
+                strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["Nick"].ToString() + " </a>";
                 strTemp += "                  </div>";
-                strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " (" + OP_Mode.Dtv[i]["ArrAngeCount"].ToString() + "/" + OP_Mode.Dtv[i]["MaxMen"].ToString() + ")</div>";
+                strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " ["+ OP_Mode.Dtv[i]["ClassTeacher"].ToString() + "] </div>";
                 if (Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).AddHours(-3) > System.DateTime.Now && Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)) < System.DateTime.Now.AddDays(3))
                 {
                     strTemp += "                 <div class=\"tools\">";
-                    strTemp += "                      <a href =\"/Dance/Reserve.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-info\">";
-                    strTemp += "                          <i class=\"icon-calendar\"></i>我要预约";
+                    strTemp += "                      <a href =\"/Dance/Attend.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-info\">";
+                    strTemp += "                          <i class=\"icon-calendar\"></i> 上&nbsp;课 ";
                     strTemp += "                      </a>";
                     strTemp += "                   </div>";
                 }

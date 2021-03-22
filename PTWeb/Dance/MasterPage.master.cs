@@ -21,10 +21,33 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         if (!IsPostBack)
         {
             WeChatLoad();
-            // MessageBox("消息提示","测试信息");
+            LoadFoot();
         }
     }
 
+    private void LoadFoot()
+    {
+        int iUserID = 0;
+
+        try
+        {
+            iUserID = Convert.ToInt32(Request.Cookies["Dance"]["USERID"]);
+        }
+        catch
+        { }
+        string strTemp = string.Empty;
+        strTemp += "<ul class=\"footer-nav text-center\">";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Dance/Default.aspx\"><i class=\"icon-home\"></i>课程信息</a></li>";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Dance/MyInfo.aspx\"><i class=\"icon-desktop\"></i>我的信息</a></li>";
+
+        if (iUserID == 2 || iUserID == 3)
+        {
+            strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Dance/Manage.aspx\"><i class=\"icon-group\"></i>约课管理</a></li>";
+        }
+        strTemp += "</ul>";
+
+        FootBut.InnerHtml = strTemp;
+    }
     /// <summary>
     /// 微信登录
     /// </summary>
@@ -135,7 +158,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
 
                         ///设置COOKIE最长时间
-                        Response.Cookies["Dance"].Expires = DateTime.MaxValue;
+                        //Response.Cookies["Dance"].Expires = DateTime.MaxValue;
 
                         /// 更新登录时间
                         OP_Mode.SQLRUN("Update Dance_User set Ltime=getdate(),HeadImage='" + HeadUserUrl + "',Nick=" + UserName + " where WeChatOpenID='" + opentid.ToString() + "'");

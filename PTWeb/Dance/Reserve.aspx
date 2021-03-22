@@ -48,10 +48,21 @@
         </div>
         <div class="widget-body">
             <div class="widget-main no-padding">
-                <asp:GridView ID="GridView_List" runat="server" AutoGenerateColumns="false" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+                <asp:GridView ID="GridView_List" runat="server" AutoGenerateColumns="False" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
                     <Columns>
-                        <asp:BoundField DataField="Nick" SortExpression="Nick" HeaderText="昵称"></asp:BoundField>
-                        <asp:BoundField DataField="LTime" SortExpression="LTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="预约时间"></asp:BoundField>
+                        <asp:ImageField DataImageUrlField="HeadImage">
+                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                            <ControlStyle Height="35px" Width="35px" />
+                        </asp:ImageField>
+                        <asp:BoundField DataField="Nick" SortExpression="Nick" HeaderText="昵称">
+                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="ArrangeTime" DataFormatString="{0:yyyy-MM-dd}" SortExpression="ArrangeTime" HeaderText="课程时间">
+                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="LTime" SortExpression="LTime" HeaderText="预约时间">
+                            <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
+                        </asp:BoundField>
                     </Columns>
                 </asp:GridView>
             </div>
