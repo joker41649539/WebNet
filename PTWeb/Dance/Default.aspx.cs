@@ -77,9 +77,9 @@ public partial class Dance_Default : PageBase
                 strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["ClassTeacher"].ToString() + " </a>";
                 strTemp += "                  </div>";
                 strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " (" + OP_Mode.Dtv[i]["ArrAngeCount"].ToString() + "/" + OP_Mode.Dtv[i]["MaxMen"].ToString() + ")</div>";
-                if (Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).AddHours(-3) > System.DateTime.Now && Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)) < System.DateTime.Now.AddDays(3))
+                if (Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).AddHours(-2) > System.DateTime.Now && Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)) < System.DateTime.Now.AddDays(3))
                 {
-                    strTemp += "                 <div class=\"tools\">";
+                    strTemp += "                 <div class=\"name\">";
                     strTemp += "                      <a href =\"/Dance/Reserve.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-info\">";
                     strTemp += "                          <i class=\"icon-calendar\"></i>我要预约";
                     strTemp += "                      </a>";

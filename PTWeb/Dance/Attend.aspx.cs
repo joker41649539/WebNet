@@ -21,9 +21,10 @@ public partial class Dance_Default3 : PageBase
             //int iUserID = 2;
             if (iid > 0)
             {
+
                 string strSQL = "insert into Dance_ClassList(Userid,ClassTime,ClassName,ClassTeacher,AdminUserID) ";
                 strSQL += " Select dance_user.id,getdate(),ClassName,ClassTeacher," + iUserID + " from Dance_Arrange,Dance_Class,dance_user where classid=Dance_Class.ID and userid=dance_user.id and Dance_Arrange.ID=" + iid;
-                strSQL += " Delete from Dance_Arrange where ID=" + iid;
+                strSQL += " Delete from Dance_Arrange where  ArrangeTime < DATEADD(dd,-1,getdate()) or ID=" + iid;  // 删除过期预约
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     MessageBox("", "消课成功。", "/Dance/Manage.aspx");

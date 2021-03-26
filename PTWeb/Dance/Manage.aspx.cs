@@ -87,7 +87,7 @@ public partial class Dance_Default3 : PageBase
                 strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " ["+ OP_Mode.Dtv[i]["ClassTeacher"].ToString() + "] </div>";
                 if (Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).AddHours(-3) > System.DateTime.Now && Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)) < System.DateTime.Now.AddDays(3))
                 {
-                    strTemp += "                 <div class=\"tools\">";
+                    strTemp += "                 <div class=\"name\">";
                     strTemp += "                      <a href =\"/Dance/Attend.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-info\">";
                     strTemp += "                          <i class=\"icon-calendar\"></i> 上&nbsp;课 ";
                     strTemp += "                      </a>";

@@ -28,7 +28,7 @@
                                     </div>
                                     <div class="text">正位哈地 (5/10)</div>
 
-                                    <div class="tools">
+                                    <div class="text">
                                         <a href="/Dance/Reserve.aspx" class="btn btn-minier btn-info">
                                             <i class="icon-calendar"></i>我要预约
                                         </a>

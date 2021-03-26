@@ -60,7 +60,7 @@ public partial class Dance_Default2 : PageBase
                     strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["ClassTeacher"].ToString() + " </a>";
                     strTemp += "                  </div>";
                     strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " </div>";
-                    strTemp += "                 <div class=\"tools\">";
+                    strTemp += "                 <div class=\"name\">";
                     strTemp += "                      <a href =\"/Dance/DelReserve.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-info\">";
                     strTemp += "                          <i class=\"icon-calendar\"></i>取消预约";
                     strTemp += "                      </a>";
