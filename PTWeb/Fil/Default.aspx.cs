@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -69,6 +70,23 @@ public partial class Fil_Default : PageBase
             }
         }
 
+    }
+
+    /// <summary>
+    /// 网络上获取新闻
+    /// </summary>
+    private void GetNewsByWeb()
+    {
+        string Url = "http://api.tianapi.com/digiccy/index?key=718245142813425a7adab4f1cd4f64b4";
+
+        var client = new System.Net.WebClient();
+        client.Encoding = System.Text.Encoding.UTF8;
+
+        var data = client.DownloadString(Url);
+        var serializer = new JavaScriptSerializer();
+        var obj = serializer.Deserialize<Dictionary<string, string>>(data);
+
+        MessageBox("", obj["newslist"].ToString());
     }
 
     /// <summary>

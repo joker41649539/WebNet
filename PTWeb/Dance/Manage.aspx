@@ -13,68 +13,7 @@
                 <div class="widget-body">
                     <div class="widget-main no-padding">
                         <div class="dialogs">
-                            <div class="itemdiv dialogdiv">
-                                <div class="user">
-                                    <img src="/images/DanceLogo.jpg" />
-                                </div>
-
-                                <div class="body">
-                                    <div class="time">
-                                        <i class="icon-time"></i>
-                                        <span class="green">14:00-15:00</span>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#">戈老师</a>
-                                    </div>
-                                    <div class="text">正位哈地 (5/10)</div>
-
-                                    <div class="tools">
-                                        <a href="/Dance/Reserve.aspx" class="btn btn-minier btn-info">
-                                            <i class="icon-calendar"></i>我要预约
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="itemdiv dialogdiv">
-                                <div class="user">
-                                    <img src="/images/DanceLogo.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="time">
-                                        <i class="icon-time"></i>
-                                        <span class="green">14:00-15:00</span>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#">戈老师</a>
-                                    </div>
-                                    <div class="text">正位哈地 (5/10)</div>
-                                    <div class="tools">
-                                        <a href="#" class="btn btn-minier btn-info">
-                                            <i class="icon-only icon-share-alt"></i>我要预约
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="itemdiv dialogdiv">
-                                <div class="user">
-                                    <img src="/images/DanceLogo.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="time">
-                                        <i class="icon-time"></i>
-                                        <span class="green">14:00-15:00</span>
-                                    </div>
-                                    <div class="name">
-                                        <a href="#">戈老师</a>
-                                    </div>
-                                    <div class="text">正位哈地 (5/10)</div>
-                                    <div class="tools">
-                                        <a href="#" class="btn btn-minier btn-info">
-                                            <i class="icon-only icon-share-alt"></i>我要预约
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

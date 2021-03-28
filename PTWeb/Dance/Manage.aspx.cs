@@ -26,7 +26,7 @@ public partial class Dance_Default3 : PageBase
         string strWeek2 = string.Empty;
         // 当前星期几
         string strWeek_Now = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetShortestDayName(DateTime.Now.DayOfWeek);
-        string strSQL = "Select Dance_Arrange.ID,ArrangeTime,ClassName,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,Nick,HeadImage from Dance_Arrange,Dance_Class,dance_user where classid=Dance_Class.ID and userid=dance_user.id order by ArrangeTime,ClassTimeStart";
+        string strSQL = "Select (Select sum(numhour) NumHour from Dance_ClassList where Userid=dance_user.ID) NumHour,Dance_Arrange.ID,ArrangeTime,ClassName,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,Nick,HeadImage from Dance_Arrange,Dance_Class,dance_user where classid=Dance_Class.ID and userid=dance_user.id order by ArrangeTime,ClassTimeStart";
         if (OP_Mode.SQLRUN(strSQL))
         {
             for (int i = 0; i < OP_Mode.Dtv.Count; i++)
@@ -82,7 +82,7 @@ public partial class Dance_Default3 : PageBase
 
                 strTemp += "                  </div>";
                 strTemp += "                  <div class=\"name\">";
-                strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["Nick"].ToString() + " </a>";
+                strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["Nick"].ToString() + " 累计["+ OP_Mode.Dtv[i]["NumHour"].ToString() + "]小时</a>";
                 strTemp += "                  </div>";
                 strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " ["+ OP_Mode.Dtv[i]["ClassTeacher"].ToString() + "] </div>";
                 if (Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).AddHours(-3) > System.DateTime.Now && Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)) < System.DateTime.Now.AddDays(3))

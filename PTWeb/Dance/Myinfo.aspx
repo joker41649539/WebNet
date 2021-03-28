@@ -20,7 +20,7 @@
                     <div class="widget-header green">
                         <h4 class="lighter smaller">
                             <i class="icon-calendar"></i>
-                            已上课程
+                            已上课程 累计[<asp:Label ID="Label_Count" runat="server" Text="0"></asp:Label>] 小时
                         </h4>
                     </div>
                     <div class="widget-body">

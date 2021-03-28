@@ -35,7 +35,7 @@
                         </div>
                         <div class="grid2">
                             <span class="grey">
-                                <i class="icon-heart icon-2x red"></i>
+                                <i class="icon-heart icon-2x blue"></i>
                                 &nbsp; 可提现 (FIL)
                             </span>
                             <br />
@@ -45,7 +45,7 @@
 
                         <div class="grid2">
                             <span class="grey">
-                                <i class="icon-lock icon-2x red"></i>
+                                <i class="icon-lock icon-2x blue"></i>
                                 &nbsp; 锁仓中 (FIL)
                             </span>
                             <br />
@@ -54,7 +54,7 @@
                         </div>
                         <div class="grid2">
                             <span class="grey">
-                                <i class="icon-credit-card icon-2x red"></i>
+                                <i class="icon-credit-card icon-2x blue"></i>
                                 &nbsp; 提现中 (FIL)
                             </span>
                             <br />

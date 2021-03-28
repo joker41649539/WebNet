@@ -125,11 +125,15 @@ public partial class Fil_Default2 : PageBase
 
         myStreamReader.Close();
         myResponseStream.Close();
+        try
+        {
+            string strTemp = retString.ToString().Substring(retString.IndexOf("fil"));
 
-        string strTemp = retString.ToString().Substring(retString.IndexOf("fil"));
-
-        // { "code":0,"message":"行情获取成功","data":{"fil":{ "gains":-0.57,"cny":540.68,"usd":82.7361,"high":85.7288,"high_cny":560.24,"low":81.372,"low_cny":531.77} },"time":"2021-03-20 22:06:16"}
-        Label_Fil.Text  = strTemp.Substring(strTemp.IndexOf("cny") + 5, strTemp.IndexOf(",") - 13);
+            // { "code":0,"message":"行情获取成功","data":{"fil":{ "gains":-0.57,"cny":540.68,"usd":82.7361,"high":85.7288,"high_cny":560.24,"low":81.372,"low_cny":531.77} },"time":"2021-03-20 22:06:16"}
+            Label_Fil.Text = strTemp.Substring(strTemp.IndexOf("cny") + 5, strTemp.IndexOf(",") - 13);
+        }
+        catch
+        { }
 
     }
 
@@ -233,9 +237,9 @@ public partial class Fil_Default2 : PageBase
 
         string strSQL = " declare @StartDate DATETIME = (Select min(EffectiveTime) from Fil_PowerComputer where UserID=" + iUserID + ")";
         strSQL += " declare @EndDate DATETIME = getdate()";// +System.DateTime.Now.add;
-        //strSQL += " declare @EndDate DATETIME = '2021-08-16'";
+                                                           //strSQL += " declare @EndDate DATETIME = '2021-08-16'";
         strSQL += " SELECT CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) AS every_time, a.*,(Select isnull(Sum(round(power/SumPower*Gift/180,4)),0) from vfil_gift where DATEDIFF(DAY, LTime,  CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))<180 and UserID=" + iUserID + " and LTime<CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))+isnull(a.DayRelease,0) Release FROM";
-        strSQL += " master..spt_values n left join(Select gift, sumpower, ltime, sum(POWER) power, sum(Round(POWER / sumpower * Gift * 0.25, 4)) DayRelease, sum(Round(POWER / sumpower * Gift, 4)) SumRelease from vfil_gift where userid = " + iUserID.ToString() + " group by gift, sumpower, ltime) a on a.ltime = CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23)";
+        strSQL += " master..spt_values n left join(Select gift, sumpower, ltime, sum(POWER) power, sum(Round(POWER / sumpower * Gift * 0.25 * 0.8, 4)) DayRelease, sum(Round(POWER / sumpower * Gift * 0.8, 4)) SumRelease from vfil_gift where userid = " + iUserID.ToString() + " group by gift, sumpower, ltime) a on a.ltime = CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23)";
         strSQL += " WHERE n.type = 'p' AND n.number <= DATEDIFF(day, @StartDate, @EndDate)";
 
         // OP_Mode.Dtv = new;

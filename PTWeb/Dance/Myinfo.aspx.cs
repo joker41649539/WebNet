@@ -98,12 +98,13 @@ public partial class Dance_Default2 : PageBase
         }
         string strTemp = string.Empty;
 
-        string strSQL = "Select * from Dance_ClassList where Userid=" + iUserID + " order by ClassTime";
+        string strSQL = "Select (Select sum(numhour) NumHour from Dance_ClassList where Userid=" + iUserID + ") NumHour,* from Dance_ClassList where Userid=" + iUserID + " order by ClassTime";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
             {
+                Label_Count.Text = OP_Mode.Dtv[0]["NumHour"].ToString();
                 for (int i = 0; i < OP_Mode.Dtv.Count; i++)
                 {
                     strTemp += "  <div class=\"dialogs\">";
