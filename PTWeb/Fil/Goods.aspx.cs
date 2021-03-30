@@ -32,7 +32,7 @@ public partial class Fil_Default3 : PageBase
                     strTempDiv += "    <div class=\"clearfix\">";
                     strTempDiv += "       <div class=\"grid2\">";
                     strTempDiv += "           <span class=\"grey\">";
-                    strTempDiv += "              <i class=\"icon-facebook-sign icon-2x blue\"></i>";
+                    strTempDiv += "              <img src=\"/images/Fil.png\" width=\"25px\" />";
                     strTempDiv += "               &nbsp; 产品名称：";
                     strTempDiv += "           </span>";
                     strTempDiv += "           <br>";

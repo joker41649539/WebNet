@@ -4,10 +4,10 @@
     <div class="row" style="height: 100%">
         <div class="widget-box">
             <div class="widget-header widget-header-flat widget-header-small">
-                <h3 class="green"><i class="icon-facebook-sign icon-2x green"></i>
+                <h3><img src="/images/Fil.png" width="50px" />
                     FIL值：≈<asp:Label ID="Label_Fil" runat="server" Text="0"></asp:Label>
                     (￥)</h3>
-                <h3><i class="icon-facebook-sign icon-2x blue"></i>
+                <h3><img src="/images/Fil.png" width="50px" />
                     总产出：<b><asp:Label ID="Label_SumFil" runat="server" Text="0"></asp:Label></b>
                     (FIL)
                 </h3>
@@ -26,7 +26,7 @@
                         <div class="grid2">
                             <span class="grey">
                                 <%-- <img src="/img/logo.png" width="25px" />--%>
-                                <i class="icon-facebook-sign icon-2x blue"></i>
+                                <img src="/images/Fil.png" width="25px" />
                                 &nbsp; 总算力(T)
                             </span>
                             <br />
