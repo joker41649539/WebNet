@@ -49,10 +49,10 @@ public partial class Fil_Default3 : PageBase
                     strTempDiv += "  <div class=\"grid2\">";
                     strTempDiv += "      <span class=\"grey\">";
                     strTempDiv += "          <i class=\"icon-credit-card icon-2x red\"></i>";
-                    strTempDiv += "         &nbsp; 销售价(元)：";
+                    strTempDiv += "         &nbsp; 销售价：";
                     strTempDiv += "     </span>";
                     strTempDiv += "     <br>";
-                    strTempDiv += "      <h3 class=\"bigger pull-right red\">" + OP_Mode.Dtv[i]["Price"].ToString() + "</h3>";
+                    strTempDiv += "      <h3 class=\"bigger pull-right red\">" + OP_Mode.Dtv[i]["Price"].ToString() + " CNY </h3>";
                     strTempDiv += "  </div>";
                     strTempDiv += "  <div class=\"grid2\">";
                     strTempDiv += "      <span class=\"grey\">";
@@ -69,8 +69,14 @@ public partial class Fil_Default3 : PageBase
                         strTempDiv += "      <h3 class=\"bigger pull-right\">" + OP_Mode.Dtv[i]["Years"].ToString() + "</h3>";
                     }
                     strTempDiv += "  </div>";
+                    strTempDiv += "   <p>";
 
-                   
+                    strTempDiv += "   <span class=\"label label-primary\">头矿红利</span>";
+                    strTempDiv += "   <span class=\"label label-success\">极速挖矿</span>";
+                    strTempDiv += "   <span class=\"label label-danger\">极速收益</span>";
+                    strTempDiv += "   <span class=\"label label-purple\">无质押</span>";
+                    strTempDiv += "   </p>";
+
                     strTempDiv += "  </div>";
                     strTempDiv += "  </div>";
                     strTempDiv += "  </div>";
