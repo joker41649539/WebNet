@@ -29,8 +29,26 @@
                     </div>
                     <div class="grid2">
                         <span class="grey">
+                            <img src="/images/Fil.png" width="25px" />
+                            &nbsp; 已售算力(T)
+                        </span>
+                        <br />
+                        <h3 class="bigger pull-right">
+                            <asp:Label ID="Label3" runat="server" Text="130"></asp:Label></h3>
+                    </div>
+                    <div class="grid2">
+                        <span class="grey">
+                            <img src="/images/Fil.png" width="25px" />
+                            &nbsp; 待生效算力(T)
+                        </span>
+                        <br />
+                        <h3 class="bigger pull-right">
+                            <asp:Label ID="Label4" runat="server" Text="100"></asp:Label></h3>
+                    </div>
+                    <div class="grid2">
+                        <span class="grey">
                             <i class="icon-heart icon-2x blue"></i>
-                            &nbsp; 公司余额(Fil)
+                            &nbsp; 节点可用余额(Fil)
                         </span>
                         <br />
                         <h3 class="bigger pull-right">

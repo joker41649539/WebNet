@@ -11,7 +11,6 @@ public partial class Dance_Default : PageBase
     {
         if (!IsPostBack)
         {
-            //MessageBox("", "[" + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetShortestDayName(Convert.ToDateTime("2021-03-21").DayOfWeek) + "]");
             LoadClass();
         }
     }
@@ -25,7 +24,11 @@ public partial class Dance_Default : PageBase
         string strWeek2 = string.Empty;
         // 当前星期几
         string strWeek_Now = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetShortestDayName(DateTime.Now.DayOfWeek);
-        string strSQL = "Select ID,classname,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,MaxMen,(Select Count(ID) from Dance_Arrange where classID=Dance_Class.ID) ArrAngeCount from Dance_Class where Flag=0 order by PX,ClassTimeStart";
+  
+        string strSQL = " Delete from Dance_Arrange where  ArrangeTime < DATEADD(dd,-1,getdate()) ";  // 删除过期预约
+
+        strSQL += "Select ID,classname,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,MaxMen,(Select Count(ID) from Dance_Arrange where classID=Dance_Class.ID) ArrAngeCount from Dance_Class where Flag=0 order by PX,ClassTimeStart";
+
         if (OP_Mode.SQLRUN(strSQL))
         {
             for (int i = 0; i < OP_Mode.Dtv.Count; i++)

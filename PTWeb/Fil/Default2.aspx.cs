@@ -34,9 +34,19 @@ public partial class Fil_Default2 : PageBase
         Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
         JArray jarray = (JArray)js["newslist"];
 
+        string strSQL = "";
+
         foreach (var node in jarray)
         {
             NewslistItem itm = JsonConvert.DeserializeObject<NewslistItem>(node.ToString());
+
+            strSQL = "insert into Fil_News(Title,Url,NewsID,PicUrl,Description,LTime) values ('" + itm.title + "','" + itm.url + "','" + itm.id + "','" + itm.picUrl + "','" + itm.description + "','" + itm.ctime + "')";
+
+            if (!OP_Mode.SQLRUN(strSQL))
+            {
+               // MessageBox("", OP_Mode.strErrMsg);
+                break;
+            }
         }
     }
 

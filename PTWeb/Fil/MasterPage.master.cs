@@ -24,9 +24,39 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
             LoadUserInfo();
             // MessageBox("消息提示","测试信息");
+            LoadFoot();
         }
     }
 
+    private void LoadFoot()
+    {
+        int iUserID = 0;
+
+        try
+        {
+            iUserID = Convert.ToInt32(Request.Cookies["Dance"]["USERID"]);
+        }
+        catch
+        { }
+        string strTemp = string.Empty;
+        strTemp += "<ul class=\"footer-nav text-center\">";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Fil/Info.aspx\"><i class=\"icon-home\"></i>汇总信息</a></li>";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Fil/Goods.aspx\"><i class=\"icon-bar-chart\"></i>产品信息</a></li>";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"https://filfox.info/zh/address/f063628\"><i class=\"icon-cloud\"></i>黑瞳节点</a></li>";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Fil/MyInfo.aspx\"><i class=\"icon-desktop\"></i>我的信息</a></li>";
+
+        if (iUserID == 2 || iUserID == 5 || iUserID == 6 || iUserID == 10 || iUserID == 7)
+        {
+            strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Fil/CompanyInfo.aspx\"><i class=\"icon-group\"></i>公司情况</a></li>";
+        }
+        else
+        {
+            strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Fil/Help.aspx\"><i class=\"icon-exclamation-sign\"></i>帮助信息</a></li>";
+        }
+        strTemp += "</ul>";
+
+        FootBut.InnerHtml = strTemp;
+    }
     private bool LoadUserInfo()
     {
         bool rValue = false;

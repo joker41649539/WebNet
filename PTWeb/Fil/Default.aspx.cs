@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -67,26 +69,72 @@ public partial class Fil_Default : PageBase
             else
             {/// 未存储过数据，通过网路更新数据
                 GetTotal();
+                GetNewsByWeb();
             }
         }
 
     }
-
     /// <summary>
-    /// 网络上获取新闻
+    /// 获取币圈新闻
     /// </summary>
     private void GetNewsByWeb()
     {
-        string Url = "http://api.tianapi.com/digiccy/index?key=718245142813425a7adab4f1cd4f64b4";
+        string Url = "http://api.tianapi.com/digiccy/index?key=718245142813425a7adab4f1cd4f64b4&num=10";
 
         var client = new System.Net.WebClient();
         client.Encoding = System.Text.Encoding.UTF8;
 
         var data = client.DownloadString(Url);
-        var serializer = new JavaScriptSerializer();
-        var obj = serializer.Deserialize<Dictionary<string, string>>(data);
+        var jo = (JObject)JsonConvert.DeserializeObject(data);
+        JArray data1 = jo.Value<JArray>("newslist");
+        Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
+        JArray jarray = (JArray)js["newslist"];
 
-        MessageBox("", obj["newslist"].ToString());
+        string strSQL = "";
+
+        foreach (var node in jarray)
+        {
+            NewslistItem itm = JsonConvert.DeserializeObject<NewslistItem>(node.ToString());
+
+            strSQL = "insert into Fil_News(Title,Url,NewsID,PicUrl,Description,LTime) values ('" + itm.title + "','" + itm.url + "','" + itm.id + "','" + itm.picUrl + "','" + itm.description + "','" + itm.ctime + "')";
+
+            if (!OP_Mode.SQLRUN(strSQL))
+            {
+                // MessageBox("", OP_Mode.strErrMsg);
+                break;
+            }
+        }
+    }
+    public class NewslistItem
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string id { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ctime { get; set; }
+        /// <summary>
+        /// 特斯拉成首家接受数字货币支付的汽车制造商
+        /// </summary>
+        public string title { get; set; }
+        /// <summary>
+        /// 原标题：特斯拉成首家接受数字货币支付的汽车制造商来源：东方财富网原标题：特斯拉成首家接受数字货币支付的汽车制造商上个月，特斯拉被曝购买了价值15亿美
+        /// </summary>
+        public string description { get; set; }
+        /// <summary>
+        /// 币圈资讯
+        /// </summary>
+        public string source { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string picUrl { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string url { get; set; }
     }
 
     /// <summary>

@@ -26,7 +26,7 @@ public partial class Fil_Default3 : PageBase
         strSQL += " master..spt_values n left join(Select gift, sumpower, ltime, sum(POWER) power, sum(Round(POWER / sumpower * Gift * 0.25 * 0.8, 4)) DayRelease, sum(Round(POWER / sumpower * Gift * 0.8, 4)) SumRelease from vfil_gift Where Test=" + iTest + " group by gift, sumpower, ltime) a on a.ltime = CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23)";
         strSQL += " WHERE n.type = 'p' AND n.number <= DATEDIFF(day, @StartDate, @EndDate)";
         //NULL 
-       // declare @StartDate DATETIME = (Select min(EffectiveTime) from Fil_PowerComputer where Test = 0) declare @EndDate DATETIME = getdate() SELECT CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) AS every_time, a.*,(Select isnull(Sum(round(power / SumPower * Gift / 180, 4)), 0) from vfil_gift where DATEDIFF(DAY, LTime, CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23)) < 180 and LTime<CONVERT (VARCHAR (100),dateadd(day, n.number, @StartDate),23) and Test = 0)+isnull(a.DayRelease, 0) Release FROM master..spt_values n left join(Select gift, sumpower, ltime, sum(POWER) power, sum(Round(POWER / sumpower * Gift * 0.25 * 0.8, 4)) DayRelease, sum(Round(POWER / sumpower * Gift * 0.8, 4)) SumRelease from vfil_gift where Test = 0 group by gift, sumpower, ltime) a on a.ltime = CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) WHERE n.type = 'p' AND n.number <= DATEDIFF(day, @StartDate, @EndDate)
+        // declare @StartDate DATETIME = (Select min(EffectiveTime) from Fil_PowerComputer where Test = 0) declare @EndDate DATETIME = getdate() SELECT CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) AS every_time, a.*,(Select isnull(Sum(round(power / SumPower * Gift / 180, 4)), 0) from vfil_gift where DATEDIFF(DAY, LTime, CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23)) < 180 and LTime<CONVERT (VARCHAR (100),dateadd(day, n.number, @StartDate),23) and Test = 0)+isnull(a.DayRelease, 0) Release FROM master..spt_values n left join(Select gift, sumpower, ltime, sum(POWER) power, sum(Round(POWER / sumpower * Gift * 0.25 * 0.8, 4)) DayRelease, sum(Round(POWER / sumpower * Gift * 0.8, 4)) SumRelease from vfil_gift where Test = 0 group by gift, sumpower, ltime) a on a.ltime = CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) WHERE n.type = 'p' AND n.number <= DATEDIFF(day, @StartDate, @EndDate)
 
 
         if (OP_Mode.SQLRUN(strSQL))
@@ -56,6 +56,22 @@ public partial class Fil_Default3 : PageBase
             Label_Lock.Text = SumBalance.ToString();
             // 售出锁仓
             Label1.Text = (SumRelease - SumBalance).ToString();
+        }
+
+        strSQL = " Select ";
+        strSQL += " (Select SUm(Power) from Fil_PowerComputer where Test=1 and EndTime>getdate()) as SumPower,";
+        strSQL += " (Select SUm(Power) from Fil_PowerComputer where Test=1 and EffectiveTime>getdate() and EndTime>getdate()) as EffectivePower,";
+        strSQL += " (Select top 1 filye from Fil_Summary order by id desc) as Filye,";
+        strSQL += " (Select top 1 Lock from Fil_Summary order by id desc) as Lock";
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                Label3.Text = OP_Mode.Dtv[0]["SumPower"].ToString();
+                Label4.Text = OP_Mode.Dtv[0]["EffectivePower"].ToString();
+                Label2.Text = OP_Mode.Dtv[0]["Filye"].ToString();
+                Label_Withdraw.Text = OP_Mode.Dtv[0]["Lock"].ToString();
+            }
         }
     }
 }
