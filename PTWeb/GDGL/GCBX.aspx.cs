@@ -42,7 +42,7 @@ public partial class GDGL_GCBX : PageBase
                 Label9.Text = OP_Mode.Dtv[0]["FS"].ToString();
                 // TextBox2.Text= OP_Mode.Dtv[0]["XH"].ToString();
                 /// 加载已经安装的人员
-                strSQL = "Select CNAME,FS,AZFS,S_USERINFO.ID,Remark,XH from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
+                strSQL = "Select CNAME,FS,AZFS,S_USERINFO.ID,Remark,XH,W_GCGD_FS.ID FSID from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     string strTemp = string.Empty;
@@ -56,7 +56,7 @@ public partial class GDGL_GCBX : PageBase
                             TextBox2.Text = OP_Mode.Dtv[i]["XH"].ToString();
                             bUser = true;
                         }
-                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 布线【" + OP_Mode.Dtv[i]["FS"].ToString() + " %】";
+                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 布线【" + OP_Mode.Dtv[i]["FS"].ToString() + " %】<a href='GCBXDel.aspx?ID=" + OP_Mode.Dtv[i]["FSID"].ToString() + "'>删除</a>";
                         if (Convert.ToDouble(OP_Mode.Dtv[i]["XH"]) > 0)
                         {
                             strTemp += "消耗【" + OP_Mode.Dtv[i]["XH"].ToString() + " 米】";
