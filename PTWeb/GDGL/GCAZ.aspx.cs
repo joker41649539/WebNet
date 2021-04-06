@@ -42,7 +42,7 @@ public partial class GDGL_GCAZ : PageBase
                 Label11.Text = OP_Mode.Dtv[0]["AZFS"].ToString();
 
                 /// 加载已经安装的人员
-                strSQL = "Select CNAME,AZFS,remark,S_USERINFO.ID ID from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
+                strSQL = "Select CNAME,AZFS,remark,S_USERINFO.ID ID,W_GCGD_FS.ID FSID from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     string strTemp = string.Empty;
@@ -56,7 +56,7 @@ public partial class GDGL_GCAZ : PageBase
                             TextBox_Remark.Text = OP_Mode.Dtv[i]["Remark"].ToString();
                             bUser = true;
                         }
-                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 安装【" + OP_Mode.Dtv[i]["AZFS"].ToString() + " %】<br/>";
+                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 安装【" + OP_Mode.Dtv[i]["AZFS"].ToString() + " %】<a href='GCBXDel.aspx?ID=" + OP_Mode.Dtv[i]["FSID"].ToString() + "'>删除</a><br/>";
                     }
                     if (strTemp.Length > 0)
                     {
