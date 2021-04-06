@@ -100,10 +100,10 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                     /// 给用户ID赋值
                     HiddenField_UserID.Value = OP_Mode.Dtv[0]["ID"].ToString().Trim();
                     Label_Nick.Text = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
-                    if (OP_Mode.Dtv[0]["HeadImage"].ToString().Trim().Length > 0)
-                    {
-                        Image_Header.ImageUrl = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
-                    }
+                    //if (OP_Mode.Dtv[0]["HeadImage"].ToString().Trim().Length > 0)
+                    //{
+                    //    Image_Header.ImageUrl = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+                    //}
                     /// 更新登录时间
                     OP_Mode.SQLRUN("Update Fil_Users set Ltime=getdate() where ID=" + iWeChatID);
                 }

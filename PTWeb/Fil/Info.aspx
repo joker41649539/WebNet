@@ -4,10 +4,10 @@
     <div class="row" style="height: 100%">
         <div class="widget-box">
             <div class="widget-header widget-header-flat widget-header-small">
-                <h3><img src="/images/Fil.png" width="50px" />
+                <h3><img src="/images/Fil.png" width="30px" />
                     FIL值：≈<asp:Label ID="Label_Fil" runat="server" Text="0"></asp:Label>
                     (￥)</h3>
-                <h3><img src="/images/Fil.png" width="50px" />
+                <h3><img src="/images/Fil.png" width="30px" />
                     总产出：<b><asp:Label ID="Label_SumFil" runat="server" Text="0"></asp:Label></b>
                     (FIL)
                 </h3>

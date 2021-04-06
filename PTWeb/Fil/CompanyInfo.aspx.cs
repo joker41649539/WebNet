@@ -46,11 +46,11 @@ public partial class Fil_Default3 : PageBase
             }
             if (OP_Mode.Dtv.Count > 0)
             {// 最新公司总算力
-                Label_SumPower.Text = OP_Mode.Dtv[OP_Mode.Dtv.Count - 1]["SumPower"].ToString();
-                // 公司总算力 - 已经生效的算力 = 公司掌握的实际算力。
-                Label_Release.Text = (Convert.ToInt16(OP_Mode.Dtv[OP_Mode.Dtv.Count - 1]["SumPower"]) - Convert.ToInt16(OP_Mode.Dtv[OP_Mode.Dtv.Count - 1]["Power"])).ToString();
-                // 公司矿工账户余额
-                Label2.Text = "0";
+             //Label_SumPower.Text = OP_Mode.Dtv[OP_Mode.Dtv.Count - 1]["SumPower"].ToString();
+             //// 公司总算力 - 已经生效的算力 = 公司掌握的实际算力。
+             // Label_Release.Text = Convert.ToInt16(OP_Mode.Dtv[OP_Mode.Dtv.Count - 1]["Power"])).ToString();
+             //// 公司矿工账户余额
+             //Label2.Text = "0";
             }
             //售出可提现
             Label_Lock.Text = SumBalance.ToString();
@@ -60,9 +60,11 @@ public partial class Fil_Default3 : PageBase
 
         strSQL = " Select ";
         strSQL += " (Select SUm(Power) from Fil_PowerComputer where Test=1 and EndTime>getdate()) as SumPower,";
+        strSQL += " (Select top 1 SumPower from Fil_Summary order by id desc) as SumPowerAll,";
         strSQL += " (Select SUm(Power) from Fil_PowerComputer where Test=1 and EffectiveTime>getdate() and EndTime>getdate()) as EffectivePower,";
         strSQL += " (Select top 1 filye from Fil_Summary order by id desc) as Filye,";
-        strSQL += " (Select top 1 Lock from Fil_Summary order by id desc) as Lock";
+        strSQL += " (Select top 1 Lock from Fil_Summary order by id desc) as Lock,";
+        strSQL += " (Select sum(Power) from Fil_PowerComputer where EffectiveTime<getdate() and EndTime>getdate() and test=1) as Power";
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
@@ -71,6 +73,9 @@ public partial class Fil_Default3 : PageBase
                 Label4.Text = OP_Mode.Dtv[0]["EffectivePower"].ToString();
                 Label2.Text = OP_Mode.Dtv[0]["Filye"].ToString();
                 Label_Withdraw.Text = OP_Mode.Dtv[0]["Lock"].ToString();
+                Label_SumPower.Text = OP_Mode.Dtv[0]["SumPowerAll"].ToString();
+                //// 公司总算力 - 已经生效的算力 = 公司掌握的实际算力。
+                Label_Release.Text = (Convert.ToDecimal(OP_Mode.Dtv[0]["SumPowerAll"]) - Convert.ToDecimal(OP_Mode.Dtv[0]["Power"])).ToString();
             }
         }
     }
