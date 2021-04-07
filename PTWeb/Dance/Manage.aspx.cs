@@ -82,17 +82,17 @@ public partial class Dance_Default3 : PageBase
 
                 strTemp += "                  </div>";
                 strTemp += "                  <div class=\"name\">";
-                strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["Nick"].ToString() + " 累计["+ OP_Mode.Dtv[i]["NumHour"].ToString() + "]小时</a>";
+                strTemp += "                     <a href=\"#\"> " + OP_Mode.Dtv[i]["Nick"].ToString() + " 累计[" + OP_Mode.Dtv[i]["NumHour"].ToString() + "]小时</a>";
                 strTemp += "                  </div>";
-                strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " ["+ OP_Mode.Dtv[i]["ClassTeacher"].ToString() + "] </div>";
-                if (Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).AddHours(-3) > System.DateTime.Now && Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)) < System.DateTime.Now.AddDays(3))
-                {
-                    strTemp += "                 <div class=\"name\">";
-                    strTemp += "                      <a href =\"/Dance/Attend.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-info\">";
-                    strTemp += "                          <i class=\"icon-calendar\"></i> 上&nbsp;课 ";
-                    strTemp += "                      </a>";
-                    strTemp += "                   </div>";
-                }
+                strTemp += "                <div class=\"text\">" + OP_Mode.Dtv[i]["classname"].ToString() + " [" + OP_Mode.Dtv[i]["ClassTeacher"].ToString() + "] </div>";
+                //if (Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).AddHours(-3) > System.DateTime.Now && Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)) < System.DateTime.Now.AddDays(3))
+                //{
+                strTemp += "                 <div class=\"name\">";
+                strTemp += "                      <a href =\"/Dance/Attend.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-info\">";
+                strTemp += "                          <i class=\"icon-calendar\"></i> 上&nbsp;课 ";
+                strTemp += "                      </a>";
+                strTemp += "                   </div>";
+                //}
                 strTemp += "               </div>";
                 strTemp += "           </div>";
 
