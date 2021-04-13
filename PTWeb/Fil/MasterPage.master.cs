@@ -34,7 +34,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
         try
         {
-            iUserID = Convert.ToInt32(Request.Cookies["Dance"]["USERID"]);
+            iUserID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
         }
         catch
         { }

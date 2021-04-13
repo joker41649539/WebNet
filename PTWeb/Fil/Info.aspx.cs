@@ -9,6 +9,8 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public partial class Fil_Default2 : PageBase
 {
@@ -96,45 +98,78 @@ public partial class Fil_Default2 : PageBase
         //{
         //    MessageBox("", ex.ToString());
         //}
-
-        /// https://www.ztpay.org/  账号： 41649539@qq.com  joK121
-        /// 
-        string Appid = "ztpayj44ocmpkavmgs";
-        string AppSecret = "vOAF74hUzs9pGgpNovXNM8jqzuYrG8H2";
-        string Url = "https://sapi.ztpay.org/api/v2";
-
-        var client = new System.Net.WebClient();
-        client.Encoding = System.Text.Encoding.UTF8;
-
-        string stringSignTemp = "appid=" + Appid + "&method=market&key=" + AppSecret;
-
-        string strMakeSign = "appid=" + Appid + "&method=market&sign=" + GetMD5(stringSignTemp).ToUpper();
-
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
-        request.Method = "POST";
-
-        byte[] bytes = Encoding.UTF8.GetBytes(strMakeSign);
-        request.ContentType = "application/x-www-form-urlencoded";
-        request.ContentLength = bytes.Length;
-        Stream myResponseStream = request.GetRequestStream();
-        myResponseStream.Write(bytes, 0, bytes.Length);
-
-        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        StreamReader myStreamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-        string retString = myStreamReader.ReadToEnd();
-
-        myStreamReader.Close();
-        myResponseStream.Close();
         try
         {
+
+            /// https://www.ztpay.org/  账号： 41649539@qq.com  joK121
+            /// 
+            string Appid = "ztpayj44ocmpkavmgs";
+            string AppSecret = "vOAF74hUzs9pGgpNovXNM8jqzuYrG8H2";
+            string Url = "https://sapi.ztpay.org/api/v2";
+
+            var client = new System.Net.WebClient();
+            client.Encoding = System.Text.Encoding.UTF8;
+
+            string stringSignTemp = "appid=" + Appid + "&method=market&key=" + AppSecret;
+
+            string strMakeSign = "appid=" + Appid + "&method=market&sign=" + GetMD5(stringSignTemp).ToUpper();
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+            request.Method = "POST";
+
+            byte[] bytes = Encoding.UTF8.GetBytes(strMakeSign);
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = bytes.Length;
+            Stream myResponseStream = request.GetRequestStream();
+            myResponseStream.Write(bytes, 0, bytes.Length);
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader myStreamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+            var jo = (JObject)JsonConvert.DeserializeObject(myStreamReader.ReadToEnd());
+            var jo1 = (JObject)JsonConvert.DeserializeObject(jo.Root.ToString());
+            JArray data1 = jo.Value<JArray>("data");
+            string retString = myStreamReader.ReadToEnd();
+
+            myStreamReader.Close();
+            myResponseStream.Close();
+            //var data = client.DownloadString(Url + strMakeSign);
+            //var jo = (JObject)JsonConvert.DeserializeObject(retString);
+            //JArray data1 = jo.Value<JArray>("data");
+            //Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
+            //JArray jarray = (JArray)js["cny"];
+
             string strTemp = retString.ToString().Substring(retString.IndexOf("fil"));
 
             // { "code":0,"message":"行情获取成功","data":{"fil":{ "gains":-0.57,"cny":540.68,"usd":82.7361,"high":85.7288,"high_cny":560.24,"low":81.372,"low_cny":531.77} },"time":"2021-03-20 22:06:16"}
             Label_Fil.Text = strTemp.Substring(strTemp.IndexOf("cny") + 5, strTemp.IndexOf(",") - 13);
         }
-        catch
-        { }
+        catch (Exception ex)
+        {
 
+        }
+        //var client = new System.Net.WebClient();
+        //client.Encoding = System.Text.Encoding.UTF8;
+
+        //var data = client.DownloadString(Url);
+        //var jo = (JObject)JsonConvert.DeserializeObject(data);
+        //JArray data1 = jo.Value<JArray>("newslist");
+        //Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
+        //JArray jarray = (JArray)js["newslist"];
+
+        //string strSQL = "";
+
+        //foreach (var node in jarray)
+        //{
+        //    NewslistItem itm = JsonConvert.DeserializeObject<NewslistItem>(node.ToString());
+
+        //    strSQL = "insert into Fil_News(Title,Url,NewsID,PicUrl,Description,LTime) values ('" + itm.title + "','" + itm.url + "','" + itm.id + "','" + itm.picUrl + "','" + itm.description + "','" + itm.ctime + "')";
+
+        //    if (!OP_Mode.SQLRUN(strSQL))
+        //    {
+        //        // MessageBox("", OP_Mode.strErrMsg);
+        //        break;
+        //    }
+        //}
     }
 
     #region "GridView_Info 读取产出明细 相关代码"

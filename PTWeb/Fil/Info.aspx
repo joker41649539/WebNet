@@ -4,10 +4,12 @@
     <div class="row" style="height: 100%">
         <div class="widget-box">
             <div class="widget-header widget-header-flat widget-header-small">
-                <h3><img src="/images/Fil.png" width="30px" />
+                <h3>
+                    <img src="/images/Fil.png" width="30px" />
                     FIL值：≈<asp:Label ID="Label_Fil" runat="server" Text="0"></asp:Label>
                     (￥)</h3>
-                <h3><img src="/images/Fil.png" width="30px" />
+                <h3>
+                    <img src="/images/Fil.png" width="30px" />
                     总产出：<b><asp:Label ID="Label_SumFil" runat="server" Text="0"></asp:Label></b>
                     (FIL)
                 </h3>
@@ -65,6 +67,9 @@
                 </div>
                 <!-- /widget-main -->
             </div>
+            <p>
+                <a href="/Fil/Withdrawal.aspx" class="btn btn-success btn-block">我要提现</a>
+            </p>
             <!-- /widget-body -->
         </div>
         <asp:GridView ID="GridView_Info" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView_Info_Sorting" OnSelectedIndexChanging="GridView_Info_SelectedIndexChanging">
