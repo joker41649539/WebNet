@@ -371,7 +371,7 @@
             <Table主数据2_Cell1 Ref="30" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,3.8,0.8</ClientRectangle>
+              <ClientRectangle>0,0,5.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -390,7 +390,7 @@
             <Table主数据2_Cell2 Ref="31" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.8,0,3.8,0.8</ClientRectangle>
+              <ClientRectangle>5.2,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -466,7 +466,7 @@
             <Table主数据2_Cell6 Ref="35" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.8,3.8,0.8</ClientRectangle>
+              <ClientRectangle>0,0.8,5.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -484,7 +484,7 @@
             <Table主数据2_Cell7 Ref="36" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.8,0.8,3.8,0.8</ClientRectangle>
+              <ClientRectangle>5.2,0.8,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -596,10 +596,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>2/24/2021 11:21:47 AM</ReportChanged>
+  <ReportChanged>4/16/2021 10:27:00 AM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
-  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdListBankID.mrt</ReportFile>
-  <ReportGuid>ad20f21ae26c49d1a36c8eb4c9060e48</ReportGuid>
+  <ReportFile>D:\Work\WebNet\PTWeb\BBGL\BB\BxdListBankID.mrt</ReportFile>
+  <ReportGuid>f19814c31a0f47ae953d5c8ec6eff46e</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

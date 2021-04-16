@@ -49,7 +49,7 @@ public partial class Fil_Default3 : PageBase
                     strTempDiv += "  <div class=\"grid2\">";
                     strTempDiv += "      <span class=\"grey\">";
                     strTempDiv += "          <i class=\"icon-credit-card icon-2x red\"></i>";
-                    strTempDiv += "         &nbsp; 销售价(元)：";
+                    strTempDiv += "         &nbsp; 销售价(Fil)：";
                     strTempDiv += "     </span>";
                     strTempDiv += "     <br>";
                     strTempDiv += "      <h3 class=\"bigger pull-right red\">" + OP_Mode.Dtv[i]["Price"].ToString() + "</h3>";
