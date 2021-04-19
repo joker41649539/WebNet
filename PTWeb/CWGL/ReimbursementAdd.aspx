@@ -35,6 +35,14 @@
     </div>
     <div class="col-xs-12">
         <div class="form-group">
+            <label runat="server" id="Label17" class="col-sm-3 control-label no-padding-right" for="form-field-1">收款人：</label>
+            <div class="col-sm-9">
+               <asp:TextBox ID="TextBox_Cname" ClientIDMode="Static" runat="server" placeholder="请输入收款人" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">报销类型：</label>
             &nbsp;&nbsp;
             <asp:RadioButtonList ID="RadioButtonList1" runat="server" class="ace" RepeatColumns="3" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" AutoPostBack="True">
@@ -80,6 +88,9 @@
                         <asp:ListItem>停车费</asp:ListItem>
                         <asp:ListItem>加油费</asp:ListItem>
                         <asp:ListItem>招待费</asp:ListItem>
+                        <asp:ListItem>办公费</asp:ListItem>
+                        <asp:ListItem>福利费</asp:ListItem>
+                        <asp:ListItem>行政综合</asp:ListItem>
                         <asp:ListItem>其他</asp:ListItem>
                     </asp:DropDownList>
                 </div>

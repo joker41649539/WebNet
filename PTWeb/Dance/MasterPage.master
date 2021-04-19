@@ -26,7 +26,7 @@
     <script src='/assets/alert/makeSy.js'></script>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/Logo.ico" media="screen" />
-    <title>合肥遇见舞蹈工作室</title>
+    <title>Swan Lady舞蹈瑜伽</title>
 </head>
 <body>
 
@@ -69,7 +69,7 @@
                             <i class="icon-circle light-green middle"></i>
                             &nbsp;
 															<span class="white">
-                                                                <asp:Label ID="Label_Nick" runat="server" Text="遇见舞蹈瑜伽"></asp:Label></span>
+                                                                <asp:Label ID="Label_Nick" runat="server" Text="Swan Lady 舞蹈瑜伽"></asp:Label></span>
                         </a>
                     </div>
                 </div>

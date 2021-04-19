@@ -37,7 +37,7 @@ public partial class CWGL_Default2 : PageBase
             int IID = Convert.ToInt32(Request["ID"]);
             if (IID > 0)
             {
-                string strSQL = "Select UserName,BXLX,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark RemarkSum,W_BXD1.FLAG,(Select top 1 Remark from w_examine where djbh=W_BXD1.BXDH and ireturn<>0 order by ltime desc) ReturnMSG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
+                string strSQL = "Select UserName,BXLX,SKR,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark RemarkSum,W_BXD1.FLAG,(Select top 1 Remark from w_examine where djbh=W_BXD1.BXDH and ireturn<>0 order by ltime desc) ReturnMSG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
                 if (OP_Mode.SQLRUN(strSQL))
                 {
                     if (OP_Mode.Dtv.Count > 0)
@@ -45,6 +45,8 @@ public partial class CWGL_Default2 : PageBase
                         bool bDel = true;
                         Label_No.Text = OP_Mode.Dtv[0]["BXDH"].ToString();
                         TextBox_Remark.Text = OP_Mode.Dtv[0]["RemarkSum"].ToString();
+
+                        TextBox_Cname.Text = OP_Mode.Dtv[0]["SKR"].ToString();
 
                         if (OP_Mode.Dtv[0]["ReturnMSG"].ToString().Length > 0)
                         { /// 被退回单据
@@ -141,6 +143,7 @@ public partial class CWGL_Default2 : PageBase
             {
                 Label_No.Text = "等待生成编号";
                 Label_CName.Text = UserNAME;
+                TextBox_Cname.Text = UserNAME;
             }
         }
         catch
@@ -336,7 +339,7 @@ public partial class CWGL_Default2 : PageBase
 
         int intClass = Convert.ToInt32(HiddenField1.Value);
 
-        if (strFYLX == "交通费" || strFYLX == "补助")
+        if (strFYLX == "交通费" || strFYLX == "补助" || strFYLX == "办公费" || strFYLX == "福利费" || strFYLX == "行政综合")
         {
             rValue = 1;
         }
@@ -480,6 +483,11 @@ public partial class CWGL_Default2 : PageBase
                     ErrMsg += i + "、报销金额必须大于0。<br>";
                 }
             }
+            if (TextBox_Cname.Text.Length <= 0)
+            {
+                i = i + 1;
+                ErrMsg += i + "、收款人必须填写。<br>";
+            }
         }
 
         if (ErrMsg.Length > 0)
@@ -516,14 +524,14 @@ public partial class CWGL_Default2 : PageBase
                 int newID = 0;
                 if (Label_No.Text.Length == "BXD2020-12-01-0001".Length)
                 {/// 更新主表数据
-                    strSQL = " Update w_bxd1 set BXLX='" + RadioButtonList1.SelectedValue + "',Remark='" + TextBox_Remark.Text.Replace("'", "") + "',LTIME=getdate() where BXDH='" + Label_No.Text + "'";
+                    strSQL = " Update w_bxd1 set BXLX='" + RadioButtonList1.SelectedValue + "',SKR='" + TextBox_Cname.Text + "',Remark='" + TextBox_Remark.Text.Replace("'", "") + "',LTIME=getdate() where BXDH='" + Label_No.Text + "'";
 
                     strSQL += " SELECT * FROM w_bxd1 WHERE BXDH='" + Label_No.Text + "'";
                 }
                 else
                 {/// 插入数据 
                     //1、插入主表数据
-                    strSQL = " Insert into w_bxd1 (UserName,BXDH,FLAG,BXLX,Remark) values ('" + UserNAME + "',(SELECT  'BXD'+CONVERT(VARCHAR(10),GETDATE(),120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(BXDH,4)),'0000') + 1 AS VARCHAR),4) FROM w_bxd1 WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10),CTIME,120)),0," + RadioButtonList1.SelectedValue + ",'" + TextBox_Remark.Text.Replace("'", "") + "')";
+                    strSQL = " Insert into w_bxd1 (UserName,BXDH,FLAG,BXLX,Remark,skr) values ('" + UserNAME + "',(SELECT  'BXD'+CONVERT(VARCHAR(10),GETDATE(),120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(BXDH,4)),'0000') + 1 AS VARCHAR),4) FROM w_bxd1 WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10),CTIME,120)),0," + RadioButtonList1.SelectedValue + ",'" + TextBox_Remark.Text.Replace("'", "") + "','" + TextBox_Cname.Text + "')";
 
                     /// 查询主表数据（用来显示新插入的报销单编号
                     strSQL += " SELECT * FROM w_bxd1 WHERE ID=SCOPE_IDENTITY()";
@@ -669,9 +677,17 @@ public partial class CWGL_Default2 : PageBase
                     strMC = TextBox_MC.Text.Replace("'", "");// 名称
                     strBecity = TextBox_Becity.Text.Replace("'", "");// 出发地点
                     strArrival = TextBox_Arrival.Text.Replace("'", "");//到达地点
-                    strNum = Convert.ToDouble(TextBox_Num.Text);// 报销金额
-                    strRemark2 = TextBox_Remark2.Text.Replace("'", "");//报销说明信息
 
+                    if (DropDownList1.SelectedValue == "补助")
+                    {
+                        strNum = db_Bk + Db_ZC + DB_WC + Db_ZC;
+                    }
+                    else
+                    {
+                        strNum = Convert.ToDouble(TextBox_Num.Text);// 报销金额
+                    }
+
+                    strRemark2 = TextBox_Remark2.Text.Replace("'", "");//报销说明信息
 
                     imageName = "/BxImages/" + imageName;
                     imageName2 = "/BxImages/" + imageName2;
@@ -718,7 +734,6 @@ public partial class CWGL_Default2 : PageBase
                     }
                     if (OP_Mode.SQLRUN(strSQL))
                     {
-
                         if (MXID > 0)
                         {
                             MessageBox("", "明细修改成功。", "/CWGL/ReimbursementAdd.ASPX?ID=" + Request["ID"]);
@@ -787,7 +802,7 @@ public partial class CWGL_Default2 : PageBase
                         }
 
                         //  添加水印
-                        System.Drawing.Image imgSrc = AddText(@URLpath, "50,50", "300, 100", "报销");
+                        System.Drawing.Image imgSrc = AddText(@URLpath, "50,50", "300, 100", string.Empty);
 
                         string imageName = "SY" + newname;
                         string newpath = Server.MapPath(@"/BxImages/" + imageName);
@@ -1105,7 +1120,7 @@ public partial class CWGL_Default2 : PageBase
 
         if (Label_Flag.Text == "待提交")
         {
-            strSQL += " Update W_BXD1 Set Flag=" + NewFlag + ",Remark='" + TextBox_Remark.Text + "',LTime=getdate() where BXDH='" + Label_No.Text + "'";
+            strSQL += " Update W_BXD1 Set Flag=" + NewFlag + ",SKR='" + TextBox_Cname.Text + "',Remark='" + TextBox_Remark.Text + "',LTime=getdate() where BXDH='" + Label_No.Text + "'";
         }
         else
         {

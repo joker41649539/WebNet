@@ -1,6 +1,16 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dance/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Dance_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <span class="btn-toolbar inline middle no-margin">
+        <span id="accordion-style" data-toggle="buttons" class="btn-group no-margin">
+            <label class="btn btn-xs btn-yellow active">
+               <a href="#"> 滨江花月店</a>
+            </label>
+            <label class="btn btn-xs btn-yellow ">
+               <a href="#"> 金中环店</a>
+            </label>
+        </span>
+    </span>
     <div class="row">
         <div class="col-xs-12" runat="server" id="ClassList">
             <div class="widget-box ">

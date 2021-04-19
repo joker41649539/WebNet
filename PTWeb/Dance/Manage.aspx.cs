@@ -13,7 +13,6 @@ public partial class Dance_Default3 : PageBase
         {
             LoadClass();
         }
-
     }
 
     /// <summary>

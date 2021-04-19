@@ -12,16 +12,17 @@
     <DataSources isList="true" count="12">
       <主数据 Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
         <Alias>主数据</Alias>
-        <Columns isList="true" count="2">
+        <Columns isList="true" count="3">
           <value>UserName,System.String</value>
           <value>BankID,System.String</value>
+          <value>SKR,System.String</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
         <Name>主数据</Name>
         <NameInSource>连接</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>Select UserName,BankID from W_BXD1,W_BXD2,S_USERINFO where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.FLAG=6 and CNAME=UserName and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' and UserName like '%{UserName}%' group by UserName,BankID</SqlCommand>
+        <SqlCommand>Select UserName,BankID,SKR from W_BXD1,W_BXD2,S_USERINFO where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.FLAG=6 and CNAME=UserName and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' and UserName like '%{UserName}%' group by UserName,BankID,SKR</SqlCommand>
       </主数据>
       <交通费 Ref="4" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
         <Alias>交通费</Alias>
@@ -514,8 +515,9 @@
               <Page isRef="26" />
               <Parent isRef="29" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.UserName}</Text>
+              <Text>{主数据.SKR}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell8>
             <Table主数据2_Cell9 Ref="38" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
@@ -596,10 +598,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/16/2021 10:27:00 AM</ReportChanged>
+  <ReportChanged>4/19/2021 10:02:14 AM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
   <ReportFile>D:\Work\WebNet\PTWeb\BBGL\BB\BxdListBankID.mrt</ReportFile>
-  <ReportGuid>f19814c31a0f47ae953d5c8ec6eff46e</ReportGuid>
+  <ReportGuid>757bdd624a5d459db854026664f1609c</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>
