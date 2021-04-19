@@ -21,6 +21,11 @@
                     <br />
                     已提现(Fil)
                 </div>
+                <%--<div class="grid2">
+                    <span class="bigger-175 blue"><a href="#">0</a></span>
+                    <br />
+                    <a href="#">已提现现金(CNY)</a>
+                </div>--%>
             </div>
             <div class="hr hr16 dotted"></div>
         </div>

@@ -63,43 +63,43 @@ public partial class Fil_Default2 : PageBase
     /// </summary>
     public void GetTotal()
     {
+        //try
+        //{
+        //   // string HQUrl = "https://filfox.info/zh"; //行情信息
+        //    string HQUrl = "https://www.mytokencap.com/currency/fil/821765876"; //行情信息
+
+        //    List<string> result = new List<string>();
+
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"" + HQUrl + "");
+        //    request.Timeout = 4000;
+        //    request.ReadWriteTimeout = 4000;
+        //    WebResponse response = request.GetResponse();
+        //    Stream resStream = response.GetResponseStream();
+        //    StreamReader sr = new StreamReader(resStream, Encoding.UTF8);
+        //    string content = sr.ReadToEnd();
+
+        //    string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
+
+        //    /// 总余额
+        //    string strHQ = "≈¥";
+
+        //    int startIndex = content.IndexOf(strHQ);
+        //    int length = content.IndexOf("</div>", startIndex) - startIndex;
+
+        //    /// 获得 总余额
+        //    totalDataStr = content.Substring(startIndex, length);
+
+        //    /// 获得 总余额
+        //    double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
+        //    // 行情
+        //    Label_Fil.Text = (NumHQ).ToString();
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox("", ex.ToString());
+        //}
         try
         {
-            //   // string HQUrl = "https://filfox.info/zh"; //行情信息
-            //    string HQUrl = "https://www.mytokencap.com/currency/fil/821765876"; //行情信息
-
-            //    List<string> result = new List<string>();
-
-            //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"" + HQUrl + "");
-            //    request.Timeout = 4000;
-            //    request.ReadWriteTimeout = 4000;
-            //    WebResponse response = request.GetResponse();
-            //    Stream resStream = response.GetResponseStream();
-            //    StreamReader sr = new StreamReader(resStream, Encoding.UTF8);
-            //    string content = sr.ReadToEnd();
-
-            //    string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
-
-            //    /// 总余额
-            //    string strHQ = "≈¥";
-
-            //    int startIndex = content.IndexOf(strHQ);
-            //    int length = content.IndexOf("</div>", startIndex) - startIndex;
-
-            //    /// 获得 总余额
-            //    totalDataStr = content.Substring(startIndex, length);
-
-            //    /// 获得 总余额
-            //    double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
-            //    // 行情
-            //    Label_Fil.Text = (NumHQ).ToString();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox("", ex.ToString());
-            //}
-            //try
-            //{
 
             /// https://www.ztpay.org/  账号： 41649539@qq.com  joK121
             /// 
@@ -125,9 +125,9 @@ public partial class Fil_Default2 : PageBase
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             StreamReader myStreamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-            //var jo = (JObject)JsonConvert.DeserializeObject(myStreamReader.ReadToEnd());
-            //var jo1 = (JObject)JsonConvert.DeserializeObject(jo.Root.ToString());
-            //JArray data1 = jo.Value<JArray>("data");
+            var jo = (JObject)JsonConvert.DeserializeObject(myStreamReader.ReadToEnd());
+            var jo1 = (JObject)JsonConvert.DeserializeObject(jo.Root.ToString());
+            JArray data1 = jo.Value<JArray>("data");
             string retString = myStreamReader.ReadToEnd();
 
             myStreamReader.Close();
