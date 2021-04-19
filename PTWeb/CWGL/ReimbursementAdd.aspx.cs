@@ -680,7 +680,7 @@ public partial class CWGL_Default2 : PageBase
 
                     if (DropDownList1.SelectedValue == "补助")
                     {
-                        strNum = db_Bk + Db_ZC + DB_WC + Db_ZC;
+                        strNum = db_Bk + Db_ZC + DB_WC + Db_ZS + DB_DRZS;
                     }
                     else
                     {
