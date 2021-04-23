@@ -40,7 +40,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Dance/Default.aspx\"><i class=\"icon-home\"></i>课程信息</a></li>";
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Dance/MyInfo.aspx\"><i class=\"icon-desktop\"></i>我的信息</a></li>";
 
-        if (iUserID == 2 || iUserID == 3)
+        if (iUserID == 2 || iUserID == 3 || iUserID == 7)
         {
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Dance/Manage.aspx\"><i class=\"icon-group\"></i>约课管理</a></li>";
         }

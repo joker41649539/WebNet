@@ -9,7 +9,7 @@
         <Name>连接</Name>
       </连接>
     </Databases>
-    <DataSources isList="true" count="12">
+    <DataSources isList="true" count="15">
       <主数据 Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
         <Alias>主数据</Alias>
         <Columns isList="true" count="1">
@@ -165,9 +165,48 @@
         <Parameters isList="true" count="0" />
         <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='其他' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
       </其他>
+      <办公费 Ref="15" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>办公费</Alias>
+        <Columns isList="true" count="2">
+          <value>UserName,System.String</value>
+          <value>BXJE,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>办公费</Name>
+        <NameInSource>连接</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='办公费' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
+      </办公费>
+      <福利费 Ref="16" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>福利费</Alias>
+        <Columns isList="true" count="2">
+          <value>UserName,System.String</value>
+          <value>BXJE,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>福利费</Name>
+        <NameInSource>连接</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='福利费' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
+      </福利费>
+      <行政综合 Ref="17" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>行政综合</Alias>
+        <Columns isList="true" count="2">
+          <value>UserName,System.String</value>
+          <value>BXJE,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>行政综合</Name>
+        <NameInSource>连接</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='行政综合' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
+      </行政综合>
     </DataSources>
-    <Relations isList="true" count="11">
-      <交通费 Ref="15" type="DataRelation" isKey="true">
+    <Relations isList="true" count="14">
+      <交通费 Ref="18" type="DataRelation" isKey="true">
         <Alias>交通费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -181,7 +220,7 @@
         </ParentColumns>
         <ParentSource isRef="4" />
       </交通费>
-      <补助 Ref="16" type="DataRelation" isKey="true">
+      <补助 Ref="19" type="DataRelation" isKey="true">
         <Alias>补助</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -195,7 +234,7 @@
         </ParentColumns>
         <ParentSource isRef="5" />
       </补助>
-      <采购物资 Ref="17" type="DataRelation" isKey="true">
+      <采购物资 Ref="20" type="DataRelation" isKey="true">
         <Alias>采购物资</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -209,7 +248,7 @@
         </ParentColumns>
         <ParentSource isRef="6" />
       </采购物资>
-      <运输费 Ref="18" type="DataRelation" isKey="true">
+      <运输费 Ref="21" type="DataRelation" isKey="true">
         <Alias>运输费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -223,7 +262,7 @@
         </ParentColumns>
         <ParentSource isRef="7" />
       </运输费>
-      <租脚手架 Ref="19" type="DataRelation" isKey="true">
+      <租脚手架 Ref="22" type="DataRelation" isKey="true">
         <Alias>租脚手架</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -237,7 +276,7 @@
         </ParentColumns>
         <ParentSource isRef="8" />
       </租脚手架>
-      <开槽费 Ref="20" type="DataRelation" isKey="true">
+      <开槽费 Ref="23" type="DataRelation" isKey="true">
         <Alias>开槽费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -251,7 +290,7 @@
         </ParentColumns>
         <ParentSource isRef="9" />
       </开槽费>
-      <开孔费 Ref="21" type="DataRelation" isKey="true">
+      <开孔费 Ref="24" type="DataRelation" isKey="true">
         <Alias>开孔费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -265,7 +304,7 @@
         </ParentColumns>
         <ParentSource isRef="10" />
       </开孔费>
-      <停车费 Ref="22" type="DataRelation" isKey="true">
+      <停车费 Ref="25" type="DataRelation" isKey="true">
         <Alias>停车费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -279,7 +318,7 @@
         </ParentColumns>
         <ParentSource isRef="11" />
       </停车费>
-      <加油费 Ref="23" type="DataRelation" isKey="true">
+      <加油费 Ref="26" type="DataRelation" isKey="true">
         <Alias>加油费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -293,7 +332,7 @@
         </ParentColumns>
         <ParentSource isRef="12" />
       </加油费>
-      <招待费 Ref="24" type="DataRelation" isKey="true">
+      <招待费 Ref="27" type="DataRelation" isKey="true">
         <Alias>招待费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -307,7 +346,7 @@
         </ParentColumns>
         <ParentSource isRef="13" />
       </招待费>
-      <其他 Ref="25" type="DataRelation" isKey="true">
+      <其他 Ref="28" type="DataRelation" isKey="true">
         <Alias>其他</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -321,6 +360,48 @@
         </ParentColumns>
         <ParentSource isRef="14" />
       </其他>
+      <办公费 Ref="29" type="DataRelation" isKey="true">
+        <Alias>办公费</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>UserName</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>办公费</Name>
+        <NameInSource>关系12</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>UserName</value>
+        </ParentColumns>
+        <ParentSource isRef="15" />
+      </办公费>
+      <福利费 Ref="30" type="DataRelation" isKey="true">
+        <Alias>福利费</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>UserName</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>福利费</Name>
+        <NameInSource>关系13</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>UserName</value>
+        </ParentColumns>
+        <ParentSource isRef="16" />
+      </福利费>
+      <行政综合 Ref="31" type="DataRelation" isKey="true">
+        <Alias>行政综合</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>UserName</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>行政综合</Name>
+        <NameInSource>关系14</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>UserName</value>
+        </ParentColumns>
+        <ParentSource isRef="17" />
+      </行政综合>
     </Relations>
     <Report isRef="0" />
     <Variables isList="true" count="3">
@@ -333,15 +414,15 @@
   <GlobalizationStrings isList="true" count="0" />
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
-    <Page1 Ref="26" type="Page" isKey="true">
+    <Page1 Ref="32" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <Components isList="true" count="2">
-        <ReportTitleBand1 Ref="27" type="ReportTitleBand" isKey="true">
+        <ReportTitleBand1 Ref="33" type="ReportTitleBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,19,2.8</ClientRectangle>
           <Components isList="true" count="2">
-            <Text1 Ref="28" type="Text" isKey="true">
+            <Text1 Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,19,2</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -349,22 +430,22 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
-              <Page isRef="26" />
-              <Parent isRef="27" />
+              <Page isRef="32" />
+              <Parent isRef="33" />
               <Text>报  销  支  付  单</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text1>
-            <Text2 Ref="29" type="Text" isKey="true">
+            <Text2 Ref="35" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,2.2,19,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,12</Font>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
-              <Page isRef="26" />
-              <Parent isRef="27" />
+              <Page isRef="32" />
+              <Parent isRef="33" />
               <Text>  报销时间：{STIME} 到 {ETIME}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -373,19 +454,19 @@
           </Components>
           <Conditions isList="true" count="0" />
           <Name>ReportTitleBand1</Name>
-          <Page isRef="26" />
-          <Parent isRef="26" />
+          <Page isRef="32" />
+          <Parent isRef="32" />
         </ReportTitleBand1>
-        <Table主数据2 Ref="30" type="Stimulsoft.Report.Components.Table.StiTable" isKey="true">
+        <Table主数据2 Ref="36" type="Stimulsoft.Report.Components.Table.StiTable" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,4,19,2.4</ClientRectangle>
-          <ColumnCount>13</ColumnCount>
-          <Components isList="true" count="39">
-            <Table主数据2_Cell1 Ref="31" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+          <ColumnCount>16</ColumnCount>
+          <Components isList="true" count="48">
+            <Table主数据2_Cell1 Ref="37" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>0,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -393,18 +474,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell1</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>姓名</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell1>
-            <Table主数据2_Cell2 Ref="32" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell2 Ref="38" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.6,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>1.2,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -412,18 +493,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell2</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>交通费</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell2>
-            <Table主数据2_Cell3 Ref="33" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell3 Ref="39" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>2.4,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -431,18 +512,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell3</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>补助</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell3>
-            <Table主数据2_Cell4 Ref="34" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell4 Ref="40" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.8,0,1.6,0.8</ClientRectangle>
+              <ClientRectangle>3.6,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -450,18 +531,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell4</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>采购物资</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell4>
-            <Table主数据2_Cell5 Ref="35" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell5 Ref="41" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>4.8,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -469,18 +550,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell5</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>运输费</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell5>
-            <Table主数据2_Cell6 Ref="36" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell6 Ref="42" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.8,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>6,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -488,18 +569,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell6</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>租脚手架</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell6>
-            <Table主数据2_Cell7 Ref="37" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell7 Ref="43" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>9.2,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>7.2,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -507,18 +588,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell7</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>开槽费</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell7>
-            <Table主数据2_Cell8 Ref="38" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell8 Ref="44" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.6,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>8.4,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -526,18 +607,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell8</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>开孔费</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell8>
-            <Table主数据2_Cell9 Ref="39" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell9 Ref="45" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>9.6,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -545,18 +626,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell9</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>停车费</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell9>
-            <Table主数据2_Cell10 Ref="40" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell10 Ref="46" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>10.8,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -564,18 +645,18 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell10</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>加油费</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell10>
-            <Table主数据2_Cell11 Ref="41" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell11 Ref="47" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.8,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>12,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
@@ -583,74 +664,131 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell11</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>招待费</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell11>
-            <Table主数据2_Cell12 Ref="42" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell12 Ref="48" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.2,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>13.2,0,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>45</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell12</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>办公费</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell12>
+            <Table主数据2_Cell13 Ref="49" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.4,0,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>42</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell13</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>福利费</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell13>
+            <Table主数据2_Cell14 Ref="50" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.6,0,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>39</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell14</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>行政综合</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell14>
+            <Table主数据2_Cell15 Ref="51" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>11</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell12</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell15</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>其它</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell12>
-            <Table主数据2_Cell13 Ref="43" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell15>
+            <Table主数据2_Cell16 Ref="52" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.6,0,1.4,0.8</ClientRectangle>
+              <ClientRectangle>18,0,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,12</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>36</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell13</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell16</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>合计</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell13>
-            <Table主数据2_Cell14 Ref="44" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell16>
+            <Table主数据2_Cell17 Ref="53" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.8,1.6,0.8</ClientRectangle>
+              <ClientRectangle>0,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>12</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell14</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell17</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.UserName}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell14>
-            <Table主数据2_Cell15 Ref="45" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell17>
+            <Table主数据2_Cell18 Ref="54" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.6,0.8,1.6,0.8</ClientRectangle>
+              <ClientRectangle>1.2,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -658,18 +796,18 @@
               <ID>13</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell15</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell18</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.交通费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell15>
-            <Table主数据2_Cell16 Ref="46" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell18>
+            <Table主数据2_Cell19 Ref="55" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,0.8,1.6,0.8</ClientRectangle>
+              <ClientRectangle>2.4,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -677,18 +815,18 @@
               <ID>14</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell16</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell19</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.补助.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell16>
-            <Table主数据2_Cell17 Ref="47" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell19>
+            <Table主数据2_Cell20 Ref="56" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.8,0.8,1.6,0.8</ClientRectangle>
+              <ClientRectangle>3.6,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -696,18 +834,18 @@
               <ID>15</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell17</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell20</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.采购物资.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell17>
-            <Table主数据2_Cell18 Ref="48" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell20>
+            <Table主数据2_Cell21 Ref="57" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>4.8,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -715,18 +853,18 @@
               <ID>16</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell18</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell21</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.运输费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell18>
-            <Table主数据2_Cell19 Ref="49" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell21>
+            <Table主数据2_Cell22 Ref="58" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.8,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>6,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -734,18 +872,18 @@
               <ID>17</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell19</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell22</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.租脚手架.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell19>
-            <Table主数据2_Cell20 Ref="50" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell22>
+            <Table主数据2_Cell23 Ref="59" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>9.2,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>7.2,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -753,18 +891,18 @@
               <ID>18</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell20</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell23</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.开槽费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell20>
-            <Table主数据2_Cell21 Ref="51" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell23>
+            <Table主数据2_Cell24 Ref="60" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.6,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>8.4,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -772,18 +910,18 @@
               <ID>19</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell21</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell24</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.开孔费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell21>
-            <Table主数据2_Cell22 Ref="52" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell24>
+            <Table主数据2_Cell25 Ref="61" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>9.6,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -791,18 +929,18 @@
               <ID>20</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell22</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell25</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.停车费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell22>
-            <Table主数据2_Cell23 Ref="53" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell25>
+            <Table主数据2_Cell26 Ref="62" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>10.8,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -810,18 +948,18 @@
               <ID>21</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell23</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell26</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.加油费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell23>
-            <Table主数据2_Cell24 Ref="54" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell26>
+            <Table主数据2_Cell27 Ref="63" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.8,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>12,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -829,18 +967,78 @@
               <ID>22</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell24</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell27</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.招待费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell24>
-            <Table主数据2_Cell25 Ref="55" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell27>
+            <Table主数据2_Cell28 Ref="64" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.2,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>13.2,0.8,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HideZeros>True</HideZeros>
+              <HorAlignment>Center</HorAlignment>
+              <ID>46</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell28</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{办公费.BXJE}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell28>
+            <Table主数据2_Cell29 Ref="65" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.4,0.8,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HideZeros>True</HideZeros>
+              <HorAlignment>Center</HorAlignment>
+              <ID>43</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell29</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{福利费.BXJE}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell29>
+            <Table主数据2_Cell30 Ref="66" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.6,0.8,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HideZeros>True</HideZeros>
+              <HorAlignment>Center</HorAlignment>
+              <ID>40</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell30</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{行政综合.BXJE}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell30>
+            <Table主数据2_Cell31 Ref="67" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -848,56 +1046,56 @@
               <ID>23</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell25</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell31</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.其他.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell25>
-            <Table主数据2_Cell26 Ref="56" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell31>
+            <Table主数据2_Cell32 Ref="68" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.6,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>18,0.8,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,12</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>37</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell26</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell32</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.交通费.BXJE+主数据.补助.BXJE+主数据.采购物资.BXJE+主数据.运输费.BXJE+主数据.租脚手架.BXJE+主数据.开槽费.BXJE+主数据.开孔费.BXJE+主数据.停车费.BXJE+主数据.加油费.BXJE+主数据.招待费.BXJE+主数据.其他.BXJE}</Text>
+              <Text>{主数据.交通费.BXJE+主数据.办公费.BXJE+主数据.行政综合.BXJE+主数据.福利费.BXJE+主数据.补助.BXJE+主数据.采购物资.BXJE+主数据.运输费.BXJE+主数据.租脚手架.BXJE+主数据.开槽费.BXJE+主数据.开孔费.BXJE+主数据.停车费.BXJE+主数据.加油费.BXJE+主数据.招待费.BXJE+主数据.其他.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell26>
-            <Table主数据2_Cell27 Ref="57" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell32>
+            <Table主数据2_Cell33 Ref="69" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,1.6,1.6,0.8</ClientRectangle>
+              <ClientRectangle>0,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>24</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell27</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell33</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>合计：</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell27>
-            <Table主数据2_Cell28 Ref="58" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell33>
+            <Table主数据2_Cell34 Ref="70" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.6,1.6,1.6,0.8</ClientRectangle>
+              <ClientRectangle>1.2,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -905,19 +1103,19 @@
               <ID>25</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell28</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell34</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.交通费.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell28>
-            <Table主数据2_Cell29 Ref="59" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell34>
+            <Table主数据2_Cell35 Ref="71" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,1.6,1.6,0.8</ClientRectangle>
+              <ClientRectangle>2.4,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -925,19 +1123,19 @@
               <ID>26</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell29</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell35</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.补助.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell29>
-            <Table主数据2_Cell30 Ref="60" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell35>
+            <Table主数据2_Cell36 Ref="72" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.8,1.6,1.6,0.8</ClientRectangle>
+              <ClientRectangle>3.6,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -945,19 +1143,19 @@
               <ID>27</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell30</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell36</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.采购物资.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell30>
-            <Table主数据2_Cell31 Ref="61" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell36>
+            <Table主数据2_Cell37 Ref="73" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.4,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>4.8,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -965,19 +1163,19 @@
               <ID>28</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell31</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell37</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.运输费.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell31>
-            <Table主数据2_Cell32 Ref="62" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell37>
+            <Table主数据2_Cell38 Ref="74" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>7.8,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>6,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -985,19 +1183,19 @@
               <ID>29</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell32</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell38</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.租脚手架.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell32>
-            <Table主数据2_Cell33 Ref="63" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell38>
+            <Table主数据2_Cell39 Ref="75" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>9.2,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>7.2,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -1005,19 +1203,19 @@
               <ID>30</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell33</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell39</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.开槽费.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell33>
-            <Table主数据2_Cell34 Ref="64" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell39>
+            <Table主数据2_Cell40 Ref="76" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10.6,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>8.4,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -1025,19 +1223,19 @@
               <ID>31</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell34</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell40</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.开孔费.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell34>
-            <Table主数据2_Cell35 Ref="65" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell40>
+            <Table主数据2_Cell41 Ref="77" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>12,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>9.6,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -1045,19 +1243,19 @@
               <ID>32</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell35</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell41</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.停车费.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell35>
-            <Table主数据2_Cell36 Ref="66" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell41>
+            <Table主数据2_Cell42 Ref="78" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>13.4,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>10.8,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -1065,19 +1263,19 @@
               <ID>33</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell36</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell42</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.加油费.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell36>
-            <Table主数据2_Cell37 Ref="67" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell42>
+            <Table主数据2_Cell43 Ref="79" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14.8,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>12,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -1085,19 +1283,79 @@
               <ID>34</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell37</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell43</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.招待费.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell37>
-            <Table主数据2_Cell38 Ref="68" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell43>
+            <Table主数据2_Cell44 Ref="80" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.2,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>13.2,1.6,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HideZeros>True</HideZeros>
+              <HorAlignment>Center</HorAlignment>
+              <ID>47</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell44</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{Sum(主数据.办公费.BXJE)}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell44>
+            <Table主数据2_Cell45 Ref="81" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.4,1.6,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HideZeros>True</HideZeros>
+              <HorAlignment>Center</HorAlignment>
+              <ID>44</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell45</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{Sum(主数据.福利费.BXJE)}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell45>
+            <Table主数据2_Cell46 Ref="82" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.6,1.6,1.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,12</Font>
+              <HideZeros>True</HideZeros>
+              <HorAlignment>Center</HorAlignment>
+              <ID>41</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据2_Cell46</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{Sum(主数据.行政综合.BXJE)}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据2_Cell46>
+            <Table主数据2_Cell47 Ref="83" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,12</Font>
               <HideZeros>True</HideZeros>
@@ -1105,34 +1363,34 @@
               <ID>35</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell38</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell47</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.其他.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Totals</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell38>
-            <Table主数据2_Cell39 Ref="69" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据2_Cell47>
+            <Table主数据2_Cell48 Ref="84" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>17.6,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>18,1.6,1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,12</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>38</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据2_Cell39</Name>
-              <Page isRef="26" />
-              <Parent isRef="30" />
+              <Name>Table主数据2_Cell48</Name>
+              <Page isRef="32" />
+              <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{Sum(主数据.交通费.BXJE+主数据.补助.BXJE+主数据.采购物资.BXJE+主数据.运输费.BXJE+主数据.租脚手架.BXJE+主数据.开槽费.BXJE+主数据.开孔费.BXJE+主数据.停车费.BXJE+主数据.加油费.BXJE+主数据.招待费.BXJE+主数据.其他.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据2_Cell39>
+            </Table主数据2_Cell48>
           </Components>
           <Conditions isList="true" count="0" />
           <DataSourceName>主数据</DataSourceName>
@@ -1141,9 +1399,9 @@
           <HeaderRowsCount>1</HeaderRowsCount>
           <MinHeight>0.60000000000000009</MinHeight>
           <Name>Table主数据2</Name>
-          <NumberID>39</NumberID>
-          <Page isRef="26" />
-          <Parent isRef="26" />
+          <NumberID>48</NumberID>
+          <Page isRef="32" />
+          <Parent isRef="32" />
           <RowCount>3</RowCount>
           <Sort isList="true" count="0" />
         </Table主数据2>
@@ -1155,13 +1413,13 @@
       <PageHeight>29.7</PageHeight>
       <PageWidth>21</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="70" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="85" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="71" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="86" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -1173,10 +1431,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>2/24/2021 1:18:08 PM</ReportChanged>
+  <ReportChanged>4/23/2021 6:29:45 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
   <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdList.mrt</ReportFile>
-  <ReportGuid>6fe39dd965ff4bfcbbaafb273c741fc6</ReportGuid>
+  <ReportGuid>b5e44ce6fd564475ae1f86aabb07858d</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

@@ -81,7 +81,7 @@ public partial class CWGL_ReturnMSG : PageBase
                     return rValue;
                 }
             }
-            else if (Flag == 5 || Flag == 6)
+            else if (Flag == 5 || Flag == 6 || Flag == 7)
             {
                 if (!QXBool(42, Convert.ToInt32(DefaultUser)))
                 {

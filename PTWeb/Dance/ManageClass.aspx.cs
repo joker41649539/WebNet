@@ -307,10 +307,9 @@ public partial class Dance_ManageClass : PageBase
     {
 
         if (e.CommandName == "GridView_Class_ADD")
-
         {
-
-            this.Page.ClientScript.RegisterStartupScript(typeof(string), "sKey", "<script language=JavaScript>$('#GridView_Class_ADD').modal('show')</script>");
+            MessageBox("","准备添加新课程。","/Dance/ManageClassAdd.aspx");
+           // this.Page.ClientScript.RegisterStartupScript(typeof(string), "sKey", "<script language=JavaScript>$('#GridView_Class_ADD').modal('show')</script>");
 
         }
 

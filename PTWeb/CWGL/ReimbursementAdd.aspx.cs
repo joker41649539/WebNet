@@ -517,7 +517,7 @@ public partial class CWGL_Default2 : PageBase
             String imageName2 = UploadTP(FileUpload2);
             String imageName3 = UploadTP(FileUpload3);
 
-            if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助" || DropDownList1.SelectedValue == "交通费" || MXID > 0)
+            if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助" || DropDownList1.SelectedValue == "办公费" || DropDownList1.SelectedValue == "福利费" || DropDownList1.SelectedValue == "行政综合" || DropDownList1.SelectedValue == "交通费" || MXID > 0)
             {/// 图片上传成功
 
                 string strSQL = string.Empty;
@@ -802,7 +802,7 @@ public partial class CWGL_Default2 : PageBase
                         }
 
                         //  添加水印
-                        System.Drawing.Image imgSrc = AddText(@URLpath, "50,50", "300, 100", string.Empty);
+                        System.Drawing.Image imgSrc = AddText(@URLpath, "0,0", "0, 0", "普田公司报销使用");
 
                         string imageName = "SY" + newname;
                         string newpath = Server.MapPath(@"/BxImages/" + imageName);
@@ -819,9 +819,7 @@ public partial class CWGL_Default2 : PageBase
                         MessageBox("", "服务器正忙，请稍后再试！" + ex.ToString());
                         return string.Empty;
                     }
-
                 }
-
             }
         }
         return string.Empty;
