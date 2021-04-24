@@ -426,7 +426,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,19,2</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,36,Bold</Font>
+              <Font>新宋体,28,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
@@ -990,9 +990,9 @@
               <Page isRef="32" />
               <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{办公费.BXJE}</Text>
+              <Text>{主数据.办公费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell28>
             <Table主数据2_Cell29 Ref="65" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
@@ -1010,9 +1010,9 @@
               <Page isRef="32" />
               <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{福利费.BXJE}</Text>
+              <Text>{主数据.福利费.BXJE}</Text>
               <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell29>
             <Table主数据2_Cell30 Ref="66" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
@@ -1030,9 +1030,9 @@
               <Page isRef="32" />
               <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{行政综合.BXJE}</Text>
+              <Text>{主数据.行政综合.BXJE}</Text>
               <TextBrush>Black</TextBrush>
-              <Type>Expression</Type>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell30>
             <Table主数据2_Cell31 Ref="67" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
@@ -1431,10 +1431,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/23/2021 6:29:45 PM</ReportChanged>
+  <ReportChanged>4/24/2021 3:35:40 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
-  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdList.mrt</ReportFile>
-  <ReportGuid>b5e44ce6fd564475ae1f86aabb07858d</ReportGuid>
+  <ReportFile>D:\Work\WebNet\PTWeb\BBGL\BB\BxdList.mrt</ReportFile>
+  <ReportGuid>b960b6c2609f4487a0e37ac25d4cd283</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

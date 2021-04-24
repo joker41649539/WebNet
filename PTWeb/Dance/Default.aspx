@@ -1,16 +1,37 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Dance/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Dance_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <span class="btn-toolbar inline middle no-margin">
-        <span id="accordion-style" data-toggle="buttons" class="btn-group no-margin">
-            <label class="btn btn-xs btn-yellow active">
-               <a href="#"> 滨江花月店</a>
-            </label>
-            <label class="btn btn-xs btn-yellow ">
-               <a href="#"> 金中环店</a>
-            </label>
-        </span>
-    </span>
+    <div class="row">
+        <div class="space-6"></div>
+        <div class="col-sm-7 infobox-container">
+            <div class="infobox infobox-red  ">
+                <div class="infobox-icon">
+                    <i class="icon-heart"></i>
+                </div>
+                <div class="infobox-data">
+                    <span class="infobox-data-number">
+                        <a href="?School=0">
+                            <asp:Label ID="Label_YE" runat="server" Text="美生店"></asp:Label></a></span>
+                    <a href="?School=0">
+                        <div class="infobox-content">(美生滨江花月二期南山书店二楼)</div>
+                    </a>
+                </div>
+            </div>
+            <div class="infobox infobox-green  ">
+                <div class="infobox-icon">
+                    <i class="icon-heart"></i>
+                </div>
+                <div class="infobox-data">
+                    <span class="infobox-data-number">
+                        <a href="?School=1">
+                            <asp:Label ID="Label_YL" runat="server" Text="金中环店"></asp:Label></a></span>
+                    <a href="?School=1">
+                        <div class="infobox-content">(金中环C座1201-1202)</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12" runat="server" id="ClassList">
             <div class="widget-box ">

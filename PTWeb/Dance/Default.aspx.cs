@@ -24,10 +24,19 @@ public partial class Dance_Default : PageBase
         string strWeek2 = string.Empty;
         // 当前星期几
         string strWeek_Now = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetShortestDayName(DateTime.Now.DayOfWeek);
-  
+
+        int iSchool = 0;
+        try
+        {
+            iSchool = Convert.ToInt32(Request["school"]);
+        }
+        catch
+        {
+        }
+
         string strSQL = " Delete from Dance_Arrange where  ArrangeTime < DATEADD(dd,-1,getdate()) ";  // 删除过期预约
 
-        strSQL += "Select ID,classname,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,MaxMen,(Select Count(ID) from Dance_Arrange where classID=Dance_Class.ID) ArrAngeCount from Dance_Class where Flag=0 order by PX,ClassTimeStart";
+        strSQL += "Select ID,classname,ClassTeacher,CONVERT(varchar(100), ClassTimeStart, 24) STime,CONVERT(varchar(100), ClassTimeEnd, 24) ETime,ClassWeek,MaxMen,(Select Count(ID) from Dance_Arrange where classID=Dance_Class.ID) ArrAngeCount from Dance_Class where Flag=0 and school=" + iSchool + " order by PX,ClassTimeStart";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -59,6 +68,16 @@ public partial class Dance_Default : PageBase
                     strTemp += "         <i class=\"icon-calendar\"></i>";
                     // strTemp += " 星期" + OP_Mode.Dtv[i]["ClassWeek"].ToString();
                     strTemp += Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).ToString("yyyy-MM-dd") + " " + System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(Convert.ToDateTime(OP_Mode.Dtv[i]["STime"].ToString()).AddDays(CountWeek(strWeek_Now, strWeek)).DayOfWeek);
+
+                    if (iSchool == 0)
+                    {
+                        strTemp += " (美生店)";
+                    }
+                    else if (iSchool == 1)
+                    {
+                        strTemp += " (金中环店)";
+                    }
+
                     strTemp += "     </h4>";
                     strTemp += "  </div>";
                     strTemp += " <div class=\"widget-body\">";
@@ -97,10 +116,10 @@ public partial class Dance_Default : PageBase
                 }
             }
         }
-        if (strTemp.Length > 0)
-        {
+        //if (strTemp.Length > 0)
+        //{
             ClassList.InnerHtml = strTemp;
-        }
+        //}
     }
 
     /// <summary>

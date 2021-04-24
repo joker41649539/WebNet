@@ -12,7 +12,7 @@
     <DataSources isList="true" count="1">
       <主数据 Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
         <Alias>主数据</Alias>
-        <Columns isList="true" count="13">
+        <Columns isList="true" count="14">
           <value>ID,System.Int32</value>
           <value>Occurrence,System.DateTime</value>
           <value>hzje,System.Decimal</value>
@@ -26,17 +26,18 @@
           <value>LTIME,System.DateTime</value>
           <value>BXDH,System.String</value>
           <value>remark,System.String</value>
+          <value>mxremark,System.String</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
         <Name>主数据</Name>
         <NameInSource>连接</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>Select a.ID,c.Occurrence,(Select sum(BXJE) from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and UserName=a.username  and FLAG=6) hzje,c.KZXM,c.TXR,(SELECT stuff((select ','+convert(varchar(25),  W_Examine.UserName) FROM W_Examine,W_BXD1 where djbh=W_BXD1.BXDH and djbh=c.BXDH and OldFlag&gt;0 
+        <SqlCommand>Select a.ID,c.remark mxremark,c.Occurrence,(Select sum(BXJE) from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and UserName=a.username  and FLAG=6) hzje,c.KZXM,c.TXR,(SELECT stuff((select ','+convert(varchar(25),  W_Examine.UserName) FROM W_Examine,W_BXD1 where djbh=W_BXD1.BXDH and djbh=c.BXDH and OldFlag&gt;0 
 	group by W_Examine.UserName FOR XML PATH('')), 1, 1, '') ) SPR,
 (Select top 1 W_Examine.CTime from W_Examine,W_BXD1 where djbh=W_BXD1.BXDH  and djbh=c.BXDH and NewFlag&gt;1 and NewFlag&lt;=6 and OldFlag&gt;0) SPRSJ,UserName,
 (Select BXJE from W_BXD2 where ID=C.ID) ZJE,FLAG,a.LTIME,a.BXDH,a.remark from w_bxd1 a,W_BXD2 c
-WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP BY  a.ID,a.BXDH,UserName,FLAG,a.LTIME,a.remark,c.bxdh,c.KZXM,c.TXR,C.ID,c.Occurrence ORDER BY UserName DESC
+WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP BY  a.ID,a.BXDH,UserName,FLAG,a.LTIME,a.remark,c.bxdh,c.KZXM,c.TXR,C.ID,c.Occurrence,c.Remark ORDER BY UserName DESC
 </SqlCommand>
       </主数据>
     </DataSources>
@@ -502,7 +503,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Parent isRef="7" />
               <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.remark}</Text>
+              <Text>{主数据.mxremark}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="32" type="CustomFormat" isKey="true">
                 <StringFormat>yyyy-MM-dd</StringFormat>
@@ -751,10 +752,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/23/2021 6:04:25 PM</ReportChanged>
+  <ReportChanged>4/24/2021 3:32:38 PM</ReportChanged>
   <ReportCreated>4/6/2021 10:09:27 AM</ReportCreated>
-  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdByUser.mrt</ReportFile>
-  <ReportGuid>3965363827f74fa2bd2c6b1db3437786</ReportGuid>
+  <ReportFile>D:\Work\WebNet\PTWeb\BBGL\BB\BxdByUser.mrt</ReportFile>
+  <ReportGuid>4956ae6347cd434981565db5ed0c837c</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

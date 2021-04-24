@@ -347,7 +347,7 @@
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,19,2</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,36,Bold</Font>
+              <Font>新宋体,28,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
@@ -598,10 +598,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/19/2021 10:02:14 AM</ReportChanged>
+  <ReportChanged>4/24/2021 3:34:47 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
   <ReportFile>D:\Work\WebNet\PTWeb\BBGL\BB\BxdListBankID.mrt</ReportFile>
-  <ReportGuid>757bdd624a5d459db854026664f1609c</ReportGuid>
+  <ReportGuid>4b9b1fc77e6c4b38a00fbea52e12e246</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

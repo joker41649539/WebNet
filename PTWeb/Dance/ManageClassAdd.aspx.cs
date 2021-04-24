@@ -66,7 +66,7 @@ public partial class Dance_Default3 : PageBase
         }
 
         strSQL = "Insert into Dance_Class (School,PX,ClassName,ClassTeacher,ClassTimeStart,ClassTimeEnd,ClassWeek,MaxMen,Flag) ";
-        strSQL += " values (" + db_School + "," + Db_PX + ",'" + db_KCMC + "','" + db_RKLS + "','" + db_xksj + "','" + db_xksj + "','" + db_Week + "',10,0)";
+        strSQL += " values (" + db_School + "," + Db_PX + ",'" + db_KCMC + "','" + db_RKLS + "','" + db_sksj + "','" + db_xksj + "','" + db_Week + "',10,0)";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
