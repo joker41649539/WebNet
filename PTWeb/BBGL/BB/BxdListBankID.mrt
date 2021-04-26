@@ -9,7 +9,7 @@
         <Name>连接</Name>
       </连接>
     </Databases>
-    <DataSources isList="true" count="12">
+    <DataSources isList="true" count="15">
       <主数据 Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
         <Alias>主数据</Alias>
         <Columns isList="true" count="3">
@@ -22,7 +22,7 @@
         <Name>主数据</Name>
         <NameInSource>连接</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>Select UserName,BankID,SKR from W_BXD1,W_BXD2,S_USERINFO where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.FLAG=6 and CNAME=UserName and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' and UserName like '%{UserName}%' group by UserName,BankID,SKR</SqlCommand>
+        <SqlCommand>Select UserName,BankID,SKR from W_BXD1,W_BXD2,S_USERINFO where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.FLAG=6 and CNAME=SKR and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' and UserName like '%{UserName}%' group by UserName,BankID,SKR</SqlCommand>
       </主数据>
       <交通费 Ref="4" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
         <Alias>交通费</Alias>
@@ -167,9 +167,48 @@
         <Parameters isList="true" count="0" />
         <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='其他' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
       </其他>
+      <办公费 Ref="15" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>办公费</Alias>
+        <Columns isList="true" count="2">
+          <value>UserName,System.String</value>
+          <value>BXJE,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>办公费</Name>
+        <NameInSource>连接</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='办公费' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
+      </办公费>
+      <福利费 Ref="16" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>福利费</Alias>
+        <Columns isList="true" count="2">
+          <value>UserName,System.String</value>
+          <value>BXJE,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>福利费</Name>
+        <NameInSource>连接</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='福利费' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
+      </福利费>
+      <行政综合 Ref="17" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>行政综合</Alias>
+        <Columns isList="true" count="2">
+          <value>UserName,System.String</value>
+          <value>BXJE,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Name>行政综合</Name>
+        <NameInSource>连接</NameInSource>
+        <Parameters isList="true" count="0" />
+        <SqlCommand>Select UserName,sum(BXJE) BXJE from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and KZXM='行政综合' and FLAG=6 and W_BXD1.LTIME between  '{STIME}' and '{ETIME}' group by UserName</SqlCommand>
+      </行政综合>
     </DataSources>
-    <Relations isList="true" count="11">
-      <交通费 Ref="15" type="DataRelation" isKey="true">
+    <Relations isList="true" count="14">
+      <交通费 Ref="18" type="DataRelation" isKey="true">
         <Alias>交通费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -183,7 +222,7 @@
         </ParentColumns>
         <ParentSource isRef="4" />
       </交通费>
-      <补助 Ref="16" type="DataRelation" isKey="true">
+      <补助 Ref="19" type="DataRelation" isKey="true">
         <Alias>补助</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -197,7 +236,7 @@
         </ParentColumns>
         <ParentSource isRef="5" />
       </补助>
-      <采购物资 Ref="17" type="DataRelation" isKey="true">
+      <采购物资 Ref="20" type="DataRelation" isKey="true">
         <Alias>采购物资</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -211,7 +250,7 @@
         </ParentColumns>
         <ParentSource isRef="6" />
       </采购物资>
-      <运输费 Ref="18" type="DataRelation" isKey="true">
+      <运输费 Ref="21" type="DataRelation" isKey="true">
         <Alias>运输费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -225,7 +264,7 @@
         </ParentColumns>
         <ParentSource isRef="7" />
       </运输费>
-      <租脚手架 Ref="19" type="DataRelation" isKey="true">
+      <租脚手架 Ref="22" type="DataRelation" isKey="true">
         <Alias>租脚手架</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -239,7 +278,7 @@
         </ParentColumns>
         <ParentSource isRef="8" />
       </租脚手架>
-      <开槽费 Ref="20" type="DataRelation" isKey="true">
+      <开槽费 Ref="23" type="DataRelation" isKey="true">
         <Alias>开槽费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -253,7 +292,7 @@
         </ParentColumns>
         <ParentSource isRef="9" />
       </开槽费>
-      <开孔费 Ref="21" type="DataRelation" isKey="true">
+      <开孔费 Ref="24" type="DataRelation" isKey="true">
         <Alias>开孔费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -267,7 +306,7 @@
         </ParentColumns>
         <ParentSource isRef="10" />
       </开孔费>
-      <停车费 Ref="22" type="DataRelation" isKey="true">
+      <停车费 Ref="25" type="DataRelation" isKey="true">
         <Alias>停车费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -281,7 +320,7 @@
         </ParentColumns>
         <ParentSource isRef="11" />
       </停车费>
-      <加油费 Ref="23" type="DataRelation" isKey="true">
+      <加油费 Ref="26" type="DataRelation" isKey="true">
         <Alias>加油费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -295,7 +334,7 @@
         </ParentColumns>
         <ParentSource isRef="12" />
       </加油费>
-      <招待费 Ref="24" type="DataRelation" isKey="true">
+      <招待费 Ref="27" type="DataRelation" isKey="true">
         <Alias>招待费</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -309,7 +348,7 @@
         </ParentColumns>
         <ParentSource isRef="13" />
       </招待费>
-      <其他 Ref="25" type="DataRelation" isKey="true">
+      <其他 Ref="28" type="DataRelation" isKey="true">
         <Alias>其他</Alias>
         <ChildColumns isList="true" count="1">
           <value>UserName</value>
@@ -323,6 +362,48 @@
         </ParentColumns>
         <ParentSource isRef="14" />
       </其他>
+      <办公费 Ref="29" type="DataRelation" isKey="true">
+        <Alias>办公费</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>UserName</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>办公费</Name>
+        <NameInSource>关系12</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>UserName</value>
+        </ParentColumns>
+        <ParentSource isRef="15" />
+      </办公费>
+      <福利费 Ref="30" type="DataRelation" isKey="true">
+        <Alias>福利费</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>UserName</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>福利费</Name>
+        <NameInSource>关系13</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>UserName</value>
+        </ParentColumns>
+        <ParentSource isRef="16" />
+      </福利费>
+      <行政综合 Ref="31" type="DataRelation" isKey="true">
+        <Alias>行政综合</Alias>
+        <ChildColumns isList="true" count="1">
+          <value>UserName</value>
+        </ChildColumns>
+        <ChildSource isRef="3" />
+        <Dictionary isRef="1" />
+        <Name>行政综合</Name>
+        <NameInSource>关系14</NameInSource>
+        <ParentColumns isList="true" count="1">
+          <value>UserName</value>
+        </ParentColumns>
+        <ParentSource isRef="17" />
+      </行政综合>
     </Relations>
     <Report isRef="0" />
     <Variables isList="true" count="3">
@@ -335,15 +416,15 @@
   <GlobalizationStrings isList="true" count="0" />
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
-    <Page1 Ref="26" type="Page" isKey="true">
+    <Page1 Ref="32" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <Components isList="true" count="2">
-        <ReportTitleBand1 Ref="27" type="ReportTitleBand" isKey="true">
+        <ReportTitleBand1 Ref="33" type="ReportTitleBand" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0,0.4,19,2.2</ClientRectangle>
           <Components isList="true" count="1">
-            <Text1 Ref="28" type="Text" isKey="true">
+            <Text1 Ref="34" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,19,2</ClientRectangle>
               <Conditions isList="true" count="0" />
@@ -351,8 +432,8 @@
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
-              <Page isRef="26" />
-              <Parent isRef="27" />
+              <Page isRef="32" />
+              <Parent isRef="33" />
               <Text>记账凭证</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
@@ -361,15 +442,15 @@
           </Components>
           <Conditions isList="true" count="0" />
           <Name>ReportTitleBand1</Name>
-          <Page isRef="26" />
-          <Parent isRef="26" />
+          <Page isRef="32" />
+          <Parent isRef="32" />
         </ReportTitleBand1>
-        <Table主数据2 Ref="29" type="Stimulsoft.Report.Components.Table.StiTable" isKey="true">
+        <Table主数据2 Ref="35" type="Stimulsoft.Report.Components.Table.StiTable" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,3.4,19,1.6</ClientRectangle>
           <Components isList="true" count="10">
-            <Table主数据2_Cell1 Ref="30" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell1 Ref="36" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0,5.2,0.8</ClientRectangle>
@@ -380,15 +461,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell1</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>账号</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell1>
-            <Table主数据2_Cell2 Ref="31" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell2 Ref="37" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>5.2,0,2.4,0.8</ClientRectangle>
@@ -399,15 +480,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell2</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>币种</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell2>
-            <Table主数据2_Cell3 Ref="32" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell3 Ref="38" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>7.6,0,3.8,0.8</ClientRectangle>
@@ -418,15 +499,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell3</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>户名</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell3>
-            <Table主数据2_Cell4 Ref="33" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell4 Ref="39" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>11.4,0,3.8,0.8</ClientRectangle>
@@ -437,15 +518,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell4</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>金额</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell4>
-            <Table主数据2_Cell5 Ref="34" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell5 Ref="40" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.2,0,3.8,0.8</ClientRectangle>
@@ -456,15 +537,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell5</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>附言</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell5>
-            <Table主数据2_Cell6 Ref="35" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell6 Ref="41" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>0,0.8,5.2,0.8</ClientRectangle>
@@ -475,14 +556,14 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell6</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.BankID}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell6>
-            <Table主数据2_Cell7 Ref="36" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell7 Ref="42" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>5.2,0.8,2.4,0.8</ClientRectangle>
@@ -493,15 +574,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell7</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>01</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell7>
-            <Table主数据2_Cell8 Ref="37" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell8 Ref="43" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>7.6,0.8,3.8,0.8</ClientRectangle>
@@ -512,15 +593,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell8</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.SKR}</Text>
               <TextBrush>Black</TextBrush>
               <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell8>
-            <Table主数据2_Cell9 Ref="38" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell9 Ref="44" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>11.4,0.8,3.8,0.8</ClientRectangle>
@@ -531,15 +612,15 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell9</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.交通费.BXJE+主数据.补助.BXJE+主数据.采购物资.BXJE+主数据.运输费.BXJE+主数据.租脚手架.BXJE+主数据.开槽费.BXJE+主数据.开孔费.BXJE+主数据.停车费.BXJE+主数据.加油费.BXJE+主数据.招待费.BXJE+主数据.其他.BXJE}</Text>
+              <Text>{主数据.交通费.BXJE+主数据.行政综合.BXJE+主数据.福利费.BXJE+主数据.办公费.BXJE+主数据.补助.BXJE+主数据.采购物资.BXJE+主数据.运输费.BXJE+主数据.租脚手架.BXJE+主数据.开槽费.BXJE+主数据.开孔费.BXJE+主数据.停车费.BXJE+主数据.加油费.BXJE+主数据.招待费.BXJE+主数据.其他.BXJE}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据2_Cell9>
-            <Table主数据2_Cell10 Ref="39" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据2_Cell10 Ref="45" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>15.2,0.8,3.8,0.8</ClientRectangle>
@@ -550,8 +631,8 @@
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据2_Cell10</Name>
-              <Page isRef="26" />
-              <Parent isRef="29" />
+              <Page isRef="32" />
+              <Parent isRef="35" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>报销</Text>
               <TextBrush>Black</TextBrush>
@@ -566,8 +647,8 @@
           <MinHeight>0.60000000000000009</MinHeight>
           <Name>Table主数据2</Name>
           <NumberID>15</NumberID>
-          <Page isRef="26" />
-          <Parent isRef="26" />
+          <Page isRef="32" />
+          <Parent isRef="32" />
           <RowCount>2</RowCount>
           <Sort isList="true" count="0" />
         </Table主数据2>
@@ -580,13 +661,13 @@
       <PageWidth>21</PageWidth>
       <PaperSize>A4</PaperSize>
       <Report isRef="0" />
-      <Watermark Ref="40" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="46" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="41" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="47" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -598,10 +679,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/24/2021 3:34:47 PM</ReportChanged>
+  <ReportChanged>4/26/2021 6:46:24 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
-  <ReportFile>D:\Work\WebNet\PTWeb\BBGL\BB\BxdListBankID.mrt</ReportFile>
-  <ReportGuid>4b9b1fc77e6c4b38a00fbea52e12e246</ReportGuid>
+  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdListBankID.mrt</ReportFile>
+  <ReportGuid>77a7fa8fbaa4496da2ebc66b341c4738</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

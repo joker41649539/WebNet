@@ -37,6 +37,7 @@
                 <h4 class="lighter"><i class="icon-user"></i>报销单查询                </h4>
                 <asp:DropDownList ID="GridView1_DropDownList1" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
                     <asp:ListItem Value="USERNAME">姓名</asp:ListItem>
+                    <asp:ListItem Value="W_BXD1.BXDH">单据编号</asp:ListItem>
                     <asp:ListItem Value="W_BXD1.REMARK">施工编号(事由)</asp:ListItem>
                     <asp:ListItem Value="Occurrence">发生日期</asp:ListItem>
                     <asp:ListItem Value="FLAG">状态</asp:ListItem>

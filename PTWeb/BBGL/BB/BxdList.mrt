@@ -1386,7 +1386,7 @@
               <Page isRef="32" />
               <Parent isRef="36" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{Sum(主数据.交通费.BXJE+主数据.补助.BXJE+主数据.采购物资.BXJE+主数据.运输费.BXJE+主数据.租脚手架.BXJE+主数据.开槽费.BXJE+主数据.开孔费.BXJE+主数据.停车费.BXJE+主数据.加油费.BXJE+主数据.招待费.BXJE+主数据.其他.BXJE)}</Text>
+              <Text>{Sum(主数据.交通费.BXJE+主数据.行政综合.BXJE+主数据.福利费.BXJE+主数据.办公费.BXJE+主数据.补助.BXJE+主数据.采购物资.BXJE+主数据.运输费.BXJE+主数据.租脚手架.BXJE+主数据.开槽费.BXJE+主数据.开孔费.BXJE+主数据.停车费.BXJE+主数据.加油费.BXJE+主数据.招待费.BXJE+主数据.其他.BXJE)}</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -1431,10 +1431,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/24/2021 3:35:40 PM</ReportChanged>
+  <ReportChanged>4/26/2021 6:35:50 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
-  <ReportFile>D:\Work\WebNet\PTWeb\BBGL\BB\BxdList.mrt</ReportFile>
-  <ReportGuid>b960b6c2609f4487a0e37ac25d4cd283</ReportGuid>
+  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdList.mrt</ReportFile>
+  <ReportGuid>25c63f9fdcb04bb98e4c3ca436450152</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>
