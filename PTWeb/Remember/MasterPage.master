@@ -1,0 +1,140 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Remember_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=GB2312" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+
+    <script src="/assets/js/ace-extra.min.js"></script>
+
+    <link rel="stylesheet" href="/css/style.css" />
+
+
+    <link rel="stylesheet" href="/assets/alert/alert.css" />
+    <script src='/assets/alert/alert.js'></script>
+    <script src='/assets/alert/shCore.js'></script>
+
+    <script src='/assets/alert/makeSy.js'></script>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/lu32.ico" media="screen" />
+    <title>艾宾浩斯记忆法</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="navbar navbar-default" id="navbar">
+            <div class="navbar-container" id="navbar-container">
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+                        <small>
+                            <b>艾宾浩斯记忆</b>
+                        </small>
+                    </a>
+                    <!-- /.brand -->
+                </div>
+                <!-- /.navbar-header -->
+
+                <div class="navbar-header pull-right" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <asp:Image class="nav-user-photo" ID="Image_User" runat="server" />
+                                <span class="user-info">
+                                    <small>欢迎光临</small>
+                                    <asp:Label ID="label_UserName" runat="server" Text="游客"></asp:Label>
+                                </span>
+                                <i class="icon-caret-down"></i>
+                            </a>
+                            <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                <%-- <li>
+                                    <div class="item-img">
+                                       <%-- <img src='/images/lushiyanwo.png' /><asp:Image ID="Image1" runat="server" />
+                                    </div>
+                                </li>
+                                <li>
+                                    <asp:HyperLink ID="HyperLink1" Visible="false" runat="server" NavigateUrl="/Manage.aspx"><i class="icon-bar-chart"></i>&nbsp;管理中心</asp:HyperLink>
+                                </li>--%>
+                                <li>
+                                    <asp:LinkButton ID="LinkButton1" runat="server"><i class="icon-off"></i>
+                                        退出登录</asp:LinkButton>
+                                </li>
+                                <li>
+                                    <asp:LinkButton ID="LinkButton2" runat="server"><i class="icon-off"></i>
+                                        我要登录</asp:LinkButton>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- /.ace-nav -->
+                </div>
+                <!-- /.navbar-header -->
+            </div>
+        </div>
+
+        <div style="background-color: white">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <div class="row" style="height: 80px;">
+            </div>
+        </div>
+        <div runat="server" id="FootBut">
+            <ul class="footer-nav text-center">
+                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/Default.aspx"><i class="icon-home"></i>首  页</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/Remember.aspx"><i class="icon-book"></i>今日学习<asp:Label ID="Label_DayCount" class="badge badge-danger" runat="server" Text="0"></asp:Label></a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/RememberAdd.aspx"><i class="icon-calendar"></i>添加计划</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/Remembered.aspx"><i class="icon-check"></i>今日完成<asp:Label ID="Label_Finsh" class="badge badge-danger" runat="server" Text="0"></asp:Label></a></li>
+            </ul>
+        </div>
+    </form>
+</body>
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'>" + "<" + "script>");
+</script>
+<script type="text/javascript">
+    if ("ontouchend" in document) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>" + "<" + "script>");
+</script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/typeahead-bs2.min.js"></script>
+
+<script src="/assets/js/fuelux/data/fuelux.tree-sampledata.js"></script>
+<script src="/assets/js/fuelux/fuelux.tree.min.js"></script>
+
+<!-- ace scripts -->
+
+<script src="/assets/js/ace-elements.min.js"></script>
+<script src="/assets/js/ace.min.js"></script>
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/masonry-docs.min.js"></script>
+<script>
+    $("#GoodsList").resize(function () {
+        var $grid = $('#GoodsList');
+        $grid.masonry();
+    });
+    $(function () {
+        var $container = $('#GoodsList');
+        $container.imagesLoaded(function () {
+            $container.masonry({
+                itemSelector: '.box',
+                gutter: 0,
+                isAnimated: true,
+                percentPosition: true
+
+            });
+        });
+    });
+</script>
+</html>
