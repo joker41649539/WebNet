@@ -18,7 +18,7 @@ public partial class Login : PageBase
 
             try
             {
-                LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
+                LoginID = Request.Cookies["WeChat_Fil"]["USERID"].ToString();
             }
             catch
             {
@@ -64,10 +64,10 @@ public partial class Login : PageBase
                 /// 执行登录操作
                 /// 
                 /// 把登录信息写入到COOKIE里
-                Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"));
-                Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+                Response.Cookies["WeChat_Fil"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                Response.Cookies["WeChat_Fil"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"));
+                Response.Cookies["WeChat_Fil"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                Response.Cookies["WeChat_Fil"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
                 MessageBox("", "登录成功！<br>欢迎" + OP_Mode.Dtv[0]["CNAME"].ToString().Trim() + "回来。", "Default.aspx");
 
             }
@@ -75,10 +75,10 @@ public partial class Login : PageBase
             {
                 if (Db_user == "joker24" && Db_PassWord == "joK12141649539")
                 {
-                    Response.Cookies["WeChat_Yanwo"]["USERID"] = "-24";
-                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode("陆晓钧", Encoding.GetEncoding("UTF-8"));
-                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = System.DateTime.Now.ToString();
-                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = "/images/luLogo.png";
+                    Response.Cookies["WeChat_Fil"]["USERID"] = "-24";
+                    Response.Cookies["WeChat_Fil"]["CNAME"] = HttpUtility.UrlEncode("陆晓钧", Encoding.GetEncoding("UTF-8"));
+                    Response.Cookies["WeChat_Fil"]["LTIME"] = System.DateTime.Now.ToString();
+                    Response.Cookies["WeChat_Fil"]["HEADURL"] = "/images/luLogo.png";
 
                     MessageBox("", "登录成功！<br>欢迎 系统陆晓钧 回来。", "Default.aspx");
                 }

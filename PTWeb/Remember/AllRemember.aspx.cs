@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Remember : PageBaseRem
+public partial class Remember_Default3 : PageBaseRem
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -20,7 +20,7 @@ public partial class Remember : PageBaseRem
     /// </summary>
     private void LoadDefaultData()
     {
-        string strSQL = "Select * from Remember Where NextTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iFlag=0 And iUserID=" + DefaultUser + " order by ICount";
+        string strSQL = "Select * from Remember where iUserID=" + DefaultUser + " order by ICount desc";
         string strTemp = string.Empty;
 
         if (OP_Mode.SQLRUN(strSQL))
@@ -38,11 +38,11 @@ public partial class Remember : PageBaseRem
                     strTemp += ReadMyTag(Convert.ToInt32(OP_Mode.Dtv[i]["ID"])); // 加载标签数据
 
                     strTemp += "   <div class=\"btn-group\">";
-                    strTemp += "     <a href=\"RememberAdd.aspx?flag=1&ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-sm btn-success\"><i class=\"icon-ok\"></i>完成</a>";
-                    if (Convert.ToInt32(OP_Mode.Dtv[i]["ICount"]) > 5)
-                    { // 如果超过5次记忆，才允许非常熟了。
-                        strTemp += "     <a href=\"RememberAdd.aspx?flag=-1&ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-sm btn-danger\"><i class=\"icon-eye-close\"></i>很熟</a>";
-                    }
+                    //strTemp += "     <a href=\"RememberAdd.aspx?flag=1&ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-sm btn-success\"><i class=\"icon-ok\"></i>完成</a>";
+                    //if (Convert.ToInt32(OP_Mode.Dtv[i]["ICount"]) > 5)
+                    //{ // 如果超过5次记忆，才允许非常熟了。
+                    //    strTemp += "     <a href=\"RememberAdd.aspx?flag=-1&ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-sm btn-danger\"><i class=\"icon-eye-close\"></i>很熟</a>";
+                    //}
 
                     strTemp += "     <a href=\"RememberAdd.aspx?ID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-sm btn-info\"><i class=\"icon-edit\"></i>编辑</a>";
                     strTemp += "   </div>";
@@ -86,5 +86,4 @@ public partial class Remember : PageBaseRem
 
         return rValue;
     }
-
 }

@@ -46,29 +46,4 @@ public partial class Remember_Remembered : PageBaseRem
         }
     }
 
-    /// <summary>
-    /// 完成学习
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    protected void Button1_Click(object sender, EventArgs e)
-    {//1\2\4\7\15
-        string strSQL = " Update Remember set tRememberTime='" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "',lTime=getdate(),iRememberCount=iRememberCount+1 where tRememberTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and iRememberCount=1 ";
-        strSQL += " Update Remember set tRememberTime='" + System.DateTime.Now.AddDays(2).ToString("yyyy-MM-dd") + "',lTime=getdate(),iRememberCount=iRememberCount+1 where tRememberTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and iRememberCount=2 ";
-        strSQL += " Update Remember set tRememberTime='" + System.DateTime.Now.AddDays(4).ToString("yyyy-MM-dd") + "',lTime=getdate(),iRememberCount=iRememberCount+1 where tRememberTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and iRememberCount=3 ";
-        strSQL += " Update Remember set tRememberTime='" + System.DateTime.Now.AddDays(7).ToString("yyyy-MM-dd") + "',lTime=getdate(),iRememberCount=iRememberCount+1 where tRememberTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and iRememberCount=4 ";
-        strSQL += " Update Remember set tRememberTime='" + System.DateTime.Now.AddDays(15).ToString("yyyy-MM-dd") + "',lTime=getdate(),iRememberCount=iRememberCount+1 where tRememberTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and iRememberCount>=5 ";
-        /// 最后一次记忆结束，则赋值到最大日期
-        // strSQL += " Update Remember set tRememberTime='2079-06-06 00:00:00',lTime=getdate() where tRememberTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and iRememberCount=6 ";
-        //this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '提示', 'content': '您确定要关闭吗？', 'modal': true, 'buttons': { '确定': function () {dialog.destroy();dialog.close(); },'取消': function () {dialog.destroy();dialog.close(); } })</script>");
-
-        if (OP_Mode.SQLRUN(strSQL))
-        {
-            MessageBox("", "恭喜，您已经完成今日的学习,<br>期待您明天的学习。", "Remember.aspx");
-        }
-        else
-        {
-            MessageBox("", "数据保存错误，请重试。");
-        }
-    }
 }

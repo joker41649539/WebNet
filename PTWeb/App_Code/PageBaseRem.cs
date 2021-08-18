@@ -78,7 +78,7 @@ public class PageBaseRem : System.Web.UI.Page
 
             try
             {
-                rValue = Request.Cookies["WeChat_Yanwo"]["USERID"];
+                rValue = Request.Cookies["WeChat_Remember"]["USERID"];
             }
             catch
             {
@@ -105,7 +105,7 @@ public class PageBaseRem : System.Web.UI.Page
 
             try
             {
-                rValue = HttpUtility.UrlDecode(Request.Cookies["WeChat_Yanwo"]["CNAME"], Encoding.GetEncoding("UTF-8"));
+                rValue = HttpUtility.UrlDecode(Request.Cookies["WeChat_Remember"]["CNAME"], Encoding.GetEncoding("UTF-8"));
             }
             catch
             {

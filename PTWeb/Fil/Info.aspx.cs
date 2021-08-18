@@ -29,7 +29,7 @@ public partial class Fil_Default2 : PageBase
         int iUserID = 0;
         try
         {
-            iUserID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+            iUserID = Convert.ToInt32(Request.Cookies["WeChat_Fil"]["USERID"]);
         }
         catch
         {
@@ -63,90 +63,90 @@ public partial class Fil_Default2 : PageBase
     /// </summary>
     public void GetTotal()
     {
-        //try
-        //{
-        //   // string HQUrl = "https://filfox.info/zh"; //行情信息
-        //    string HQUrl = "https://www.mytokencap.com/currency/fil/821765876"; //行情信息
-
-        //    List<string> result = new List<string>();
-
-        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"" + HQUrl + "");
-        //    request.Timeout = 4000;
-        //    request.ReadWriteTimeout = 4000;
-        //    WebResponse response = request.GetResponse();
-        //    Stream resStream = response.GetResponseStream();
-        //    StreamReader sr = new StreamReader(resStream, Encoding.UTF8);
-        //    string content = sr.ReadToEnd();
-
-        //    string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
-
-        //    /// 总余额
-        //    string strHQ = "≈¥";
-
-        //    int startIndex = content.IndexOf(strHQ);
-        //    int length = content.IndexOf("</div>", startIndex) - startIndex;
-
-        //    /// 获得 总余额
-        //    totalDataStr = content.Substring(startIndex, length);
-
-        //    /// 获得 总余额
-        //    double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
-        //    // 行情
-        //    Label_Fil.Text = (NumHQ).ToString();
-        //}
-        //catch (Exception ex)
-        //{
-        //    MessageBox("", ex.ToString());
-        //}
         try
         {
+            // string HQUrl = "https://filfox.info/zh"; //行情信息
+            string HQUrl = "https://www.mytokencap.com/currency/fil/821765876"; //行情信息
 
-            /// https://www.ztpay.org/  账号： 41649539@qq.com  joK121
-            /// 
-            string Appid = "ztpayj44ocmpkavmgs";
-            string AppSecret = "vOAF74hUzs9pGgpNovXNM8jqzuYrG8H2";
-            string Url = "https://sapi.ztpay.org/api/v2";
+            List<string> result = new List<string>();
 
-            var client = new System.Net.WebClient();
-            client.Encoding = System.Text.Encoding.UTF8;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"" + HQUrl + "");
+            request.Timeout = 4000;
+            request.ReadWriteTimeout = 4000;
+            WebResponse response = request.GetResponse();
+            Stream resStream = response.GetResponseStream();
+            StreamReader sr = new StreamReader(resStream, Encoding.UTF8);
+            string content = sr.ReadToEnd();
 
-            string stringSignTemp = "appid=" + Appid + "&method=market&key=" + AppSecret;
+            string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
 
-            string strMakeSign = "appid=" + Appid + "&method=market&sign=" + GetMD5(stringSignTemp).ToUpper();
+            /// 总余额
+            string strHQ = "≈¥";
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
-            request.Method = "POST";
+            int startIndex = content.IndexOf(strHQ);
+            int length = content.IndexOf("</div>", startIndex) - startIndex;
 
-            byte[] bytes = Encoding.UTF8.GetBytes(strMakeSign);
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = bytes.Length;
-            Stream myResponseStream = request.GetRequestStream();
-            myResponseStream.Write(bytes, 0, bytes.Length);
+            /// 获得 总余额
+            totalDataStr = content.Substring(startIndex, length);
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            StreamReader myStreamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-            var jo = (JObject)JsonConvert.DeserializeObject(myStreamReader.ReadToEnd());
-            var jo1 = (JObject)JsonConvert.DeserializeObject(jo.Root.ToString());
-            JArray data1 = jo.Value<JArray>("data");
-            string retString = myStreamReader.ReadToEnd();
-
-            myStreamReader.Close();
-            myResponseStream.Close();
-            //var data = client.DownloadString(Url + strMakeSign);
-            //var jo = (JObject)JsonConvert.DeserializeObject(retString);
-            //JArray data1 = jo.Value<JArray>("data");
-            //Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
-            //JArray jarray = (JArray)js["cny"];
-
-            string strTemp = retString.ToString().Substring(retString.IndexOf("fil"));
-
-            // { "code":0,"message":"行情获取成功","data":{"fil":{ "gains":-0.57,"cny":540.68,"usd":82.7361,"high":85.7288,"high_cny":560.24,"low":81.372,"low_cny":531.77} },"time":"2021-03-20 22:06:16"}
-            Label_Fil.Text = strTemp.Substring(strTemp.IndexOf("cny") + 5, strTemp.IndexOf(",") - 13);
+            /// 获得 总余额
+            double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
+            // 行情
+            Label_Fil.Text = (NumHQ).ToString();
         }
         catch (Exception ex)
         {
-
+            MessageBox("", ex.ToString());
         }
+        //try
+        //{
+
+        //    / https://www.ztpay.org/  账号： 41649539@qq.com  joK121
+        //    /
+        //    string Appid = "ztpayj44ocmpkavmgs";
+        //    string AppSecret = "vOAF74hUzs9pGgpNovXNM8jqzuYrG8H2";
+        //    string Url = "https://sapi.ztpay.org/api/v2";
+
+        //    var client = new System.Net.WebClient();
+        //    client.Encoding = System.Text.Encoding.UTF8;
+
+        //    string stringSignTemp = "appid=" + Appid + "&method=market&key=" + AppSecret;
+
+        //    string strMakeSign = "appid=" + Appid + "&method=market&sign=" + GetMD5(stringSignTemp).ToUpper();
+
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
+        //    request.Method = "POST";
+
+        //    byte[] bytes = Encoding.UTF8.GetBytes(strMakeSign);
+        //    request.ContentType = "application/x-www-form-urlencoded";
+        //    request.ContentLength = bytes.Length;
+        //    Stream myResponseStream = request.GetRequestStream();
+        //    myResponseStream.Write(bytes, 0, bytes.Length);
+
+        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //    StreamReader myStreamReader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+        //    var jo = (JObject)JsonConvert.DeserializeObject(myStreamReader.ReadToEnd());
+        //    var jo1 = (JObject)JsonConvert.DeserializeObject(jo.Root.ToString());
+        //    JArray data1 = jo.Value<JArray>("data");
+        //    string retString = myStreamReader.ReadToEnd();
+
+        //    myStreamReader.Close();
+        //    myResponseStream.Close();
+        //    var data = client.DownloadString(Url + strMakeSign);
+        //    var jo = (JObject)JsonConvert.DeserializeObject(retString);
+        //    JArray data1 = jo.Value<JArray>("data");
+        //    Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
+        //    JArray jarray = (JArray)js["cny"];
+
+        //    string strTemp = retString.ToString().Substring(retString.IndexOf("fil"));
+
+        //    { "code":0,"message":"行情获取成功","data":{ "fil":{ "gains":-0.57,"cny":540.68,"usd":82.7361,"high":85.7288,"high_cny":560.24,"low":81.372,"low_cny":531.77} },"time":"2021-03-20 22:06:16"}
+        //    Label_Fil.Text = strTemp.Substring(strTemp.IndexOf("cny") + 5, strTemp.IndexOf(",") - 13);
+        //}
+        //catch (Exception ex)
+        //{
+
+        //}
         //var client = new System.Net.WebClient();
         //client.Encoding = System.Text.Encoding.UTF8;
 
@@ -187,7 +187,7 @@ public partial class Fil_Default2 : PageBase
         //int iUserID = 0;
         //try
         //{
-        //    iUserID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+        //    iUserID = Convert.ToInt32(Request.Cookies["WeChat_Fil"]["USERID"]);
         //}
         //catch
         //{
@@ -259,7 +259,7 @@ public partial class Fil_Default2 : PageBase
         int iUserID = 0;
         try
         {
-            iUserID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+            iUserID = Convert.ToInt32(Request.Cookies["WeChat_Fil"]["USERID"]);
         }
         catch
         {
@@ -272,7 +272,7 @@ public partial class Fil_Default2 : PageBase
 
         string strSQL = " declare @StartDate DATETIME = (Select min(EffectiveTime) from Fil_PowerComputer where UserID=" + iUserID + ")";
         strSQL += " declare @EndDate DATETIME = getdate()";
-        strSQL += " SELECT CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) AS every_time, a.*,(Select isnull(Sum(round(power/SumPower*Gift/180,4)),0) from vfil_gift where DATEDIFF(DAY, LTime,  CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))<180 and UserID=" + iUserID + " and LTime<CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))+isnull(a.DayRelease,0) Release FROM";
+        strSQL += " SELECT CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23) AS every_time, a.*,(Select isnull(Sum(round(power/SumPower*Gift/180 * 0.8 * 0.75,4)),0) from vfil_gift where DATEDIFF(DAY, LTime,  CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))<180 and UserID=" + iUserID + " and LTime<CONVERT (VARCHAR (100),dateadd(day,n.number,@StartDate),23))+isnull(a.DayRelease,0) Release FROM";
         strSQL += " master..spt_values n left join(Select gift, sumpower, ltime, sum(POWER) power, sum(Round(POWER / sumpower * Gift * 0.25 * 0.8, 4)) DayRelease, sum(Round(POWER / sumpower * Gift * 0.8, 4)) SumRelease from vfil_gift where userid = " + iUserID.ToString() + " group by gift, sumpower, ltime) a on a.ltime = CONVERT(VARCHAR(100), dateadd(day, n.number, @StartDate), 23)";
         strSQL += " WHERE n.type = 'p' AND n.number <= DATEDIFF(day, @StartDate, @EndDate)";
 
@@ -286,6 +286,7 @@ public partial class Fil_Default2 : PageBase
                 if (OP_Mode.Dtv[i]["Release"].ToString().Length > 0)
                 {
                     SumBalance += Convert.ToDouble(OP_Mode.Dtv[i]["Release"]);
+
                 }
                 if (OP_Mode.Dtv[i]["SumRelease"].ToString().Length > 0)
                 {
@@ -299,9 +300,9 @@ public partial class Fil_Default2 : PageBase
             //    rowView["Release"] = SumBalance.ToString();
             //    OP_Mode.Dtv.AddNew();
             //}
-            Label_Release.Text = SumBalance.ToString();
-            Label_Lock.Text = (SumRelease - SumBalance).ToString();
-            Label_SumFil.Text = SumRelease.ToString();
+            Label_Release.Text = Math.Round(Convert.ToDecimal(SumBalance), 4).ToString();// decimal.Round(decimal.Parse(SumBalance.ToString(), 4)).ToString();
+            Label_Lock.Text = Math.Round(Convert.ToDecimal(SumRelease - SumBalance), 4).ToString();//decimal.Round(decimal.Parse((SumRelease - SumBalance).ToString(), 4)).ToString();
+            Label_SumFil.Text = Math.Round(Convert.ToDecimal(SumRelease), 4).ToString();//decimal.Round(decimal.Parse(SumRelease.ToString(), 4)).ToString();
             //for (int i = 0; i < OP_Mode.Dtv.Count; i++)
             //{
 

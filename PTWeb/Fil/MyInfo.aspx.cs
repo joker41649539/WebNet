@@ -19,7 +19,7 @@ public partial class Fil_Default2 : PageBase
     {
         try
         {
-            int iUserID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+            int iUserID = Convert.ToInt32(Request.Cookies["WeChat_Fil"]["USERID"]);
             int iSumPower = 0;
             string strTempDiv = string.Empty;
             strSQL = "Select * from Fil_PowerComputer Where UserID=" + iUserID.ToString();

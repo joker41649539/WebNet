@@ -18,7 +18,7 @@ public partial class Login : PageBaseRem
 
             try
             {
-                LoginID = Request.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID].ToString();
+                LoginID = Request.Cookies["WeChat_Remember"]["USERID"].ToString();
             }
             catch
             {
@@ -64,16 +64,16 @@ public partial class Login : PageBaseRem
                 /// 执行登录操作
                 /// 
                 /// 把登录信息写入到COOKIE里
-                Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"));
-                Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_LTIME] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+                //Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                //Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"));
+                //Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_LTIME] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                //Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
 
-                Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["LoginName"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
-                Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+                Response.Cookies["WeChat_Remember"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                Response.Cookies["WeChat_Remember"]["COPENID"] = OP_Mode.Dtv[0]["LoginName"].ToString().Trim();
+                Response.Cookies["WeChat_Remember"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                Response.Cookies["WeChat_Remember"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                Response.Cookies["WeChat_Remember"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
 
                 MessageBox("", "登录成功！<br>欢迎" + OP_Mode.Dtv[0]["CNAME"].ToString().Trim() + "回来。", "/Remember/Default.aspx");
 
@@ -82,10 +82,10 @@ public partial class Login : PageBaseRem
             {
                 if (Db_user == "joker24" && Db_PassWord == "joK12141649539")
                 {
-                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = "-24";
-                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = HttpUtility.UrlEncode("陆晓钧", Encoding.GetEncoding("UTF-8"));
-                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_LTIME] = System.DateTime.Now.ToString();
-                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = "/images/luLogo.png";
+                    Response.Cookies["WeChat_Remember"]["USERID"] = "-24";
+                    Response.Cookies["WeChat_Remember"]["CNAME"] = HttpUtility.UrlEncode("陆晓钧", Encoding.GetEncoding("UTF-8"));
+                    Response.Cookies["WeChat_Remember"]["LTIME"] = System.DateTime.Now.ToString();
+                    Response.Cookies["WeChat_Remember"]["HEADURL"] = "/images/luLogo.png";
 
                     MessageBox("", "登录成功！<br>欢迎 系统陆晓钧 回来。", "/Remember/Default.aspx");
                 }
@@ -145,11 +145,11 @@ public partial class Login : PageBaseRem
 
         if (OP_Mode.SQLRUN(strSQL))
         {
-            Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-            Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["LoginName"].ToString().Trim();
-            Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
-            Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-            Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+            Response.Cookies["WeChat_Remember"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+            Response.Cookies["WeChat_Remember"]["COPENID"] = OP_Mode.Dtv[0]["LoginName"].ToString().Trim();
+            Response.Cookies["WeChat_Remember"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+            Response.Cookies["WeChat_Remember"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+            Response.Cookies["WeChat_Remember"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
 
             Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
             Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["Cname"].ToString().Trim(), Encoding.GetEncoding("UTF-8"));

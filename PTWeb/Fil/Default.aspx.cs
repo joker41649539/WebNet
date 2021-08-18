@@ -79,31 +79,31 @@ public partial class Fil_Default : PageBase
     /// </summary>
     private void GetNewsByWeb()
     {
-        string Url = "http://api.tianapi.com/digiccy/index?key=718245142813425a7adab4f1cd4f64b4&num=10";
+        //string Url = "http://api.tianapi.com/digiccy/index?key=718245142813425a7adab4f1cd4f64b4&num=10";
 
-        var client = new System.Net.WebClient();
-        client.Encoding = System.Text.Encoding.UTF8;
+        //var client = new System.Net.WebClient();
+        //client.Encoding = System.Text.Encoding.UTF8;
 
-        var data = client.DownloadString(Url);
-        var jo = (JObject)JsonConvert.DeserializeObject(data);
-        JArray data1 = jo.Value<JArray>("newslist");
-        Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
-        JArray jarray = (JArray)js["newslist"];
+        //var data = client.DownloadString(Url);
+        //var jo = (JObject)JsonConvert.DeserializeObject(data);
+        //JArray data1 = jo.Value<JArray>("newslist");
+        //Newtonsoft.Json.Linq.JObject js = jo as Newtonsoft.Json.Linq.JObject;//把上面的obj转换为 Jobject对象
+        //JArray jarray = (JArray)js["newslist"];
 
-        string strSQL = "";
+        //string strSQL = "";
 
-        foreach (var node in jarray)
-        {
-            NewslistItem itm = JsonConvert.DeserializeObject<NewslistItem>(node.ToString());
+        //foreach (var node in jarray)
+        //{
+        //    NewslistItem itm = JsonConvert.DeserializeObject<NewslistItem>(node.ToString());
 
-            strSQL = "insert into Fil_News(Title,Url,NewsID,PicUrl,Description,LTime) values ('" + itm.title + "','" + itm.url + "','" + itm.id + "','" + itm.picUrl + "','" + itm.description + "','" + itm.ctime + "')";
+        //    strSQL = "insert into Fil_News(Title,Url,NewsID,PicUrl,Description,LTime) values ('" + itm.title + "','" + itm.url + "','" + itm.id + "','" + itm.picUrl + "','" + itm.description + "','" + itm.ctime + "')";
 
-            if (!OP_Mode.SQLRUN(strSQL))
-            {
-                // MessageBox("", OP_Mode.strErrMsg);
-                break;
-            }
-        }
+        //    if (!OP_Mode.SQLRUN(strSQL))
+        //    {
+        //        // MessageBox("", OP_Mode.strErrMsg);
+        //        break;
+        //    }
+        //}
     }
     public class NewslistItem
     {
@@ -142,7 +142,7 @@ public partial class Fil_Default : PageBase
     /// </summary>
     private void SaveData()
     {
-        string strSQL = "Insert into Fil_Summary (SumRMBYE,Gift,SumPower,PowerAdd,Lock,FilYE,FilRmb,Hardware,Average) values (" + Label_RMB.Text + "," + Label_CK.Text + "," + Label_ZSL.Text + ",'" + Label_RZZ.Text + "'," + Label_PowerLock.Text + "," + Label_FilYE.Text + "," + Label_RMB.Text + "," + Label_YJ.Text + "," + Label_PJ.Text + ")";
+        string strSQL = "Insert into Fil_Summary (SumRMBYE,SumGift,SumPower,PowerAdd,Lock,FilYE,FilRmb,Hardware,Average,Gift) values (" + Label_RMB.Text + "," + Label_CK.Text + "," + Label_ZSL.Text + ",'" + Label_RZZ.Text + "'," + Label_PowerLock.Text + "," + Label_FilYE.Text + "," + Label_RMB.Text + "," + Label_YJ.Text + "," + Label_PJ.Text + "," + Label_CK.Text + " - (Select top 1 sumgift from Fil_Summary order by CTIME desc))";
         if (!OP_Mode.SQLRUN(strSQL))
         {
             MessageBox("", "错误：" + OP_Mode.strErrMsg);
@@ -178,8 +178,8 @@ public partial class Fil_Default : PageBase
 
             /// 可用余额
             string strKYYE = "></div></span>: ";
-            string strWKSC = "挖矿锁仓: ";
-            string strWin = "出块奖励 (占比): ";
+            string strWKSC = "提供存储服务锁仓: ";
+            string strWin = "累计出块奖励: ";
             string strPowerAdd = "算力增速: ";
             string strSumPower = "有效算力 </p><div class=";
 
@@ -200,7 +200,7 @@ public partial class Fil_Default : PageBase
             totalDataStr = content.Substring(startIndex, length);
 
             double NumWKSC = Convert.ToDouble(totalDataStr.Substring(strWKSC.Length, totalDataStr.Length - strWKSC.Length).Replace(",", ""));
-            ////// 出快奖励
+            ////// 累计 出快奖励   
             startIndex = content.IndexOf(strWin);
             length = content.IndexOf("FIL", startIndex) - startIndex;
 
@@ -209,14 +209,14 @@ public partial class Fil_Default : PageBase
 
             double NumWin = Convert.ToDouble(totalDataStr.Substring(strWin.Length, totalDataStr.Length - strWin.Length).Replace(",", ""));
 
-            ////// 算力增速
-            startIndex = content.IndexOf(strPowerAdd);
-            length = content.IndexOf("/", startIndex) - startIndex;
+            //////// 算力增速
+            //startIndex = content.IndexOf(strPowerAdd);
+            //length = content.IndexOf("/", startIndex) - startIndex;
 
-            /// 获得 算力增速
-            totalDataStr = content.Substring(startIndex, length);
+            ///// 获得 算力增速
+            //totalDataStr = content.Substring(startIndex, length);
 
-            string NumPowerAdd = totalDataStr.Substring(strPowerAdd.Length, totalDataStr.Length - strPowerAdd.Length).Replace(",", "");
+            //string NumPowerAdd = totalDataStr.Substring(strPowerAdd.Length, totalDataStr.Length - strPowerAdd.Length).Replace(",", "");
 
             ////////////////
             ////// 总算力
@@ -285,7 +285,7 @@ public partial class Fil_Default : PageBase
             /// Fil 总余额
             Label_FilYE.Text = (NumSumYE + NumKYYE).ToString("F2");
             /// 日增长 
-            Label_RZZ.Text = NumPowerAdd.ToString();
+          //  Label_RZZ.Text = NumPowerAdd.ToString();
             /// 总算力
             Label_ZSL.Text = NumSumPower.ToString();
             // 运行时间

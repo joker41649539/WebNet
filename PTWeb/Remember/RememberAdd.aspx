@@ -23,11 +23,20 @@
                 </div>
             </div>
         </div>
+        <p runat="server" id="RememberTag">
+            <%--            <span class="label label-danger">Top</span>--%>
+        </p>
         <div class="clearfix form-actions">
             <div class="col-md-offset-3 col-md-9">
                 <asp:LinkButton UseSubmitBehavior="false" ID="GridView_Remember_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Remember_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 保  存</asp:LinkButton>
                 <asp:LinkButton UseSubmitBehavior="false" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton_Del_Click"><i class="icon-trash bigger-110"></i> 删  除</asp:LinkButton>
             </div>
+        </div>
+        <div class="well">
+            <h4>我的标签</h4>
+            <p runat="server" id="MyTag">
+                <a href="TagAdd.aspx" class="label label-grey"><i class="far fa-plus-square"></i>&nbsp;添加新的标签</a>
+            </p>
         </div>
     </div>
 </asp:Content>

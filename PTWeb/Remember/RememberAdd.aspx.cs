@@ -17,7 +17,6 @@ public partial class RememberAdd : PageBaseRem
                 int iid = Convert.ToInt32(Request["id"]);
                 if (iid > 0)
                 {
-                    LoadData(iid);
                     LinkButton_Del.Visible = true;
 
                     int iFlag = Convert.ToInt32(Request["flag"]);
@@ -29,6 +28,14 @@ public partial class RememberAdd : PageBaseRem
                     {/// 非常熟了
                         OverRemember(iid);
                     }
+
+                    int Tag = Convert.ToInt32(Request["tag"]);
+                    if (Tag > 0 && iid > 0)
+                    {
+                        AddTag(iid, Tag);
+                    }
+                    LoadData(iid);
+                    ReadMyAllTag(iid);
                 }
             }
             catch
@@ -36,6 +43,50 @@ public partial class RememberAdd : PageBaseRem
                 MessageBox("", "参数错误，请勿非法操作!", "/Remember/Remember.aspx");
                 return;
             }
+        }
+    }
+
+    /// <summary>
+    /// 加载所有标签
+    /// </summary>
+    private void ReadMyAllTag(int iid)
+    {
+        string strTemp = string.Empty;
+        if (iid > 0)
+        {
+            string strSQL = " Select * from Remember_Tag where UserID=" + DefaultUser + " order By LTime";
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                { // 循环展示标签
+                    strTemp += "<a href=\"?ID=" + iid + "&tag=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"label label-" + OP_Mode.Dtv[i]["TagColor"].ToString() + "\">" + OP_Mode.Dtv[i]["TagName"].ToString() + "</a>";
+                }
+            }
+        }
+        strTemp += "<a href=\"TagAdd.aspx\" class=\"label label-grey\"><i class=\"far fa-plus-square\"></i>&nbsp;添加新的标签</a>";
+        MyTag.InnerHtml = strTemp;
+    }
+
+    /// <summary>
+    /// 添加标签
+    /// </summary>
+    /// <param name="IID"></param>
+    /// <param name="iTag"></param>
+    private void AddTag(int IID, int iTag)
+    {
+
+        string strSQL = " DECLARE @Cont INT ";
+
+        strSQL += " Select @Cont = count(*) from Remember_Tag,Remember_TagRemember where UserID=" + DefaultUser + " and Remember_Tag.ID=TagID and RememberID=" + IID + " and TagID=" + iTag + " ";
+
+        strSQL += " if @Cont=0 ";
+        strSQL += " BEGIN ";
+        strSQL += "   Insert into Remember_TagRemember(RememberID, TagID) values(" + IID.ToString() + ", " + iTag.ToString() + ")";
+        strSQL += " End";
+
+        if (!OP_Mode.SQLRUN(strSQL))
+        {
+            MessageBox("", "" + OP_Mode.strErrMsg);
         }
     }
 
@@ -49,7 +100,8 @@ public partial class RememberAdd : PageBaseRem
         strSQL += " Update Remember set NextTime='" + System.DateTime.Now.AddDays(2).ToString("yyyy-MM-dd") + "',lTime=getdate(),ICount=ICount+1 where NextTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and ICount=1 and ID=" + IID + "  ";
         strSQL += " Update Remember set NextTime='" + System.DateTime.Now.AddDays(4).ToString("yyyy-MM-dd") + "',lTime=getdate(),ICount=ICount+1 where NextTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and ICount=2 and ID=" + IID + "  ";
         strSQL += " Update Remember set NextTime='" + System.DateTime.Now.AddDays(7).ToString("yyyy-MM-dd") + "',lTime=getdate(),ICount=ICount+1 where NextTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and ICount=3 and ID=" + IID + "  ";
-        strSQL += " Update Remember set NextTime='" + System.DateTime.Now.AddDays(15).ToString("yyyy-MM-dd") + "',lTime=getdate(),ICount=ICount+1 where NextTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and ICount>=4 and ID=" + IID + "  ";
+        strSQL += " Update Remember set NextTime='" + System.DateTime.Now.AddDays(15).ToString("yyyy-MM-dd") + "',lTime=getdate(),ICount=ICount+1 where NextTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and ICount=4 and ID=" + IID + "  ";
+        strSQL += " Update Remember set NextTime='" + System.DateTime.Now.AddDays(30).ToString("yyyy-MM-dd") + "',lTime=getdate(),ICount=ICount+1 where NextTime<'" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "' And iUserID=" + DefaultUser + " and ICount>4 and ID=" + IID + "  ";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -96,12 +148,46 @@ public partial class RememberAdd : PageBaseRem
             {
                 GridView_Remember_TextBox_nContent.Text = OP_Mode.Dtv[0]["CContent"].ToString();
                 GridView_Remember_TextBox_nRemark.Text = OP_Mode.Dtv[0]["CRemark"].ToString();
+
+                LoadTag(IID);
             }
             else
             {
                 MessageBox("", "参数错误，请勿非法操作!", "/Remember/Remember.aspx");
                 return;
             }
+        }
+    }
+
+    /// <summary>
+    /// 加载标签
+    /// </summary>
+    /// <param name="IID"></param>
+    private void LoadTag(int IID)
+    {
+        string strSQL = "Select Remember_Tag.ID,TagName,TagColor from Remember_Tag,Remember_TagRemember where UserID=" + DefaultUser + " and Remember_Tag.ID=TagID and RememberID=" + IID;
+
+        string strTemp = string.Empty;
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+            {
+                strTemp += "<div class=\"btn-group\">";
+                strTemp += "  <button data-toggle=\"dropdown\" class=\"btn btn-" + OP_Mode.Dtv[i]["TagColor"].ToString() + " dropdown-toggle\">";
+                strTemp += " " + OP_Mode.Dtv[i]["TagName"].ToString() + " <span class=\"icon-caret-down icon-on-right\"></span>";
+                strTemp += "  </button>";
+                strTemp += " <ul class=\"dropdown-menu dropdown-default\">";
+                strTemp += "  <li>";
+                strTemp += "    <a href=\"TagAdd.aspx?TagID=" + OP_Mode.Dtv[i]["ID"].ToString() + "&RememberID=" + IID + "\" >删除标签</a></li>";
+                strTemp += " </ul>";
+                strTemp += "</div>";
+                //                strTemp += "<span class=\"label label-"+OP_Mode.Dtv[i]["TagColor"].ToString()+ "\">" + OP_Mode.Dtv[i]["TagName"].ToString() + "</span>";
+            }
+        }
+        if (strTemp.Length > 0)
+        {
+            RememberTag.InnerHtml = strTemp;
         }
     }
 

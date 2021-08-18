@@ -34,7 +34,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
         try
         {
-            iUserID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+            iUserID = Convert.ToInt32(Request.Cookies["WeChat_Fil"]["USERID"]);
         }
         catch
         { }
@@ -65,7 +65,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
         try
         {
-            iWeChatID = Convert.ToInt32(Request.Cookies["WeChat_Yanwo"]["USERID"]);
+            iWeChatID = Convert.ToInt32(Request.Cookies["WeChat_Fil"]["USERID"]);
         }
         catch
         {
@@ -82,19 +82,19 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                     // 临时登录
                     /// 如果数据库有ID，则直接登录。
                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                    Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
-                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
-                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+                    Response.Cookies["WeChat_Fil"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    Response.Cookies["WeChat_Fil"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                    Response.Cookies["WeChat_Fil"]["CNAME"] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    Response.Cookies["WeChat_Fil"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                    Response.Cookies["WeChat_Fil"]["HEADURL"] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
 
-                    Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+                    Response.Cookies["WeChat_Fil"]["LOGIN"] = "true";
 
                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
 
                     ///设置COOKIE最长时间
-                    Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+                    Response.Cookies["WeChat_Fil"].Expires = DateTime.MaxValue;
 
 
                     /// 给用户ID赋值
@@ -213,19 +213,19 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                         }
                         /// 如果数据库有ID，则直接登录。
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["COPENID"] = opentid.ToString();
-                        Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(UserName);
-                        Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["HEADURL"] = HeadUserUrl;
+                        Response.Cookies["WeChat_Fil"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_Fil"]["COPENID"] = opentid.ToString();
+                        Response.Cookies["WeChat_Fil"]["CNAME"] = HttpUtility.UrlEncode(UserName);
+                        Response.Cookies["WeChat_Fil"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                        Response.Cookies["WeChat_Fil"]["HEADURL"] = HeadUserUrl;
 
-                        Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+                        Response.Cookies["WeChat_Fil"]["LOGIN"] = "true";
 
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
 
                         ///设置COOKIE最长时间
-                        Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+                        Response.Cookies["WeChat_Fil"].Expires = DateTime.MaxValue;
 
                         /// 更新登录时间
                         OP_Mode.SQLRUN("Update Fil_Users set Ltime=getdate(),HEADImage='" + HeadUserUrl + "' where WeChatOpenID='" + opentid.ToString() + "'");
@@ -248,19 +248,19 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                                 if (OP_Mode.Dtv.Count > 0)
                                 {
                                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["WeChatName"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
-                                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
+                                    Response.Cookies["WeChat_Fil"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Fil"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Fil"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["WeChatName"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                                    Response.Cookies["WeChat_Fil"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                                    Response.Cookies["WeChat_Fil"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
 
-                                    Response.Cookies["WeChat_Yanwo"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
+                                    Response.Cookies["WeChat_Fil"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
                                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
 
-                                    Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+                                    Response.Cookies["WeChat_Fil"]["LOGIN"] = "true";
                                     Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
                                     ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
-                                    Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+                                    Response.Cookies["WeChat_Fil"].Expires = DateTime.MaxValue;
 
                                     string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
 
