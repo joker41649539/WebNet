@@ -103,7 +103,7 @@ public partial class Remember_MasterPage : System.Web.UI.MasterPage
         string DeBugMsg = string.Empty;
         // 东之燕 账号
         string AppId = "wxf60778eb4d1003de";//与微信公众账号后台的AppId设置保持一致，区分大小写。
-        string AppSecret = "21c72eab57d27d92cdc87870d350fd01";
+        string AppSecret = "4224c03a03edeba44cb4aab9b27678be";
 
         var code = string.Empty;
         var opentid = string.Empty;

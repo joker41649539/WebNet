@@ -54,27 +54,9 @@ public partial class Fil_Default2 : PageBase
                     SumRelease += Convert.ToDouble(OP_Mode.Dtv[i]["SumRelease"]);
                 }
             }
-            //if (OP_Mode.Dtv.Count > 0)
-            //{
-            //    DataRowView rowView = OP_Mode.Dtv.AddNew();
-            //    rowView["every_time"] = SumRelease.ToString();
-            //    rowView["Release"] = SumBalance.ToString();
-            //    OP_Mode.Dtv.AddNew();
-            //}
-            Label_Release.Text = SumBalance.ToString();
-            //Label_Lock.Text = (SumRelease - SumBalance).ToString();
-            //Label_SumFil.Text = SumRelease.ToString();
-            //for (int i = 0; i < OP_Mode.Dtv.Count; i++)
-            //{
+            
+            Label_Release.Text = Math.Round(Convert.ToDecimal(SumBalance), 4).ToString();
 
-            //}
-
-            //for (DateTime dt = new DateTime(System.DateTime.Now.Year, System.DateTime.Now.Month, System.DateTime.Now.Day); dt >= new DateTime(startTime.Year, startTime.Month, startTime.Day); dt = dt.AddDays(-1))
-            //{
-            //    DataRowView rowView = OP_Mode.Dtv.AddNew();
-            //    rowView["LTime"] = dt.ToString("yyyy-MM-dd");
-            //    rowView["DayRelease"] = 0;
-            //}
         }
 
     }

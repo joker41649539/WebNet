@@ -17,7 +17,7 @@ public partial class Admin_SendMsg : PageBaseRem
 
     private void senMsg()
     {
-        //http://yanwo.x76.com.cn/remember/sendmsg.aspx?OPID=ooUML6EsI6okXuBBhZ-l4ur204Y&Title=%E6%A0%87%E9%A2%98&Num=32.2&Info=%E4%BF%A1%E6%81%AF&Remark=%E8%AF%B4%E6%98%8E&URL=#
+        //http://yanwo.x76.com.cn/remember/sendmsg.aspx?OPID=ooUML6LgLHJdW17frsAoI9V0s-ws&Title=%E6%A0%87%E9%A2%98&Num=32.2&Info=%E4%BF%A1%E6%81%AF&Remark=%E8%AF%B4%E6%98%8E&URL=#
         string strOPenid = "ooUML6EsI6okXuBBhZ-_l4ur204Y";
         string strTilte = "标题";
         string strNum = "0.00";

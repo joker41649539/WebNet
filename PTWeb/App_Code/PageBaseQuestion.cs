@@ -22,7 +22,7 @@ using System.Xml;
 /// <summary>
 /// Summary description for PageBase
 /// </summary>
-public class PageBaseRem : System.Web.UI.Page
+public class PageBaseQuestion : System.Web.UI.Page
 {
     public static string DefaultConStr = ConfigurationManager.ConnectionStrings["DefaultConnectionString"].ConnectionString;
 
@@ -39,7 +39,7 @@ public class PageBaseRem : System.Web.UI.Page
     /// <summary>
     /// 权限判断后跳转的页面
     /// </summary>
-    public static string Defaut_QX_URL = "/Remember/Default.aspx";
+    public static string Defaut_QX_URL = "/Question/Default.aspx";
 
     /// <summary>
     /// 依据权限ID和用户ID判断是否有此功能权限。有返回TURE，反之返回FALSE;
@@ -78,11 +78,11 @@ public class PageBaseRem : System.Web.UI.Page
 
             try
             {
-                rValue = Request.Cookies["WeChat_Remember"]["USERID"];
+                rValue = Request.Cookies["WeChat_Question"]["USERID"];
             }
             catch
             {
-                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Remember/Login.aspx\"; } } })</script>");
+                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Question/Login.aspx\"; } } })</script>");
                 //this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "key", "document.getElementById('ShowMSG').innerHTML='您还未登陆，无权查看该页！<br/>请先登陆！';document.getElementById('MSGTitle').innerHTML='提 示'", true);
                 //this.Page.ClientScript.RegisterStartupScript(typeof(string), "sKey", "<script language=JavaScript>$('#MSG').modal('show');$(function () {$('#MSG').on('hide.bs.modal', function () {setTimeout(parent.location.href = '/Login.aspx', 0);})});</script>");
             }
@@ -105,11 +105,11 @@ public class PageBaseRem : System.Web.UI.Page
 
             try
             {
-                rValue = HttpUtility.UrlDecode(Request.Cookies["WeChat_Remember"]["CNAME"], Encoding.GetEncoding("UTF-8"));
+                rValue = HttpUtility.UrlDecode(Request.Cookies["WeChat_Question"]["CNAME"], Encoding.GetEncoding("UTF-8"));
             }
             catch
             {
-                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Remember/Login.aspx\"; } } })</script>");
+                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Question/Login.aspx\"; } } })</script>");
                 //this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "key", "document.getElementById('ShowMSG').innerHTML='您还未登陆，无权查看该页！<br/>请先登陆！';document.getElementById('MSGTitle').innerHTML='提 示'", true);
                 //this.Page.ClientScript.RegisterStartupScript(typeof(string), "sKey", "<script language=JavaScript>$('#MSG').modal('show');$(function () {$('#MSG').on('hide.bs.modal', function () {setTimeout(parent.location.href = '/Login.aspx', 0);})});</script>");
             }
@@ -134,7 +134,7 @@ public class PageBaseRem : System.Web.UI.Page
     /// 默认网址前缀
     /// </summary>
     public static string DefaultWebURL = ConfigurationManager.AppSettings["DefaultWebURL"];
-    public PageBaseRem()
+    public PageBaseQuestion()
     {
         // MessageBox("1", "123");
     }
@@ -705,8 +705,8 @@ public class PageBaseRem : System.Web.UI.Page
     public string GetaccessToken()
     {
         string sValue = string.Empty, strSQL;
-        string AppId = "wxf60778eb4d1003de";//与微信公众账号后台的AppId设置保持一致，区分大小写。
-        string AppSecret = "4224c03a03edeba44cb4aab9b27678be";
+        string AppId = WebConfigurationManager.AppSettings["CorpId"];//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
         string MSG = string.Empty;
 
         var client = new System.Net.WebClient();

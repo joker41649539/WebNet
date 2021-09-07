@@ -96,7 +96,7 @@ public partial class Fil_Default2 : PageBase
         }
         catch (Exception ex)
         {
-            MessageBox("", ex.ToString());
+           // MessageBox("", ex.ToString());
         }
         //try
         //{
