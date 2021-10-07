@@ -13,9 +13,30 @@ public partial class _Default : PageBase
     {
         if (!IsPostBack)
         {
-            LoadQX();
-           // LoadMyJF();
-            LoadGCNum();
+            //try
+            //{
+            //    LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
+            //}
+            //catch
+            //{
+            //    MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
+            //    return;
+            //}
+
+            string strURL = Request.Url.AbsoluteUri;
+            //      MessageBox("", strURL + "{" + strURL.IndexOf("putian") + "}");
+            if (strURL.IndexOf("putian") > -1 || strURL.IndexOf("localhost") > -1)
+            {
+
+                LoadQX();
+                // LoadMyJF();
+                LoadGCNum();
+            }
+            else
+            {
+                MessageBox("", "该域名已停用，请使用 www.putian.ink 访问。");
+                // return;
+            }
         }
     }
 

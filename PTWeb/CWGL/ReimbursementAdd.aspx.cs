@@ -1052,7 +1052,7 @@ public partial class CWGL_Default2 : PageBase
             {
                 int ID = Convert.ToInt32(Request["ID"]);
 
-                SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "ptweb.x76.com.cn/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
+                SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "www.putian.ink/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
             }
             catch
             {

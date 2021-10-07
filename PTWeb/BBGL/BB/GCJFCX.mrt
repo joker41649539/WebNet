@@ -5,7 +5,7 @@
     <Databases isList="true" count="1">
       <PT Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
         <Alias>PT</Alias>
-        <ConnectionStringEncrypted>5W7RKcZK84xhTU3EYQXnStVsT6FmC/OtzBmcmHZJ4yqBVNHJyQ1LvPgVzY3IBCIvhnBlwmcYcwlpSc30ZACke41igSNPDrPBaknxBHJY4I+GbGkJVlB7WfNcwZxqDaBP3MSb4+VWUchoTLyEZwTiZt9cccvGTDHZ7xu1jWcA9G7kVmNITA5zkGlMjKVJKfQqhVr1y2JbIoXtHU0ETw00e4FW0Q==</ConnectionStringEncrypted>
+        <ConnectionStringEncrypted>5RJ1LUtXkwVrCGVkY2SgP8PazYphfNOBRUTo3GhcpG7e2HvIVnGjvOldwa3mhOEvwFxTS0hd49XsXDn0YWz3Y8Xu/cvGFsP5fxrtmcolpD+L0FMryErq8WsVpZhiGKIPw3DRg8Vx84FGE9XQ+xH2e8VWwQ==</ConnectionStringEncrypted>
         <Name>PT</Name>
       </PT>
     </Databases>
@@ -573,10 +573,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/2/2020 10:11:36 PM</ReportChanged>
+  <ReportChanged>9/14/2021 9:17:20 PM</ReportChanged>
   <ReportCreated>9/2/2020 4:47:41 PM</ReportCreated>
-  <ReportFile>D:\WebNet\PTWeb\BBGL\BB\GCJFCX.mrt</ReportFile>
-  <ReportGuid>282ef7ae6d764fa08f3bb356a59aaead</ReportGuid>
+  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\GCJFCX.mrt</ReportFile>
+  <ReportGuid>9e881c9c94af427cba9512a9bd73dc26</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

@@ -5,7 +5,7 @@
     <Databases isList="true" count="1">
       <连接 Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
         <Alias>连接</Alias>
-        <ConnectionStringEncrypted>5cJTqMVn04XpFayNY0z1csNahW3NXQHpQx5N2Ghc90aFWNGDTlx73XIeTehqEXVu3Vb5KGdKS4RpHqWlb1gjbtU6eYPFCWP17B6c8Mnst2Pc0HnpS1FxnEII7YBNGDR7kGzNSWEJ09VHR7z0w4Tnu91q0QleCwHZzBvNvc8BZRLTVNHJRmhxmA==</ConnectionStringEncrypted>
+        <ConnectionStringEncrypted>5RJ1LUtXkwVrCGVkY2SgP8PazYphfNOBRUTo3GhcpG7e2HvIVnGjvOldwa3mhOEvwFxTS0hd49XsXDn0YWz3Y8Xu/cvGFsP5fxrtmcolpD+L0FMryErq8WsVpZhiGKIPw3DRg8Vx84FGE9XQ+xH2e8VWwQ==</ConnectionStringEncrypted>
         <Name>连接</Name>
       </连接>
     </Databases>
@@ -1431,10 +1431,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/26/2021 6:35:50 PM</ReportChanged>
+  <ReportChanged>9/14/2021 9:16:41 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
   <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdList.mrt</ReportFile>
-  <ReportGuid>25c63f9fdcb04bb98e4c3ca436450152</ReportGuid>
+  <ReportGuid>458bcc1e514542b896dbbfc5a5d4749e</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

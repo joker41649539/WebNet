@@ -160,9 +160,9 @@ public partial class Fil_Default : PageBase
     {
         try
         {
-            string strURL = "https://filfox.info/zh/address/f063628";// 旷工账户信息
-            string UserURL = "https://filfox.info/zh/address/f3sfrn2s523s7rpkedw7efqzlk2wzs7y3sg3ie6xuuyx72pchyk2mzg4ms4q7favb2iv7m6uy3pjlp2e4zob3a"; // 节点账户信息
-            string HQUrl = "https://filfox.info/zh"; //行情信息
+            string strURL = "https://filfox.info/en/address/f063628";// 旷工账户信息
+            string UserURL = "https://filfox.info/en/address/f3sfrn2s523s7rpkedw7efqzlk2wzs7y3sg3ie6xuuyx72pchyk2mzg4ms4q7favb2iv7m6uy3pjlp2e4zob3a"; // 节点账户信息
+            string HQUrl = "https://filfox.info/en"; //行情信息
 
             List<string> result = new List<string>();
 
@@ -178,10 +178,10 @@ public partial class Fil_Default : PageBase
 
             /// 可用余额
             string strKYYE = "></div></span>: ";
-            string strWKSC = "提供存储服务锁仓: ";
-            string strWin = "累计出块奖励: ";
+            string strWKSC = "Initial Pledge: ";
+            string strWin = "Total Reward:";
             string strPowerAdd = "算力增速: ";
-            string strSumPower = "有效算力 </p><div class=";
+            string strSumPower = "Adjusted Power </p><div class=";
 
 
             int startIndex = content.IndexOf(strKYYE);
@@ -236,7 +236,7 @@ public partial class Fil_Default : PageBase
             content = sr.ReadToEnd();
 
             /// 总余额
-            string strSumYE = " 余额 </dt><dd class=";
+            string strSumYE = " Balance </dt><dd class=";
 
 
             startIndex = content.IndexOf(strSumYE);
@@ -247,30 +247,30 @@ public partial class Fil_Default : PageBase
 
             /// 获得 总余额
             double NumSumYE = Convert.ToDouble(totalDataStr.Substring(strSumYE.Length + 8, totalDataStr.Length - strSumYE.Length - 8).Replace(",", ""));
-            ////////////////////////////////////////////// 获得总行情
-            //////  用户信息网址
+            //////////////////////////////////////////////// 获得总行情
+            ////////  用户信息网址
             request = (HttpWebRequest)WebRequest.Create(@"" + HQUrl + "");
             response = request.GetResponse();
             resStream = response.GetResponseStream();
             sr = new StreamReader(resStream, Encoding.UTF8);
             content = sr.ReadToEnd();
 
-            /// 总余额
-            string strHQ = "$";
+            ///// 美元价值
+            //string strHQ = "%";
 
 
-            startIndex = content.IndexOf(strHQ);
-            length = content.IndexOf("</div>", startIndex) - startIndex;
+            //startIndex = content.IndexOf(strHQ);
+            //length = content.IndexOf("</div>", startIndex) - startIndex;
 
-            /// 获得 总余额
-            totalDataStr = content.Substring(startIndex, length);
+            ///// 获得 总余额
+            //totalDataStr = content.Substring(startIndex, length);
 
-            /// 获得 总余额
-            double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
+            ///// 获得 总余额
+            //double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
 
             //////////////////////////////////////////////
             /// 总余额
-            string strPJ = "近24h每个高度出块奖励与有效算力比值的均值</div><div><img src=\"/dist/img/tip.0ec64e2.svg\" alt=\"tip\" class=\"h-3\"></div></span></div><div class=\"text-left lg:text-center text-sm lg:text-2xl items-start lg:mx-auto\">";
+            string strPJ = "Average value in last 24h of the ratio of total block rewards at every tipset and corresponding adjusted storage power.</div><div><img src=\"/dist/img/tip.0ec64e2.svg\" alt=\"tip\" class=\"h-3\"></div></span></div><div class=\"text-left lg:text-center text-sm lg:text-2xl items-start lg:mx-auto\"> ";
 
 
             startIndex = content.IndexOf(strPJ);
@@ -291,7 +291,7 @@ public partial class Fil_Default : PageBase
             // 运行时间
             Label_Day.Text = GetDuration(System.DateTime.Now, Convert.ToDateTime("2021-01-01")).ToString();
             // 行情
-            Label_RMB.Text = (NumHQ * 6.4 * (NumSumYE + NumKYYE)).ToString("F2");
+            //Label_RMB.Text = (NumHQ * 6.4 * (NumSumYE + NumKYYE)).ToString("F2");
             // 挖矿锁仓
             Label_PowerLock.Text = NumWKSC.ToString();
             // 出快奖励

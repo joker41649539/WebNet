@@ -10,6 +10,7 @@ public partial class GDGL_Default : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        http://localhost:56361/GDGL/GCGDAdd.aspx?id=357
         if (!IsPostBack)
         {
             Load_GridView1();

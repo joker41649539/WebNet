@@ -12,6 +12,18 @@ public partial class BBGL_BBShow : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        try
+        {
+            string LoginID;
+            LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
+        }
+        catch
+        {
+            MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
+            return;
+        }
+
+
         LoadBBInfo();
     }
 

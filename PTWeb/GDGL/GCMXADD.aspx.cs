@@ -12,6 +12,18 @@ public partial class GDGL_GCMXADD : PageBase
     public string strSQL = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
+        try
+        {
+            string LoginID;
+            LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
+        }
+        catch
+        {
+            MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
+            return;
+        }
+
+
         if (!IsPostBack)
         {
             iID = Convert.ToInt32(Request["ID"]);

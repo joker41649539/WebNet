@@ -9,6 +9,18 @@ public partial class GDGL_GCBXList : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        try
+        {
+            string LoginID;
+            LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
+        }
+        catch
+        {
+            MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
+            return;
+        }
+
+
         if (!IsPostBack)
         {
             Load_GridView_List();

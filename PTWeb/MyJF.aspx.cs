@@ -11,6 +11,16 @@ public partial class MyJF : PageBase
     {
         if (!IsPostBack)
         {
+            //try
+            //{
+            //    LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
+            //}
+            //catch
+            //{
+            //    MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
+            //    return;
+            //}
+
             Load_Data();
         }
     }

@@ -29,48 +29,63 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             try
             {
-                if (Request["WeChat"] == "0")
-                {/// 0 表示企业微信
-                    WeChatWorkLoad();
-                }
-                else
-                {/// 1 表示正常微信
-                    WeChatLoad();
-                }
-                this.Label_Name.Text = HttpUtility.UrlDecode(Request.Cookies["WeChat_Yanwo"]["CNAME"], Encoding.GetEncoding("UTF-8"));
-
-                string strTemp = Request.Cookies["WeChat_Yanwo"]["HEADURL"];
-
-                if (strTemp.Length > 0)
-                {
-                    this.Image_User.ImageUrl = strTemp;
-                }
-                else
-                {
-                    this.Image_User.ImageUrl = "/images/luLogo.png";
-                }
+                string LoginID;
+                LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox("", "您还未登陆！<br/>请先登陆！", "/Login.aspx");
+                MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
                 return;
             }
+            string strURL = Request.Url.AbsoluteUri;
 
-            //string weekstr = DateTime.Now.DayOfWeek.ToString();
-            //switch (weekstr)
-            //{
-            //    case "Monday": weekstr = "星期一"; break;
-            //    case "Tuesday": weekstr = "星期二"; break;
-            //    case "Wednesday": weekstr = "星期三"; break;
-            //    case "Thursday": weekstr = "星期四"; break;
-            //    case "Friday": weekstr = "星期五"; break;
-            //    case "Saturday": weekstr = "星期六"; break;
-            //    case "Sunday": weekstr = "星期日"; break;
-            //}
+            if (strURL.IndexOf("putian") > -1 || strURL.IndexOf("localhost") > -1)
+            {
+                try
+                {
+                    if (Request["WeChat"] == "0")
+                    {/// 0 表示企业微信
+                        WeChatWorkLoad();
+                    }
+                    else
+                    {/// 1 表示正常微信
+                        WeChatLoad();
+                    }
+                    this.Label_Name.Text = HttpUtility.UrlDecode(Request.Cookies["WeChat_Yanwo"]["CNAME"], Encoding.GetEncoding("UTF-8"));
 
-            //  Label_Data.Text = DateTime.Now.Year + "年" + DateTime.Now.Month + "月" + DateTime.Now.Day + "日 ";// + weekstr;
+                    string strTemp = Request.Cookies["WeChat_Yanwo"]["HEADURL"];
 
-            LoadMenu();
+                    if (strTemp.Length > 0)
+                    {
+                        this.Image_User.ImageUrl = strTemp;
+                    }
+                    else
+                    {
+                        this.Image_User.ImageUrl = "/images/luLogo.png";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox("", "您还未登陆！<br/>请先登陆！", "/Login.aspx");
+                    return;
+                }
+
+                //string weekstr = DateTime.Now.DayOfWeek.ToString();
+                //switch (weekstr)
+                //{
+                //    case "Monday": weekstr = "星期一"; break;
+                //    case "Tuesday": weekstr = "星期二"; break;
+                //    case "Wednesday": weekstr = "星期三"; break;
+                //    case "Thursday": weekstr = "星期四"; break;
+                //    case "Friday": weekstr = "星期五"; break;
+                //    case "Saturday": weekstr = "星期六"; break;
+                //    case "Sunday": weekstr = "星期日"; break;
+                //}
+
+                //  Label_Data.Text = DateTime.Now.Year + "年" + DateTime.Now.Month + "月" + DateTime.Now.Day + "日 ";// + weekstr;
+
+                LoadMenu();
+            }
             // LoadQJGG();
         }
         // GetaccessToken();

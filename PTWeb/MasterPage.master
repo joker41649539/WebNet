@@ -7,8 +7,8 @@
     <meta charset="utf-8" />
     <title>普田科技</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="" />
     <meta name="description" content="" />
+    <meta name="robots" content="noarchive" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="/assets/alert/alert.css" />
     <script src='/assets/alert/alert.js'></script>
     <script src='/assets/alert/shCore.js'></script>
-
     <script src='/assets/alert/makeSy.js'></script>
     <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
 </head>

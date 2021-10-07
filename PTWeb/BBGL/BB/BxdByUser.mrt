@@ -5,7 +5,7 @@
     <Databases isList="true" count="1">
       <连接 Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
         <Alias>连接</Alias>
-        <ConnectionStringEncrypted>5cJTqMVn04XpFayNY0z1csNahW3NXQHpQx5N2Ghc90aFWNGDTlx73XIeTehqEXVu3Vb5KGdKS4RpHqWlb1gjbtU6eYPFCWP17B6c8Mnst2Pc0HnpS1FxnEII7YBNGDR7kGzNSWEJ09VHR7z0w4Tnu91q0QleCwHZzBvNvc8BZRLTVNHJRmhxmA==</ConnectionStringEncrypted>
+        <ConnectionStringEncrypted>5RJ1LUtXkwVrCGVkY2SgP8PazYphfNOBRUTo3GhcpG7e2HvIVnGjvOldwa3mhOEvwFxTS0hd49XsXDn0YWz3Y8Xu/cvGFsP5fxrtmcolpD+L0FMryErq8WsVpZhiGKIPw3DRg8Vx84FGE9XQ+xH2e8VWwQ==</ConnectionStringEncrypted>
         <Name>连接</Name>
       </连接>
     </Databases>
@@ -33,7 +33,7 @@
         <Name>主数据</Name>
         <NameInSource>连接</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>Select a.ID,c.remark mxremark,c.Occurrence,(Select sum(BXJE) from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and UserName=a.username  and FLAG=6) hzje,c.KZXM,c.TXR,(SELECT stuff((select ','+convert(varchar(25),  W_Examine.UserName) FROM W_Examine,W_BXD1 where djbh=W_BXD1.BXDH and djbh=c.BXDH and OldFlag&gt;0 
+        <SqlCommand>Select a.ID,C.kzxm,c.Occurrence,(Select sum(BXJE) from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and UserName=a.username  and FLAG=6) hzje,(select stuff((select char(10)+becity+'-'+Arrival+' '+convert(nvarchar(max),bxje)+' '+Remark from W_BXD2 where bxdh=a.BXDH for xml path('')),1,1,'')) as mxremark,c.TXR,(SELECT stuff((select ','+convert(varchar(25),  W_Examine.UserName) FROM W_Examine,W_BXD1 where djbh=W_BXD1.BXDH and djbh=c.BXDH and OldFlag&gt;0 
 	group by W_Examine.UserName FOR XML PATH('')), 1, 1, '') ) SPR,
 (Select top 1 W_Examine.CTime from W_Examine,W_BXD1 where djbh=W_BXD1.BXDH  and djbh=c.BXDH and NewFlag&gt;1 and NewFlag&lt;=6 and OldFlag&gt;0) SPRSJ,UserName,
 (Select BXJE from W_BXD2 where ID=C.ID) ZJE,FLAG,a.LTIME,a.BXDH,a.remark from w_bxd1 a,W_BXD2 c
@@ -58,11 +58,11 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
       <Components isList="true" count="2">
         <ReportTitleBand1 Ref="5" type="ReportTitleBand" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,0.4,27.7,2.4</ClientRectangle>
+          <ClientRectangle>0,0.4,19,2.4</ClientRectangle>
           <Components isList="true" count="1">
             <Text1 Ref="6" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.2,27.6,2</ClientRectangle>
+              <ClientRectangle>0,0.2,19,2</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>宋体,28,Bold</Font>
               <HorAlignment>Center</HorAlignment>
@@ -84,15 +84,16 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
         <Table主数据 Ref="7" type="Stimulsoft.Report.Components.Table.StiTable" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,3.6,27.7,2.4</ClientRectangle>
+          <ClientRectangle>0,3.6,19,2.4</ClientRectangle>
           <ColumnCount>10</ColumnCount>
           <Components isList="true" count="30">
             <Table主数据_Cell1 Ref="8" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>0,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>33</ID>
               <JoinCells isList="true" count="0" />
@@ -110,9 +111,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell2 Ref="9" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.8,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>2,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>0</ID>
               <JoinCells isList="true" count="0" />
@@ -129,9 +131,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell3 Ref="10" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.6,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>4.4,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>30</ID>
               <JoinCells isList="true" count="0" />
@@ -148,9 +151,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell4 Ref="11" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.4,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>6,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>2</ID>
               <JoinCells isList="true" count="0" />
@@ -159,7 +163,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>开支项目</Text>
+              <Text>报销金额</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -167,9 +171,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell5 Ref="12" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.2,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>7.6,0,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>3</ID>
               <JoinCells isList="true" count="0" />
@@ -178,7 +183,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>报销金额</Text>
+              <Text>开支项目</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -186,9 +191,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell6 Ref="13" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>9,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>4</ID>
               <JoinCells isList="true" count="0" />
@@ -197,7 +203,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>同行人</Text>
+              <Text>施工编号(事由) </Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -205,9 +211,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell7 Ref="14" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.8,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>11.4,0,2.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>5</ID>
               <JoinCells isList="true" count="0" />
@@ -216,7 +223,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>审批人</Text>
+              <Text>备注信息</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -224,9 +231,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell8 Ref="15" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.6,0,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>14.2,0,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>6</ID>
               <JoinCells isList="true" count="0" />
@@ -235,7 +243,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>关键审批时间</Text>
+              <Text>同行人</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -243,9 +251,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell9 Ref="16" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.4,0,2.6,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>15.4,0,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>7</ID>
               <JoinCells isList="true" count="0" />
@@ -254,7 +263,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>施工编号(事由)</Text>
+              <Text> 审批人</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -262,9 +271,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell10 Ref="17" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>25,0,2.7,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>17,0,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>8</ID>
               <JoinCells isList="true" count="0" />
@@ -273,7 +283,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>备注信息</Text>
+              <Text>关键审批时间</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -281,9 +291,9 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell11 Ref="18" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.8,2.8,0.8</ClientRectangle>
+              <ClientRectangle>0,0.8,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>34</ID>
               <JoinCells isList="true" count="0" />
@@ -291,7 +301,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Name>Table主数据_Cell11</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
-              <ProcessingDuplicates>Merge</ProcessingDuplicates>
+              <ProcessingDuplicates>GlobalMerge</ProcessingDuplicates>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.UserName} {主数据.hzje}</Text>
               <TextBrush>Black</TextBrush>
@@ -301,9 +311,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell12 Ref="19" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.8,0.8,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>2,0.8,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>9</ID>
               <JoinCells isList="true" count="0" />
@@ -320,9 +331,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell13 Ref="20" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.6,0.8,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>4.4,0.8,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>31</ID>
               <JoinCells isList="true" count="0" />
@@ -342,10 +354,11 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell14 Ref="22" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.4,0.8,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>6,0.8,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
-              <HorAlignment>Center</HorAlignment>
+              <Font>新宋体,9</Font>
+              <HorAlignment>Right</HorAlignment>
               <ID>11</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
@@ -353,34 +366,39 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.KZXM}</Text>
+              <Text>{主数据.ZJE}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell14>
             <Table主数据_Cell15 Ref="23" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.2,0.8,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>7.6,0.8,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
-              <HorAlignment>Right</HorAlignment>
+              <Font>新宋体,9</Font>
+              <HorAlignment>Center</HorAlignment>
               <ID>12</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据_Cell15</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.ZJE}</Text>
+              <Text>{主数据.KZXM}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell15>
             <Table主数据_Cell16 Ref="24" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,0.8,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>9,0.8,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>13</ID>
               <JoinCells isList="true" count="0" />
@@ -388,35 +406,40 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Name>Table主数据_Cell16</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.TXR}</Text>
+              <Text>{主数据.remark}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell16>
             <Table主数据_Cell17 Ref="25" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.8,0.8,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>11.4,0.8,2.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
-              <HorAlignment>Center</HorAlignment>
+              <Font>新宋体,9</Font>
               <ID>14</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据_Cell17</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.SPR}</Text>
+              <Text>{主数据.mxremark}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell17>
             <Table主数据_Cell18 Ref="26" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.6,0.8,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>14.2,0.8,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>15</ID>
               <JoinCells isList="true" count="0" />
@@ -425,19 +448,21 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.SPRSJ}</Text>
+              <Text>{主数据.TXR}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="27" type="CustomFormat" isKey="true">
                 <StringFormat>yyyy-MM-dd</StringFormat>
               </TextFormat>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell18>
             <Table主数据_Cell19 Ref="28" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.4,0.8,2.6,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>15.4,0.8,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>16</ID>
               <JoinCells isList="true" count="0" />
@@ -445,18 +470,19 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Name>Table主数据_Cell19</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
-              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.remark}</Text>
+              <Text>{主数据.SPR}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell19>
             <Table主数据_Cell20 Ref="29" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>25,0.8,2.7,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>17,0.8,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>17</ID>
               <JoinCells isList="true" count="0" />
@@ -464,22 +490,22 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Name>Table主数据_Cell20</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
-              <ProcessingDuplicates>Merge</ProcessingDuplicates>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.mxremark}</Text>
+              <Text>{主数据.SPRSJ}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="30" type="CustomFormat" isKey="true">
                 <StringFormat>yyyy-MM-dd</StringFormat>
               </TextFormat>
-              <Type>DataColumn</Type>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell20>
             <Table主数据_Cell21 Ref="31" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>0,1.6,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Right</HorAlignment>
               <ID>35</ID>
               <JoinCells isList="true" count="0" />
@@ -495,9 +521,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell22 Ref="32" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.8,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>2,1.6,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>18</ID>
               <JoinCells isList="true" count="0" />
@@ -513,9 +540,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell23 Ref="33" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.6,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>4.4,1.6,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>32</ID>
               <JoinCells isList="true" count="0" />
@@ -530,9 +558,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell24 Ref="34" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>8.4,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>6,1.6,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>20</ID>
               <JoinCells isList="true" count="0" />
@@ -541,15 +570,18 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{Sum(主数据.ZJE)}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell24>
             <Table主数据_Cell25 Ref="35" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>11.2,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>7.6,1.6,1.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Right</HorAlignment>
               <ID>21</ID>
               <JoinCells isList="true" count="0" />
@@ -558,21 +590,21 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
               <Page isRef="4" />
               <Parent isRef="7" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{Sum(主数据.ZJE)}</Text>
               <TextBrush>Black</TextBrush>
               <TextFormat Ref="36" type="NumberFormat" isKey="true">
                 <GroupSeparator>,</GroupSeparator>
                 <NegativePattern>1</NegativePattern>
               </TextFormat>
-              <Type>Totals</Type>
+              <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell25>
             <Table主数据_Cell26 Ref="37" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>14,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>9,1.6,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>22</ID>
               <JoinCells isList="true" count="0" />
@@ -587,9 +619,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell27 Ref="38" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>16.8,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>11.4,1.6,2.8,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>23</ID>
               <JoinCells isList="true" count="0" />
@@ -604,9 +637,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell28 Ref="39" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.6,1.6,2.8,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>14.2,1.6,1.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>24</ID>
               <JoinCells isList="true" count="0" />
@@ -621,9 +655,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell29 Ref="40" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>22.4,1.6,2.6,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>15.4,1.6,1.6,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>25</ID>
               <JoinCells isList="true" count="0" />
@@ -638,9 +673,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
             <Table主数据_Cell30 Ref="41" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>25,1.6,2.7,0.8</ClientRectangle>
+              <CanBreak>True</CanBreak>
+              <ClientRectangle>17,1.6,2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,12</Font>
+              <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>26</ID>
               <JoinCells isList="true" count="0" />
@@ -671,9 +707,8 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
       <Guid>14d7229b1fea41c194abaa694f8d36a1</Guid>
       <Margins>1,1,1,1</Margins>
       <Name>Page1</Name>
-      <Orientation>Landscape</Orientation>
-      <PageHeight>21</PageHeight>
-      <PageWidth>29.7</PageWidth>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
       <Report isRef="0" />
       <Watermark Ref="42" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
@@ -693,10 +728,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}' GROUP
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/26/2021 7:13:35 PM</ReportChanged>
+  <ReportChanged>9/23/2021 9:51:24 AM</ReportChanged>
   <ReportCreated>4/6/2021 10:09:27 AM</ReportCreated>
   <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\BxdByUser.mrt</ReportFile>
-  <ReportGuid>856dff1b8e6e4373b8c18234ca2a87bb</ReportGuid>
+  <ReportGuid>742d4a07558b4038ba908a9b89aafd50</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

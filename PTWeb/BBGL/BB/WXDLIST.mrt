@@ -5,7 +5,7 @@
     <Databases isList="true" count="1">
       <连接 Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
         <Alias>连接</Alias>
-        <ConnectionStringEncrypted>5cJTqMVn04XpFayNY0z1csNahW3NXQHpQx5N2Ghc90aFWNGDTlx73XIeTehqEXVu3Vb5KGdKS4RpHqWlb1gjbtU6eYPFCWP17B6c8Mnst2Pc0HnpS1FxnEII7YBNGDR7kGzNSWEJ09VHR7z0w4Tnu91q0QleCwHZzBvNvc8BZRLTVNHJRmhxmA==</ConnectionStringEncrypted>
+        <ConnectionStringEncrypted>5RJ1LUtXkwVrCGVkY2SgP8PazYphfNOBRUTo3GhcpG7e2HvIVnGjvOldwa3mhOEvwFxTS0hd49XsXDn0YWz3Y8Xu/cvGFsP5fxrtmcolpD+L0FMryErq8WsVpZhiGKIPw3DRg8Vx84FGE9XQ+xH2e8VWwQ==</ConnectionStringEncrypted>
         <Name>连接</Name>
       </连接>
     </Databases>
@@ -385,10 +385,10 @@ AND WXSJ BETWEEN  CONVERT(datetime,CONVERT(varchar(100), '{STIME}', 23)) and CON
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>3/12/2021 7:50:08 AM</ReportChanged>
+  <ReportChanged>9/14/2021 9:17:46 PM</ReportChanged>
   <ReportCreated>10/27/2020 8:03:40 PM</ReportCreated>
-  <ReportFile>D:\WebNet\PTWeb\BBGL\BB\WXDLIST.mrt</ReportFile>
-  <ReportGuid>da313acf3461457b8474c87e1cf46c6f</ReportGuid>
+  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\WXDLIST.mrt</ReportFile>
+  <ReportGuid>4ba1499515c744758f3bacd692bec737</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

@@ -355,7 +355,7 @@ public partial class GDGL_GCWXD : PageBase
 
         if (strUsers.Length > 0)
         {
-            SendWorkMsgCard(strUsers, "维修报告单完成提示", " [" + UserNAME + "] 完成了一张维修报告单。", "ptweb.x76.com.cn/BGGL/GCWXD.ASPX?ID=" + IID + "&WeChat=0");
+            SendWorkMsgCard(strUsers, "维修报告单完成提示", " [" + UserNAME + "] 完成了一张维修报告单。", "www.putian.ink/BGGL/GCWXD.ASPX?ID=" + IID + "&WeChat=0");
         }
     }
 
@@ -421,7 +421,7 @@ public partial class GDGL_GCWXD : PageBase
             ///// 水印成功后，删除原图片
             if (File.Exists(URLpath)) { File.Delete(URLpath); }
 
-            return "http://ptweb.x76.com.cn/QMImage/" + imageName;
+            return "http://www.putian.ink/QMImage/" + imageName;
         }
         else
         {
