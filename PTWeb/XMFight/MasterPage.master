@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Fil_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <script src="/assets/js/ace-extra.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/assets/alert/alert.css" />
+    <script src='/assets/alert/alert.js'></script>
+    <script src='/assets/alert/shCore.js'></script>
+
+    <script src='/assets/alert/makeSy.js'></script>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/XMFightLogo.ico" media="screen" />
+    <title>旭铭搏击</title>
+</head>
+<body>
+
+    <form id="form1" runat="server">
+        <asp:HiddenField ID="HiddenField_UserID" runat="server" />
+        <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="MSGTitle">提  示
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="modal-title" id="ShowMSG">发生了错误！
+                        </h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                            data-dismiss="modal">
+                            确&nbsp;&nbsp;定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="center">
+            <div class="page-content" style="height: auto;">
+                <span class="profile-picture">
+                    <img id="ContentPlaceHolder1_Image_User" class="editable img-responsive" src="/images/XMFightLogo.jpg" style="max-width: 150px" />
+                </span>
+                <div class="space-4"></div>
+                <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                    <div class="inline position-relative">
+                        <a href="#" class="user-title-label dropdown-toggle">
+                            <i class="icon-circle light-green middle"></i>
+                            <span id="ContentPlaceHolder1_Label_Name" class="white">旭铭搏击</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-content" style="height: auto;">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <!-- 主循环 结束-->
+        <div class="row" style="height: 80px;">
+        </div>
+        <!-- 底部代码 开始-->
+        <div runat="server" id="FootBut" style="height: auto;">
+            <ul class="footer-nav text-center">
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/"><i class="icon-camera-retro"></i>学员风采</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/MyClass.aspx"><i class="icon-calendar"></i>我的课程</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Contact.aspx"><i class="icon-comments"></i>联系我们</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Manage/Class.aspx"><i class="icon-calendar"></i>课程管理</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Manage/Bance.aspx"><i class="icon-bar-chart"></i>盈利报表</a></li>
+            </ul>
+        </div>
+        <!-- 底部代码 结束-->
+    </form>
+</body>
+</html>
