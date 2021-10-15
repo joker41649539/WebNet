@@ -21,9 +21,9 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         if (!IsPostBack)
         {
             //  LoadUserInfo();
-            //WeChatLoad();
+            WeChatLoad();
             ////  MessageBox("消息提示", "测试信息");
-            //LoadFoot();
+            LoadFoot();
         }
     }
 
@@ -47,12 +47,9 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Contact.aspx\"><i class=\"icon-comments\"></i>联系我们</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/UserInfo.aspx\"><i class=\"icon-exclamation-sign\"></i>个人信息</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\" icon-exclamation-sign\"></i>帮助信息</a></li>";
-        if (iUserID == 1 || iUserID == 2)
+        if (iUserID == 5 || iUserID == 6)
         {
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Class.aspx\"><i class=\"icon-calendar\"></i>课程管理</a></li>";
-        }
-        else
-        {
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Bance.aspx\"><i class=\"icon-bar-chart\"></i>盈利报表</a></li>";
         }
         strTemp += "</ul>";
@@ -84,13 +81,13 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                     // 临时登录
                     /// 如果数据库有ID，则直接登录。
                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                    Response.Cookies["WeChat_XMFigth"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                    Response.Cookies["WeChat_XMFigth"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
-                    Response.Cookies["WeChat_XMFigth"]["CNAME"] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
-                    Response.Cookies["WeChat_XMFigth"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                    Response.Cookies["WeChat_XMFigth"]["HEADURL"] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["CNAME"] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["HEADURL"] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
 
-                    Response.Cookies["WeChat_XMFigth"]["LOGIN"] = "true";
+                    Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
 
                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
@@ -122,8 +119,8 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         string accessToken = string.Empty;
         string DeBugMsg = string.Empty;
         // 黑瞳账号密码
-        string AppId = "wxf75c5c5ac11d5256";//与微信公众账号后台的AppId设置保持一致，区分大小写。
-        string AppSecret = "ab1a98bddffa29a4bb4558f0aa432766";
+        string AppId = "wxf60778eb4d1003de";//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        string AppSecret = "4224c03a03edeba44cb4aab9b27678be";
 
         var code = string.Empty;
         var opentid = string.Empty;
@@ -215,13 +212,13 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                         }
                         /// 如果数据库有ID，则直接登录。
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_XMFigth"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_XMFigth"]["COPENID"] = opentid.ToString();
-                        Response.Cookies["WeChat_XMFigth"]["CNAME"] = HttpUtility.UrlEncode(UserName);
-                        Response.Cookies["WeChat_XMFigth"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                        Response.Cookies["WeChat_XMFigth"]["HEADURL"] = HeadUserUrl;
+                        Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_XMFight"]["COPENID"] = opentid.ToString();
+                        Response.Cookies["WeChat_XMFight"]["CNAME"] = HttpUtility.UrlEncode(UserName);
+                        Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                        Response.Cookies["WeChat_XMFight"]["HEADURL"] = HeadUserUrl;
 
-                        Response.Cookies["WeChat_XMFigth"]["LOGIN"] = "true";
+                        Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
 
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
                         Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
@@ -241,7 +238,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
                             strSQL = " INSERT INTO XMFight_Users (Nick,HEADImage,WeChatOpenID) VALUES ('" + UserName + "','" + HeadUserUrl + "','" + opentid + "')";
 
-                            strSQL += " Select * from Question_Users where WeChatOpenID='" + opentid + "'";
+                            strSQL += " Select * from XMFight_Users where WeChatOpenID='" + opentid + "'";
 
                             DeBugMsg += "+" + strSQL + "+";
 
@@ -250,23 +247,23 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                                 if (OP_Mode.Dtv.Count > 0)
                                 {
                                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFigth"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFigth"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFigth"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["Nick"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
-                                    Response.Cookies["WeChat_XMFigth"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFigth"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["Nick"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                                    Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
 
-                                    Response.Cookies["WeChat_XMFigth"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
                                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
 
-                                    Response.Cookies["WeChat_XMFigth"]["LOGIN"] = "true";
+                                    Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
                                     Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
                                     ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
                                    // Response.Cookies["WeChat_Question"].Expires = DateTime.MaxValue;
 
                                     string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
 
-                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADImage"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["CNAME"].ToString() + " 注册成功。<br/>祝您生活愉快。";
+                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADImage"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["Nick"].ToString() + " 注册成功。<br/>祝您生活愉快。";
 
                                     MessageBox("", MSG);
 
