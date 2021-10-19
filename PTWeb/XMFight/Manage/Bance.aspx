@@ -75,5 +75,8 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div runat="server" id="Div_BanceList"></div>
+    </div>
 </asp:Content>
 

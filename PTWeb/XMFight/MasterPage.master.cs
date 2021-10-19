@@ -47,7 +47,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Contact.aspx\"><i class=\"icon-comments\"></i>联系我们</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/UserInfo.aspx\"><i class=\"icon-exclamation-sign\"></i>个人信息</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\" icon-exclamation-sign\"></i>帮助信息</a></li>";
-        if (iUserID == 5 || iUserID == 6)
+        if (iUserID == 7 || iUserID == 6)
         {
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Class.aspx\"><i class=\"icon-calendar\"></i>课程管理</a></li>";
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Bance.aspx\"><i class=\"icon-bar-chart\"></i>盈利报表</a></li>";

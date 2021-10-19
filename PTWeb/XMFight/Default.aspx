@@ -21,7 +21,7 @@ IPFS目标是打造一个更加开放、快速、安全的互联网，利用分�
         </div>
         <div class="hr hr12 dotted"></div>
     </div>--%>
-    <div class="row">
+    <%--<div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
             <div class="timeline-container">
                 <div class="timeline-label">
@@ -312,6 +312,6 @@ IPFS目标是打造一个更加开放、快速、安全的互联网，利用分�
             </div>
             <!-- /.timeline-container -->
         </div>
-    </div>
+    </div>--%>
 </asp:Content>
 
