@@ -12,7 +12,8 @@ public partial class XMFight_Default : PageBaseXMFight
     {
         if (!IsPostBack)
         {
-            LoadPhoto();
+            Server.Transfer("MyClass.aspx");
+            //LoadPhoto();
         }
     }
 

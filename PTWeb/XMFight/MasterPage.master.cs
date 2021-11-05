@@ -42,7 +42,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         string strTemp = string.Empty;
         strTemp += "<ul class=\"footer-nav text-center\">";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\"icon-home\"></i>首页</a></li>";
-        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/\"><i class=\"icon-camera-retro\"></i>学员风采</a></li>";
+        // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/\"><i class=\"icon-camera-retro\"></i>学员风采</a></li>";
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/MyClass.aspx\"><i class=\"icon-calendar\"></i>我的课程</a></li>";
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Contact.aspx\"><i class=\"icon-comments\"></i>联系我们</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/UserInfo.aspx\"><i class=\"icon-exclamation-sign\"></i>个人信息</a></li>";

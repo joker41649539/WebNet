@@ -21,7 +21,7 @@ public partial class XMFight_Manage_Bance : PageBaseXMFight
     private void LoadDefaultData()
     {
         TextBox1.Text = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.ToString("yyyy-MM-dd");
-        TextBox2.Text = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).AddSeconds(-1).ToString("yyyy-MM-dd");
+        TextBox2.Text = DateTime.Now.AddDays(1 - DateTime.Now.Day).Date.AddMonths(1).ToString("yyyy-MM-dd");
     }
 
     /// <summary>
@@ -34,8 +34,8 @@ public partial class XMFight_Manage_Bance : PageBaseXMFight
         string DLtimeStart = Convert.ToDateTime(TextBox1.Text).ToString("yyyy-MM-dd");
         string DLtimeEnd = Convert.ToDateTime(TextBox2.Text).ToString("yyyy-MM-dd");
         string strDiv = string.Empty;
-        strSQL = "Select (Select sum(amount) SR from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and amount > 0) SR,";
-        strSQL += "(Select sum(amount) ZC from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and amount<0) ZC,";
+        strSQL = "Select ISNULL((Select sum(amount) SR from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and amount > 0),0) SR,";
+        strSQL += "ISNULL((Select sum(amount) ZC from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and amount<0),0) ZC,";
         strSQL += " * from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' order by Ltime desc";
 
         if (OP_Mode.SQLRUN(strSQL))
