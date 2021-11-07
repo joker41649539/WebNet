@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,14 +8,40 @@ using System.Web.UI.WebControls;
 
 public partial class XMFight_MyClass : PageBaseXMFight
 {
+    public int iUserID = 10;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             LoadStudentsByOpID();
-            LoadClassList();
+            //  LoadClassList();
         }
     }
+
+    private void LoadMyClassTime(int iStudentID)
+    {
+        string strTempDiv = string.Empty;
+        string strSQL = "Select XMFight_ClassTime.* from XMFight_Class_Student,XMFight_ClassTime where classid=XMFight_ClassTime.ID and Flag=0 and studentid=" + iStudentID + " order by Week";
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+            {
+                strTempDiv += "  <div class=\"grid2\">";
+                strTempDiv += "     <span class=\"blue\">";
+                strTempDiv += "         <i class=\"icon-twitter-sign icon-2x blue\"></i>";
+                strTempDiv += "         &nbsp; 每个&nbsp;" + NumtoCHWeek(Convert.ToInt32(OP_Mode.Dtv[i]["Week"]));
+                strTempDiv += "     </span>";
+                strTempDiv += "     <h4 class=\"bigger pull-right\">" + Convert.ToDateTime(OP_Mode.Dtv[i]["STime"]).ToString("HH:mm") + " - " + Convert.ToDateTime(OP_Mode.Dtv[i]["ETime"]).ToString("HH:mm") + "</h4>";
+                strTempDiv += " </div>";
+            }
+            if (strTempDiv.Length > 0)
+            {
+                Div_MyClassTime.InnerHtml = strTempDiv;
+                Div_MyClassTime.Visible = true;
+            }
+        }
+    }
+
     private void LoadStudentsByOpID()
     {
         string strOPID = string.Empty;
@@ -22,7 +49,7 @@ public partial class XMFight_MyClass : PageBaseXMFight
         try
         {
             strOPID = Request.Cookies["WeChat_XMFight"]["COPENID"];
-           // MessageBox("", strOPID);
+            // MessageBox("", strOPID);
             string strSQL = "Select ID,Name,Sex from XMFight_Student where OpenID like ('%" + strOPID + "%')";
             if (OP_Mode.SQLRUN(strSQL))
             {
@@ -36,7 +63,13 @@ public partial class XMFight_MyClass : PageBaseXMFight
                     {// 女孩紫色标签
                         strTempDiv += " <a href=\"?SID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-sm btn-pink\">" + OP_Mode.Dtv[i]["Name"].ToString() + "</a>";
                     }
+                    /// 赋值ID
+                    iUserID = Convert.ToInt32(OP_Mode.Dtv[0]["ID"].ToString());
                 }
+            }
+            if (Convert.ToInt32(Request) > 0)
+            {
+                iUserID = Convert.ToInt32(Request);
             }
         }
         catch
@@ -54,7 +87,42 @@ public partial class XMFight_MyClass : PageBaseXMFight
         {
             Div_Students.Visible = false;
         }
+        /// 加载并绑定用户信息
+        LoadData(iUserID);
+        LoadMyClassTime(iUserID);
+        Load_GridView1(iUserID);
     }
+
+    /// <summary>
+    /// 依据学生ID获取学生信息
+    /// </summary>
+    /// <param name="iStudentID"></param>
+    private void LoadData(int iStudentID)
+    {
+        string strSQL = string.Empty;
+
+        strSQL = " Select ID, Name, Sex, Remark, Tel, BrithDay, datediff(year, BrithDay, getdate()) age,HeadImg";
+        strSQL += " ,sumClassCount,LastClassTime,";
+        strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=2 and StudentID = a.ID),0) Leave,";
+        strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=3 and StudentID = a.ID),0) Absenteeism,";
+        strSQL += " isnull((Select sum(Bance) from XMFight_reserve where StudentID=a.ID),0) SumBance";
+        strSQL += " from XMFight_Student a,";
+        strSQL += " (Select sum(ICount) sumClassCount, MAX(CTime) LastClassTime, StudentID from XMFight_Class_Record group by StudentID) as b";
+        strSQL += " where a.ID = b.StudentID and a.id=" + iStudentID;
+        strSQL += " order by Name";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                Label_Sum.Text = Convert.ToDouble(OP_Mode.Dtv[0]["sumClassCount"]).ToString("G0");
+                Label_QJ.Text = OP_Mode.Dtv[0]["Absenteeism"].ToString();
+                Label_KG.Text = OP_Mode.Dtv[0]["Leave"].ToString();
+                Label_CBJ.Text = OP_Mode.Dtv[0]["SumBance"].ToString();
+            }
+        }
+    }
+
 
     /// <summary>
     /// 加载并绑定课程安排
@@ -240,4 +308,105 @@ public partial class XMFight_MyClass : PageBaseXMFight
         }
         return rValue;
     }
+
+    #region "GridView1 读取上课记录 相关代码"
+    /// <summary>
+
+    /// 模块列表读取
+
+    /// </summary>
+
+    private void Load_GridView1(int iStudentID)
+
+    {
+
+        // 获取GridView排序数据列及排序方向
+
+        string sortExpression = this.GridView1.Attributes["SortExpression"];
+
+        string sortDirection = this.GridView1.Attributes["SortDirection"];
+
+        string strSQL;
+
+        strSQL = "Select * from XMFight_Class_Record where StudentID=" + iStudentID + " order by ctime desc";
+
+        if (OP_Mode.SQLRUN(strSQL))
+
+        {
+
+            /// 设置排序
+
+            if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+
+            {
+
+                OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+
+            }
+
+            this.GridView1.DataSource = OP_Mode.Dtv;
+
+            this.GridView1.DataBind();
+
+        }
+
+        else
+
+        {
+
+            MessageBox("", strSQL + "<br/>" + OP_Mode.strErrMsg);
+
+            return;
+
+        }
+
+    }
+
+    protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
+
+    {
+
+        // 从事件参数获取排序数据列
+
+        string sortExpression = e.SortExpression.ToString();
+
+        // 假定为排序方向为“顺序”
+
+        string sortDirection = "ASC";
+
+        // “ASC”与事件参数获取到的排序方向进行比较，进行GridView排序方向参数的修改
+
+        if (sortExpression == this.GridView1.Attributes["SortExpression"])
+
+        {
+
+            //获得下一次的排序状态
+
+            sortDirection = (this.GridView1.Attributes["SortDirection"].ToString() == sortDirection ? "DESC" : "ASC");
+
+        }
+
+        // 重新设定GridView排序数据列及排序方向
+
+        this.GridView1.Attributes["SortExpression"] = sortExpression;
+
+        this.GridView1.Attributes["SortDirection"] = sortDirection;
+
+        Load_GridView1(iUserID);
+
+    }
+
+    protected void GridView1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+
+    {
+
+        GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#CAD3E4");
+
+        GridView1.Rows[e.NewSelectedIndex].Cells[1].BackColor = Color.FromName("#CAD3E4");
+
+        GridView1.Rows[e.NewSelectedIndex].Cells[2].BackColor = Color.FromName("#CAD3E4");
+
+    }
+
+    #endregion
 }

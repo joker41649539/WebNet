@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="btn-group" runat="server" id="Div_Students">
-       <%-- <a href="#" class="btn btn-sm btn-primary">陆博文</a>
+        <%-- <a href="#" class="btn btn-sm btn-primary">陆博文</a>
         <a href="#" class="btn btn-sm btn-pink">陆博语</a>--%>
     </div>
     <div class="row">
@@ -13,47 +13,78 @@
                     <i class="icon-twitter-sign icon-2x green"></i>
                     &nbsp; 剩余
                 </span>
-                <h4 class="bigger pull-right">85 次</h4>
+                <h4 class="bigger pull-right">
+                    <asp:Label ID="Label_Sum" runat="server" Text="0"></asp:Label>
+                    课时</h4>
             </div>
             <div class="grid4">
                 <span class="grey">
                     <i class="icon-twitter-sign icon-2x grey"></i>
                     &nbsp; 请假
                 </span>
-                <h4 class="bigger pull-right">0 次</h4>
+                <h4 class="bigger pull-right">
+                    <asp:Label ID="Label_QJ" runat="server" Text="0"></asp:Label>
+                    课时</h4>
             </div>
             <div class="grid4">
                 <span class="red">
                     <i class="icon-twitter-sign icon-2x red"></i>
                     &nbsp; 旷课
                 </span>
-                <h4 class="bigger pull-right">0 次</h4>
+                <h4 class="bigger pull-right">
+                    <asp:Label ID="Label_KG" runat="server" Text="0"></asp:Label>
+                    课时</h4>
             </div>
             <div class="grid4">
                 <span class="red">
                     <i class="icon-twitter-sign icon-2x red"></i>
                     &nbsp; 储备金
                 </span>
-                <h4 class="bigger pull-right">100 元</h4>
+                <h4 class="bigger pull-right">
+                    <asp:Label ID="Label_CBJ" runat="server" Text="0"></asp:Label>
+                    元</h4>
             </div>
         </div>
         <div class="hr hr8 hr-double"></div>
-        <div class="clearfix">
+        <div class="clearfix" runat="server" id="Div_MyClassTime">
             <div class="grid2">
                 <span class="blue">
                     <i class="icon-twitter-sign icon-2x blue"></i>
-                    &nbsp; 每周六
+                    &nbsp; 暂未安排课程
                 </span>
-                <h4 class="bigger pull-right">10:00 - 11:30</h4>
-            </div>
-            <div class="grid2">
-                <span class="blue">
-                    <i class="icon-twitter-sign icon-2x blue"></i>
-                    &nbsp; 每周日
-                </span>
-                <h4 class="bigger pull-right">10:00 - 11:30</h4>
             </div>
         </div>
+        <asp:GridView ID="GridView1" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging">
+            <Columns>
+                <asp:BoundField DataField="CTime" DataFormatString="{0:yyyy-MM-dd dddd}" SortExpression="CTime" HeaderText="日期"></asp:BoundField>
+                <asp:BoundField DataField="iFlag" SortExpression="iFlag" HeaderText="状态"></asp:BoundField>
+                <asp:BoundField DataField="iCount" SortExpression="iCount" DataFormatString="{0:F0}" HeaderText="课时"></asp:BoundField>
+                  <asp:BoundField DataField="Remark" SortExpression="Remark" HeaderText="说明"></asp:BoundField>
+          </Columns>
+            <PagerTemplate>
+                <div>
+                    <ul class="pagination">
+                        <li>
+                            <asp:LinkButton ID="GridView1_LinkButton1" runat="server" CommandArgument="First" CommandName="Page"><i class="icon-double-angle-left"></i></asp:LinkButton>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="GridView1_LinkButtonPreviousPage" runat="server" CommandArgument="Prev" CommandName="Page"><i class="icon-angle-left"></i></asp:LinkButton>
+                        </li>
+                        <li class="active"><a href="#">
+                            <asp:Label ID="GridView1_LabelCurrentPage" runat="server" Text="<%# ((GridView)Container.NamingContainer).PageIndex + 1 %>"></asp:Label>
+                            /                                                   
+                            <asp:Label ID="GridView1_LabelPageCount" runat="server" Text="<%# ((GridView)Container.NamingContainer).PageCount %>"></asp:Label>
+                        </a></li>
+                        <li>
+                            <asp:LinkButton ID="GridView1_LinkButtonNextPage" runat="server" CommandArgument="Next" CommandName="Page"><i class="icon-angle-right"></i></asp:LinkButton>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="GridView1_LinkButtonLastPage" runat="server" CommandArgument="Last" CommandName="Page"> <i class="icon-double-angle-right"></i></asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
+            </PagerTemplate>
+        </asp:GridView>
         <%--<div class="grid3">
             <span class="grey">
                 <i class="icon-pinterest-sign icon-2x red"></i>
@@ -62,11 +93,11 @@
             <h4 class="bigger pull-right">1,050</h4>
         </div>--%>
     </div>
-    <h3>课程安排</h3>
+    <%-- <h3>课程安排</h3>
     <hr />
-    <div class="row">
-        <div runat="server" id="Div_PhotoList"></div>
-    </div>
-    <hr />
+    <div class="row">--%>
+    <div runat="server" id="Div_PhotoList" visible="false"></div>
+    <%--</div>
+    <hr />--%>
 </asp:Content>
 
