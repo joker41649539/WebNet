@@ -20,10 +20,10 @@
             </div>
 
             <div class="infobox-data">
-                <span class="infobox-data-number">32</span>
+                <span class="infobox-data-number">
+                    <asp:Label ID="Label_SumStudent" runat="server" Text="0"></asp:Label></span>
                 <div class="infobox-content">累计学员</div>
             </div>
-            <div class="stat stat-success">8%</div>
         </div>
 
         <div class="infobox infobox-blue  ">
@@ -32,14 +32,11 @@
             </div>
 
             <div class="infobox-data">
-                <span class="infobox-data-number">11</span>
+                <span class="infobox-data-number">
+                    <asp:Label ID="Label_AddStudent" runat="server" Text="0"></asp:Label></span>
                 <div class="infobox-content">本月新增学员</div>
             </div>
 
-            <div class="badge badge-success">
-                +32%
-												<i class="icon-arrow-up"></i>
-            </div>
         </div>
         <div class="infobox infobox-red">
             <div class="infobox-icon">
@@ -48,7 +45,7 @@
 
             <div class="infobox-data">
                 <span class="infobox-data-number">
-                    <asp:Label ID="Label_LJLR" runat="server" Text="50000"></asp:Label></span>
+                    <asp:Label ID="Label_LJLR" runat="server" Text="0"></asp:Label></span>
                 <div class="infobox-content">累计利润</div>
             </div>
         </div>
@@ -59,7 +56,7 @@
 
             <div class="infobox-data">
                 <span class="infobox-data-number">
-                    <asp:Label ID="Label_LJSR" runat="server" Text="50000"></asp:Label></span>
+                    <asp:Label ID="Label_LJSR" runat="server" Text="0"></asp:Label></span>
                 <div class="infobox-content">累计收入</div>
             </div>
         </div>

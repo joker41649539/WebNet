@@ -705,14 +705,14 @@ public class PageBaseXMFight : System.Web.UI.Page
     public string GetaccessToken()
     {
         string sValue = string.Empty, strSQL;
-        string AppId = WebConfigurationManager.AppSettings["CorpId"];//与微信公众账号后台的AppId设置保持一致，区分大小写。
-        string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+        string AppId = "wxf60778eb4d1003de";//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        string AppSecret = "4224c03a03edeba44cb4aab9b27678be";
         string MSG = string.Empty;
 
         var client = new System.Net.WebClient();
         client.Encoding = System.Text.Encoding.UTF8;
 
-        strSQL = "SELECT * FROM S_TYDM where ITYDMLB=1 and DATEDIFF(MI, LTIME, GETDATE()) < 0";
+        strSQL = "SELECT * FROM S_TYDM where ITYDMLB=4 and DATEDIFF(MI, LTIME, GETDATE()) < 0";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -741,7 +741,7 @@ public class PageBaseXMFight : System.Web.UI.Page
                 {
                     //MSG = (Convert.ToDecimal(obj["expires_in"]) / 60).ToString();
 
-                    strSQL = "UPDATE S_TYDM SET CTIME=GETDATE(), LTIME = DATEADD(S," + obj["expires_in"] + ",GETDATE()),CTYDMZ='" + sValue + "' WHERE ITYDMLB=1";
+                    strSQL = "UPDATE S_TYDM SET CTIME=GETDATE(), LTIME = DATEADD(S," + obj["expires_in"] + ",GETDATE()),CTYDMZ='" + sValue + "' WHERE ITYDMLB=4";
 
                     if (OP_Mode.SQLRUN(strSQL))
                     {
@@ -1120,5 +1120,145 @@ public class PageBaseXMFight : System.Web.UI.Page
             originalImage.Dispose();
             return toBitmap;
         }
+    }
+
+    /// <summary>
+    /// 消课通知
+    /// </summary>
+    /// <param name="WeiXinOpenID">收信人OPENID</param>
+    /// <param name="sFrist">学生姓名</param>
+    /// <param name="sKey1">课程名称</param>
+    /// <param name="sKey2">剩余课时</param>
+    /// <param name="sKey3">上课时间</param>
+    /// <param name="sKey4">消课情况 扣除1课时</param>
+    /// <param name="sRemark">备注信息</param>
+    /// <param name="sURL">链接地址</param>
+    public string SendXKMsg(string WeiXinOpenID, string sFrist, string sKey1, string sKey2, string sKey3, string sKey4, string sRemark, string sURL)
+    {
+        string RValue = string.Empty;
+        /// 检测微信ID是否存在，不存在则不可以发送微信消息。
+        if (WeiXinOpenID != null)
+        {
+            var url = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());
+
+            var data = "{";
+
+            data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 微信ID
+            data += "\"template_id\":\"tTPHH85-2RQx3bq4AWvKPUDgU6YOPU8GkpGtS5Ovje8\",";     /// 模板ID
+            data += "\"url\":\"" + sURL + "\",";
+            data += "\"topcolor\":\"#FF0000\",";
+            data += "\"data\":{";
+
+            data += "\"first\": {";
+            data += "\"value\":\"" + sFrist + "\" ,";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword1\":{";
+            data += "\"value\":\"" + sKey1 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword2\":{";
+            data += "\"value\":\"" + sKey2 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword3\":{";
+            data += "\"value\":\"" + sKey3 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword4\":{";
+            data += "\"value\":\"" + sKey4 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"remark\":{";
+            data += "\"value\":\"" + sRemark + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "}";
+
+            data += "}";
+
+            data += "}";
+
+            var serializer = new JavaScriptSerializer();
+            var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+
+            string MSG = "openid:" + WeiXinOpenID;
+
+            foreach (var key in obj.Keys)
+            {
+                MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+            }
+            if (MSG.Length > 0)
+            {
+                RValue = MSG;
+            }
+        }
+        return RValue;
+    }
+    /// <summary>
+    /// 上课提醒
+    /// </summary>
+    /// <param name="WeiXinOpenID">收信人OPENID</param>
+    /// <param name="sFrist">学生姓名</param>
+    /// <param name="sKey1">课程名称</param>
+    /// <param name="sKey2">上课时间</param>
+    /// <param name="sKey3">上课时长</param>
+    /// <param name="sRemark">备注信息</param>
+    /// <param name="sURL">链接地址</param>
+    public string SendSKTXMsg(string WeiXinOpenID, string sFrist, string sKey1, string sKey2, string sKey3, string sRemark, string sURL)
+    {
+        string RValue = string.Empty;
+        /// 检测微信ID是否存在，不存在则不可以发送微信消息。
+        if (WeiXinOpenID != null)
+        {
+            var url = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());
+
+            var data = "{";
+
+            data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 微信ID
+            data += "\"template_id\":\"q2fD29kBayctEfePih5gQGP2CKcCIoKpkZ2_dnXYTug\",";     /// 模板ID
+            data += "\"url\":\"" + sURL + "\",";
+            data += "\"topcolor\":\"#FF0000\",";
+            data += "\"data\":{";
+
+            data += "\"first\": {";
+            data += "\"value\":\"" + sFrist + " 同学家长您好预约的课程快到了,请尽量提前5分钟到，注意带齐装备。如需请假一定通知工作人员。\" ,";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword1\":{";
+            data += "\"value\":\"" + sKey1 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword2\":{";
+            data += "\"value\":\"" + sKey2 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword3\":{";
+            data += "\"value\":\"" + sKey3 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"remark\":{";
+            data += "\"value\":\"" + sRemark + " 请假不扣课时，旷课正常扣除课时。\",";
+            data += "\"color\":\"#173177\"";
+            data += "}";
+
+            data += "}";
+
+            data += "}";
+
+            var serializer = new JavaScriptSerializer();
+            var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+
+            string MSG = "openid:" + WeiXinOpenID;
+
+            foreach (var key in obj.Keys)
+            {
+                MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+            }
+            if (MSG.Length > 0)
+            {
+                RValue = MSG;
+            }
+        }
+        return RValue;
     }
 }

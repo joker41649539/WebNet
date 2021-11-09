@@ -34,7 +34,9 @@ public partial class XMFight_Manage_Bance : PageBaseXMFight
         string DLtimeStart = Convert.ToDateTime(TextBox1.Text).ToString("yyyy-MM-dd");
         string DLtimeEnd = Convert.ToDateTime(TextBox2.Text).ToString("yyyy-MM-dd");
         string strDiv = string.Empty;
-        strSQL = "Select ISNULL((Select sum(amount) SR from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and amount > 0),0) SR,";
+        strSQL = " Select isnull((Select count(*) from XMFight_Student where iflag=0),0) SumStudents,";
+        strSQL += "isnull((Select count(*) from XMFight_Student where iflag=0 and CTime between '" + DLtimeStart + "' and '" + DLtimeEnd + "'),0) AddStudents,";
+        strSQL += "ISNULL((Select sum(amount) SR from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and amount > 0),0) SR,";
         strSQL += "ISNULL((Select sum(amount) ZC from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and amount<0),0) ZC,";
         strSQL += " * from xmfight_bance where ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' order by Ltime desc";
 
@@ -44,6 +46,8 @@ public partial class XMFight_Manage_Bance : PageBaseXMFight
             {
                 Label_LJSR.Text = OP_Mode.Dtv[0]["SR"].ToString();
                 Label_LJZC.Text = OP_Mode.Dtv[0]["ZC"].ToString();
+                Label_SumStudent.Text = OP_Mode.Dtv[0]["SumStudents"].ToString();
+                Label_AddStudent.Text = OP_Mode.Dtv[0]["AddStudents"].ToString();
                 Label_LJLR.Text = (Convert.ToDouble(OP_Mode.Dtv[0]["SR"]) + Convert.ToDouble(OP_Mode.Dtv[0]["ZC"])).ToString();
                 strDiv = "<div class=\"col-xs-12 col-sm-10 col-sm-offset-1\">";
 

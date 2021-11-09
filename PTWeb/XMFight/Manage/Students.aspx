@@ -4,12 +4,9 @@
     <div class="row">
         <div class="col-xs-12 col-sm-8">
             <div class="input-group">
-                <input type="text" class="form-control search-query" placeholder="请输入需查询姓名" />
+                <asp:TextBox ID="TextBox1" class="form-control search-query" placeholder="请输入需查询姓名"  runat="server"></asp:TextBox>
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-purple btn-sm">
-                        查  询
-																			<i class="icon-search icon-on-right bigger-110"></i>
-                    </button>
+                    <asp:Button ID="Button1" class="btn btn-purple btn-sm" runat="server" Text=" 查  询" OnClick="Button1_Click" />
                 </span>
             </div>
         </div>

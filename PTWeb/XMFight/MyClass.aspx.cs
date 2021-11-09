@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class XMFight_MyClass : PageBaseXMFight
 {
-    public int iUserID = 10;
+    public int iUserID = 16;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -67,9 +67,9 @@ public partial class XMFight_MyClass : PageBaseXMFight
                     iUserID = Convert.ToInt32(OP_Mode.Dtv[0]["ID"].ToString());
                 }
             }
-            if (Convert.ToInt32(Request) > 0)
+            if (Convert.ToInt32(Request["SID"]) > 0)
             {
-                iUserID = Convert.ToInt32(Request);
+                iUserID = Convert.ToInt32(Request["SID"]);
             }
         }
         catch
@@ -328,7 +328,7 @@ public partial class XMFight_MyClass : PageBaseXMFight
 
         string strSQL;
 
-        strSQL = "Select * from XMFight_Class_Record where StudentID=" + iStudentID + " order by ctime desc";
+        strSQL = "Select top 100 * from XMFight_Class_Record where StudentID=" + iStudentID + " order by ctime desc";
 
         if (OP_Mode.SQLRUN(strSQL))
 

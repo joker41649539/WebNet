@@ -27,6 +27,10 @@ public partial class XMFight_Manage_Students : PageBaseXMFight
         strSQL += " from XMFight_Student a,";
         strSQL += " (Select sum(ICount) sumClassCount, MAX(CTime) LastClassTime, StudentID from XMFight_Class_Record group by StudentID) as b";
         strSQL += " where a.ID = b.StudentID";
+        if (TextBox1.Text.Length > 0)
+        {
+            strSQL += " and a.name like '%" + TextBox1.Text.Replace("'", "''") + "%' ";
+        }
         strSQL += " order by Name";
 
         if (OP_Mode.SQLRUN(strSQL))
@@ -137,5 +141,15 @@ public partial class XMFight_Manage_Students : PageBaseXMFight
         TimeSpan ts3 = ts1.Subtract(ts2).Duration();
         //你想转的格式
         return Convert.ToInt32(ts3.TotalDays);
+    }
+
+    /// <summary>
+    /// 查询
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        LoadStudents();
     }
 }

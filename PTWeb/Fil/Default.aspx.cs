@@ -142,7 +142,7 @@ public partial class Fil_Default : PageBase
     /// </summary>
     private void SaveData()
     {
-        string strSQL = "Insert into Fil_Summary (SumRMBYE,SumGift,SumPower,PowerAdd,Lock,FilYE,FilRmb,Hardware,Average,Gift) values (" + Label_RMB.Text + "," + Label_CK.Text + "," + Label_ZSL.Text + ",'" + Label_RZZ.Text + "'," + Label_PowerLock.Text + "," + Label_FilYE.Text + "," + Label_RMB.Text + "," + Label_YJ.Text + "," + Label_PJ.Text + "," + Label_CK.Text + " - (Select top 1 sumgift from Fil_Summary order by CTIME desc))";
+        string strSQL = "Insert into Fil_Summary (SumRMBYE,SumGift,SumPower,PowerAdd,Lock,FilYE,FilRmb,Hardware,Average,Gift) values (" + Label_RMB.Text + "," + Label_CK.Text + "," + Label_ZSL.Text + ",(" + Label_ZSL.Text + " - (Select top 1 SumPower from Fil_Summary order by CTIME desc))," + Label_PowerLock.Text + "," + Label_FilYE.Text + "," + Label_RMB.Text + "," + Label_YJ.Text + "," + Label_PJ.Text + "," + Label_CK.Text + " - (Select top 1 sumgift from Fil_Summary order by CTIME desc))";
         if (!OP_Mode.SQLRUN(strSQL))
         {
             MessageBox("", "错误：" + OP_Mode.strErrMsg);
@@ -177,8 +177,8 @@ public partial class Fil_Default : PageBase
             string totalDataStr;//, totalDataStr_SG, totalDataStr_PK, totalDataStr_TZ, totalDataStr_ZQ;
 
             /// 可用余额
-            string strKYYE = "></div></span>: ";
-            string strWKSC = "Initial Pledge: ";
+            string strKYYE = "</span>: ";
+            string strWKSC = "Locked Rewards: ";
             string strWin = "Total Reward:";
             string strPowerAdd = "算力增速: ";
             string strSumPower = "Adjusted Power </p><div class=";
@@ -269,8 +269,8 @@ public partial class Fil_Default : PageBase
             //double NumHQ = Convert.ToDouble(totalDataStr.Substring(strHQ.Length, totalDataStr.Length - strHQ.Length).Replace(",", ""));
 
             //////////////////////////////////////////////
-            /// 总余额
-            string strPJ = "Average value in last 24h of the ratio of total block rewards at every tipset and corresponding adjusted storage power.</div><div><img src=\"/dist/img/tip.0ec64e2.svg\" alt=\"tip\" class=\"h-3\"></div></span></div><div class=\"text-left lg:text-center text-sm lg:text-2xl items-start lg:mx-auto\"> ";
+            /// 总余额       <!---->Average value in last 24h of the ratio of total block rewards at every tipset and corresponding adjusted storage power.</div><span class="el-popover__reference-wrapper"><div><img src="/dist/img/tip.2db31cb.svg" alt="tip" class="h-3"></div></span></span></div><div class="text-left lg:text-center text-sm lg:text-2xl items-start lg:mx-auto">
+            string strPJ = "<!---->Average value in last 24h of the ratio of total block rewards at every tipset and corresponding adjusted storage power.</div><span class=\"el-popover__reference-wrapper\"><div><img src=\"/dist/img/tip.2db31cb.svg\" alt=\"tip\" class=\"h-3\"></div></span></span></div><div class=\"text-left lg:text-center text-sm lg:text-2xl items-start lg:mx-auto\">";
 
 
             startIndex = content.IndexOf(strPJ);
