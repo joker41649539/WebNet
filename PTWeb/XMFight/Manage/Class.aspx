@@ -10,7 +10,7 @@
         </div>
     </div>
     <div runat="server" id="Div_StudentsList"></div>
-    <div class="row">
+    <%--  <div class="row">
         <h5>&nbsp;2021-11-09 星期二 10:00 - 11:30</h5>
         <div class="widget-main no-padding">
             <div class="dialogs">
@@ -51,7 +51,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
+   <div class="row">
         <h5>&nbsp;2021-11-10 星期三 10:00 - 11:30</h5>
         <div class="widget-main no-padding">
             <div class="dialogs">
@@ -91,6 +91,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --%>
 </asp:Content>
 

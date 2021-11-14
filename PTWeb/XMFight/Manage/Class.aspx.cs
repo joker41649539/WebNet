@@ -9,7 +9,10 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            LoadStudents();
+        }
     }
 
 
@@ -33,7 +36,7 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                 strWeek = "3,4";
                 break;
             case "Thursday":
-                strWeek = "4,5";
+                strWeek = "4,5,6";
                 break;
             case "Friday":
                 strWeek = "5,6";
@@ -46,19 +49,20 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                 break;
         }
 
-        strSQL = " Select Week,STime,ETime,* from XMFight_Class_Student,XMFight_Student,XMFight_ClassTime where ClassID=XMFight_ClassTime.ID and StudentID=XMFight_Student.ID and Week in (" + strWeek + ")";
-        //strSQL += " ,sumClassCount,LastClassTime,";
-        //strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=2 and StudentID = a.ID),0) Leave,";
-        //strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=3 and StudentID = a.ID),0) Absenteeism,";
-        //strSQL += " isnull((Select sum(Bance) from XMFight_reserve where StudentID=a.ID),0) SumBance";
-        //strSQL += " from XMFight_Student a,";
-        //strSQL += " (Select sum(ICount) sumClassCount, MAX(CTime) LastClassTime, StudentID from XMFight_Class_Record group by StudentID) as b";
-        //strSQL += " where a.ID = b.StudentID";
+        strSQL = " Select Week,STime,ETime, datediff(year, BrithDay, getdate()) age";
+        strSQL += " ,sumClassCount,LastClassTime,*";
+        strSQL += " ,isnull((Select Count(ID) from XMFight_Class_Record where IFlag=2 and StudentID = XMFight_Student.ID),0) Leave,";
+        strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=3 and StudentID = XMFight_Student.ID),0) Absenteeism,";
+        strSQL += " isnull((Select sum(Bance) from XMFight_reserve where StudentID=XMFight_Student.ID),0) SumBance";
+        strSQL += "  from XMFight_Class_Student,XMFight_Student,XMFight_ClassTime,";
+        strSQL += " (Select sum(ICount) sumClassCount, MAX(CTime) LastClassTime, StudentID from XMFight_Class_Record group by StudentID) as b";
+        strSQL += " where ClassID=XMFight_ClassTime.ID and XMFight_Class_Student.StudentID=XMFight_Student.ID and b.StudentID=XMFight_Student.ID and Week in (" + strWeek + ")";
+        // strSQL += " where ClassID=XMFight_ClassTime.ID and StudentID=XMFight_Student.ID and Week in (" + strWeek + ")where a.ID = b.StudentID";
         //if (TextBox1.Text.Length > 0)
         //{
         //    strSQL += " and a.name like '%" + TextBox1.Text.Replace("'", "''") + "%' ";
         //}
-        strSQL += " order by Name";
+        strSQL += " order by classid ,name";
         // select datename(weekday, DATEADD(dd,0, GETDATE())),DATEPART(weekday, DATEADD(dd, 0, GETDATE()))
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -69,7 +73,7 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
 
                     if (i == 0)
                     {// 输出表头
-                        strTempDiv += "<h5>&nbsp;2021-11-09 星期二 10:00 - 11:30 </h5>";
+                        strTempDiv += "<h5>&nbsp;" + System.DateTime.Now.ToString("yyyy-MM-dd dddd") + " " + Convert.ToDateTime(OP_Mode.Dtv[i]["STime"]).ToString("HH:mm") + " - " + Convert.ToDateTime(OP_Mode.Dtv[i]["ETime"]).ToString("HH:mm") + " </h5>";
                         strTempDiv += "<div class=\"widget-main no-padding\">";
                         strTempDiv += "<div class=\"dialogs\">";
                     }
@@ -77,7 +81,10 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                     {
                         if (OP_Mode.Dtv[i - 1]["ClassID"].ToString() != OP_Mode.Dtv[i]["ClassID"].ToString())
                         {
-                            strTempDiv += "<h5>&nbsp;2021-11-09 星期二 10:00 - 11:30 </h5>";
+                            strTempDiv += "</div>";
+                            strTempDiv += "</div>";
+                            strTempDiv += "</div>";
+                            strTempDiv += "<h5>&nbsp;" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd dddd") + " " + Convert.ToDateTime(OP_Mode.Dtv[i]["STime"]).ToString("HH:mm") + " - " + Convert.ToDateTime(OP_Mode.Dtv[i]["ETime"]).ToString("HH:mm") + " </h5>";
                             strTempDiv += "<div class=\"widget-main no-padding\">";
                             strTempDiv += "<div class=\"dialogs\">";
                         }
@@ -164,6 +171,11 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                     strTempDiv += " </div>";
                     strTempDiv += " </div>";
                 }
+                /// 结束了，添加三个收尾
+                strTempDiv += "</div>";
+                strTempDiv += "</div>";
+                strTempDiv += "</div>";
+
                 if (strTempDiv.Length > 0)
                 {
                     Div_StudentsList.InnerHtml = strTempDiv;
