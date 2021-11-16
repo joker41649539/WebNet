@@ -49,7 +49,7 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                 break;
         }
 
-        strSQL = " Select Week,STime,ETime, datediff(year, BrithDay, getdate()) age";
+        strSQL = " Select XMFight_Student.ID,Week,STime,ETime, datediff(year, BrithDay, getdate()) age";
         strSQL += " ,sumClassCount,LastClassTime,*";
         strSQL += " ,isnull((Select Count(ID) from XMFight_Class_Record where IFlag=2 and StudentID = XMFight_Student.ID),0) Leave,";
         strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=3 and StudentID = XMFight_Student.ID),0) Absenteeism,";

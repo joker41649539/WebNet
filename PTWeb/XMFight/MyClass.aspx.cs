@@ -49,6 +49,10 @@ public partial class XMFight_MyClass : PageBaseXMFight
         try
         {
             strOPID = Request.Cookies["WeChat_XMFight"]["COPENID"];
+            if (strOPID.Length < 1)
+            {
+                return;
+            }
             // MessageBox("", strOPID);
             string strSQL = "Select ID,Name,Sex from XMFight_Student where OpenID like ('%" + strOPID + "%')";
             if (OP_Mode.SQLRUN(strSQL))

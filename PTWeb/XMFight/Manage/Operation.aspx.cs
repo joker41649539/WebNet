@@ -10,31 +10,29 @@ public partial class XMFight_Manage_Operation : PageBaseXMFight
     public string Openids = string.Empty;// = new Openids[] { 1, 2, 3, 4, 5, 6 };
     protected void Page_Load(object sender, EventArgs e)
     {
-        //if (Convert.ToInt32(DefaultUser) != 6)
-        //{
-        //    MessageBox("", "您没有操作权限。", "/XMFight/");
-        //    return;
-        //}
-        //else
-        //{
-        //    if (!IsPostBack)
-        //    { 
-        try
-        {
-            int StudentID = Convert.ToInt32(Request["SID"]);
-            LoadUserInfo(StudentID);
-            int iClassID = Convert.ToInt32(Request["CID"]);
-            Operation(iClassID);
-        }
-        catch
+        if (Convert.ToInt32(DefaultUser) != 6)
         {
             MessageBox("", "您没有操作权限。", "/XMFight/");
             return;
         }
-        //    }
-        //}
-
-
+        else
+        {
+            if (!IsPostBack)
+            {
+                try
+                {
+                    int StudentID = Convert.ToInt32(Request["SID"]);
+                    LoadUserInfo(StudentID);
+                    int iClassID = Convert.ToInt32(Request["CID"]);
+                    Operation(iClassID);
+                }
+                catch
+                {
+                    MessageBox("", "您没有操作权限。", "/XMFight/");
+                    return;
+                }
+            }
+        }
     }
     /// <summary>
     /// 
@@ -98,6 +96,10 @@ public partial class XMFight_Manage_Operation : PageBaseXMFight
     {
         try
         {
+            if (Convert.ToInt32(DefaultUser) <= 0)
+            {
+                return;
+            }
             int StudentID = Convert.ToInt32(Request["SID"]);
             int iClassID = Convert.ToInt32(Request["CID"]);
             string strSQL = string.Empty;
