@@ -1,6 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/XMFight/MasterPage.master" AutoEventWireup="true" CodeFile="MyClass.aspx.cs" Inherits="XMFight_MyClass" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="alert alert-block alert-success" runat="server" visible="false" id="Div_AllMsg">
+        <h5>公告消息</h5>
+        <h6>明天放假休息</h6>
+    </div>
     <div class="btn-group" runat="server" id="Div_Students">
         <%-- <a href="#" class="btn btn-sm btn-primary">陆博文</a>
         <a href="#" class="btn btn-sm btn-pink">陆博语</a>--%>

@@ -73,7 +73,16 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
 
                     if (i == 0)
                     {// 输出表头
-                        strTempDiv += "<h5>&nbsp;" + System.DateTime.Now.ToString("yyyy-MM-dd dddd") + " " + Convert.ToDateTime(OP_Mode.Dtv[i]["STime"]).ToString("HH:mm") + " - " + Convert.ToDateTime(OP_Mode.Dtv[i]["ETime"]).ToString("HH:mm") + " </h5>";
+                        if (strWeek.Substring(0, 1) == OP_Mode.Dtv[i]["Week"].ToString())
+                        {
+                            strTempDiv += "<h5>&nbsp;" + System.DateTime.Now.ToString("yyyy-MM-dd dddd") + " " + Convert.ToDateTime(OP_Mode.Dtv[i]["STime"]).ToString("HH:mm") + " - " + Convert.ToDateTime(OP_Mode.Dtv[i]["ETime"]).ToString("HH:mm") + " </h5>";
+                        }
+                        else
+                        {
+                            strTempDiv += "<h5>&nbsp;" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd dddd") + " " + Convert.ToDateTime(OP_Mode.Dtv[i]["STime"]).ToString("HH:mm") + " - " + Convert.ToDateTime(OP_Mode.Dtv[i]["ETime"]).ToString("HH:mm") + " </h5>";
+                        }
+                        strTempDiv += "         <a href=\"SendMsg.aspx?CID=" + OP_Mode.Dtv[i]["ClassID"].ToString() + "\" class=\"btn btn-minier btn-success\">群发上课提醒";
+                        strTempDiv += "           </a>";
                         strTempDiv += "<div class=\"widget-main no-padding\">";
                         strTempDiv += "<div class=\"dialogs\">";
                     }
@@ -118,6 +127,11 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                     }
                     strTempDiv += "     </div>";
                     strTempDiv += "    <div class=\"text\">";
+
+                    if (ExecDateDiff(Convert.ToDateTime(Convert.ToDateTime(OP_Mode.Dtv[i]["BrithDay"]).ToString("MM-dd")), System.DateTime.Now) < 7)
+                    {/// 最近一周内要过生日。
+                        strTempDiv += "<h3 class=\"red\">生日:" + Convert.ToDateTime(OP_Mode.Dtv[i]["BrithDay"]).ToString("MM月dd日 dddd") + "</h3>";
+                    }
                     if (ExecDateDiff(Convert.ToDateTime(OP_Mode.Dtv[i]["LastClassTime"]), System.DateTime.Now) > 7)
                     {/// 超过 7 天未上课的 红色显示
                         strTempDiv += "         <h5>上节课时间：<span class=\"label label-danger\">" + Convert.ToDateTime(OP_Mode.Dtv[i]["LastClassTime"]).ToString("yyyy-MM-dd") + " </span></h5>";
@@ -167,6 +181,8 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                     strTempDiv += "          </a>";
                     strTempDiv += "        <a href=\"Operation.aspx?SID=" + OP_Mode.Dtv[i]["ID"].ToString() + "&CID=0\" class=\"btn btn-minier btn-pink\">储备金";
                     strTempDiv += "          </a>";
+                    strTempDiv += "         <a href=\"/XMFight/MyClass.aspx?SID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-primary\">详情";
+                    strTempDiv += "           </a>";
                     strTempDiv += "     </div>";
                     strTempDiv += " </div>";
                     strTempDiv += " </div>";

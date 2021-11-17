@@ -8,13 +8,36 @@ using System.Web.UI.WebControls;
 
 public partial class XMFight_MyClass : PageBaseXMFight
 {
-    public int iUserID = 16;
+    public int iUserID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
+            LoadMSG();
             LoadStudentsByOpID();
             //  LoadClassList();
+        }
+    }
+    private void LoadMSG()
+    {
+        string TempHtml = string.Empty;
+        string strSQL = "SELECT top 1 * FROM XMFIGHT_MSG WHERE GETDATE() BETWEEN STIME AND ETIME";
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                TempHtml += "<h5>" + OP_Mode.Dtv[0]["Title"].ToString() + "</h5>";
+                TempHtml += "<h6>&nbsp;&nbsp;" + OP_Mode.Dtv[0]["MsgContent"].ToString() + "</h6>";
+            }
+        }
+        if (TempHtml.Length > 0)
+        {
+            Div_AllMsg.InnerHtml = TempHtml;
+            Div_AllMsg.Visible = true;
+        }
+        else
+        {
+            Div_AllMsg.Visible = false;
         }
     }
 
@@ -71,14 +94,15 @@ public partial class XMFight_MyClass : PageBaseXMFight
                     iUserID = Convert.ToInt32(OP_Mode.Dtv[0]["ID"].ToString());
                 }
             }
-            if (Convert.ToInt32(Request["SID"]) > 0)
-            {
-                iUserID = Convert.ToInt32(Request["SID"]);
-            }
         }
         catch
         {
 
+        }
+
+        if (Convert.ToInt32(Request["SID"]) > 0)
+        {
+            iUserID = Convert.ToInt32(Request["SID"]);
         }
 
         if (strTempDiv.Length > 0)
@@ -120,8 +144,8 @@ public partial class XMFight_MyClass : PageBaseXMFight
             if (OP_Mode.Dtv.Count > 0)
             {
                 Label_Sum.Text = Convert.ToDouble(OP_Mode.Dtv[0]["sumClassCount"]).ToString("G0");
-                Label_QJ.Text = OP_Mode.Dtv[0]["Absenteeism"].ToString();
-                Label_KG.Text = OP_Mode.Dtv[0]["Leave"].ToString();
+                Label_KG.Text = OP_Mode.Dtv[0]["Absenteeism"].ToString();
+                Label_QJ.Text = OP_Mode.Dtv[0]["Leave"].ToString();
                 Label_CBJ.Text = OP_Mode.Dtv[0]["SumBance"].ToString();
             }
         }

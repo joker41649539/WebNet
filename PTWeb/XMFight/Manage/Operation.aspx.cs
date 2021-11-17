@@ -173,7 +173,7 @@ public partial class XMFight_Manage_Operation : PageBaseXMFight
                     //}
                     //else
                     //{
-                    MessageBox("", "操作成功。", "/XMFight/Manage/Students.aspx");
+                    MessageBox("", "操作成功。", "/XMFight/Manage/Class.aspx");
                     //}
                     return;
                 }
