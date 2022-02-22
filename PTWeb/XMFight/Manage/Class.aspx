@@ -7,6 +7,7 @@
             <a href='/XMFight/Manage/AddStudent.aspx' class="btn btn-sm">添加学生</a>
             <a href='/XMFight/Manage/AddClass.aspx' class="btn btn-sm">添加课程</a>
             <a href='/XMFight/Manage/Students.aspx' class="btn btn-sm">学生操作</a>
+            <a href='/XMFight/Manage/Record.aspx' class="btn btn-sm">今日消课</a>
         </div>
     </div>
     <div runat="server" id="Div_StudentsList"></div>

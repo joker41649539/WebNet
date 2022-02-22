@@ -94,6 +94,8 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                             strTempDiv += "</div>";
                             strTempDiv += "</div>";
                             strTempDiv += "<h5>&nbsp;" + System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd dddd") + " " + Convert.ToDateTime(OP_Mode.Dtv[i]["STime"]).ToString("HH:mm") + " - " + Convert.ToDateTime(OP_Mode.Dtv[i]["ETime"]).ToString("HH:mm") + " </h5>";
+                            strTempDiv += "         <a href=\"SendMsg.aspx?CID=" + OP_Mode.Dtv[i]["ClassID"].ToString() + "\" class=\"btn btn-minier btn-success\">群发上课提醒";
+                            strTempDiv += "           </a>";
                             strTempDiv += "<div class=\"widget-main no-padding\">";
                             strTempDiv += "<div class=\"dialogs\">";
                         }
