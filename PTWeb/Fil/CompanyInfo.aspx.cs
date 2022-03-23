@@ -53,9 +53,9 @@ public partial class Fil_Default3 : PageBase
              //Label2.Text = "0";
             }
             //售出可提现
-            Label_Lock.Text = SumBalance.ToString();
+            Label_Lock.Text = SumBalance.ToString("N2");
             // 售出锁仓
-            Label1.Text = (SumRelease - SumBalance).ToString();
+            Label1.Text = (SumRelease - SumBalance).ToString("N2");
         }
 
         strSQL = " Select ";
@@ -69,11 +69,11 @@ public partial class Fil_Default3 : PageBase
         {
             if (OP_Mode.Dtv.Count > 0)
             {
-                Label3.Text = OP_Mode.Dtv[0]["SumPower"].ToString();
-                Label4.Text = OP_Mode.Dtv[0]["EffectivePower"].ToString();
-                Label2.Text = OP_Mode.Dtv[0]["Filye"].ToString();
-                Label_Withdraw.Text = OP_Mode.Dtv[0]["Lock"].ToString();
-                Label_SumPower.Text = OP_Mode.Dtv[0]["SumPowerAll"].ToString();
+                Label3.Text = Convert.ToDouble(OP_Mode.Dtv[0]["SumPower"]).ToString("N2");
+                Label4.Text = Convert.ToDouble(OP_Mode.Dtv[0]["EffectivePower"]).ToString("N2");
+                Label2.Text = Convert.ToDouble(OP_Mode.Dtv[0]["Filye"]).ToString("N2");
+                Label_Withdraw.Text = Convert.ToDouble(OP_Mode.Dtv[0]["Lock"]).ToString("N2");
+                Label_SumPower.Text = Convert.ToDouble(OP_Mode.Dtv[0]["SumPowerAll"]).ToString("N2");
                 //// 公司总算力 - 已经生效的算力 = 公司掌握的实际算力。
                 Label_Release.Text = (Convert.ToDecimal(OP_Mode.Dtv[0]["SumPowerAll"]) - Convert.ToDecimal(OP_Mode.Dtv[0]["Power"])).ToString();
             }

@@ -180,8 +180,9 @@ public partial class Fil_Default : PageBase
             string strKYYE = "</span>: ";
             string strWKSC = "Locked Rewards: ";
             string strWin = "Total Reward:";
-            string strPowerAdd = "算力增速: ";
-            string strSumPower = "Adjusted Power </p><div class=";
+            //string strPowerAdd = "算力增速: ";
+            //string strSumPower = "Adjusted Power </p><div class=";
+            string strSumPower = ",active:";
 
 
             int startIndex = content.IndexOf(strKYYE);
@@ -221,12 +222,15 @@ public partial class Fil_Default : PageBase
             ////////////////
             ////// 总算力
             startIndex = content.IndexOf(strSumPower);
-            length = content.IndexOf(" TiB </p>", startIndex) - startIndex;
+            length = content.IndexOf(",faulty:", startIndex) - startIndex;
 
             /// 获得 总算力
             totalDataStr = content.Substring(startIndex, length);
 
-            string NumSumPower = totalDataStr.Substring(strSumPower.Length + 76, totalDataStr.Length - strSumPower.Length - 76).Replace(",", "");
+            string NumSumPower = totalDataStr.Substring(strSumPower.Length, totalDataStr.Length - strSumPower.Length).Replace(",", "");
+
+
+            NumSumPower = Math.Round(Convert.ToDouble(NumSumPower + ".00") / 32.00, 2).ToString();
 
             //////  用户信息网址
             request = (HttpWebRequest)WebRequest.Create(@"" + UserURL + "");
@@ -287,7 +291,7 @@ public partial class Fil_Default : PageBase
             /// 日增长 
           //  Label_RZZ.Text = NumPowerAdd.ToString();
             /// 总算力
-            Label_ZSL.Text = NumSumPower.ToString();
+            Label_ZSL.Text = NumSumPower;
             // 运行时间
             Label_Day.Text = GetDuration(System.DateTime.Now, Convert.ToDateTime("2021-01-01")).ToString();
             // 行情
