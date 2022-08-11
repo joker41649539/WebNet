@@ -86,4 +86,22 @@ public partial class Remember_Default3 : PageBaseRem
 
         return rValue;
     }
+
+    /// <summary>
+    /// 清空记忆数据
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Button_Clear_Click(object sender, EventArgs e)
+    {
+        string strSQL = "Delete from Remember where iUserID=" + DefaultUser;
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            MessageBox("", "数据清空成功。<br />","Default.aspx");
+        }
+        else
+        {
+            MessageBox("", "数据清空失败。<br />" + OP_Mode.strErrMsg);
+        }
+    }
 }

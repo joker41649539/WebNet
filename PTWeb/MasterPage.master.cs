@@ -27,16 +27,16 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         if (!IsPostBack)
         {
-            try
-            {
-                string LoginID;
-                LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
-            }
-            catch
-            {
-                MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
-                return;
-            }
+            //try
+            //{
+            //    string LoginID;
+            //    LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
+            //}
+            //catch
+            //{
+            //    MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
+            //    return;
+            //}
             string strURL = Request.Url.AbsoluteUri;
 
             if (strURL.IndexOf("putian") > -1 || strURL.IndexOf("localhost") > -1)

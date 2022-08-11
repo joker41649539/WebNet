@@ -35,7 +35,7 @@ public partial class XMFight_Manage_Record : PageBaseXMFight
 
         string strSQL;
 
-        strSQL = "Select XMFight_Class_Record.ID,Name,ICount,XMFight_Class_Record.LTime from XMFight_Class_Record,XMFight_Student where XMFight_Class_Record.LTime >CONVERT(varchar(100), GETDATE(), 23) and XMFight_Class_Record.StudentID=XMFight_Student.ID order by XMFight_Class_Record.LTime";
+        strSQL = "Select XMFight_Class_Record.ID,Name,ICount,XMFight_Class_Record.LTime,XMFight_Class_Record.iFlag from XMFight_Class_Record,XMFight_Student where XMFight_Class_Record.LTime >CONVERT(varchar(100), GETDATE(), 23) and XMFight_Class_Record.StudentID=XMFight_Student.ID order by XMFight_Class_Record.LTime";
 
         if (OP_Mode.SQLRUN(strSQL))
 

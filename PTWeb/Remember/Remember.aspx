@@ -5,9 +5,9 @@
         <div class="page-header">
             <h1>记忆训练								<small><i class="icon-double-angle-right"></i>&nbsp;今日学习内容                                </small></h1>
         </div>
+        <div id="accordion" class="accordion-style1 panel-group" runat="server"></div>
+        <br />
     </div>
-    <div id="accordion" class="accordion-style1 panel-group" runat="server"></div>
-    <br />
     <div class="row" style="height: 50px;">
     </div>
 </asp:Content>

@@ -15,9 +15,58 @@ public partial class XMFight_MyClass : PageBaseXMFight
         {
             LoadMSG();
             LoadStudentsByOpID();
+            if (DefaultUser == "6")
+            {
+                LoadClassTime();
+            }
+            else
+            {
+                CheckBoxList1.Visible = false;
+            }
             //  LoadClassList();
         }
     }
+
+    private void LoadClassTime()
+    {
+        int SID = 0;
+        try
+        {
+            SID = Convert.ToInt32(Request["SID"]);
+        }
+        catch
+        {
+
+        }
+        string strSQL = "Select XMFight_ClassTime.ID,'&nbsp;&nbsp;'+cast(XMFight_ClassTime.Week as char(1)) +' '+CONVERT(varchar(100), STime, 24) as Name,isnull(XMFight_Class_Student.ID,0) checked from XMFight_ClassTime left join XMFight_Class_Student on ClassID=XMFight_ClassTime.ID and StudentID=" + SID.ToString() + " where Flag=0";
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                CheckBoxList1.Visible = true;
+                CheckBoxList1.DataSource = OP_Mode.Dtv;
+                CheckBoxList1.DataTextField = "Name";
+                CheckBoxList1.DataValueField = "ID";
+                CheckBoxList1.DataBind();
+
+                int i = -1;
+                foreach (ListItem litem in CheckBoxList1.Items)
+                {
+                    i++;
+                    if (Convert.ToInt32(OP_Mode.Dtv[i]["checked"]) > 0)
+                    {
+                        litem.Selected = true;
+                    }
+                    else
+                    {
+                        litem.Selected = false;
+                    }
+                }
+            }
+        }
+
+    }
+
     private void LoadMSG()
     {
         string TempHtml = string.Empty;
@@ -77,7 +126,25 @@ public partial class XMFight_MyClass : PageBaseXMFight
                 return;
             }
             // MessageBox("", strOPID);
-            string strSQL = "Select ID,Name,Sex from XMFight_Student where OpenID like ('%" + strOPID + "%')";
+            int iSID = 0;
+
+            try
+            {
+                iSID = Convert.ToInt32(Request["SID"]);
+            }
+            catch
+            {
+
+            }
+            string strSQL = string.Empty;
+            if (iSID > 0 & DefaultUser == "6")
+            {
+                strSQL = "Select ID,Name,Sex from XMFight_Student where ID =" + iSID;
+            }
+            else
+            {
+                strSQL = "Select ID,Name,Sex from XMFight_Student where OpenID like ('%" + strOPID + "%')";
+            }
             if (OP_Mode.SQLRUN(strSQL))
             {
                 for (int i = 0; i < OP_Mode.Dtv.Count; i++)
@@ -437,4 +504,45 @@ public partial class XMFight_MyClass : PageBaseXMFight
     }
 
     #endregion
+
+    protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int SID = 0;
+        string strSQL = string.Empty;
+        try
+        {
+            SID = Convert.ToInt32(Request["SID"]);
+            if (SID > 0)
+            {
+                strSQL = " Delete XMFight_Class_Student Where StudentID=" + SID + " ";
+                foreach (ListItem item in CheckBoxList1.Items)
+                {
+                    if (item.Selected)
+                    {
+                        strSQL += " Insert into XMFight_Class_Student (ClassID,StudentID) values (" + item.Value + "," + SID + ") ";
+                    }
+                    //else
+                    //{
+                    //    strSQL += " Delete XMFight_Class_Student Where ClassID=" + item.Value + " and StudentID=" + SID + " ";
+                    //}
+                }
+                if (strSQL.Length > 0)
+                {
+                    if (OP_Mode.SQLRUN(strSQL))
+                    {
+                        MessageBox("", "课程安排成功。", Request.Url.AbsoluteUri);
+                    }
+                    else
+                    {
+                        MessageBox("", "课程安排失败。<br/>错误：" + OP_Mode.strErrMsg);
+                    }
+                }
+            }
+        }
+        catch
+        {
+            MessageBox("", "用户ID获取失败。");
+        }
+
+    }
 }

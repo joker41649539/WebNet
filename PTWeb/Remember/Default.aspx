@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Remember/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Remember_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     复习点的确定<br>
+     <div class="page-content">
+     <h5>艾宾浩斯记忆法对于任何学习材料的记忆都是行之有效的，可以极大地提高记忆效率，收到事半功倍的记忆效果。</h5>
     1． 第一个记忆周期：5分钟<br>
     2． 第二个记忆周期：30分钟<br>
     3． 第三个记忆周期：12小时<br>
@@ -26,5 +27,6 @@
     e）复习的原则<br>
     时间间隔：30秒 1分钟 5分钟 30分钟 1小时 8小时 1天 2天 6天 31天<br>
     重学节省诵读时间百分数：58.2 44.2 35.8 33.7 27.8 25.4 21.1<br>
+        </div>
 </asp:Content>
 

@@ -20,9 +20,19 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
     {
         if (!IsPostBack)
         {
-            //  LoadUserInfo();
-            WeChatLoad();
-            ////  MessageBox("消息提示", "测试信息");
+            //}
+            string strURL = Request.Url.AbsoluteUri;
+
+            if (strURL.IndexOf("localhost") > -1)
+            {/// 测试程序，默认ID
+                LoadUserInfo(6);
+            }
+            else
+            {
+                //  LoadUserInfo();
+                WeChatLoad();
+                ////  MessageBox("消息提示", "测试信息");
+            }
             LoadFoot();
         }
     }
@@ -57,11 +67,9 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
         FootBut.InnerHtml = strTemp;
     }
-    private bool LoadUserInfo()
+    private bool LoadUserInfo(int iWeChatID)
     {
         bool rValue = false;
-
-        int iWeChatID = 0;
 
         try
         {

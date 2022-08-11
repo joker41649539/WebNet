@@ -50,6 +50,18 @@
             </div>
         </div>
         <div class="hr hr8 hr-double"></div>
+        <div class="center" runat="server" id="Div_ClassTime">
+            <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatColumns="4" AutoPostBack="True" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged">
+                <asp:ListItem Value="14">&nbsp;&nbsp;周二 15:00&nbsp;&nbsp;</asp:ListItem>
+                <asp:ListItem Value="15">&nbsp;&nbsp;周四 15:00&nbsp;&nbsp;</asp:ListItem>
+                <asp:ListItem Value="16">&nbsp;&nbsp;周六 10:00&nbsp;&nbsp;</asp:ListItem>
+                <asp:ListItem Value="17">&nbsp;&nbsp;周7 10:00&nbsp;&nbsp;</asp:ListItem>
+                <asp:ListItem Value="18">&nbsp;&nbsp;周8 10:00&nbsp;&nbsp;</asp:ListItem>
+                <asp:ListItem Value="19">&nbsp;&nbsp;周9 10:00&nbsp;</asp:ListItem>
+            </asp:CheckBoxList>
+        </div>
+
+        <div class="hr hr8 hr-double"></div>
         <div class="clearfix" runat="server" id="Div_MyClassTime">
             <div class="grid2">
                 <span class="blue">

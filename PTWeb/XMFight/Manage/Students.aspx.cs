@@ -117,6 +117,8 @@ public partial class XMFight_Manage_Students : PageBaseXMFight
                     strTempDiv += "          </a>";
                     strTempDiv += "        <a href=\"Operation.aspx?SID=" + OP_Mode.Dtv[i]["ID"].ToString() + "&CID=0\" class=\"btn btn-minier btn-pink\">储备金";
                     strTempDiv += "          </a>";
+                    strTempDiv += "         <a href=\"/XMFight/MyClass.aspx?SID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-minier btn-primary\">详情";
+                    strTempDiv += "           </a>";
                     strTempDiv += "     </div>";
                     strTempDiv += " </div>";
                     strTempDiv += " </div>";

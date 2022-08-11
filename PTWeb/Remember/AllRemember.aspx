@@ -5,10 +5,8 @@
         <div class="page-header">
             <h1>记忆训练								<small><i class="icon-double-angle-right"></i>&nbsp;所有记忆内容                                </small></h1>
         </div>
+        <div id="accordion" class="accordion-style1 panel-group" runat="server"></div>
     </div>
-    <div id="accordion" class="accordion-style1 panel-group" runat="server"></div>
-    <br />
-    <div class="row" style="height: 50px;">
-    </div>
+    <asp:Button ID="Button_Clear" runat="server" Text="清空记忆数据" class="btn btn-danger btn-block" OnClick="Button_Clear_Click"/>
 </asp:Content>
 
