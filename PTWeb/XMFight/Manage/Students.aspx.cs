@@ -27,6 +27,12 @@ public partial class XMFight_Manage_Students : PageBaseXMFight
         strSQL += " from XMFight_Student a,";
         strSQL += " (Select sum(ICount) sumClassCount, MAX(CTime) LastClassTime, StudentID from XMFight_Class_Record group by StudentID) as b";
         strSQL += " where a.ID = b.StudentID";
+
+        if (!CheckBox_All.Checked)
+        {
+            strSQL += " and sumClassCount > 0";
+        }
+
         if (TextBox1.Text.Length > 0)
         {
             strSQL += " and a.name like '%" + TextBox1.Text.Replace("'", "''") + "%' ";

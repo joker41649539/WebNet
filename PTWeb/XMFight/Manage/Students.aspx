@@ -8,6 +8,7 @@
                 <span class="input-group-btn">
                     <asp:Button ID="Button1" class="btn btn-purple btn-sm" runat="server" Text=" 查  询" OnClick="Button1_Click" />
                 </span>
+                <asp:CheckBox ID="CheckBox_All" runat="server" Checked="false" Text="显示所有学生" /> 
             </div>
         </div>
     </div>
