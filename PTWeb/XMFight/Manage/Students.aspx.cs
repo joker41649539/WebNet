@@ -24,6 +24,8 @@ public partial class XMFight_Manage_Students : PageBaseXMFight
         strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=2 and StudentID = a.ID),0) Leave,";
         strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=3 and StudentID = a.ID),0) Absenteeism,";
         strSQL += " isnull((Select sum(Bance) from XMFight_reserve where StudentID=a.ID),0) SumBance";
+        strSQL += " ,isnull((Select top 1 LTime from XMFight_Class_Record where ICount>0 and StudentID=a.ID order by CTime desc),'2021-01-01') EndTime";
+        strSQL += " ,isnull((Select count(StudentID) from XMFight_Class_Student,XMFight_ClassTime where ClassID=XMFight_ClassTime.ID and StudentID=a.ID and XMFight_ClassTime.Flag=0),0) ClassCount";
         strSQL += " from XMFight_Student a,";
         strSQL += " (Select sum(ICount) sumClassCount, MAX(CTime) LastClassTime, StudentID from XMFight_Class_Record group by StudentID) as b";
         strSQL += " where a.ID = b.StudentID";
@@ -106,6 +108,23 @@ public partial class XMFight_Manage_Students : PageBaseXMFight
                     else
                     {
                         strTempDiv += "         <h5>旷课：" + OP_Mode.Dtv[i]["Absenteeism"].ToString() + " 节</h5>";
+                    }
+                    if (Convert.ToInt32(OP_Mode.Dtv[i]["ClassCount"]) < 1)
+                    {
+                        strTempDiv += "         <h5>每周课程：<span class=\"label label-danger\">" + OP_Mode.Dtv[i]["ClassCount"].ToString() + "</span> 节</h5>";
+                    }
+                    else
+                    { 
+                        strTempDiv += "         <h5>每周课程：" + OP_Mode.Dtv[i]["ClassCount"].ToString() + " 节</h5>";
+                    }
+
+                    if (Convert.ToDateTime(OP_Mode.Dtv[i]["EndTime"]).AddDays(30) < System.DateTime.Now)
+                    {
+                        strTempDiv += "         <h5>有效期止：<span class=\"label label-danger\">" + Convert.ToDateTime(OP_Mode.Dtv[i]["EndTime"]).ToString("yyyy-MM-dd") + "</span> </h5>";
+                    }
+                    else
+                    {
+                        strTempDiv += "         <h5>有效期止：" + Convert.ToDateTime(OP_Mode.Dtv[i]["EndTime"]).ToString("yyyy-MM-dd") + " </h5>";
                     }
                     strTempDiv += "         <h5 class='pink'>储备金：" + OP_Mode.Dtv[i]["SumBance"].ToString() + " 元</h5>";
                     if (OP_Mode.Dtv[i]["Remark"].ToString().Length > 0)

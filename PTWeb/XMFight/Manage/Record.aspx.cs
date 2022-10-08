@@ -12,8 +12,16 @@ public partial class XMFight_Manage_Record : PageBaseXMFight
     {
         if (!IsPostBack)
         {
+            LoadDefaultData();
             Load_GridView1();
         }
+    }
+
+
+    private void LoadDefaultData()
+    {
+        TextBox1.Text = DateTime.Now.Date.ToString("yyyy-MM-dd");
+        TextBox2.Text = DateTime.Now.AddDays(1).Date.ToString("yyyy-MM-dd");
     }
 
     #region "GridView1 读取今日消课 相关代码"
@@ -35,11 +43,21 @@ public partial class XMFight_Manage_Record : PageBaseXMFight
 
         string strSQL;
 
-        strSQL = "Select XMFight_Class_Record.ID,Name,ICount,XMFight_Class_Record.LTime,XMFight_Class_Record.iFlag from XMFight_Class_Record,XMFight_Student where XMFight_Class_Record.LTime >CONVERT(varchar(100), GETDATE(), 23) and XMFight_Class_Record.StudentID=XMFight_Student.ID order by XMFight_Class_Record.LTime";
+        string DLtimeStart = Convert.ToDateTime(TextBox1.Text).ToString("yyyy-MM-dd");
+        string DLtimeEnd = Convert.ToDateTime(TextBox2.Text).ToString("yyyy-MM-dd");
+        strSQL = "Select XMFight_Class_Record.ID,Name,ICount,XMFight_Class_Record.LTime,XMFight_Class_Record.iFlag,isnull((Select sum(ICount)*-1 from XMFight_Class_Record where LTime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and iflag=1),0) XK,isnull((Select Count(ID) from XMFight_Class_Record where LTime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and iflag=2),0) QJ,isnull((Select sum(ICount)*-1 from XMFight_Class_Record where LTime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' and iflag=3),0) KK,(Select sum(ICount) from XMFight_Class_Record where StudentID not in (16,17)) ZS from XMFight_Class_Record,XMFight_Student where XMFight_Class_Record.StudentID=XMFight_Student.ID and XMFight_Class_Record.ltime between '" + DLtimeStart + "' and '" + DLtimeEnd + "' order by XMFight_Class_Record.LTime desc";
 
         if (OP_Mode.SQLRUN(strSQL))
 
         {
+
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                Label_XK.Text = Convert.ToDecimal(OP_Mode.Dtv[0]["XK"]).ToString("g0");
+                Label_QJ.Text = Convert.ToDecimal(OP_Mode.Dtv[0]["QJ"]).ToString("g0");
+                Label_KK.Text = Convert.ToDecimal(OP_Mode.Dtv[0]["KK"]).ToString("g0");
+                Label_Sum.Text = Convert.ToDecimal(OP_Mode.Dtv[0]["ZS"]).ToString("g0");
+            }
 
             this.GridView1.DataSource = OP_Mode.Dtv;
 
@@ -125,4 +143,9 @@ public partial class XMFight_Manage_Record : PageBaseXMFight
 
 
     #endregion
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Load_GridView1();
+    }
 }

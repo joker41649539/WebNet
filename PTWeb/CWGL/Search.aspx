@@ -41,6 +41,7 @@
                     <asp:ListItem Value="W_BXD1.REMARK">施工编号(事由)</asp:ListItem>
                     <asp:ListItem Value="Occurrence">发生日期</asp:ListItem>
                     <asp:ListItem Value="FLAG">状态</asp:ListItem>
+                    <asp:ListItem Value="W_BXD1.LTime">最后日期</asp:ListItem>
                     <asp:ListItem Value=""></asp:ListItem>
                 </asp:DropDownList>
                 <asp:DropDownList ID="GridView1_DropDownList_SF" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">

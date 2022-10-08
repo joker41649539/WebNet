@@ -201,6 +201,7 @@ public partial class XMFight_MyClass : PageBaseXMFight
         strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=2 and StudentID = a.ID),0) Leave,";
         strSQL += " isnull((Select Count(ID) from XMFight_Class_Record where IFlag=3 and StudentID = a.ID),0) Absenteeism,";
         strSQL += " isnull((Select sum(Bance) from XMFight_reserve where StudentID=a.ID),0) SumBance";
+        strSQL += " ,isnull((Select top 1 LTime from XMFight_Class_Record where ICount>0 and StudentID=a.ID order by CTime desc),'2021-01-01') EndTime";
         strSQL += " from XMFight_Student a,";
         strSQL += " (Select sum(ICount) sumClassCount, MAX(CTime) LastClassTime, StudentID from XMFight_Class_Record group by StudentID) as b";
         strSQL += " where a.ID = b.StudentID and a.id=" + iStudentID;
@@ -214,6 +215,7 @@ public partial class XMFight_MyClass : PageBaseXMFight
                 Label_KG.Text = OP_Mode.Dtv[0]["Absenteeism"].ToString();
                 Label_QJ.Text = OP_Mode.Dtv[0]["Leave"].ToString();
                 Label_CBJ.Text = OP_Mode.Dtv[0]["SumBance"].ToString();
+                Label_KCYXQZ.Text = Convert.ToDateTime(OP_Mode.Dtv[0]["EndTime"]).ToString("yyyy-MM-dd");
             }
         }
     }

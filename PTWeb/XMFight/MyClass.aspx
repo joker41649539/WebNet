@@ -50,6 +50,10 @@
             </div>
         </div>
         <div class="hr hr8 hr-double"></div>
+        <div class="content">
+            <h4>课程有效截止日期：<asp:Label ID="Label_KCYXQZ" runat="server" Text="2022-11-01"></asp:Label></h4>
+        </div>
+        <div class="hr hr8 hr-double"></div>
         <div class="center" runat="server" id="Div_ClassTime">
             <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatColumns="4" AutoPostBack="True" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged">
                 <asp:ListItem Value="14">&nbsp;&nbsp;周二 15:00&nbsp;&nbsp;</asp:ListItem>
