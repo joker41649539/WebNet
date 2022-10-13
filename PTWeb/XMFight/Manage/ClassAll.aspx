@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/XMFight/MasterPage.master" AutoEventWireup="true" CodeFile="Class.aspx.cs" Inherits="XMFight_Manage_Class" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/XMFight/MasterPage.master" AutoEventWireup="true" CodeFile="ClassAll.aspx.cs" Inherits="XMFight_Default3" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="row">
@@ -12,6 +12,6 @@
         </div>
     </div>
     <div runat="server" id="Div_StudentsList"></div>
-  
+
 </asp:Content>
 

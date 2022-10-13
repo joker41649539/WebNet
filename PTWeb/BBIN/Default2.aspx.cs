@@ -11,8 +11,8 @@ public partial class BBIN_Default2 : PageBase
     {
         if (!IsPostBack)
         {
-            TextBox2.Text = "2021-09-01";
-            TextBox3.Text = "2021-10-01";
+            TextBox2.Text = "2021-08-01";
+            TextBox3.Text = "2021-09-01";
         }
     }
 
@@ -23,13 +23,70 @@ public partial class BBIN_Default2 : PageBase
     /// <param name="e"></param>
     protected void Button1_Click(object sender, EventArgs e)
     {
-        Test(Convert.ToInt32(TextBox1.Text), TextBox2.Text, TextBox3.Text);
+        //Test(Convert.ToInt32(TextBox1.Text), TextBox2.Text, TextBox3.Text);
+        TextBox_Remark.Text = DateTimeByWeekAndDay(1).ToString("yyyy-MM-dd");
     }
-    double[] intZM = new double[] { 10, 50, 110, 250}; // 打码量
+
+    public static DateTime DateTimeByWeekAndDay(int day)
+    {
+        DateTime someTime = System.DateTime.Now;
+
+        int i = (int)someTime.DayOfWeek;
+
+        if (day > i)
+        {
+            someTime = someTime.AddDays(day - i);
+        }
+        else if (day < i)
+        {
+            someTime = someTime.AddDays(day + 7 - i);
+        }
+
+        return someTime;
+    }
+
+    public static int WeekOfMonth()
+    {
+        DateTime dtSel = System.DateTime.Now;
+        //如果要判断的日期为1号，则肯定是第一周了
+        if (dtSel.Day == 1)
+            return 1;
+        else
+        {
+            //得到本月第一天
+            DateTime dtStart = new DateTime(dtSel.Year, dtSel.Month, 1);
+            //得到本月第一天是周几
+            int dayofweek = (int)dtStart.DayOfWeek;
+
+            ////如果不是以周日开始，需要重新计算一下dayofweek，详细风DayOfWeek枚举的定义
+            //if (!sundayStart)
+            //{
+            //    dayofweek = dayofweek - 1;
+
+            //    if (dayofweek < 0)
+            //        dayofweek = 7;
+            //}
+
+            //得到本月的第一周一共有几天
+            int startWeekDays = 7 - dayofweek;
+
+            //如果要判断的日期在第一周范围内，返回1
+            if (dtSel.Day <= startWeekDays)
+                return 1;
+            else
+            {
+                int aday = dtSel.Day + 7 - startWeekDays;
+                return aday / 7 + (aday % 7 > 0 ? 1 : 0);
+            }
+        }
+    }
+
+
+    double[] intZM = new double[] { 10, 50, 110, 250, 500 }; // 打码量
 
     double lostLR = 920;//{ 10, 50, 110, 250, 500 }
 
-    int strZMSN = 14;// 开始下注注码需要，等于为算。
+    int strZMSN = 15;// 开始下注注码需要，等于为算。
     int iBao = 0;// 炸次数
     int maxJTSN = 0;// 最大解套序号
     double DWiner = 0; ///累计利润
@@ -69,160 +126,215 @@ public partial class BBIN_Default2 : PageBase
                             if (TempPlay != "无")
                             {/// 下注操作
 
-                                /// 下注操作，扣除利润
-                                if ((iZmSN - strZMSN) > -1)
-                                {
-                                    /// 扣除利润
-                                    DWiner = DWiner - intZM[(iZmSN - strZMSN)];
-                                    /// 增加打码量
-                                    DDML = DDML + intZM[(iZmSN - strZMSN)];
-
-                                    if (DWiner < MinWiner)
-                                    {// 记录最小值
-                                        MinWiner = DWiner;
-                                        MinDML = DDML;
-                                    }
-                                }
-
-                                /// 判断输赢
-                                if (TempLu.Substring(iLu, 1) == "庄")
-                                {
-                                    if (TempPlay == "庄")
-                                    { /// 下中了
-                                        if ((iZmSN - strZMSN) > -1)
-                                        {// 获得庄的利润
-                                            DWiner = DWiner + intZM[(iZmSN - strZMSN)] * 1.95;
-                                            ///中庄扣除5%的打码量
-                                            DDML = DDML - intZM[(iZmSN - strZMSN)] * 0.05;
-                                        }
-                                        if (DWiner > MaxWiner)
-                                        {// 记录最大值
-                                            MaxWiner = DWiner;
-                                            MaxDML = DDML;
-                                        }
-                                        if (iZmSN > maxJTSN)
-                                        {/// 记录注码SN
-                                            maxJTSN = iZmSN;
-                                        }
-                                        iZmSN = 0;// 复位下注注码
-                                    }
-                                    else
-                                    { // 没下中
-                                        iZmSN++; // 增加注码序号
-                                        if ((iZmSN - strZMSN) >= intZM.Length)
-                                        { // 炸了
-                                            if (iZmSN > maxJTSN)
-                                            {/// 记录注码SN
-                                                maxJTSN = iZmSN;
-                                            }
-                                            iBao += 1;
-                                            iZmSN = 0;
-                                        }
-                                    }
-                                }
-                                else if (TempLu.Substring(iLu, 1) == "闲")
-                                {
-                                    if (TempPlay == "闲")
-                                    { /// 下中了
-                                        if ((iZmSN - strZMSN) > -1)
-                                        {// 获得庄的利润
-                                            DWiner = DWiner + intZM[(iZmSN - strZMSN)] * 2;
-                                        }
-                                        if (DWiner > MaxWiner)
-                                        {// 记录最大值
-                                            MaxWiner = DWiner;
-                                            MaxDML = DDML;
-                                        }
-                                        if (iZmSN > maxJTSN)
-                                        {/// 记录注码SN
-                                            maxJTSN = iZmSN;
-                                        }
-                                        iZmSN = 0;// 复位下注注码
-                                    }
-                                    else
-                                    { // 没下中
-                                        iZmSN++; // 增加注码序号
-                                        if ((iZmSN - strZMSN) >= intZM.Length)
-                                        { // 炸了
-                                            if (iZmSN > maxJTSN)
-                                            {/// 记录注码SN
-                                                maxJTSN = iZmSN;
-                                            }
-                                            iBao += 1;
-                                            iZmSN = 0;
-                                        }
-                                    }
-                                }
-                                else if (TempLu.Substring(iLu, 1) == "和")
-                                {
+                                if (CheckBox1.Checked)
+                                {// 反下
+                                    /// 下注操作，扣除利润
                                     if ((iZmSN - strZMSN) > -1)
-                                    {// 增加利润
-                                        DWiner = DWiner + intZM[(iZmSN - strZMSN)];
-                                        ///扣除打码
-                                        DDML = DDML - intZM[(iZmSN - strZMSN)];
+                                    {
+                                        /// 扣除利润
+                                        DWiner = DWiner - intZM[(iZmSN - strZMSN)];
+                                        /// 增加打码量
+                                        DDML = DDML + intZM[(iZmSN - strZMSN)];
+
+                                        if (DWiner < MinWiner)
+                                        {// 记录最小值
+                                            MinWiner = DWiner;
+                                            MinDML = DDML;
+                                        }
+                                    }
+
+                                    /// 判断输赢
+                                    if (TempLu.Substring(iLu, 1) == "庄")
+                                    {
+                                        if (TempPlay == "庄")
+                                        { /// 下中了
+                                            if ((iZmSN - strZMSN) > -1)
+                                            {// 获得庄的利润
+                                                DWiner = DWiner + intZM[(iZmSN - strZMSN)] * 1.95;
+                                                ///中庄扣除5%的打码量
+                                                DDML = DDML - intZM[(iZmSN - strZMSN)] * 0.05;
+                                            }
+                                            if (DWiner > MaxWiner)
+                                            {// 记录最大值
+                                                MaxWiner = DWiner;
+                                                MaxDML = DDML;
+                                            }
+                                            if (iZmSN > maxJTSN)
+                                            {/// 记录注码SN
+                                                maxJTSN = iZmSN;
+                                            }
+                                            iZmSN++;// 增加
+
+                                            if ((iZmSN - strZMSN) >= intZM.Length)
+                                            { // 炸了
+                                                if (iZmSN > maxJTSN)
+                                                {/// 记录注码SN
+                                                    maxJTSN = iZmSN;
+                                                }
+                                                iBao += 1;
+                                                iZmSN = 0;
+                                            }
+                                        }
+                                        else
+                                        { // 没下中
+                                            iZmSN = 0; // 增加注码序号
+                                        }
+                                    }
+                                    else if (TempLu.Substring(iLu, 1) == "闲")
+                                    {
+                                        if (TempPlay == "闲")
+                                        { /// 下中了
+                                            if ((iZmSN - strZMSN) > -1)
+                                            {// 获得庄的利润
+                                                DWiner = DWiner + intZM[(iZmSN - strZMSN)] * 2;
+                                            }
+                                            if (DWiner > MaxWiner)
+                                            {// 记录最大值
+                                                MaxWiner = DWiner;
+                                                MaxDML = DDML;
+                                            }
+                                            if (iZmSN > maxJTSN)
+                                            {/// 记录注码SN
+                                                maxJTSN = iZmSN;
+                                            }
+                                            iZmSN++;// 复位下注注码
+                                            if ((iZmSN - strZMSN) >= intZM.Length)
+                                            { // 炸了
+                                                if (iZmSN > maxJTSN)
+                                                {/// 记录注码SN
+                                                    maxJTSN = iZmSN;
+                                                }
+                                                iBao += 1;
+                                                iZmSN = 0;
+                                            }
+                                        }
+                                        else
+                                        { // 没下中
+                                            iZmSN = 0; // 增加注码序号
+                                        }
+                                    }
+                                    else if (TempLu.Substring(iLu, 1) == "和")
+                                    {
+                                        if ((iZmSN - strZMSN) > -1)
+                                        {// 增加利润
+                                            DWiner = DWiner + intZM[(iZmSN - strZMSN)];
+                                            ///扣除打码
+                                            DDML = DDML - intZM[(iZmSN - strZMSN)];
+                                        }
                                     }
                                 }
+                                else
+                                {// 正下
+
+                                    /// 下注操作，扣除利润
+                                    if ((iZmSN - strZMSN) > -1)
+                                    {
+                                        /// 扣除利润
+                                        DWiner = DWiner - intZM[(iZmSN - strZMSN)];
+                                        /// 增加打码量
+                                        DDML = DDML + intZM[(iZmSN - strZMSN)];
+
+                                        if (DWiner < MinWiner)
+                                        {// 记录最小值
+                                            MinWiner = DWiner;
+                                            MinDML = DDML;
+                                        }
+                                    }
+
+                                    /// 判断输赢
+                                    if (TempLu.Substring(iLu, 1) == "庄")
+                                    {
+                                        if (TempPlay == "庄")
+                                        { /// 下中了
+                                            if ((iZmSN - strZMSN) > -1)
+                                            {// 获得庄的利润
+                                                DWiner = DWiner + intZM[(iZmSN - strZMSN)] * 1.95;
+                                                ///中庄扣除5%的打码量
+                                                DDML = DDML - intZM[(iZmSN - strZMSN)] * 0.05;
+                                            }
+                                            if (DWiner > MaxWiner)
+                                            {// 记录最大值
+                                                MaxWiner = DWiner;
+                                                MaxDML = DDML;
+                                            }
+                                            if (iZmSN > maxJTSN)
+                                            {/// 记录注码SN
+                                                maxJTSN = iZmSN;
+                                            }
+                                            iZmSN = 0;// 复位下注注码
+                                        }
+                                        else
+                                        { // 没下中
+                                            iZmSN++; // 增加注码序号
+                                            if ((iZmSN - strZMSN) >= intZM.Length)
+                                            { // 炸了
+                                                if (iZmSN > maxJTSN)
+                                                {/// 记录注码SN
+                                                    maxJTSN = iZmSN;
+                                                }
+                                                iBao += 1;
+                                                iZmSN = 0;
+                                            }
+                                        }
+                                    }
+                                    else if (TempLu.Substring(iLu, 1) == "闲")
+                                    {
+                                        if (TempPlay == "闲")
+                                        { /// 下中了
+                                            if ((iZmSN - strZMSN) > -1)
+                                            {// 获得庄的利润
+                                                DWiner = DWiner + intZM[(iZmSN - strZMSN)] * 2;
+                                            }
+                                            if (DWiner > MaxWiner)
+                                            {// 记录最大值
+                                                MaxWiner = DWiner;
+                                                MaxDML = DDML;
+                                            }
+                                            if (iZmSN > maxJTSN)
+                                            {/// 记录注码SN
+                                                maxJTSN = iZmSN;
+                                            }
+                                            iZmSN = 0;// 复位下注注码
+                                        }
+                                        else
+                                        { // 没下中
+                                            iZmSN++; // 增加注码序号
+                                            if ((iZmSN - strZMSN) >= intZM.Length)
+                                            { // 炸了
+                                                if (iZmSN > maxJTSN)
+                                                {/// 记录注码SN
+                                                    maxJTSN = iZmSN;
+                                                }
+                                                iBao += 1;
+                                                iZmSN = 0;
+                                            }
+                                        }
+                                    }
+                                    else if (TempLu.Substring(iLu, 1) == "和")
+                                    {
+                                        if ((iZmSN - strZMSN) > -1)
+                                        {// 增加利润
+                                            DWiner = DWiner + intZM[(iZmSN - strZMSN)];
+                                            ///扣除打码
+                                            DDML = DDML - intZM[(iZmSN - strZMSN)];
+                                        }
+                                    }
+                                }
+
                             }
-                            //if (BoolTrue(TempLu.Substring(iLu, 1)))
-                            //{/// 下中了，处理
-
-                            //    if ((iZmSN - strZMSN) > -1)
-                            //    {
-                            //        if (TempLu.Substring(iLu, 1) == "庄")
-                            //        {
-                            //            DWiner += intZMLRZ[(iZmSN - strZMSN)];
-                            //            DDML += intDM[(iZmSN - strZMSN)] * 0.95;
-                            //        }
-                            //        else
-                            //        {
-                            //            DWiner += intZMLRX[(iZmSN - strZMSN)];
-                            //            DDML += intDM[(iZmSN - strZMSN)];
-                            //        }
-
-                            //        if (DWiner > MaxWiner)
-                            //        {/// 记录最大值
-                            //            MaxWiner = DWiner;
-                            //            MaxDML = DDML;
-                            //        }
-                            //    }
-                            //    if (iZmSN > maxJTSN)
-                            //    {/// 记录注码SN
-                            //        maxJTSN = iZmSN;
-                            //    }
-                            //    iZmSN = 0;
-                            //}
-                            //else
-                            //{/// 没下中处理
-                            //    if (TempLu.Substring(iLu, 1) != "和")
-                            //    {///
-                            //        iZmSN += 1;// 注码+1
-                            //        if ((iZmSN - strZMSN) >= intZMLRX.Length)
-                            //        {/// 炸了，扣除利润
-                            //            DWiner -= lostLR;
-                            //            iBao += 1;
-                            //            DDML += lostLR;
-                            //            iZmSN = 0;
-                            //        }
-                            //        if (DWiner < MinWiner)
-                            //        {// 记录最小值
-                            //            MinWiner = DWiner;
-                            //            MinDML = DDML;
-                            //        }
-                            //    }
-                            //}
-
-                            //if (DWiner > 3000 || DWiner < -1500)
-                            //{
-                            //    TextBox_Remark.Text = "累计利润：" + DWiner + "\r\n";
-                            //    TextBox_Remark.Text += "最高利润：" + MaxWiner + "\r\n";
-                            //    TextBox_Remark.Text += "最高打码：" + MaxDML + "\r\n";
-                            //    TextBox_Remark.Text += "最低利润：" + MinWiner + "\r\n";
-                            //    TextBox_Remark.Text += "最低打码：" + MinDML + "\r\n";
-                            //    TextBox_Remark.Text += "爆：" + iBao + "\r\n";
-                            //    TextBox_Remark.Text += "最大注码：" + maxJTSN + "\r\n";
-                            //    TextBox_Remark.Text += "计算：" + TempCount + " 次\r\n";
-                            //    return;
-                            //}
+                            if (DWiner > 3000 || DWiner < -1500)
+                            {
+                                TextBox_Remark.Text = "累计利润：" + DWiner + "\r\n";
+                                TextBox_Remark.Text += "累计打码：" + DDML + "\r\n";
+                                TextBox_Remark.Text += "最高利润：" + MaxWiner + "\r\n";
+                                TextBox_Remark.Text += "最高打码：" + MaxDML + "\r\n";
+                                TextBox_Remark.Text += "最低利润：" + MinWiner + "\r\n";
+                                TextBox_Remark.Text += "最低打码：" + MinDML + "\r\n";
+                                TextBox_Remark.Text += "爆：" + iBao + "\r\n";
+                                TextBox_Remark.Text += "最大注码：" + maxJTSN + "\r\n";
+                                TextBox_Remark.Text += "计算：" + TempCount + " 次\r\n";
+                                return;
+                            }
                         }
                     }
                 }
@@ -230,6 +342,7 @@ public partial class BBIN_Default2 : PageBase
         }
 
         TextBox_Remark.Text = "累计利润：" + DWiner + "\r\n";
+        TextBox_Remark.Text += "累计打码：" + DDML + "\r\n";
         TextBox_Remark.Text += "最高利润：" + MaxWiner + "\r\n";
         TextBox_Remark.Text += "最高打码：" + MaxDML + "\r\n";
         TextBox_Remark.Text += "最低利润：" + MinWiner + "\r\n";

@@ -256,6 +256,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
                     {
                         strDiv += "</ul></li>";
                     }
+                    strDiv += "<li class=\"active\"><a class=\"dropdown-toggle\" href=\"#\"><img src=\"/images/luLogo.png\" width=\"25px\" /><span class=\"menu-text\">&nbsp;备案信息</span> <b class=\"arrow icon-angle-down\"></b></a>";
+                    strDiv += "     <ul class=\"submenu\">";
+                    strDiv += "         <li><a class=\"dropdown-toggle\" target=\"_blank\" href=\"https://beian.miit.gov.cn\"><i class=\"icon-coffee\"></i><span class=\"menu-text\">晥ICP备2021004456号</span>  </a></li>";
+                    strDiv += "         <li><a class=\"dropdown-toggle\" href=\"#\"><i class=\"icon-male\"></i><span class=\"menu-text\">合肥普田科技</span>  </a></li>";
+                    strDiv += "     </ul>";
+                    strDiv += "</li>";
                     strDiv += "<li class=\"active\"><a class=\"dropdown-toggle\" href=\"#\"><img src=\"/images/luLogo.png\" width=\"25px\" /><span class=\"menu-text\">&nbsp;版本信息</span> <b class=\"arrow icon-angle-down\"></b></a>";
                     strDiv += "     <ul class=\"submenu\">";
                     strDiv += "         <li><a class=\"dropdown-toggle\" target=\"_blank\" href=\"http://www.x76.com.cn\"><i class=\"icon-coffee\"></i><span class=\"menu-text\">&copy; 合肥星期陆</span>  </a></li>";

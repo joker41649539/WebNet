@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class XMFight_Manage_Class : PageBaseXMFight
+public partial class XMFight_Default3 : PageBaseXMFight
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -51,6 +51,8 @@ public partial class XMFight_Manage_Class : PageBaseXMFight
                 strWeek = "7,1";
                 break;
         }
+
+        strWeek = "1,2,3,4,5,6,7";
 
         strSQL = " Select XMFight_Student.ID,Week,STime,ETime, datediff(year, BrithDay, getdate()) age";
         strSQL += " ,sumClassCount,LastClassTime,*";
