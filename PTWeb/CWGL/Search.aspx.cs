@@ -34,9 +34,9 @@ public partial class CWGL_Search : PageBase
 
         // 获取GridView排序数据列及排序方向
 
-        string sortExpression = this.GridView1.Attributes["SortExpression"];
+        string sortExpression = this.GridView_BX.Attributes["SortExpression"];
 
-        string sortDirection = this.GridView1.Attributes["SortDirection"];
+        string sortDirection = this.GridView_BX.Attributes["SortDirection"];
 
         string strSQL;
         strSQL = "Select w_bxd1.id,username,W_BXD1.bxdh,Occurrence,KZXM,W_BXD1.Remark SY,flag,FLAG,W_BXD2.BREAKFIRST,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,BECITY,ARRIVAL,BXJE,W_BXD2.REMARK,IMAGE from W_BXD1,W_BXD2 where w_bxd1.bxdh=w_bxd2.bxdh and flag>0 ";
@@ -84,9 +84,9 @@ public partial class CWGL_Search : PageBase
 
 
 
-            this.GridView1.DataSource = OP_Mode.Dtv;
+            this.GridView_BX.DataSource = OP_Mode.Dtv;
 
-            this.GridView1.DataBind();
+            this.GridView_BX.DataBind();
 
         }
 
@@ -116,21 +116,21 @@ public partial class CWGL_Search : PageBase
 
         // “ASC”与事件参数获取到的排序方向进行比较，进行GridView排序方向参数的修改
 
-        if (sortExpression == this.GridView1.Attributes["SortExpression"])
+        if (sortExpression == this.GridView_BX.Attributes["SortExpression"])
 
         {
 
             //获得下一次的排序状态
 
-            sortDirection = (this.GridView1.Attributes["SortDirection"].ToString() == sortDirection ? "DESC" : "ASC");
+            sortDirection = (this.GridView_BX.Attributes["SortDirection"].ToString() == sortDirection ? "DESC" : "ASC");
 
         }
 
         // 重新设定GridView排序数据列及排序方向
 
-        this.GridView1.Attributes["SortExpression"] = sortExpression;
+        this.GridView_BX.Attributes["SortExpression"] = sortExpression;
 
-        this.GridView1.Attributes["SortDirection"] = sortDirection;
+        this.GridView_BX.Attributes["SortDirection"] = sortDirection;
 
         Load_GridView1();
 
@@ -379,7 +379,7 @@ public partial class CWGL_Search : PageBase
     {
         //MessageBox("", "[" + GridView1.DataKeys[e.NewSelectedIndex].Value.ToString() + "]");
 
-        Response.Write("<script language='javascript'>window.location='/CWGL/ReimbursementAdd.aspx?ID=" + GridView1.DataKeys[e.NewSelectedIndex].Value.ToString() + "'</script>"); ;
+        Response.Write("<script language='javascript'>window.location='/CWGL/ReimbursementAdd.aspx?ID=" + GridView_BX.DataKeys[e.NewSelectedIndex].Value.ToString() + "'</script>"); ;
 
         //GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#CAD3E4");
 
@@ -440,12 +440,12 @@ public partial class CWGL_Search : PageBase
     protected void GridView1_DC_Click(object sender, EventArgs e)
     {
         Response.ClearContent(); Response.AddHeader("content-disposition", "attachment; filename=MyExcelFile.xls");
-        Response.ContentType = "application/excel"; 
-        StringWriter sw = new StringWriter(); 
-        HtmlTextWriter htw = new HtmlTextWriter(sw); 
-       this.GridView1.RenderControl(htw); 
-        Response.Write(sw.ToString()); 
+        Response.ContentType = "application/excel";
+        StringWriter sw = new StringWriter();
+        HtmlTextWriter htw = new HtmlTextWriter(sw);
+        this.GridView_BX.RenderControl(htw);
+        Response.Write(sw.ToString());
         Response.End();
-       // ExportGridView(this.GridView1);
+        // ExportGridView(this.GridView1);
     }
 }

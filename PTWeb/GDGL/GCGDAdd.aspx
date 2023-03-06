@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="/GDGL/">工单管理</a></li>
             <li class="active">添加工程工单</li>
@@ -87,7 +87,7 @@
         &nbsp; &nbsp;                        
        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-danger" runat="server" OnClick="LinkButton2_Click"><i class=" icon-barcode bigger-130"></i> 下一单</asp:LinkButton>
         &nbsp; &nbsp;                        
-       <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton4" class="btn btn-info" runat="server" OnClick="LinkButton4_Click" ><i class=" icon-barcode bigger-130"></i> 查看报表</asp:LinkButton>
+       <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton4" class="btn btn-info" runat="server" OnClick="LinkButton4_Click"><i class=" icon-barcode bigger-130"></i> 查看报表</asp:LinkButton>
     </div>
 
     <div>
@@ -136,25 +136,35 @@
         <div class="widget-box transparent">
             <div class="widget-body">
                 <div class="widget-main no-padding">
-                    <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowUpdating="GridView1_RowUpdating">
-                        <Columns>
-                            <asp:BoundField DataField="AZWZ" SortExpression="AZWZ" HeaderText="安装位置"></asp:BoundField>
-                            <asp:BoundField DataField="SBBH" SortExpression="SBBH" HeaderText="设备编号"></asp:BoundField>
-                            <asp:BoundField DataField="SBMC" SortExpression="SBMC" HeaderText="设备名称"></asp:BoundField>
-                            <asp:BoundField DataField="SBPP" SortExpression="SBPP" HeaderText="设备品牌"></asp:BoundField>
-                            <asp:BoundField DataField="SBXH" SortExpression="SBXH" HeaderText="设备型号"></asp:BoundField>
-                            <asp:BoundField DataField="JLDW" SortExpression="JLDW" HeaderText="计量单位"></asp:BoundField>
-                            <asp:BoundField DataField="SL" SortExpression="SL" HeaderText="数量"></asp:BoundField>
-                            <asp:BoundField DataField="YQSM" SortExpression="YQSM" HeaderText="说明"></asp:BoundField>
-                            <asp:BoundField DataField="FS" SortExpression="FS" HeaderText="布线分数"></asp:BoundField>
-                            <asp:BoundField DataField="YBX" SortExpression="YBX" HeaderText="布线已完成"></asp:BoundField>
-                            <asp:BoundField DataField="AZFS" SortExpression="FS" HeaderText="安装分数"></asp:BoundField>
-                            <asp:BoundField DataField="YAZ" SortExpression="YAZ" HeaderText="安装已完成"></asp:BoundField>
-<%--                            <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCMXADD.ASPX?MXID={0}" DataTextField="ID" Text="修改" HeaderText="修改" DataTextFormatString="修改"></asp:HyperLinkField>
+                    <asp:ScriptManager ID="ScriptManager_GridView1" runat="server"></asp:ScriptManager>
+                    <asp:UpdatePanel ID="GridView1_UpdatePanel1" runat="server" UpdateMode="Always">
+                        <ContentTemplate>
+
+                            <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowUpdating="GridView1_RowUpdating">
+                                <Columns>
+                                    <asp:BoundField DataField="AZWZ" SortExpression="AZWZ" HeaderText="安装位置"></asp:BoundField>
+                                    <asp:BoundField DataField="SBBH" SortExpression="SBBH" HeaderText="设备编号"></asp:BoundField>
+                                    <asp:BoundField DataField="SBMC" SortExpression="SBMC" HeaderText="设备名称"></asp:BoundField>
+                                    <asp:BoundField DataField="SBPP" SortExpression="SBPP" HeaderText="设备品牌"></asp:BoundField>
+                                    <asp:BoundField DataField="SBXH" SortExpression="SBXH" HeaderText="设备型号"></asp:BoundField>
+                                    <asp:BoundField DataField="JLDW" SortExpression="JLDW" HeaderText="计量单位"></asp:BoundField>
+                                    <asp:BoundField DataField="SL" SortExpression="SL" HeaderText="数量"></asp:BoundField>
+                                    <asp:BoundField DataField="YQSM" SortExpression="YQSM" HeaderText="说明"></asp:BoundField>
+                                    <asp:BoundField DataField="FS" SortExpression="FS" HeaderText="布线分数"></asp:BoundField>
+                                    <asp:BoundField DataField="YBX" ReadOnly="true" SortExpression="YBX" HeaderText="布线已完成"></asp:BoundField>
+                                    <asp:BoundField DataField="BXMX" ReadOnly="true" SortExpression="YBX" HeaderText="布线明细"></asp:BoundField>
+                                    <asp:BoundField DataField="AZFS" SortExpression="FS" HeaderText="安装分数"></asp:BoundField>
+                                    <asp:BoundField DataField="YAZ" ReadOnly="true" SortExpression="YAZ" HeaderText="安装已完成"></asp:BoundField>
+                                    <asp:BoundField DataField="AZMX" ReadOnly="true" SortExpression="YAZ" HeaderText="安装明细"></asp:BoundField>
+                                    <%--                            <asp:HyperLinkField DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCMXADD.ASPX?MXID={0}" DataTextField="ID" Text="修改" HeaderText="修改" DataTextFormatString="修改"></asp:HyperLinkField>
                             <asp:ButtonField DataTextField="ID" DataTextFormatString="删除" HeaderText="删除" CommandName="Delete" SortExpression="ID" Text="按钮" />--%>
-                            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
-                        </Columns>
-                    </asp:GridView>
+                                    <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
+                                </Columns>
+                            </asp:GridView>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
                 </div>
             </div>
         </div>
@@ -175,7 +185,7 @@
                 mtd.html(" <span class=\"label label-purple\">" + mtd.text() + " %</span>");
             }
 
-            var mtd = $(this).children("td:eq(11)");
+            var mtd = $(this).children("td:eq(12)");
             if (mtd.text() == '0') {
                 mtd.html(" <span class=\"label label-success\">" + mtd.text() + " %</span>");
             }

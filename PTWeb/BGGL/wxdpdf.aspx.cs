@@ -23,5 +23,9 @@ public partial class BGGL_pdf : PageBase
 
             StiWebViewer1.Report = report;
         }
+
+        HyperLink1.NavigateUrl = "/BGGL/WXDPDF.ASPX?ID=" + (iid + 1).ToString();
+        HyperLink2.NavigateUrl = "/BGGL/WXDPDF.ASPX?ID=" + (iid - 1).ToString();
+
     }
 }

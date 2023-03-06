@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="/BGGL/">报告管理</a></li>
             <li><a href="/BGGL/GCWXDList.ASPX">工程维修单</a></li>

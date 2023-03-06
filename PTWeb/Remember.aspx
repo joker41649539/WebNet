@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a class="active" href="/">首页</a>
+                <a class="active" href="/Default.aspx">首页</a>
             </li>
             <li>
                 <a class="active" href="/Remember.aspx">记忆模块</a>

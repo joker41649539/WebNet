@@ -25,64 +25,86 @@ public partial class WeChat_Tesp : PageBase
 
     }
 
-    //public ActionResult UploadSignature2(string src_data)
-    //{
-    //    Class1.Base64StrToImage(src_data, "C:\\Users\\45448\\Desktop\\1\\" + DateTime.Now.ToString("yyyyMMddHHss") + ".png");
-    //    return Json(1, JsonRequestBehavior.AllowGet);
-    //}
+    protected void Button1_Click(object sender, EventArgs e)
+    {
 
-    ///// <summary>
-    ///// 将Base64字符串转换为图片并保存到本地
-    ///// </summary>
-    ///// <param name="base64Str">base64字符串</param>
-    ///// <param name="savePath">图片保存地址，如：/Content/Images/10000.png</param>
-    ///// <returns></returns>
-    //public static bool Base64StrToImage(string base64Str, string savePath)
-    //{
-    //    var ret = true;
-    //    try
-    //    {
-    //        base64Str = base64Str.Replace("data:image/png;base64,", "").Replace("data:image/jgp;base64,", "")
-    //            .Replace("data:image/jpg;base64,", "").Replace("data:image/jpeg;base64,", ""); //将base64头部信息替换
-    //        var bitmap = Base64StrToImage(base64Str);
-    //        if (bitmap != null)
-    //        {
-    //            //创建文件夹
-    //            var folderPath = savePath.Substring(0, savePath.LastIndexOf('\\'));
-    //            ////FileHelper.CreateDir(folderPath);
-    //            if (!Directory.Exists(folderPath))
-    //            {
-    //                Directory.CreateDirectory(folderPath);
-    //            }
-    //            //图片后缀格式
-    //            var suffix = savePath.Substring(savePath.LastIndexOf('.') + 1,
-    //                savePath.Length - savePath.LastIndexOf('.') - 1).ToLower();
-    //            var suffixName = suffix == "png"
-    //                ? ImageFormat.Png
-    //                : suffix == "jpg" || suffix == "jpeg"
-    //                    ? ImageFormat.Jpeg
-    //                    : suffix == "bmp"
-    //                        ? ImageFormat.Bmp
-    //                        : suffix == "gif"
-    //                            ? ImageFormat.Gif
-    //                            : ImageFormat.Jpeg;
+        int iFilCount = Request.Files.Count;
 
-    //            //这里复制一份对图像进行保存，否则会出现“GDI+ 中发生一般性错误”的错误提示
-    //            var bmpNew = new Bitmap(bitmap);
-    //            bmpNew.Save(savePath, suffixName);
-    //            bmpNew.Dispose();
-    //            bitmap.Dispose();
-    //        }
-    //        else
-    //        {
-    //            ret = false;
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        ret = false;
-    //    }
-    //    return ret;
+        for (int i = 0; i < iFilCount; i++)
+        {
+            HttpPostedFile f = Request.Files[0];
+            UploadTP(f);
+        }
+      //  MessageBox("", "文件数量：" + Request.Files.Count.ToString());
+    }
 
-    //}
+    private string UploadTP(HttpPostedFile fileName)
+    {
+        //string name = fileName.FileName;//获取文件名称
+
+        //if (name.Length > 0)
+        //{
+        //        int i = fileName.ContentLength;   //得到上传文件大小
+
+        //        int index = name.LastIndexOf(".");
+
+        //        string lastName = name.Substring(index, name.Length - index);//文件后缀
+
+        //        string newname = DateTime.Now.ToString("yyyyMMddhhmmssfff") + lastName;//新文件名
+        //                                                                               //  string newname = "12345" + lastName;
+        //        string path = Server.MapPath("~/KQImage/" + newname);
+
+        //        string URLpath = Server.MapPath("\\KQImage\\" + newname);
+
+        //        if (System.IO.File.Exists(URLpath))
+        //        {
+        //            return string.Empty;
+        //        }
+        //        else
+        //        {
+        //            try
+        //            {
+        //                if (i < 1048576)
+        //                {
+        //                    fileName.SaveAs(path);//保存到服务器上	 小于1M的图片不进行压缩处理
+        //                }
+        //                else
+        //                { /// 大于1M的图片文件压缩后上传
+        //                   // ystp(fileName.PostedFile, "~/KQImage/" + newname);
+        //                }
+
+        //                /// 设置图片文字
+        //                string strTemp = string.Empty;
+        //                if (Hidden_WZ.Value.Length > 0)
+        //                {
+        //                    strTemp = UserNAME + "\r\n" + System.DateTime.Now.ToString("yyyy-MM-dd hh:mm") + "\r\n" + Hidden_WZ.Value;
+        //                }
+        //                else
+        //                {
+        //                    strTemp = UserNAME + "\r\n" + System.DateTime.Now.ToString("yyyy-MM-dd hh:mm");
+        //                }
+
+        //                //添加水印
+        //                System.Drawing.Image imgSrc = AddText(@URLpath, "50,50", "300, 100", strTemp);
+
+        //                string imageName = "SY" + newname;
+        //                string newpath = Server.MapPath(@"/KQImage/" + imageName);
+        //                imgSrc.Save(newpath, System.Drawing.Imaging.ImageFormat.Jpeg);
+        //                //释放水印图片
+        //                ///// 水印成功后，删除原图片
+        //                if (File.Exists(URLpath)) { File.Delete(URLpath); }
+
+        //                return imageName;
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                MessageBox("", "服务器正忙，请稍后再试！" + ex.ToString());
+        //                return string.Empty;
+        //            }
+
+        //        }
+
+        //}
+        return string.Empty;
+    }
 }

@@ -179,7 +179,7 @@ public partial class GDGL_GCGDAdd : PageBase
 
         string strSQL;
 
-        strSQL = "SELECT *,(SELECT ISNULL(SUM(FS),0) YBX FROM W_GCGD_FS WHERE GCMXID=W_GCGD2.ID) YBX,(SELECT ISNULL(SUM(AZFS),0) YAZ FROM W_GCGD_FS WHERE GCMXID=W_GCGD2.ID) YAZ,isnull((Select sum(FS+AZFS)  FROM W_GCGD2 where GCDH='" + Label_GCBH.Text + "'),0) SumFS,isnull((Select sum(isnull(W_GCGD_FS.fs*W_GCGD2.FS/100,0)+isnull(W_GCGD_FS.AZFS*W_GCGD2.AZFS/100,0)) from W_GCGD1,W_GCGD2,W_GCGD_FS where W_GCGD1.GCDH=W_GCGD2.GCDH and W_GCGD2.ID=W_GCGD_FS.GCMXID and W_GCGD1.GCDH='" + Label_GCBH.Text + "'),0) YAZFS FROM W_GCGD2 where GCDH='" + Label_GCBH.Text + "' ORDER BY ID";
+        strSQL = "SELECT *,(Select cname+cast(FS as nvarchar) +'%;' from W_GCGD_FS,S_USERINFO where GCMXID=W_GCGD2.ID and FS>0 and USERID=S_USERINFO.ID for xml path('')) BXMX,(Select cname+cast(AZFS as nvarchar) +'%;' from W_GCGD_FS,S_USERINFO where GCMXID=W_GCGD2.ID and AZFS>0 and USERID=S_USERINFO.ID for xml path('')) AZMX,(SELECT ISNULL(SUM(FS),0) YBX FROM W_GCGD_FS WHERE GCMXID=W_GCGD2.ID) YBX,(SELECT ISNULL(SUM(AZFS),0) YAZ FROM W_GCGD_FS WHERE GCMXID=W_GCGD2.ID) YAZ,isnull((Select sum(FS+AZFS)  FROM W_GCGD2 where GCDH='" + Label_GCBH.Text + "'),0) SumFS,isnull((Select sum(isnull(W_GCGD_FS.fs*W_GCGD2.FS/100,0)+isnull(W_GCGD_FS.AZFS*W_GCGD2.AZFS/100,0)) from W_GCGD1,W_GCGD2,W_GCGD_FS where W_GCGD1.GCDH=W_GCGD2.GCDH and W_GCGD2.ID=W_GCGD_FS.GCMXID and W_GCGD1.GCDH='" + Label_GCBH.Text + "'),0) YAZFS FROM W_GCGD2 where GCDH='" + Label_GCBH.Text + "' ORDER BY ID";
 
         if (OP_Mode.SQLRUN(strSQL))
 
@@ -224,6 +224,21 @@ public partial class GDGL_GCGDAdd : PageBase
             return;
 
         }
+        if (GridView1.EditIndex > -1)
+        {
+            GridView1.Rows[GridView1.EditIndex].Cells[0].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[1].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[2].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[3].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[4].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[5].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[6].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[7].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[8].BackColor = Color.FromName("#FFFF00");
+            //GridView1.Rows[GridView1.EditIndex].Cells[9].BackColor = Color.FromName("#FFFF00");
+            //GridView1.Rows[GridView1.EditIndex].Cells[10].BackColor = Color.FromName("#FFFF00");
+            GridView1.Rows[GridView1.EditIndex].Cells[11].BackColor = Color.FromName("#FFFF00");
+        }
 
     }
 
@@ -262,26 +277,24 @@ public partial class GDGL_GCGDAdd : PageBase
     }
 
     protected void GridView1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
-
     {
+        GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[1].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[1].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[2].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[2].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[3].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[3].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[4].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[4].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[5].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[5].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[6].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[6].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[7].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[7].BackColor = Color.FromName("#CAD3E4");
-
-        GridView1.Rows[e.NewSelectedIndex].Cells[8].BackColor = Color.FromName("#CAD3E4");
+        GridView1.Rows[e.NewSelectedIndex].Cells[8].BackColor = Color.FromName("#FFF68F");
 
     }
     /// <summary>
@@ -537,7 +550,9 @@ public partial class GDGL_GCGDAdd : PageBase
     /// <param name="e"></param>
     protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
     {
+
         GridView1.EditIndex = e.NewEditIndex;
+
         Load_GridView1();
     }
 

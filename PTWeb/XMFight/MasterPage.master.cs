@@ -49,6 +49,9 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         {
 
         }
+
+        LeftMenu.Visible = false;
+
         string strTemp = string.Empty;
         strTemp += "<ul class=\"footer-nav text-center\">";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\"icon-home\"></i>首页</a></li>";
@@ -60,12 +63,65 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\" icon-exclamation-sign\"></i>帮助信息</a></li>";
         if (iUserID == 7 || iUserID == 6)
         {
+            ManageMenu();
+            LeftMenu.Visible = true;
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Class.aspx\"><i class=\"icon-calendar\"></i>课程管理</a></li>";
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Bance.aspx\"><i class=\"icon-bar-chart\"></i>盈利报表</a></li>";
         }
         strTemp += "</ul>";
 
         FootBut.InnerHtml = strTemp;
+    }
+
+    /// <summary>
+    /// 管理菜单
+    /// </summary>
+    private void ManageMenu()
+    {
+        string strDiv = string.Empty;
+
+        strDiv = "<a class=\"menu-toggler\" id=\"menu-toggler\" href=\"#\">";
+        strDiv += " <span class=\"menu-text\"></span>";
+        strDiv += "</a>";
+        strDiv += " <div class=\"sidebar\" id=\"sidebar\">";
+        strDiv += " <script type=\"text/javascript\">";
+        strDiv += "  try { ace.settings.check('sidebar', 'fixed') } catch (e) { }";
+        strDiv += " </script>";
+
+        strDiv += " <ul class=\"nav nav-list\">";
+
+        strDiv += "  <li class=\"active\">";
+        strDiv += "    <a href='/XMFight/Manage/AddStudent.aspx' >";
+        strDiv += "      <i class=\"icon-dashboard\"></i>";
+        strDiv += "      <span class=\"menu-text\">添加学生 </span>";
+        strDiv += "    </a>";
+        strDiv += "   </li>";
+
+        strDiv += "  <li class=\"active\">";
+        strDiv += "    <a href=\"/XMFight/Manage/AddClass.aspx\">";
+        strDiv += "      <i class=\"icon-dashboard\"></i>";
+        strDiv += "      <span class=\"menu-text\">添加课程 </span>";
+        strDiv += "    </a>";
+        strDiv += "   </li>";
+
+        strDiv += "  <li class=\"active\">";
+        strDiv += "    <a href=\"/TuanGou/Default2.aspx\">";
+        strDiv += "      <i class=\"icon-dashboard\"></i>";
+        strDiv += "      <span class=\"menu-text\">测试页面 </span>";
+        strDiv += "    </a>";
+        strDiv += "   </li>";
+
+        strDiv += "  <li class=\"active\">";
+        strDiv += "    <a href=\"/TuanGou/pay.aspx\">";
+        strDiv += "      <i class=\"icon-dashboard\"></i>";
+        strDiv += "      <span class=\"menu-text\">支付测试 </span>";
+        strDiv += "    </a>";
+        strDiv += "   </li>";
+
+        strDiv += " </ul>";
+
+        LeftMenu.InnerHtml = strDiv;
+
     }
     private bool LoadUserInfo(int iWeChatID)
     {

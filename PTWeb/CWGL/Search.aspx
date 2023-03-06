@@ -20,7 +20,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="/CWGL/">财务管理</a></li>
             <li class="active">报销单查询</li>
@@ -67,6 +67,9 @@
                 <asp:ListItem Text="&nbsp;停车费&nbsp;"></asp:ListItem>
                 <asp:ListItem Text="&nbsp;加油费&nbsp;"></asp:ListItem>
                 <asp:ListItem Text="&nbsp;招待费&nbsp;"></asp:ListItem>
+                <asp:ListItem Text="&nbsp;办公费&nbsp;"></asp:ListItem>
+                <asp:ListItem Text="&nbsp;福利费&nbsp;"></asp:ListItem>
+                <asp:ListItem Text="&nbsp;行政综合&nbsp;"></asp:ListItem>
                 <asp:ListItem Text="&nbsp;其他&nbsp;"></asp:ListItem>
             </asp:CheckBoxList>
             <div id="GridView1_alerts_tj" runat="server" class="alert alert-success" visible="false">
@@ -78,7 +81,7 @@
                 </div>
             <div class="widget-body">
                 <div class="widget-main no-padding">
-                    <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView1_PageIndexChanging" AllowSorting="True" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" AutoGenerateColumns="False">
+                    <asp:GridView ID="GridView_BX" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView1_PageIndexChanging" AllowSorting="True" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" AutoGenerateColumns="False">
                         <Columns>
                             <asp:ButtonField DataTextField="BXDH" HeaderText="ID" CommandName="Select" SortExpression="ID" Text="报销单号" />
                             <asp:BoundField DataField="FLAG" SortExpression="FLAG" HeaderText="状态"></asp:BoundField>
@@ -129,74 +132,7 @@
         </div>
         <!-- /widget-box -->
     </div>
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script>
-        // 字符替换
-        $("#GridView1 tr").each(function () {
-            var mtd = $(this).children("td:eq(1)");
-            if (mtd.text() == 0) {
-                mtd.html(" <span class=\"label label-success\">待提交</span>");
-            }
-            else if (mtd.text() == 1) {
-                mtd.html(" <span class=\"label label-danger\">已完结</span>");
-            }
-            else if (mtd.text() == 2) {
-                mtd.html(" <span class=\"label label-info\">综合部</span>");
-            }
-            else if (mtd.text() == 3) {
-                mtd.html(" <span class=\"label label-info\">物资部</span>");
-            }
-            else if (mtd.text() == 4) {
-                mtd.html(" <span class=\"label label-pink\">工程部</span>");
-            }
-            else if (mtd.text() == 5) {
-                mtd.html(" <span class=\"label label-info\">财务部</span>");
-            }
-            else if (mtd.text() == 6) {
-                mtd.html(" <span class=\"label label-pink\">待放款</span>");
-            }
-            else if (mtd.text() == 7) {
-                mtd.html(" <span class=\"label label-pink\">待收票</span>");
-            }
-        });
-
-        // 字符替换
-        $("#GridView1 tr").each(function () {
-            var mtd = $(this).children("td:eq(6)");
-            if (mtd.text() == 0.00) {
-                mtd.html(" ");
-            }
-        });
-        // 字符替换
-        $("#GridView1 tr").each(function () {
-            var mtd = $(this).children("td:eq(7)");
-            if (mtd.text() == 0.00) {
-                mtd.html(" ");
-            }
-        });
-        // 字符替换
-        $("#GridView1 tr").each(function () {
-            var mtd = $(this).children("td:eq(8)");
-            if (mtd.text() == 0.00) {
-                mtd.html(" ");
-            }
-        });
-        // 字符替换
-        $("#GridView1 tr").each(function () {
-            var mtd = $(this).children("td:eq(9)");
-            if (mtd.text() == 0.00) {
-                mtd.html(" ");
-            }
-        });
-        // 字符替换
-        $("#GridView1 tr").each(function () {
-            var mtd = $(this).children("td:eq(10)");
-            if (mtd.text() == 0.00) {
-                mtd.html(" ");
-            }
-        });
-
-    </script>
+   
 
 </asp:Content>
 

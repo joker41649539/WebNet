@@ -29,7 +29,6 @@
     <title>旭铭搏击</title>
 </head>
 <body>
-
     <form id="form1" runat="server">
         <asp:HiddenField ID="HiddenField_UserID" runat="server" />
         <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
@@ -57,6 +56,9 @@
                 </div>
             </div>
         </div>
+        <!-- 管理菜单//-->
+        <div class="main-container-inner" runat="server" id="LeftMenu" visible="false" />
+                    <!-- //-->
         <div class="center">
             <div class="page-content" style="height: auto;">
                 <span class="profile-picture">
@@ -91,6 +93,14 @@
             </ul>
         </div>
         <!-- 底部代码 结束-->
+        <!-- 菜单使用脚本 开始-->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'>" + "<" + "script>");
+        </script>
+        <script src="/assets/js/ace-elements.min.js"></script>
+        <script src="/assets/js/ace.min.js"></script>
+        <!-- 菜单使用脚本 结束-->
     </form>
+
 </body>
 </html>

@@ -42,7 +42,7 @@ public partial class GDGL_GCBX : PageBase
             if (OP_Mode.Dtv.Count > 0)
             {
                 Label_GCMC.Text = OP_Mode.Dtv[0]["GCMC"].ToString();
-                Label_GCMC.NavigateUrl = "\\GDGL\\GCBXList.ASPX?ID=" + OP_Mode.Dtv[0]["IID"].ToString();
+                Label_GCMC.NavigateUrl = "\\GDGL\\GCBXListPH.ASPX?ID=" + OP_Mode.Dtv[0]["IID"].ToString();
                 Label1.Text = OP_Mode.Dtv[0]["AZWZ"].ToString();
                 Label2.Text = OP_Mode.Dtv[0]["SBBH"].ToString();
                 Label3.Text = OP_Mode.Dtv[0]["SBMC"].ToString();
@@ -138,7 +138,7 @@ public partial class GDGL_GCBX : PageBase
             strSQL += " End";
             if (OP_Mode.SQLRUN(strSQL))
             {
-                MessageBox("", "布线信息录入成功，您辛苦了。", "/GDGL/GCBXList.ASPX?ID=" + Request["ID"]);
+                MessageBox("", "布线信息录入成功，您辛苦了。", "/GDGL/GCBXListPH.ASPX?ID=" + Request["ID"]);
             }
             else
             {

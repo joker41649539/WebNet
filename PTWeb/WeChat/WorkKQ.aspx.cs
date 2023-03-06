@@ -154,7 +154,7 @@ public partial class WeChat_WorkKQ : PageBase
                     strTemp += "  <div class='timeline-info'>";
                     if (OP_Mode.Dtv[i]["HeadUrl"].ToString().Length > 0)
                     {
-                        strTemp += "<img src='" + OP_Mode.Dtv[i]["HeadUrl"].ToString() + "' />";
+                        strTemp += "<img whidth='100%' src='" + OP_Mode.Dtv[i]["HeadUrl"].ToString() + "' />";
                     }
                     strTemp += "      <span class='label label-info label-sm'>" + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
                     strTemp += "  </div>";

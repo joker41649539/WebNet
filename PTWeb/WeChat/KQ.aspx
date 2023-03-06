@@ -18,11 +18,13 @@
         });
 
         wx.ready(function () {
+
             wx.checkJsApi({
                 jsApiList: [
                     'getLocation'
                 ],
                 success: function (res) {
+                    alert("加载");
                     if (res.checkResult.getLocation == false) {
                         alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
                         return;
@@ -30,11 +32,11 @@
                 }
             });
             wx.getLocation({
-                type: "gcj02",
+                //type: "gcj02",
+                type: "wgs84",
                 success: function (res) {
                     document.getElementById("TextBox_WD").value = res.longitude;
                     document.getElementById("TextBox_JD").value = res.latitude;
-
                     $.ajax({
                         type: 'get',
                         url: 'map.ashx',
@@ -46,7 +48,7 @@
                         },
                         success: function (responseData) {
                             if (responseData) {
-                                // alert(responseData.address);
+                                alert(responseData.address);
                                 document.getElementById("TextBox_WZ").value = responseData.address;
                                 //wx.openLocation({
                                 //    latitude: res.latitude,
@@ -61,6 +63,9 @@
                             alert(XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText);
                         }
                     });
+                },
+                fail: function (err) {
+                    alert('错误:+' + err);
                 },
                 cancel: function (res) {
                     alert('用户拒绝授权获取地理位置');
@@ -83,7 +88,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="#">微信相关</a></li>
             <li class="active"><a href="/WeChat/KQ.aspx">签到打卡</a></li>

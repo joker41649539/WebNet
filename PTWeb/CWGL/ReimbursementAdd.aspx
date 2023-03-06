@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="/CWGL/">财务管理</a></li>
             <li class="active">报销填报</li>
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label runat="server" id="Label17" class="col-sm-3 control-label no-padding-right" for="form-field-1">收款人：</label>
             <div class="col-sm-9">
-               <asp:TextBox ID="TextBox_Cname" ClientIDMode="Static" runat="server" placeholder="请输入收款人" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <asp:TextBox ID="TextBox_Cname" ClientIDMode="Static" runat="server" placeholder="请输入收款人" class="col-xs-12 col-sm-12"></asp:TextBox>
             </div>
         </div>
     </div>
@@ -67,6 +67,9 @@
             <div class="col-sm-9">
                 <asp:TextBox ID="TextBox_Remark" runat="server" placeholder="请输入内容" class="col-xs-12 col-sm-12" Width="100%" TextMode="MultiLine"></asp:TextBox>
             </div>
+        </div>
+        <div class="form-group">
+            <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-mini btn-success" runat="server" OnClick="LinkButton2_Click1"><b>保&nbsp;&nbsp;存</b></asp:LinkButton>
         </div>
     </div>
     <br />
@@ -198,7 +201,8 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <div runat="server" id="UpdateImages"></div>
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-mini" runat="server" OnClick="LinkButton3_Click"><b>添加下一条</b></asp:LinkButton>
+                <%--  <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-mini btn-success" runat="server" OnClick="LinkButton1_Click1"><b>保&nbsp;&nbsp;存</b></asp:LinkButton>--%>
+                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-mini" runat="server" OnClick="LinkButton1_Click1"><b>添加下一条</b></asp:LinkButton>
             </div>
         </div>
     </div>
@@ -208,6 +212,7 @@
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Return" class="btn btn-pink" runat="server" OnClick="LinkButton4_Click"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
+        <asp:HyperLink ID="HyperLink1" class="btn btn-info" runat="server" Target="_blank">查看轨迹</asp:HyperLink>
     </div>
 
     <script type="text/javascript" src="/assets/timepicker/js/jquery-1.7.2.min.js"></script>
@@ -217,4 +222,6 @@
     <script type="text/javascript">
         $(function () { $('#TextBoxSTime').datepicker(); });
     </script>
+</div>
+    </div>
 </asp:Content>

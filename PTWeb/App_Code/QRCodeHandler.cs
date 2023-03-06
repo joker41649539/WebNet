@@ -10,7 +10,6 @@ using ThoughtWorks.QRCode.Codec;
 /// </summary>
 public class QRCodeHandler
 {
-
     /// <summary>
     /// 返回二维码图片地址
     /// </summary>

@@ -31,6 +31,17 @@ public partial class GDGL_GCWXD : PageBase
     {
         try
         {
+
+            /// 固定死，ID为33的 邓春亮 的维保单 单位名称为特定单位，别的为默认单位。2023-02-13 奚唯嘉要求
+            if (DefaultUser == "33")
+            {
+                Label_DW.Text = "南京新索奇科技有限公司";
+            }
+            else
+            {
+                Label_DW.Text = "合肥普田科技有限公司";
+            }
+
             int iid = Convert.ToInt32(Request["ID"]);
             if (iid > 0)
             {
@@ -46,6 +57,7 @@ public partial class GDGL_GCWXD : PageBase
                 Button2.Visible = true;
                 Button3.Visible = false;
                 Button4.Visible = false;
+                Button6.Visible = false;
                 Hidden_WXRY.Value = DefaultUser;
             }
         }
@@ -57,6 +69,7 @@ public partial class GDGL_GCWXD : PageBase
             Label_WXRY.Text = UserNAME;
             Button3.Visible = false;
             Button4.Visible = false;
+            Button6.Visible = false;
             Hidden_WXRY.Value = DefaultUser;
         }
     }
@@ -112,6 +125,7 @@ public partial class GDGL_GCWXD : PageBase
                     Button2.Visible = true;
                     Button3.Visible = false;
                     Button4.Visible = true;
+                    Button6.Visible = false;
 
                 }
                 else if (OP_Mode.Dtv[0]["FLAG"].ToString() == "1")
@@ -121,6 +135,18 @@ public partial class GDGL_GCWXD : PageBase
                     Button2.Visible = false;
                     Button3.Visible = true;
                     Button4.Visible = false;
+                    Button6.Visible = true;
+                    SignDiv.InnerHtml = string.Empty;
+                    SignBtnDiv.InnerHtml = string.Empty;
+                }
+                else if (OP_Mode.Dtv[0]["FLAG"].ToString() == "9")
+                {
+                    Label_Flag.Text = "已归档";
+                    Button1.Visible = false;
+                    Button2.Visible = false;
+                    Button3.Visible = true;
+                    Button4.Visible = false;
+                    Button6.Visible = false;
                     SignDiv.InnerHtml = string.Empty;
                     SignBtnDiv.InnerHtml = string.Empty;
                 }
@@ -378,7 +404,7 @@ public partial class GDGL_GCWXD : PageBase
             byte[] bytes = Convert.FromBase64String(base64);
             MemoryStream memStream = new MemoryStream(bytes);
             Bitmap b = new Bitmap(memStream);
-            string newname = DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".png";//新文件名
+            string newname = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";//新文件名
 
             b.Save(Server.MapPath(@"/QMImage/" + newname));
 
@@ -403,16 +429,16 @@ public partial class GDGL_GCWXD : PageBase
             /// 设置图片文字
             string strTemp = string.Empty;
 
-            strTemp = System.DateTime.Now.ToString("yyyy-MM-dd hh:mm");
+            strTemp = "时间:" + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm");
 
             //添加水印
-            System.Drawing.Image imgSrc = AddText(@URLpath, "50,50", "300, 100", strTemp);
+            System.Drawing.Image imgSrc = AddText(@URLpath, "0,0", "300, 70", strTemp);
 
             int width = imgSrc.Width;
             int height = imgSrc.Height;
             Bitmap bmp = new Bitmap(width, height);
             bmp.MakeTransparent(Color.Black);
-            string newname = DateTime.Now.ToString("yyyyMMddhhmmssfff") + ".png";//新文件名
+            string newname = DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";//新文件名
 
             string imageName = "SY" + newname;
             string newpath = Server.MapPath(@"/QMImage/" + imageName);
@@ -474,7 +500,7 @@ public partial class GDGL_GCWXD : PageBase
         float y2 = float.Parse(location[1]);
 
         x2 = float.Parse(Math.Round(Convert.ToDouble(width - width / 10), 0).ToString());
-        y2 = float.Parse(Math.Round(Convert.ToDouble(height - height / 10), 0).ToString());
+        y2 = float.Parse(Math.Round(Convert.ToDouble(width - width / 10), 0).ToString());
 
         // 区域宽高
         float fontWidth = x2 - x1;
@@ -688,6 +714,32 @@ public partial class GDGL_GCWXD : PageBase
         if (iid > 0)
         {
             Response.Redirect("/BGGL/WXDImage.ASPX?id=" + iid);
+        }
+    }
+
+    /// <summary>
+    /// 归档   按钮
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Button6_Click(object sender, EventArgs e)
+    {
+        int iid = Convert.ToInt32(Request["ID"]);
+        if (iid > 0)
+        {
+            if (!QXBool(47, Convert.ToInt32(DefaultUser)))
+            {
+                MessageBox("", "您没维修单归档的权限。", Defaut_QX_URL);
+                return;
+            }
+            else
+            {
+                string strSQL = "Update w_wxd set flag=9 where id=" + iid;
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    MessageBox("", "指定单据归档成功。", "/BGGL/GCWXDList.aspx");
+                }
+            }
         }
     }
 }

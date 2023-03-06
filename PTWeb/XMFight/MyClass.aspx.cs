@@ -494,9 +494,13 @@ public partial class XMFight_MyClass : PageBaseXMFight
     }
 
     protected void GridView1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
-
     {
 
+        if (Convert.ToInt32(GridView1.DataKeys[e.NewSelectedIndex].Value) > 0)
+        {
+            Response.Redirect("https://www.meipian.cn/wap/video-work/view/index.html#/?id=9k5td9y&type=6&share_to=copy_link&user_id=73058088&uuid=8180c5331f6b441eca60031475545ad6&share_depth=1&first_share_uid=73058088&utm_medium=meipian_android&share_user_mpuuid=eebea5e7536df841470f212d37a81bf7", false);
+            ///DeleteRecord(Convert.ToInt32(GridView1.DataKeys[e.NewSelectedIndex].Value));
+        }
         GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#CAD3E4");
 
         GridView1.Rows[e.NewSelectedIndex].Cells[1].BackColor = Color.FromName("#CAD3E4");

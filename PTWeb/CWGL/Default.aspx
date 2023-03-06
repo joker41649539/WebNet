@@ -20,7 +20,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="/CWGL/">财务管理</a></li>
             <li class="active">报销单</li>
@@ -111,7 +111,8 @@
                 </asp:DropDownList>
                 <asp:TextBox ID="GridView_BXD_TextBox_CXTJ" placeholder="条件内容" runat="server"></asp:TextBox>
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" OnClick="GridView_BXD_TJADD_Click" ID="GridView_BXD_TJADD"><i class="icon-plus-sign">&nbsp;条件添加</i></asp:LinkButton>
-                <button onclick="javascript:method1('GridView_BXD');" class="btn btn-white btn-sm"><i class="icon-plus-sign">&nbsp;导出Excel</i></button>
+                <button class="btn btn-white btn-sm" onclick="javascript:method1('GridView_BXD');" ><i class="icon-plus-sign">&nbsp;导出Excel</i></button>
+                <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="LinkButton_AllSubit" OnClientClick="javascript:return confirm('真的要全部提交吗？')" OnClick="LinkButton_AllSubit_Click">&nbsp;全部提交</asp:LinkButton>
                 <div class="widget-toolbar"><a href="#" data-action="collapse"><i class="icon-chevron-up"></i></a></div>
             </div>
             <div id="GridView_BXD_alerts_tj" runat="server" class="alert alert-success" visible="false">

@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="#">报告管理</a></li>
             <li class="active"><a href="/BGGL/GCWXDList.ASPX">工程维修单</a></li>
@@ -39,6 +39,7 @@
                             <div class="widget-header widget-header-flat">
                                 <h4 class="lighter"><i class="icon-user"></i>工程维修单                </h4>
                                 <asp:DropDownList ID="GridView_WXD_DropDownList1" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
+                                    <asp:ListItem Value="WXDH">单号</asp:ListItem>
                                     <asp:ListItem Value="YHMC">银行</asp:ListItem>
                                     <asp:ListItem Value="ZHMC">支行</asp:ListItem>
                                     <asp:ListItem Value="CNAME">维修人</asp:ListItem>
@@ -65,6 +66,8 @@
                                 <div class="widget-main no-padding">
                                     <asp:GridView ID="GridView_WXD" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" OnPageIndexChanging="GridView_WXD_PageIndexChanging" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView_WXD_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView_WXD_SelectedIndexChanging">
                                         <Columns>
+                                            <asp:HyperLinkField DataNavigateUrlFields="ID" HeaderText="查看" Text="查看PDF" DataNavigateUrlFormatString="/BGGL/WXDPDF.ASPX?ID={0}" ></asp:HyperLinkField>
+                                            <asp:HyperLinkField DataNavigateUrlFields="ID" HeaderText="单号" SortExpression="WXDH" DataNavigateUrlFormatString="/BGGL/GCWXD.ASPX?ID={0}" DataTextField="WXDH"></asp:HyperLinkField>
                                             <asp:HyperLinkField DataNavigateUrlFields="ID" HeaderText="银行" SortExpression="YHMC" DataNavigateUrlFormatString="/BGGL/GCWXD.ASPX?ID={0}" DataTextField="YHMC"></asp:HyperLinkField>
                                             <asp:HyperLinkField DataNavigateUrlFields="ID" HeaderText="支行" SortExpression="YHMC" DataNavigateUrlFormatString="/BGGL/GCWXD.ASPX?ID={0}" DataTextField="ZHMC"></asp:HyperLinkField>
                                             <asp:HyperLinkField DataNavigateUrlFields="ID" HeaderText="维修人" SortExpression="CNAME" DataNavigateUrlFormatString="/BGGL/GCWXD.ASPX?ID={0}" DataTextField="CNAME"></asp:HyperLinkField>
@@ -108,12 +111,15 @@
     <script>
         // 字符替换
         $("#GridView_WXD tr").each(function () {
-            var mtd = $(this).children("td:eq(3)");
+            var mtd = $(this).children("td:eq(5)");
             if (mtd.text() == 0) {
                 mtd.html(" <span class=\"label label-success\">待提交</span>");
             }
             else if (mtd.text() == 1) {
                 mtd.html(" <span class=\"label label-danger\">已完成</span>");
+            }
+            else if (mtd.text() == 9) {
+                mtd.html(" <span class=\"label label-purple\">已查看</span>");
             }
         });
     </script>

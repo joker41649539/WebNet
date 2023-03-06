@@ -24,9 +24,10 @@ public partial class WeChat_KQ : PageBase
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
-        {   // 微信JS签名
-           // this.appId = WebConfigurationManager.AppSettings["CorpId"]; /// w微信公众号
-            this.appId = WebConfigurationManager.AppSettings["AgentId"]; /// 企业微信ID
+        ///  https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf60778eb4d1003de&redirect_uri=https%3A%2F%2Fptweb.x76.com.cn%2FRemember&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+        {   // 微信JS签名 https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf60778eb4d1003de&redirect_uri=http%3A%2F%2Flocalhost%3A59802%2FWeChat%2FKQ.ASPX&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+            this.appId = WebConfigurationManager.AppSettings["CorpId"]; /// w微信公众号
+          //  this.appId = WebConfigurationManager.AppSettings["AgentId"]; /// 企业微信ID
             this.timeStamp = getTimestamp();
             this.nonceStr = getNoncestr();
             this.signature = GenSignature(this.nonceStr, this.timeStamp);
@@ -54,14 +55,14 @@ public partial class WeChat_KQ : PageBase
         }
     }
 
-   
+
 
     /// <summary>
     /// 保存考勤数据
     /// </summary>
     private void SaveData()
     {
-        string Image1 =  UploadTP(FileUpload_TP);
+        string Image1 = UploadTP(FileUpload_TP);
         string Image2 = string.Empty;// UploadTP(FileUpload_TP2);
         string Image3 = string.Empty;// UploadTP(FileUpload_TP3);
         string Image4 = string.Empty;// UploadTP(FileUpload_TP4);
@@ -225,7 +226,7 @@ public partial class WeChat_KQ : PageBase
     private string UploadTP(FileUpload fileName)
     {
         string name = fileName.PostedFile.FileName;//获取文件名称
-      //  fileName.PostedFile.ge.GetCreationTime
+                                                   //  fileName.PostedFile.ge.GetCreationTime
         if (name.Length > 0)
         {
             if (fileName.HasFile)

@@ -31,6 +31,7 @@
                 }
             });
             wx.getLocation({
+
                 type: "gcj02",
                 success: function (res) {
                     document.getElementById("TextBox_WD").value = res.longitude;
@@ -48,6 +49,7 @@
                         success: function (responseData) {
                             if (responseData) {
                                 // alert(responseData.address);
+                                document.getElementById("demo").innerHTML = responseData.address;
                                 document.getElementById("TextBox_WZ").value = responseData.address;
                                 //wx.openLocation({
                                 //    latitude: res.latitude,
@@ -62,6 +64,9 @@
                             alert(XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText);
                         }
                     });
+                },
+                fail: function (err) {
+                    alert('用户地理位置获取错误。');
                 },
                 cancel: function (res) {
                     alert('用户拒绝授权获取地理位置');
@@ -78,13 +83,14 @@
                     scale: 14
                 });
             };
+
         });
     </script>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li><a href="#">微信相关</a></li>
             <li class="active"><a href="/WeChat/KQ.aspx">签到打卡</a></li>
@@ -135,6 +141,9 @@
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">我的位置</label>
+                                    <div class="alert alert-success">
+                                        <p id="demo">Some text here</p>
+                                    </div>
                                     <div class="col-sm-9">
                                         <asp:TextBox ID="TextBox_WZ" ClientIDMode="Static" runat="server" Enabled="true" onfocus="this.blur()" placeholder="请等待位置获取" class="col-xs-12 col-sm-12"></asp:TextBox>
                                     </div>

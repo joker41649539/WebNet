@@ -35,6 +35,8 @@ public partial class CWGL_Default2 : PageBase
         try
         {
             int IID = Convert.ToInt32(Request["ID"]);
+
+            HyperLink1.NavigateUrl = "/CWGL/SearchQD.aspx?BXDID=" + IID;
             if (IID > 0)
             {
                 string strSQL = "Select UserName,BXLX,SKR,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH ) ZJE,W_BXD1.Remark RemarkSum,W_BXD1.FLAG,(Select top 1 Remark from w_examine where djbh=W_BXD1.BXDH and ireturn<>0 order by ltime desc) ReturnMSG,W_BXD2.* from w_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and W_BXD1.id=" + IID;
@@ -148,7 +150,7 @@ public partial class CWGL_Default2 : PageBase
         }
         catch
         {
-            Label_No.Text = "待生成编号";
+            Label_No.Text = "等待生成编号";
         }
         /// 依据选择显示文本框
         ShowTextBox();
@@ -162,6 +164,16 @@ public partial class CWGL_Default2 : PageBase
         if (Label_Flag.Text != "待提交")
         {
             AddHtml.Visible = false;
+            LinkButton2.Visible = false;
+        }
+
+        if (Label_No.Text == "等待生成编号")
+        {
+            LinkButton2.Visible = false;
+        }
+        if (Label_CName.Text != UserNAME)
+        {
+            LinkButton2.Visible = false;
         }
 
         if (Label_Flag.Text == "已完结")
@@ -266,15 +278,15 @@ public partial class CWGL_Default2 : PageBase
 
         if (imageName.Length > 10)//"\BxImages\"
         {
-            WellList.InnerHtml += " <a href='" + imageName + "'><img src=\"" + imageName + "\" style =\"height:40px;\" /></a>";
+            WellList.InnerHtml += " <a href='" + imageName + "' target='_blank'><img src=\"" + imageName + "\" style =\"height:40px;\" /></a>";
         }
         if (imageName2.Length > 10)//"\BxImages\"
         {
-            WellList.InnerHtml += " <a href='" + imageName2 + "'><img src=\"" + imageName2 + "\" style =\"height:40px;\" /></a>";
+            WellList.InnerHtml += " <a href='" + imageName2 + "' target='_blank'><img src=\"" + imageName2 + "\" style =\"height:40px;\" /></a>";
         }
         if (imageName3.Length > 10)//"\BxImages\"
         {
-            WellList.InnerHtml += " <a href='" + imageName3 + "'><img src=\"" + imageName3 + "\" style =\"height:40px;\" /></a>";
+            WellList.InnerHtml += " <a href='" + imageName3 + "' target='_blank'><img src=\"" + imageName3 + "\" style =\"height:40px;\" /></a>";
         }
         WellList.InnerHtml += " 发生时间：" + strSTime + " ";
 
@@ -384,7 +396,11 @@ public partial class CWGL_Default2 : PageBase
 
         if (SaveData())
         {
-
+            MessageBox("", "数据保存成功。");
+        }
+        else
+        {
+            MessageBox("", "数据保存失败。");
         }
     }
 
@@ -490,16 +506,6 @@ public partial class CWGL_Default2 : PageBase
             }
         }
 
-        if (ErrMsg.Length > 0)
-        {
-            MessageBox("", ErrMsg);
-            rValue = false;
-        }
-        else
-        {
-            rValue = true;
-        }
-
         int MXID = 0;
         try
         {
@@ -508,6 +514,16 @@ public partial class CWGL_Default2 : PageBase
         catch
         {
 
+        }
+
+        if (ErrMsg.Length > 0)
+        {
+            MessageBox("", ErrMsg);
+            rValue = false;
+        }
+        else
+        {
+            rValue = true;
         }
 
 
@@ -1045,19 +1061,19 @@ public partial class CWGL_Default2 : PageBase
                 }
             }
         }
+        // 取消报销单的消息提示 2023-03-03
+        //if (strUsers.Length > 0)
+        //{
+        //    try
+        //    {
+        //        int ID = Convert.ToInt32(Request["ID"]);
 
-        if (strUsers.Length > 0)
-        {
-            try
-            {
-                int ID = Convert.ToInt32(Request["ID"]);
-
-                SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "www.putian.ink/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
-            }
-            catch
-            {
-            }
-        }
+        //        SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "www.putian.ink/CWGL/ReimbursementAdd.aspx?ID=" + ID + "&WeChat=0");
+        //    }
+        //    catch
+        //    {
+        //    }
+        //}
     }
     /// <summary>
     /// 提交状态
@@ -1356,5 +1372,50 @@ public partial class CWGL_Default2 : PageBase
             MessageBox("", "单据删除错误。<br>" + OP_Mode.strErrMsg);
             return;
         }
+    }
+
+    /// <summary>
+    /// 单独数据保存按钮
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton1_Click1(object sender, EventArgs e)
+    {
+        if (SaveData())
+        {
+            MessageBox("", "数据保存成功。");
+        }
+        else
+        {
+            MessageBox("", "数据保存失败。");
+        }
+    }
+
+    protected void LinkButton2_Click1(object sender, EventArgs e)
+    {
+        if (SaveDefault())
+        {
+            MessageBox("", "主表数据保存成功。");
+        }
+        else
+        {
+            MessageBox("", "主表数据保存失败。");
+        }
+
+    }
+
+    private bool SaveDefault()
+    {
+        bool rValue = false;
+        string strSQL = string.Empty;
+        if (Label_Flag.Text == "待提交" & Label_No.Text != "等待生成编号")
+        {
+            strSQL = " Update w_bxd1 set BXLX='" + RadioButtonList1.SelectedValue + "',SKR='" + TextBox_Cname.Text + "',Remark='" + TextBox_Remark.Text.Replace("'", "") + "',LTIME=getdate() where BXDH='" + Label_No.Text + "'";
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                rValue = true;
+            }
+        }
+        return rValue;
     }
 }

@@ -653,11 +653,12 @@ public class PageBase : System.Web.UI.Page
         return sValue;
     }
 
-    private string GetWorkToken()
+    public string GetWorkToken()
     {
         string sValue = string.Empty, strSQL;
         string AppId = WebConfigurationManager.AppSettings["AgentId"];//与企业微信ID。
         string AppSecret = WebConfigurationManager.AppSettings["Secret"];
+
         string MSG = string.Empty;
 
         var client = new System.Net.WebClient();
@@ -689,6 +690,60 @@ public class PageBase : System.Web.UI.Page
                 {
 
                     strSQL = "UPDATE S_TYDM SET CTIME=GETDATE(), LTIME = DATEADD(S," + obj["expires_in"] + ",GETDATE()),CTYDMZ='" + sValue + "' WHERE ITYDMLB=3";
+
+                    if (OP_Mode.SQLRUN(strSQL))
+                    {
+
+                    }
+                }
+            }
+        }
+
+        return sValue;
+
+    }
+
+    /// <summary>
+    /// 企业微信 通讯录 Token
+    /// </summary>
+    /// <returns></returns>
+    public string GetWorkTokenByAddress()
+    {
+        string sValue = string.Empty, strSQL;
+        string AppId = WebConfigurationManager.AppSettings["AgentId"];//与企业微信ID。
+        string AppSecret = "5cvkC7nD8cPT8q5oChiN9qtpdnaakIxDXLBfyrjtTc8"; // 通讯录专用Secret
+
+        string MSG = string.Empty;
+
+        var client = new System.Net.WebClient();
+        client.Encoding = System.Text.Encoding.UTF8;
+
+        strSQL = "SELECT * FROM S_TYDM where ITYDMLB=4 and DATEDIFF(MI, LTIME, GETDATE()) < 0";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {/// Token 未过期，直接使用
+                sValue = OP_Mode.Dtv[0]["CTYDMZ"].ToString();
+            }
+            else
+            { /// Token 已过期，从新读取
+                var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}", AppId, AppSecret);
+                var data = client.DownloadString(url);
+                var serializer = new JavaScriptSerializer();
+                var obj = serializer.Deserialize<Dictionary<string, string>>(data);
+
+                if (!obj.TryGetValue("access_token", out sValue))
+                {
+                    foreach (var key in obj.Keys)
+                    {
+                        MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+                    }
+                }
+                else
+                {
+
+                    strSQL = "UPDATE S_TYDM SET CTIME=GETDATE(), LTIME = DATEADD(S," + obj["expires_in"] + ",GETDATE()),CTYDMZ='" + sValue + "' WHERE ITYDMLB=4";
 
                     if (OP_Mode.SQLRUN(strSQL))
                     {
@@ -934,8 +989,8 @@ public class PageBase : System.Web.UI.Page
     {
         string jsApiTicket = GetJsApiTicket_Woker();
         string url = Request.Url.ToString();
-
         string sourceData = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsApiTicket, nonecStr, timeStamp, url);
+        // MessageBox("", sourceData);
 
         using (SHA1 sha1 = new SHA1CryptoServiceProvider())
         {

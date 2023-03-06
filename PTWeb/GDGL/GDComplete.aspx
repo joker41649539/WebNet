@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li>工单管理</li>
             <li class="active"><a href="/GDGL/">工程工单</a></li>
@@ -146,27 +146,7 @@
                     </div>
                 </div>
             </div>
-            <script src="/assets/js/jquery-2.0.3.min.js"></script>
-            <script>
-                // 字符替换
-                $("#GridView1 tr").each(function () {
-                    var mtd = $(this).children("td:eq(8)");
-                    if (mtd.text() == 0) {
-                        mtd.html(" <span class=\"label label-success\">等待施工</span>");
-                    }
-                    else if (mtd.text() > 0) {
-                        mtd.html(" <span class=\"label label-danger\">正在施工</span>");
-                    }
-
-                    var mtd = $(this).children("td:eq(1)");
-                    if (mtd.text() > 0) {
-                        mtd.html(" <span class=\"label label-success\">[" + mtd.text() + "] 人</span>");
-                    }
-                    else if (mtd.text() == 1) {
-                        mtd.html(" <span class=\"label label-danger\">未指派</span>");
-                    }
-                });
-            </script>
+            
         </div>
     </div>
 </asp:Content>

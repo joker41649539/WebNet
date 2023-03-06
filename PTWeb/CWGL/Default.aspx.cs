@@ -44,9 +44,15 @@ public partial class CWGL_Default : PageBase
         string strSQL;
 
         string strFlag = Request["flag"];
-
+        /// 设置全部提交按钮 默认为禁用
+        LinkButton_AllSubit.Visible = false;
         if (strFlag != null)
         {
+            if (strFlag == "6")
+            {/// 设置全部提交按钮  仅 是待放款状态时才允许全部提交
+                LinkButton_AllSubit.Visible = true;
+            }
+
             if (this.GridView_BXD_Label_tj.Text.Length > 0)
             {
                 strSQL = "Select W_BXD1.ID,(SELECT stuff((select ','+convert(varchar(25),  W_Examine.UserName) FROM W_Examine,W_BXD1 where djbh=W_BXD1.BXDH  and djbh=c.BXDH and OldFlag>0 group by W_Examine.UserName FOR XML PATH('')), 1, 1, '') ) SPR,(Select top 1 W_Examine.CTime from W_Examine,W_BXD1 where djbh=W_BXD1.BXDH  and djbh=c.BXDH and NewFlag>1 and NewFlag<=5 and OldFlag>0) SPRSJ,UserName,(Select sum(BXJE) from W_BXD2 where BXDH=W_BXD1.BXDH) ZJE ,FLAG,W_BXD1.LTIME,w_bxd1.BXDH,w_bxd1.remark from w_bxd1,W_BXD2 c,(SELECT QXID FROM S_QXZZB,S_YH_QXZ WHERE S_YH_QXZ.QXZID=S_QXZZB.QXZID AND USERID=" + DefaultUser + " group by QXID) a WHERE W_BXD1.BXDH=c.BXDH and flag=" + Request["flag"] + " and " + this.GridView_BXD_Label_tj.Text.Trim() + " and (a.QXID in(39,40,41,42) or UserName='" + UserNAME + "') GROUP BY  W_BXD1.ID,W_BXD1.BXDH,UserName,FLAG,W_BXD1.LTIME,w_bxd1.remark,c.bxdh ORDER BY LTIME DESC";
@@ -346,4 +352,47 @@ public partial class CWGL_Default : PageBase
     }
 
     #endregion
+
+    /// <summary>
+    /// 全部提交，仅由4待放款状态提交到代收票状态
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton_AllSubit_Click(object sender, EventArgs e)
+    {
+        SaveAllFlag();
+    }
+
+    /// <summary>
+    /// 提交状态
+    /// </summary>
+    private void SaveAllFlag()
+    {
+        int oldFlag = 6;// 当前状态  6为待放款状态，7为待收票状态
+        int NewFlag = 7;// 提交后他状态
+
+        if (!QXBool(42, Convert.ToInt32(DefaultUser)))
+        {// 财务权限判断
+            MessageBox("", "您没有审核的权限。", Defaut_QX_URL);
+            return;
+        }
+
+        /// 批量处理数据 1、记录数据处理人  2、更改报销单标志位，和最后更新时间
+
+        /// 插入操作记录表数据
+        string strSQL = " insert into W_Examine(Class, DJBH, UserName, OldFlag, NewFlag) Select 'BXD',BXDH,'" + UserNAME + "'," + oldFlag + "," + NewFlag + " from W_BXD1 where FLAG = 6 ";
+
+        /// 批量更新状态
+        strSQL += " update W_BXD1 set FLAG=7,LTIME=getdate() where FLAG=6 ";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            MessageBox("", "所有单据提交成功。", "/CWGL/");
+        }
+        else
+        {
+            MessageBox("", "单据提交失败。<br>错误：" + OP_Mode.strErrMsg);
+            return;
+        }
+    }
 }

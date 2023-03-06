@@ -109,10 +109,16 @@ public partial class CWGL_ReturnMSG : PageBase
     private void SaveFlag()
     {
         int ID = Convert.ToInt32(Request["ID"]);
+        int OldFlag = Convert.ToInt32(Request["Flag"]);
         if (ID > 0)
         {/// 单据编号不对，不允许提交
             // 保存记录表  W_Examine
             int NewFlag = 0;// 提交后他状态
+
+            if (OldFlag == 7)
+            {// 应李青要求，待收票 不返回原始，返回到待放款 2023-02-21
+                NewFlag = 6;
+            }
 
             string strSQL = " Insert into W_Examine(Class,DJBH,UserName,OldFlag,NewFlag,Remark,iReturn) values ('BXD',(Select BXDH From w_bxd1 where ID=" + ID + "),'" + UserNAME + "',(Select flag From w_bxd1 where ID=" + ID + ")," + NewFlag + ",'" + UserNAME + ":" + TextBox_ReturnMSG.Text.Replace("'", "") + "',1)";
 

@@ -42,7 +42,7 @@ public partial class GDGL_GCAZ : PageBase
             if (OP_Mode.Dtv.Count > 0)
             {
                 Label_GCMC.Text = OP_Mode.Dtv[0]["GCMC"].ToString();
-                Label_GCMC.NavigateUrl = "\\GDGL\\GCAZList.ASPX?ID=" + OP_Mode.Dtv[0]["IID"].ToString();
+                Label_GCMC.NavigateUrl = "\\GDGL\\GCAZListph.ASPX?ID=" + OP_Mode.Dtv[0]["IID"].ToString();
                 Label1.Text = OP_Mode.Dtv[0]["AZWZ"].ToString();
                 Label2.Text = OP_Mode.Dtv[0]["SBBH"].ToString();
                 Label3.Text = OP_Mode.Dtv[0]["SBMC"].ToString();
@@ -68,7 +68,7 @@ public partial class GDGL_GCAZ : PageBase
                             TextBox_Remark.Text = OP_Mode.Dtv[i]["Remark"].ToString();
                             bUser = true;
                         }
-                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 安装【" + OP_Mode.Dtv[i]["AZFS"].ToString() + " %】<a href='GCBXDel.aspx?ID=" + OP_Mode.Dtv[i]["FSID"].ToString() + "'>删除</a><br/>";
+                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 安装【" + OP_Mode.Dtv[i]["AZFS"].ToString() + " %】<a OnClick=\"javascript:return confirm('确定删除【" + OP_Mode.Dtv[i]["CNAME"].ToString() + "】的积分吗？')\" href='GCAZDel.aspx?ID=" + OP_Mode.Dtv[i]["FSID"].ToString() + "'>删除</a><br/>";
                     }
                     if (strTemp.Length > 0)
                     {
@@ -129,7 +129,7 @@ public partial class GDGL_GCAZ : PageBase
             strSQL += " End";
             if (OP_Mode.SQLRUN(strSQL))
             {
-                MessageBox("", "安装信息录入成功，您辛苦了。", "/GDGL/GCAZList.ASPX?ID=" + Request["ID"]);
+                MessageBox("", "安装信息录入成功，您辛苦了。", "/GDGL/GCAZListph.ASPX?ID=" + Request["ID"]);
             }
             else
             {

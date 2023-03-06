@@ -12,7 +12,7 @@ public partial class BBIN_Default2 : PageBase
         if (!IsPostBack)
         {
             TextBox2.Text = "2021-08-01";
-            TextBox3.Text = "2021-09-01";
+            TextBox3.Text = "2021-10-01";
         }
     }
 
@@ -23,70 +23,14 @@ public partial class BBIN_Default2 : PageBase
     /// <param name="e"></param>
     protected void Button1_Click(object sender, EventArgs e)
     {
-        //Test(Convert.ToInt32(TextBox1.Text), TextBox2.Text, TextBox3.Text);
-        TextBox_Remark.Text = DateTimeByWeekAndDay(1).ToString("yyyy-MM-dd");
+        Test(Convert.ToInt32(TextBox1.Text), TextBox2.Text, TextBox3.Text);
     }
 
-    public static DateTime DateTimeByWeekAndDay(int day)
-    {
-        DateTime someTime = System.DateTime.Now;
-
-        int i = (int)someTime.DayOfWeek;
-
-        if (day > i)
-        {
-            someTime = someTime.AddDays(day - i);
-        }
-        else if (day < i)
-        {
-            someTime = someTime.AddDays(day + 7 - i);
-        }
-
-        return someTime;
-    }
-
-    public static int WeekOfMonth()
-    {
-        DateTime dtSel = System.DateTime.Now;
-        //如果要判断的日期为1号，则肯定是第一周了
-        if (dtSel.Day == 1)
-            return 1;
-        else
-        {
-            //得到本月第一天
-            DateTime dtStart = new DateTime(dtSel.Year, dtSel.Month, 1);
-            //得到本月第一天是周几
-            int dayofweek = (int)dtStart.DayOfWeek;
-
-            ////如果不是以周日开始，需要重新计算一下dayofweek，详细风DayOfWeek枚举的定义
-            //if (!sundayStart)
-            //{
-            //    dayofweek = dayofweek - 1;
-
-            //    if (dayofweek < 0)
-            //        dayofweek = 7;
-            //}
-
-            //得到本月的第一周一共有几天
-            int startWeekDays = 7 - dayofweek;
-
-            //如果要判断的日期在第一周范围内，返回1
-            if (dtSel.Day <= startWeekDays)
-                return 1;
-            else
-            {
-                int aday = dtSel.Day + 7 - startWeekDays;
-                return aday / 7 + (aday % 7 > 0 ? 1 : 0);
-            }
-        }
-    }
-
-
-    double[] intZM = new double[] { 10, 50, 110, 250, 500 }; // 打码量
+    double[] intZM = new double[] { 10, 50 }; // 打码量
 
     double lostLR = 920;//{ 10, 50, 110, 250, 500 }
 
-    int strZMSN = 15;// 开始下注注码需要，等于为算。
+    int strZMSN = 11;// 开始下注注码需要，等于为算。
     int iBao = 0;// 炸次数
     int maxJTSN = 0;// 最大解套序号
     double DWiner = 0; ///累计利润
@@ -97,6 +41,7 @@ public partial class BBIN_Default2 : PageBase
     double MinDML = 0;
 
     int TempCount = 0; ///计数
+
                        /// <summary>
                        /// 套路
                        /// </summary>
@@ -364,7 +309,7 @@ public partial class BBIN_Default2 : PageBase
 
         if (RanI > 52)
         { //
-            rValue = "无";
+            rValue = "庄";
         }
         else
         {

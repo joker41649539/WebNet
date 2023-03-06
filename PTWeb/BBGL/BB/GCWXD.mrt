@@ -739,6 +739,7 @@
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>  {Data.GZXX}</Text>
               <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
               <Type>Expression</Type>
             </Table1_Cell30>
             <Table1_Cell31 Ref="41" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
@@ -861,6 +862,7 @@
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>  {Data.WXNR}</Text>
               <TextBrush>Black</TextBrush>
+              <TextOptions>HotkeyPrefix=None, LineLimit=False, RightToLeft=False, Trimming=None, WordWrap=True, Angle=0, FirstTabOffset=40, DistanceBetweenTabs=20,</TextOptions>
               <Type>Expression</Type>
             </Table1_Cell36>
             <Table1_Cell37 Ref="47" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
@@ -2025,10 +2027,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/14/2021 9:17:32 PM</ReportChanged>
+  <ReportChanged>2/23/2023 9:13:46 AM</ReportChanged>
   <ReportCreated>4/23/2020 7:25:17 PM</ReportCreated>
-  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\GCWXD.mrt</ReportFile>
-  <ReportGuid>8b754df095f64282b76e8382f486310c</ReportGuid>
+  <ReportFile>D:\WebNet\PTWeb\BBGL\BB\GCWXD.mrt</ReportFile>
+  <ReportGuid>89c1866502c3426c880c44719b598e85</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

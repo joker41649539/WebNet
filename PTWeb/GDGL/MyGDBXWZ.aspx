@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li class="active"><a href="/GDGL/MyBXGD.aspx">我的布线工程</a></li>
         </ul>
@@ -14,6 +14,7 @@
         <h1>
             <asp:Label ID="Label_GCMC" runat="server" Text="Label"></asp:Label></h1>
     </div>
+    <span >布线人员： <b>[<asp:Label ID="Label_BXRY" runat="server" Text="无"></asp:Label>]</b></span>
     <div runat="server" class="page-content" id="Dtv_HTML"></div>
 </asp:Content>
 

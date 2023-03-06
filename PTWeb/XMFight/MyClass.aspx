@@ -81,7 +81,7 @@
                 <asp:BoundField DataField="CTime" DataFormatString="{0:yyyy-MM-dd dddd HH:mm}" SortExpression="CTime" HeaderText="日期"></asp:BoundField>
                 <asp:BoundField DataField="iFlag" SortExpression="iFlag" HeaderText="状态"></asp:BoundField>
                 <asp:BoundField DataField="iCount" SortExpression="iCount" DataFormatString="{0:F0}" HeaderText="课时"></asp:BoundField>
-                <asp:BoundField DataField="Remark" SortExpression="Remark" HeaderText="说明"></asp:BoundField>
+                <asp:ButtonField HeaderText="课程情况" CommandName="Select" SortExpression="ID" Text="课程情况" />
             </Columns>
             <PagerTemplate>
                 <div>

@@ -365,12 +365,12 @@ public class PageBaseXMFight : System.Web.UI.Page
 
     public string LoadPayID(string openid, string Bill_No, decimal Charge_Amt, string Body)
     {
-        string APPID = WebConfigurationManager.AppSettings["CorpId"];
+        string APPID = "wxf60778eb4d1003de";//WebConfigurationManager.AppSettings["CorpId"];
         // string TENPAY = "1";
         string PARTNER = WebConfigurationManager.AppSettings["PARTNER"];// "1259901501";//商户号
         string APPSECRET = WebConfigurationManager.AppSettings["WeixinAppSecret"];
         string PARTNER_KEY = WebConfigurationManager.AppSettings["JSPIKey"];// "6f498ef1c21be21531b39dd1c668c26f";//APPSECRET
-        string strPAYURL = "http://yanwo.x76.com.cn/PayNotifyUrl.aspx";// 不允许传递参数
+        string strPAYURL = "http://ptweb.x76.com.cn/Tuangou/PayNotifyUrl.aspx";// 不允许传递参数
 
         HttpContext Context = System.Web.HttpContext.Current;
 
@@ -653,6 +653,26 @@ public class PageBaseXMFight : System.Web.UI.Page
         return sValue;
     }
 
+    /// <summary>
+    /// 生成获得二维码的值
+    /// </summary>
+    public string EcodTemp(int strID,int iTimes)
+    {/// iTimes 单位是S
+        string sValue = string.Empty;
+        var url = string.Format(" https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}", GetaccessToken());
+
+        var data = "{\"expire_seconds\": "+ iTimes.ToString() + ",\"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": " + strID + "}}}";
+
+        var serializer = new JavaScriptSerializer();
+        var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+        if (!obj.TryGetValue("ticket", out sValue))
+        {
+
+        }
+        /// {"expire_seconds": 604800, "action_name": "QR_SCENE", "action_info": {"scene": {"scene_id": 123}}} 
+        return sValue;
+    }
+
     private string GetWorkToken()
     {
         string sValue = string.Empty, strSQL;
@@ -869,7 +889,8 @@ public class PageBaseXMFight : System.Web.UI.Page
     public string Draw(string strOPENID, int strID, string strHeadImageUrl)
     {
         //背景图片
-        string path = Server.MapPath(@"/TuiGuang/White.png");
+ //       string path = Server.MapPath(@"/TuiGuang/White.png");
+        string path = Server.MapPath(@"/images/Amount.png");
 
         System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(path);
 
@@ -896,7 +917,7 @@ public class PageBaseXMFight : System.Web.UI.Page
             // g.DrawString(user.nickname, font, new SolidBrush(Color.Red), 110, 10);
         }
         string imageName = strOPENID + ".jpg";
-        string newpath = Server.MapPath(@"/TuiGuang/" + imageName);
+        string newpath = Server.MapPath(@"/images/" + imageName);
         imgSrc.Save(newpath, System.Drawing.Imaging.ImageFormat.Jpeg);
         return imageName;
     }

@@ -39,7 +39,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
             //}
             string strURL = Request.Url.AbsoluteUri;
 
-            if (strURL.IndexOf("putian") > -1 || strURL.IndexOf("localhost") > -1)
+            if (strURL.IndexOf("putian") > -1 || strURL.IndexOf("localhost") > -1 || strURL.IndexOf("10.3.8.123") > -1)
             {
                 try
                 {
@@ -256,6 +256,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
                     {
                         strDiv += "</ul></li>";
                     }
+                    /// 添加BUG处理模块
+                    strDiv += "<li>  <a  class=\"dropdown-toggle\" href=\"/bug/\">   <i class=\"icon-dashboard\"></i>   <span class=\"menu-text\">操作故障反映</span> <b class=\"arrow icon-angle-down\"></b>  </a> <ul class=\"submenu\"><li  class=\"active\">  <a  class=\"dropdown-toggle\" href=\"/BUG/\">   <i class=\"icon-dashboard\"></i>   <span class=\"menu-text\">故障列表</span>  </a></li></ul></li>";
+
                     strDiv += "<li class=\"active\"><a class=\"dropdown-toggle\" href=\"#\"><img src=\"/images/luLogo.png\" width=\"25px\" /><span class=\"menu-text\">&nbsp;备案信息</span> <b class=\"arrow icon-angle-down\"></b></a>";
                     strDiv += "     <ul class=\"submenu\">";
                     strDiv += "         <li><a class=\"dropdown-toggle\" target=\"_blank\" href=\"https://beian.miit.gov.cn\"><i class=\"icon-coffee\"></i><span class=\"menu-text\">晥ICP备2021004456号</span>  </a></li>";

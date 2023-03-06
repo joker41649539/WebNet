@@ -5,7 +5,7 @@
         <ul class="breadcrumb">
             <li>
                 <i class="icon-home home-icon"></i>
-                <a href="/">首页</a>
+                <a href="/Default.aspx">首页</a>
             </li>
             <li>工单管理</li>
             <li class="active"><a href="/GDGL/">工程工单</a></li>
@@ -39,19 +39,19 @@
                     </a>
                 </li>
                 <li>
-                    <a  href="/GDGL/GDNoFinsh.aspx">
+                    <a href="/GDGL/GDNoFinsh.aspx">
                         <i class="green icon-inbox bigger-130"></i>
                         <span class="bigger-110">未完成工单</span>
                     </a>
                 </li>
                 <li>
-                    <a  href="/GDGL/GDLX.aspx">
+                    <a href="/GDGL/GDLX.aspx">
                         <i class="blue icon-inbox bigger-130"></i>
                         <span class="bigger-110">零星工程工</span>
                     </a>
                 </li>
                 <li>
-                    <a  href="/GDGL/GDComplete.aspx">
+                    <a href="/GDGL/GDComplete.aspx">
                         <i class="blue icon-inbox bigger-130"></i>
                         <span class="bigger-110">完整工程</span>
                     </a>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
             </div>
-            <script src="/assets/js/jquery-2.0.3.min.js"></script>
+           <%-- <script src="/assets/js/jquery-2.0.3.min.js"></script>
             <script>
                 // 字符替换
                 $("#GridView1 tr").each(function () {
@@ -166,7 +166,7 @@
                         mtd.html(" <span class=\"label label-danger\">未指派</span>");
                     }
                 });
-            </script>
+            </script>--%>
         </div>
     </div>
 </asp:Content>
