@@ -11,12 +11,15 @@ using System.Xml;
 public partial class Pay : PageBaseXMFight
 {
     OpMode OP_Mode = new OpMode(DefaultConStr, 0);
+    public static string getNewDate;
+    
 
     protected string wx_packageValue = "";
     protected string XSDValue = "";
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        getNewDate = "2023-03-08";
         //if (!IsPostBack)
         //{
         //    if (Request.QueryString["No"] != null && Request.QueryString["No"] != "")
@@ -34,24 +37,12 @@ public partial class Pay : PageBaseXMFight
         //    }
 
     }
-
     /// <summary>
     /// 依据销售库
     /// </summary>
     /// <param name="IXSDID"></param>
     private void LoadFKXX(string strNo)
     {
-        //string strSQL = "Select * from W_Buy1 Where DDNo='" + strNo + "'";
-
-        //if (OP_Mode.SQLRUN(strSQL))
-        //{
-
-        this.Label_DDH.Text = strNo;
-        this.Label_LXR.Text = "联系人";
-        this.Label_LXDH.Text = "电话";
-        //this.Label_SHDZ.Text = OP_Mode.Dtv[0]["SHDZ"].ToString().Trim();
-        this.Label_ZFJE.Text = "0.01";
-        //this.Label_Remark.Text = OP_Mode.Dtv[0]["Remark"].ToString().Trim();
 
         var weixinopenid = string.Empty;
         //try
@@ -59,7 +50,7 @@ public partial class Pay : PageBaseXMFight
         // 读取用户微信ID。
         //weixinopenid = Request.Cookies["WeChat_Yanwo"]["COPENID"];//"ollQItx5i3C0IUC_sQRvEzzQfXE4";//
         weixinopenid = "ooUML6EsI6okXuBBhZ-_l4ur204Y";
-        string _Pay_Package = LoadPayID(weixinopenid, strNo, Convert.ToDecimal(Label_ZFJE.Text), "旭铭搏击");
+        string _Pay_Package = LoadPayID(weixinopenid, strNo, Convert.ToDecimal(Label1.Text), "旭铭搏击");
         //微信jspai支付
         if (_Pay_Package.Length > 0)
         {

@@ -1,7 +1,6 @@
-﻿<%@ Page Title="微信支付" Language="C#" MasterPageFile="~/TuanGou/MasterPage.master" AutoEventWireup="true" CodeFile="Pay.aspx.cs" Inherits="Pay" %>
+﻿<%@ Page Title="微信支付" Language="C#" MasterPageFile="~/TuanGou/MasterPage.master" AutoEventWireup="true" CodeFile="Offer.aspx.cs" Inherits="Pay" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <%-- <script src="http://res.mail.qq.com/mmr/static/lib/js/jquery.js" type="text/javascript"></script>--%>
     <script src="/js/lazyloadv3.js" type="text/javascript"></script>
     <input type="hidden" name="name" value="" id="hidBill" runat="server" />
     <script type="text/javascript">
@@ -23,35 +22,33 @@
         }, false)
     </script>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <asp:Label ForeColor="Red" Font-Bold="true" ID="Label_DDH" runat="server" Text="订单号"></asp:Label>
-                的送货信息
-            </h3>
-        </div>
-        <div class="panel-body">
-            <h4>
-                <asp:Label ID="Label_LXR" runat="server" Text="联系人"></asp:Label><br />
-                <br />
-                <asp:Label ID="Label_LXDH" runat="server" Text="联系电话"></asp:Label><br />
-                <br />
-                <asp:Label ID="Label_SHDZ" runat="server" Text="送货地址"></asp:Label><br />
-                <br />
-                <asp:Label ID="Label_Remark" runat="server" Text="备注信息"></asp:Label></h4>
-        </div>
+        <img src="/images/temp.jpg" width="100%" class="img-rounded" />
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">付款金额
-            </h3>
-        </div>
-        <div class="panel-body">
-            <h2>
-                <asp:Label ID="Label_ZFJE" runat="server" Text="0.01"></asp:Label>￥</h2>
-        </div>
-    </div>
-    <a id="getBrandWCPayRequest" href="javascript:void(0);" class="btn btn-success btn-lg btn-block">信息确认 立即付款</a>
-    <div class="row" style="height: 50px;">
-    </div>
+    <h5>距离活动结束还有：<br /></h5>
+    <h1 id="show" class="red" clientidmode="Static" runat="server">
+        <span></span>天<span></span>小时<span></span>分<span></span>秒</h1>
+    <a id="getBrandWCPayRequest" href="javascript:void(0);" class="btn btn-success btn-lg btn-block">￥&nbsp;<asp:Label ID="Label1" runat="server" Text="299"></asp:Label>&nbsp;&nbsp;立即抢购</a>
+    <script>
+        var show = document.getElementById("show").getElementsByTagName("span");
+        setInterval(function () {
+            var timeing = new Date();
+            var time = new Date("<%=getNewDate%>");
+            var num = time.getTime() - timeing.getTime();
+
+            var day = parseInt(num / (24 * 60 * 60 * 1000));
+            num = num % (24 * 60 * 60 * 1000);
+            var hour = parseInt(num / (60 * 60 * 1000));
+            num = num % (60 * 60 * 1000);
+            var minute = parseInt(num / (60 * 1000));
+            num = num % (60 * 1000);
+            var seconde = parseInt(num / 1000);
+
+            show[0].innerHTML = day;
+            show[1].innerHTML = hour;
+            show[2].innerHTML = minute;
+            show[3].innerHTML = seconde;
+        }, 100)
+		</script>
+
 </asp:Content>
 

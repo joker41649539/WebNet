@@ -10,7 +10,7 @@ public partial class GDGL_Default : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        http://localhost:56361/GDGL/GCGDAdd.aspx?id=357
+    http://localhost:56361/GDGL/GCGDAdd.aspx?id=357
         if (!IsPostBack)
         {
             Load_GridView1();
@@ -327,7 +327,10 @@ public partial class GDGL_Default : PageBase
         if (iID > 0)
         {
             /// 施工员和安装员组用户才加载
-            string strSQL = "SELECT S_USERINFO.ID,'&nbsp;'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO,S_YH_QXZ where FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and QXZID =3 order by cname";
+            string strSQL = " Select * from(SELECT S_USERINFO.ID,'&nbsp;'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO,S_YH_QXZ where FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and QXZID =3 ";//order by cname";
+
+            strSQL += " union all ";
+            strSQL += " SELECT S_USERINFO.ID,'&nbsp;(协)'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO where FLAG=3) a order by NAME desc";
             if (OP_Mode.SQLRUN(strSQL))
             {
                 if (OP_Mode.Dtv.Count > 0)
@@ -369,7 +372,12 @@ public partial class GDGL_Default : PageBase
             }
 
             /// 施工员和安装员组用户才加载
-            strSQL = "SELECT S_USERINFO.ID,'&nbsp;'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO,S_YH_QXZ where FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and QXZID =4 order by cname";
+            strSQL = " Select * from(SELECT S_USERINFO.ID,'&nbsp;'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO,S_YH_QXZ where FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and QXZID =4";// order by cname";
+
+            strSQL += " union all ";
+            strSQL += " SELECT S_USERINFO.ID,'&nbsp;(协)'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO where FLAG=3) a order by NAME desc";
+
+
             if (OP_Mode.SQLRUN(strSQL))
             {
                 if (OP_Mode.Dtv.Count > 0)
@@ -408,6 +416,36 @@ public partial class GDGL_Default : PageBase
             else
             {
                 MessageBox("", strSQL + " " + OP_Mode.strErrMsg);
+            }
+
+            LoadCharge(iID);
+        }
+    }
+
+    /// <summary>
+    /// 加载主管人员
+    /// </summary>
+    /// <param name="iID"></param>
+    private void LoadCharge(int iID)
+    {
+        string strSQL = "Select S_USERINFO.id,case S_USERINFO.FLAG when 3 then '&nbsp;(协)'+CNAME else '&nbsp;'+CNAME end CName,charge from S_USERINFO,W_GCGD_USERS where S_USERINFO.ID=W_GCGD_USERS.USERS and GCDID=" + iID + " group by CNAME,W_GCGD_USERS.charge,S_USERINFO.FLAG,S_USERINFO.ID order by CName desc";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                RadioButtonList1.DataTextField = "CName";
+                RadioButtonList1.DataValueField = "ID";
+                RadioButtonList1.DataSource = OP_Mode.Dtv;
+                RadioButtonList1.DataBind();
+
+                for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                {
+                    if (Convert.ToInt32(OP_Mode.Dtv[i]["charge"]) == 1)
+                    {
+                        RadioButtonList1.SelectedValue = OP_Mode.Dtv[i]["ID"].ToString();
+                    }
+                }
             }
         }
     }
@@ -457,6 +495,8 @@ public partial class GDGL_Default : PageBase
         //{
         if (OP_Mode.SQLRUN(strSQL))
         {
+            /// 加载主管人员
+            LoadCharge(Convert.ToInt32(GridView1.DataKeys[GridView1.SelectedIndex].Values[0]));
             MessageBox("", "安装施工人员信息保存成功。");
         }
         else
@@ -465,5 +505,22 @@ public partial class GDGL_Default : PageBase
             return;
         }
         //}
+    }
+
+    /// <summary>
+    /// 主负责人员选择变化
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int GCID = Convert.ToInt32(GridView1.DataKeys[GridView1.SelectedIndex].Values[0]);
+        int UserID = Convert.ToInt32(RadioButtonList1.SelectedValue);
+        string strSQL = " Update W_GCGD_USERS Set Charge=1 where GCDID=" + GCID + " and Users=" + UserID;
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            LoadCharge(GCID);
+        }
+        //MessageBox("", "选择：" + RadioButtonList1.SelectedItem.ToString());
     }
 }

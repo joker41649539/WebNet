@@ -140,13 +140,18 @@
                                     <asp:ListItem Value="3">人员3</asp:ListItem>
                                 </asp:CheckBoxList>
                                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="LinkButton1" OnClick="LinkButton1_Click"><i class="icon-save">&nbsp;保 存</i></asp:LinkButton>
+                                <h2>负责人：</h2>
+                                <asp:RadioButtonList AutoPostBack="true" ID="RadioButtonList1" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" RepeatColumns="10" runat="server">
+                                    <asp:ListItem>人员1</asp:ListItem>
+                                    <asp:ListItem>人员2</asp:ListItem>
+                                </asp:RadioButtonList>
                             </div>
 
                         </div>
                     </div>
                 </div>
             </div>
-           <%-- <script src="/assets/js/jquery-2.0.3.min.js"></script>
+            <%-- <script src="/assets/js/jquery-2.0.3.min.js"></script>
             <script>
                 // 字符替换
                 $("#GridView1 tr").each(function () {

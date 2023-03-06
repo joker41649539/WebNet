@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 using System.Text;
 using System.Security.Policy;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 public partial class Partner_PartnerInfo : PageBase
 {
@@ -80,13 +81,77 @@ public partial class Partner_PartnerInfo : PageBase
     /// </summary>
     private void LoadRemarkData(int UserID)
     {
-        strSQL = "Select * from w_User_Remark where RemarkUserID=" + UserID;
+        string strTemp = string.Empty;
+        strSQL = "SELECT CNAME,W_USER_REMARK.REMARK,W_USER_REMARK.CTIME,HeadUrl FROM W_USER_REMARK,S_USERINFO WHERE USERID=S_USERINFO.ID AND REMARKUSERID=" + UserID + " order by W_USER_REMARK.CTIME desc";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
-            for (int i = 0; i < OP_Mode.Dtv.Count; i++)
-            { 
-            
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                {
+                    //if (i == 0)
+                    //{
+                    //    strTemp += " <div class='timeline'>";
+                    //    strTemp += "  <span class='label label-primary arrowed-in-right label-lg'>";
+                    //    strTemp += OP_Mode.Dtv[i]["CName"].ToString();
+                    //    strTemp += "    <b>" + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("yyyy-MM-dd") + "</b>";
+                    //    strTemp += "  </span>";
+                    //    strTemp += " </div>";
+                    //}
+                    //else
+                    //{
+                    //    if (Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("yyyy-MM-dd") != Convert.ToDateTime(OP_Mode.Dtv[i - 1]["CTime"]).ToString("yyyy-MM-dd") || OP_Mode.Dtv[i]["CName"].ToString() != OP_Mode.Dtv[i - 1]["CName"].ToString())
+                    //    {
+                    //        strTemp += " <div class='timeline'>";
+                    //        strTemp += "  <span class='label label-primary arrowed-in-right label-lg'>";
+                    //        strTemp += OP_Mode.Dtv[i]["CName"].ToString();
+                    //        strTemp += "    <b>" + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("yyyy-MM-dd") + "</b>";
+                    //        strTemp += "  </span>";
+                    //        strTemp += " </div>";
+                    //    }
+                    //}
+
+                    strTemp += "<div>";
+                    strTemp += "  <div class='timeline-info'>";
+                    if (OP_Mode.Dtv[i]["HeadUrl"].ToString().Length > 0)
+                    {
+                        strTemp += "<img whidth='100%' src='" + OP_Mode.Dtv[i]["HeadUrl"].ToString() + "' />";
+                    }
+
+                  //  strTemp += "      <span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
+                    strTemp += "  </div>";
+
+                    strTemp += " <h5 class='smaller'>";
+
+                    strTemp += " <span class='label label-primary arrowed-in-right label-lg'>" + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("yyyy-MM-dd") + "</span><br/>";
+                    strTemp += " <span class='label label-info label-sm'>" + OP_Mode.Dtv[i]["CName"].ToString() + " </span>";
+
+
+                    strTemp += " </h5>";
+                    strTemp += "          <span class='widget-toolbar'>";
+                    strTemp += "              <a href='#' data-action='collapse'>";
+                    strTemp += "                 <i class='icon-chevron-up'></i>";
+                    strTemp += "             </a>";
+                    strTemp += "         </span>";
+                    strTemp += "     </div>";
+
+                    strTemp += "     <div class='widget-body'>";
+                    strTemp += "         <div class='widget-main'>";
+                    //   var reg = new RegExp("\r\n", “g”);//g,表示全部替换
+
+                    strTemp += OP_Mode.Dtv[i]["Remark"].ToString().Replace(" ", "&nbsp").Replace("\r\n", "<br>");
+                    strTemp += "       </div>";
+                    strTemp += "     </div>";
+                }
+                if (strTemp.Length > 0)
+                {
+                    ContentPlaceHolder1_QDList.InnerHtml = strTemp;
+                }
+                else
+                {
+                    MessageBox("", "错误：" + OP_Mode.strErrMsg);
+                }
             }
         }
     }

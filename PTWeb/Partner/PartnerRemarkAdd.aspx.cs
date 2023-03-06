@@ -49,7 +49,6 @@ public partial class Partner_PartnerRemarkAdd : PageBase
                     }
                 }
             }
-
             TextBox_Remark.Text = strTemp;
         }
         catch
