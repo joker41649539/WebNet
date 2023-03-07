@@ -80,10 +80,10 @@
             </asp:ContentPlaceHolder>
         </div>
         <!-- 主循环 结束-->
-        <div class="row" style="height: 80px;">
-        </div>
+<%--        <div class="row" style="height: 80px;">
+        </div>--%>
         <!-- 底部代码 开始-->
-        <div runat="server" id="FootBut" style="height: auto;">
+        <div runat="server" visible="false" id="FootBut" style="height: auto;">
             <ul class="footer-nav text-center">
                 <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/"><i class="icon-camera-retro"></i>学员风采</a></li>
                 <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/MyClass.aspx"><i class="icon-calendar"></i>我的课程</a></li>

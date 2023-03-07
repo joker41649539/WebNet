@@ -13,23 +13,18 @@ public partial class PayNotifyUrl : PageBaseXMFight
     OpMode OP_Mode = new OpMode(DefaultConStr, 0);
     protected void Page_Load(object sender, EventArgs e)
     {
-        string Temp = System.Web.HttpContext.Current.Request.UrlReferrer.ToString(); /// 获得上一页面的网址，然后依据上一页面的网址获得参数。
-        //this.Label1.Text = "http://yanwo.x76.com.cn/pay.aspx?No=B123213123131313131";
-        //if (Request.QueryString["No"] != null && Request.QueryString["No"] != "")
-        //{
         string strNo;
         try
         {
-            strNo = Temp.Substring(Temp.IndexOf("=") + 1);
 
-            //  MessageBox("", strNo);
+            strNo = Request["XSDID"];
+
             GetWeiXinPayZT(strNo);
         }
         catch
         {
-
+            MessageBox("", "付款失败！<br>如您确定被扣款了，请联系客服。");
         }
-        //}
     }
 
 
@@ -109,11 +104,11 @@ public partial class PayNotifyUrl : PageBaseXMFight
         if (return_json == "SUCCESS")
         {/// 支付成功，修改支付状态。
             //UpadateFKZT(strNo);
-            MessageBox("", "付款成功！<br>我们会尽快安排发货。", "./");
+            MessageBox("", "付款成功！<br>我们会尽快安排发货。");
         }
         else
         {
-            MessageBox("", "付款失败！<br>如您确定被扣款了，请联系客服。", "./");
+            MessageBox("", "付款失败！<br>如您确定被扣款了，请联系客服。");
         }
 
     }

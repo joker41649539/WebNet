@@ -28,6 +28,7 @@
     <div class="hr-10"></div>
     <div class="page-header">
         <h1>
+            <asp:HiddenField ID="HiddenField_ZID" runat="server" />
             <asp:HiddenField ID="HiddenField_BXRS" runat="server" />
             <asp:HyperLink ID="Label_GCMC" runat="server">HyperLink</asp:HyperLink><small><i class="icon-double-angle-right"></i>&nbsp;&nbsp;<asp:Label ID="Label_AZWZ" runat="server" Text="Label"></asp:Label></small></h1>
     </div>
@@ -64,8 +65,8 @@
                 <div class="widget-body">
                     <asp:TextBox ID="TextBox_Remark" Width="100%" placeholder="如有需要请填写备注信息" runat="server" Height="60px" TextMode="MultiLine"></asp:TextBox>
                 </div>
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="javascript:return confirm('您确定是【主装】吗？')" ID="LinkButton_Save" class="btn btn-info" runat="server" OnClick="LinkButton_Save_Click"><i class="icon-save bigger-110"></i>主 装</asp:LinkButton>
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="javascript:return confirm('您确定是【辅装】吗？')" ID="LinkButton1" class="btn btn-warning" runat="server" OnClick="LinkButton_Save_Click1"><i class="icon-save bigger-110"></i>辅 装</asp:LinkButton>
+                <asp:LinkButton UseSubmitBehavior="false" ID="LinkButton_Save" class="btn btn-info" runat="server" OnClick="LinkButton_Save_Click"><i class="icon-save bigger-110"></i>确认布线</asp:LinkButton>
+               <%-- <asp:LinkButton UseSubmitBehavior="false" OnClientClick="javascript:return confirm('您确定是【辅装】吗？')" ID="LinkButton1" class="btn btn-warning" runat="server" OnClick="LinkButton_Save_Click1"><i class="icon-save bigger-110"></i>辅 装</asp:LinkButton>--%>
             </div>
         </div>
         <!-- /widget-box -->

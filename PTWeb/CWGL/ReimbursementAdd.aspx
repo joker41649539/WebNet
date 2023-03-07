@@ -222,6 +222,4 @@
     <script type="text/javascript">
         $(function () { $('#TextBoxSTime').datepicker(); });
     </script>
-</div>
-    </div>
 </asp:Content>

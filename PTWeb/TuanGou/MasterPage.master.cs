@@ -57,8 +57,8 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\"icon-home\"></i>首页</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/\"><i class=\"icon-camera-retro\"></i>学员风采</a></li>";
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-info\"></i>关于我们</a></li>";
-        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-credit-card\"></i>我要开团</a></li>";
-        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/pay.aspx\"><i class=\"icon-book\"></i>测试付款</a></li>";
+        //strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-credit-card\"></i>我要开团</a></li>";
+        //strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/pay.aspx\"><i class=\"icon-book\"></i>测试付款</a></li>";
         strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-comments\"></i>联系我们</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/UserInfo.aspx\"><i class=\"icon-exclamation-sign\"></i>个人信息</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\" icon-exclamation-sign\"></i>帮助信息</a></li>";
@@ -185,7 +185,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         {
 
         }
-        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf75c5c5ac11d5256&redirect_uri=http://ptweb.x76.com.cn/Question/&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf60778eb4d1003de&redirect_uri=http://ptweb.x76.com.cn/TuanGou/Offer.aspx?ID=1&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
         if (string.IsNullOrEmpty(code))
         {
 

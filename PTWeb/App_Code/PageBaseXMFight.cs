@@ -367,7 +367,7 @@ public class PageBaseXMFight : System.Web.UI.Page
     {
         string APPID = "wxf60778eb4d1003de";//WebConfigurationManager.AppSettings["CorpId"];
         // string TENPAY = "1";
-        string PARTNER = WebConfigurationManager.AppSettings["PARTNER"];// "1259901501";//商户号
+        string PARTNER = WebConfigurationManager.AppSettings["PARTNER"];// "1529873731";//商户号
         string APPSECRET = WebConfigurationManager.AppSettings["WeixinAppSecret"];
         string PARTNER_KEY = WebConfigurationManager.AppSettings["JSPIKey"];// "6f498ef1c21be21531b39dd1c668c26f";//APPSECRET
         string strPAYURL = "http://ptweb.x76.com.cn/Tuangou/PayNotifyUrl.aspx";// 不允许传递参数
@@ -656,12 +656,12 @@ public class PageBaseXMFight : System.Web.UI.Page
     /// <summary>
     /// 生成获得二维码的值
     /// </summary>
-    public string EcodTemp(int strID,int iTimes)
+    public string EcodTemp(int strID, int iTimes)
     {/// iTimes 单位是S
         string sValue = string.Empty;
         var url = string.Format(" https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}", GetaccessToken());
 
-        var data = "{\"expire_seconds\": "+ iTimes.ToString() + ",\"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": " + strID + "}}}";
+        var data = "{\"expire_seconds\": " + iTimes.ToString() + ",\"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": " + strID + "}}}";
 
         var serializer = new JavaScriptSerializer();
         var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
@@ -792,7 +792,7 @@ public class PageBaseXMFight : System.Web.UI.Page
             var url = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());
 
             var data = "{";
-
+            sURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf60778eb4d1003de&redirect_uri=http://" + sURL + "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
             data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 微信ID
             data += "\"template_id\":\"NMG1HZA6J6BTnjeZsvpwziIpnG4jiFPM8nfCvn60RLs\",";     /// 模板ID
             data += "\"url\":\"" + sURL + "\",";
@@ -889,7 +889,7 @@ public class PageBaseXMFight : System.Web.UI.Page
     public string Draw(string strOPENID, int strID, string strHeadImageUrl)
     {
         //背景图片
- //       string path = Server.MapPath(@"/TuiGuang/White.png");
+        //       string path = Server.MapPath(@"/TuiGuang/White.png");
         string path = Server.MapPath(@"/images/Amount.png");
 
         System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(path);

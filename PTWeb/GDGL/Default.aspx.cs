@@ -434,6 +434,8 @@ public partial class GDGL_Default : PageBase
         {
             if (OP_Mode.Dtv.Count > 0)
             {
+                RadioButtonList1.Visible = true;
+
                 RadioButtonList1.DataTextField = "CName";
                 RadioButtonList1.DataValueField = "ID";
                 RadioButtonList1.DataSource = OP_Mode.Dtv;
@@ -446,6 +448,10 @@ public partial class GDGL_Default : PageBase
                         RadioButtonList1.SelectedValue = OP_Mode.Dtv[i]["ID"].ToString();
                     }
                 }
+            }
+            else
+            {
+                RadioButtonList1.Visible = false;
             }
         }
     }
@@ -517,6 +523,7 @@ public partial class GDGL_Default : PageBase
         int GCID = Convert.ToInt32(GridView1.DataKeys[GridView1.SelectedIndex].Values[0]);
         int UserID = Convert.ToInt32(RadioButtonList1.SelectedValue);
         string strSQL = " Update W_GCGD_USERS Set Charge=1 where GCDID=" + GCID + " and Users=" + UserID;
+        strSQL += " Update W_GCGD_USERS Set Charge=0 where GCDID=" + GCID + " and Users!=" + UserID;
         if (OP_Mode.SQLRUN(strSQL))
         {
             LoadCharge(GCID);

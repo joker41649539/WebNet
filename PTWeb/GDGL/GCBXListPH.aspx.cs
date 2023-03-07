@@ -56,7 +56,7 @@ public partial class GDGL_GCBXListPH : PageBase
             MessageBox("", "参数错误。", "./");
             return;
         }
-        strSQL = "Select distinct W_GCGD2.ID ID,SBBH,SBMC,W_GCGD1.ID IID,GCMC,AZWZ,(Select sum(FS) from W_GCGD_FS where GCMXID=W_GCGD2.ID) ZJD,(Select Count(CNAME) from W_GCGD_USERS,W_GCGD1,W_GCGD2,S_USERINFO where W_GCGD1.GCDH=W_GCGD2.GCDH and GCDID=W_GCGD1.ID and USERS=S_USERINFO.ID and W_GCGD_USERS.Flag=0 and W_GCGD2.ID=" + iid + ") BXRS from W_GCGD1,W_GCGD2,W_GCGD_USERS where azwz =(Select AZWZ from W_GCGD2 where W_GCGD2.ID=" + iid + ") and W_GCGD1.GCDH = (Select GCDH from W_GCGD2 where W_GCGD2.ID=" + iid + ") and W_GCGD2.GCDH=W_GCGD1.GCDH and W_GCGD1.ID=GCDID and USERS=" + DefaultUser + " ";
+        strSQL = "Select distinct W_GCGD2.ID ID,(Select top 1 USERS from W_GCGD_USERS where GCDID=W_GCGD1.ID and Charge=1 and Flag=0) ZID,SBBH,SBMC,W_GCGD1.ID IID,GCMC,AZWZ,(Select sum(FS) from W_GCGD_FS where GCMXID=W_GCGD2.ID) ZJD,(Select Count(CNAME) from W_GCGD_USERS,W_GCGD1,W_GCGD2,S_USERINFO where W_GCGD1.GCDH=W_GCGD2.GCDH and GCDID=W_GCGD1.ID and USERS=S_USERINFO.ID and W_GCGD_USERS.Flag=0 and W_GCGD2.ID=" + iid + ") BXRS from W_GCGD1,W_GCGD2,W_GCGD_USERS where azwz =(Select AZWZ from W_GCGD2 where W_GCGD2.ID=" + iid + ") and W_GCGD1.GCDH = (Select GCDH from W_GCGD2 where W_GCGD2.ID=" + iid + ") and W_GCGD2.GCDH=W_GCGD1.GCDH and W_GCGD1.ID=GCDID and USERS=" + DefaultUser + " ";
 
         if (OP_Mode.SQLRUN(strSQL))
 
@@ -75,6 +75,7 @@ public partial class GDGL_GCBXListPH : PageBase
             strTempHtml = "<h5>";
             if (OP_Mode.Dtv.Count > 0)
             {
+                HiddenField_ZID.Value = OP_Mode.Dtv[0]["ZID"].ToString();
                 HiddenField_BXRS.Value = OP_Mode.Dtv[0]["BXRS"].ToString();
                 Label_GCMC.Text = OP_Mode.Dtv[0]["GCMC"].ToString();
                 Label_GCMC.NavigateUrl = "/GDGL/MyGDBXWZ.aspx?ID=" + OP_Mode.Dtv[0]["IID"].ToString();
@@ -250,35 +251,23 @@ public partial class GDGL_GCBXListPH : PageBase
     protected void LinkButton_Save_Click(object sender, EventArgs e)
     {/// 主安装 默认60%
 
-        int iZAZFS = 0;
-
-        if (Convert.ToInt16(HiddenField_BXRS.Value) == 2)
-        {/// 双人安装默认为 55%-45%
-            iZAZFS = 55;
-        }
-        else if (Convert.ToInt16(HiddenField_BXRS.Value) == 3)
-        {/// 三人安装默认为 4-3-3
-            iZAZFS = 40;
-        }
-        else if (Convert.ToInt16(HiddenField_BXRS.Value) == 1)
-        {/// 单人安装为 100%
-            iZAZFS = 100;
-        }
-        else if (Convert.ToInt16(HiddenField_BXRS.Value) > 3)
+        if (HiddenField_ZID.Value != DefaultUser)
         {
-            MessageBox("", "同时布线人数过多，请联系相关负责人。");
+            MessageBox("","您非项目负责人，无需填写。");
             return;
-        }
-
-        string iRadioValue = RadioButtonList1.SelectedValue;
-        if (iRadioValue.Length <= 0)
-        {
-            MessageBox("", "请选择完成进度。");
         }
         else
         {
-            iZAZFS = iZAZFS * Convert.ToInt32(iRadioValue) / 100;
-            SaveProgress(iZAZFS);
+            int iRadioValue = Convert.ToInt32(RadioButtonList1.SelectedValue);
+            if (iRadioValue <= 0)
+            {
+                MessageBox("", "请选择完成进度。");
+            }
+            else
+            {
+                //iZAZFS = iZAZFS * Convert.ToInt32(iRadioValue) / 100;
+                SaveProgress(iRadioValue);
+            }
         }
     }
     protected void LinkButton_Save_Click1(object sender, EventArgs e)
@@ -286,40 +275,40 @@ public partial class GDGL_GCBXListPH : PageBase
 
         int iZAZFS = 40;
 
-        if (Convert.ToInt16(HiddenField_BXRS.Value) == 2)
-        {/// 双人安装默认为 55%-45%
-            iZAZFS = 45;
-        }
-        else if (Convert.ToInt16(HiddenField_BXRS.Value) == 3)
-        {/// 三人安装默认为 4-3-3
-            iZAZFS = 30;
-        }
-        else if (Convert.ToInt16(HiddenField_BXRS.Value) == 1)
-        {/// 单人安装为 100%
-            iZAZFS = 0;
-        }
-        else if (Convert.ToInt16(HiddenField_BXRS.Value) > 3)
-        {
-            MessageBox("", "同时布线人数过多，请联系相关负责人。");
-            return;
-        }
+        //if (Convert.ToInt16(HiddenField_BXRS.Value) == 2)
+        //{/// 双人安装默认为 55%-45%
+        //    iZAZFS = 45;
+        //}
+        //else if (Convert.ToInt16(HiddenField_BXRS.Value) == 3)
+        //{/// 三人安装默认为 4-3-3
+        //    iZAZFS = 30;
+        //}
+        //else if (Convert.ToInt16(HiddenField_BXRS.Value) == 1)
+        //{/// 单人安装为 100%
+        //    iZAZFS = 0;
+        //}
+        //else if (Convert.ToInt16(HiddenField_BXRS.Value) > 3)
+        //{
+        //    MessageBox("", "同时布线人数过多，请联系相关负责人。");
+        //    return;
+        //}
 
-        string iRadioValue = RadioButtonList1.SelectedValue;
-        if (iRadioValue.Length <= 0)
+        int iRadioValue = Convert.ToInt32(RadioButtonList1.SelectedValue);
+        if (iRadioValue <= 0)
         {
             MessageBox("", "请选择完成进度。");
         }
         else
         {
-            iZAZFS = iZAZFS * Convert.ToInt32(iRadioValue) / 100;
-            SaveProgress(iZAZFS);
+            //iZAZFS = iZAZFS * Convert.ToInt32(iRadioValue) / 100;
+            SaveProgress(iRadioValue);
         }
     }
 
     /// <summary>
     /// 保存工程进度
     /// </summary>
-    private void SaveProgress(int iFS)
+    private void SaveProgress(int iAZPercent)
     {
         string strSQL = string.Empty;
         string strTempMSG = string.Empty;
@@ -340,11 +329,11 @@ public partial class GDGL_GCBXListPH : PageBase
         {
             iGCMXID = Convert.ToInt32(iCK[i]);
             // 删除自己原积分
-            strSQL += " Delete from W_GCGD_FS where GCMXID=" + iGCMXID + " and userID=" + DefaultUser;
+            strSQL += " Delete from W_GCGD_FS where GCMXID=" + iGCMXID;
             // 插入积分
-            strSQL += " Insert into W_GCGD_FS (GCMXID,USERID,FS,Remark) values (" + iGCMXID + "," + DefaultUser + "," + iFS + ",'" + strRemark + "') ";
+            strSQL += " Insert into W_GCGD_FS (GCMXID,USERID,FS,Remark) Select " + iGCMXID + ",USERS,ipercent*" + iAZPercent + "/100,'" + strRemark + "' from W_GCGD_USERS where Flag=0 and GCDID=" + HiddenField_GCID.Value;
             /// 插入记录表，后期统计使用
-            strSQL += " Insert into W_GCGD_FS_BXList (GCMXID,FS,UserID,Remark) values (" + iGCMXID + "," + iFS + "," + DefaultUser + ",'" + strRemark + "')";
+            strSQL += " Insert into W_GCGD_FS_BXList (GCMXID,FS,UserID,Remark) Select " + iGCMXID + ",USERS,ipercent*" + iAZPercent + "/100,'" + strRemark + "' from W_GCGD_USERS where Flag=0 and GCDID=" + HiddenField_GCID.Value;
         }
 
         if (strSQL.Length > 0)
