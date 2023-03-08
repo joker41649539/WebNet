@@ -3,7 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
-
         function PleaseWaite() {
             var temp = document.getElementById("demo").innerHTML;
 
@@ -17,7 +16,7 @@
                 latitude: iJD,
                 longitude: iWD,
                 name: '我在这里',
-                address:'这在哪',// document.getElementById("TextBox_WZ").value,
+                address: '这在哪',// document.getElementById("TextBox_WZ").value,
                 scale: 14
             });
         }
@@ -96,6 +95,7 @@
                 });
             };
         });
+
     </script>
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Name" ClientIDMode="Static" runat="server" />
@@ -110,6 +110,7 @@
             </li>
         </ul>
     </div>
+    <input id="Button1" onclick="init()" type="button" value="button" />
     <div class="row">
         <div class="col-xs-6">
             <h3 class="header smaller lighter green">

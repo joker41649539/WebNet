@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="QDSearch.aspx.cs" Inherits="WeChat_QDSearch" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
     <script src="/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         function add() {
@@ -95,7 +96,16 @@
                 }
             });
         });
+
+        function init(a1, a2, b1, b2) {
+            var a = new qq.maps.LatLng(a1, a2);
+            var b = new qq.maps.LatLng(b1, b2);
+            //计算两点间的距离
+            alert("两点直线距离为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米");
+        }
+
     </script>
+
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Name" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Screen" ClientIDMode="Static" runat="server" />
@@ -110,6 +120,7 @@
             <li class="active"><a href="/WeChat/QDSearch.aspx">签到记录</a></li>
         </ul>
     </div>
+    
     <div class="page-content">
         <div class="page-header">
             <h1>签到记录<small><i class="icon-double-angle-right"></i>&nbsp;<a href="/WeChat/QDSearch.aspx">添加详细签到</a>                                </small></h1>
@@ -169,4 +180,5 @@
             <!--Bug提交结束 //-->
             <div id="QDList" runat="server" class="timeline-container"></div>
         </div>
+    </div>
 </asp:Content>

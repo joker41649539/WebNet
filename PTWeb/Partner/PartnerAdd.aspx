@@ -107,7 +107,7 @@
                     <div class="form-group">
                         <h3><b>身份证头像面</b></h3>
                         <div class="col-sm-9">
-                            <input type="file" name="UpImg" capture="camera" value="拍照" accept="image/*" />
+                            <input type="file" name="UpImg" accept="image/*" />
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                     <div class="form-group">
                         <h3><b>身份证国徽面</b></h3>
                         <div class="col-sm-9">
-                            <input type="file" name="UpImg" capture="camera" value="拍照" accept="image/*" />
+                            <input type="file" name="UpImg" accept="image/*" />
                         </div>
                     </div>
                 </div>

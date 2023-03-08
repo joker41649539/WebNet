@@ -140,6 +140,14 @@ public partial class WeChat_QDSearch : PageBase
 
                     strTemp += "     <div class='widget-body'>";
                     strTemp += "         <div class='widget-main'>";
+
+                    if (i + 1 < OP_Mode.Dtv.Count)
+                    {
+                        if (OP_Mode.Dtv[i]["ZB_WZ"].ToString() != OP_Mode.Dtv[i + 1]["ZB_WZ"].ToString())
+                        {
+                            strTemp += "<input id=\"Button1\" class=\"btn btn-minier\" type=\"button\" onclick=\"init(" + OP_Mode.Dtv[i]["ZB_WD"] + "," + OP_Mode.Dtv[i]["ZB_JD"] + "," + OP_Mode.Dtv[i + 1]["ZB_WD"] + "," + OP_Mode.Dtv[i + 1]["ZB_JD"] + ")\" value=\"距上次签到距离\" />  ";
+                        }
+                    }
                     strTemp += OP_Mode.Dtv[i]["Remark"];
                     if (OP_Mode.Dtv[i]["Image1"].ToString().Length > 0)
                     {

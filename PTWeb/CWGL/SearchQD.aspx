@@ -1,6 +1,15 @@
 ﻿<%@ Page Title="签到查询" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="SearchQD.aspx.cs" Inherits="CWGL_SearchQD" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
+    <script type="text/javascript">
+        function init(a1, a2, b1, b2) {
+            var a = new qq.maps.LatLng(a1, a2);
+            var b = new qq.maps.LatLng(b1, b2);
+            //计算两点间的距离
+            alert("两点直线距离为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米");
+        }
+    </script>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
