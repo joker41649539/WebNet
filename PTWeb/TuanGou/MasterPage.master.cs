@@ -56,12 +56,13 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         strTemp += "<ul class=\"footer-nav text-center\">";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\"icon-home\"></i>首页</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/\"><i class=\"icon-camera-retro\"></i>学员风采</a></li>";
-        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-info\"></i>关于我们</a></li>";
-        //strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-credit-card\"></i>我要开团</a></li>";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-credit-card\"></i>我的订单</a></li>";
+        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/Contact.aspx\"><i class=\"icon-info\"></i>关于我们</a></li>";
         //strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/pay.aspx\"><i class=\"icon-book\"></i>测试付款</a></li>";
-        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-comments\"></i>联系我们</a></li>";
+        // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-comments\"></i>联系我们</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/UserInfo.aspx\"><i class=\"icon-exclamation-sign\"></i>个人信息</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\" icon-exclamation-sign\"></i>帮助信息</a></li>";
+
         if (iUserID == 7 || iUserID == 6)
         {
             ManageMenu();
@@ -69,6 +70,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Class.aspx\"><i class=\"icon-calendar\"></i>课程管理</a></li>";
             strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/Manage/Bance.aspx\"><i class=\"icon-bar-chart\"></i>盈利报表</a></li>";
         }
+
         strTemp += "</ul>";
 
         FootBut.InnerHtml = strTemp;
@@ -216,130 +218,132 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                 else
                 {
                     opentid = obj["openid"];
+                    Response.Cookies["WeChat_XMFight"]["COPENID"] = opentid.ToString();
+
                     //MessageBox("", "opentid：" + opentid);
                 }
 
-                // string tempToken = GetaccessWebToken(code);
+                //    // string tempToken = GetaccessWebToken(code);
 
-                url = string.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN", accessToken, opentid);
-                data = client.DownloadString(url);
-                var userInfo = serializer.Deserialize<Dictionary<string, object>>(data);
-                DeBugMsg += "userInfo：" + data.ToString();
-                //int vsex = 2;
+                //    //url = string.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN", accessToken, opentid);
+                //    //data = client.DownloadString(url);
+                //    //var userInfo = serializer.Deserialize<Dictionary<string, object>>(data);
+                //    //DeBugMsg += "userInfo：" + data.ToString();
+                //    ////int vsex = 2;
 
-                //var vcity = "中国";
+                //    ////var vcity = "中国";
 
-                //if (userInfo["sex"].ToString() == "1")
-                //{
-                //    vsex = 0;
+                //    ////if (userInfo["sex"].ToString() == "1")
+                //    ////{
+                //    ////    vsex = 0;
+                //    ////}
+
+                //    ////vcity = userInfo["country"].ToString() + userInfo["province"].ToString() + userInfo["city"].ToString();
+                //    ////DeBugMsg += "城市：" + vcity;
+                //    ////if (opentid.Length == 0)
+                //    ////{
+                //    ////    opentid = "test111";
+                //    ////}
+                //    //string UserName = "testName";
+                //    //string HeadUserUrl = "";
+
+                //    //UserName = userInfo["nickname"].ToString();
+                //    //DeBugMsg += "昵称：" + UserName;
+                //    //HeadUserUrl = userInfo["headimgurl"].ToString();
+
+                //    //DeBugMsg += "头像：" + HeadUserUrl;
+
+
+                //    string strSQL;
+                //    strSQL = " Select * from XMFight_Users where WeChatOpenID='" + opentid.ToString() + "'";
+
+                //    if (OP_Mode.SQLRUN(strSQL))
+                //    {
+                //        if (OP_Mode.Dtv.Count > 0)
+                //        {
+                //            if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
+                //            {
+                //                MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
+                //                return;
+                //            }
+                //            /// 如果数据库有ID，则直接登录。
+                //            Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                //            Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                //            Response.Cookies["WeChat_XMFight"]["COPENID"] = opentid.ToString();
+                //            Response.Cookies["WeChat_XMFight"]["CNAME"] = opentid.ToString();
+                //            Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                //          //  Response.Cookies["WeChat_XMFight"]["HEADURL"] = HeadUserUrl;
+
+                //            Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
+
+                //         //   Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
+                //          //  Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
+
+                //            ///设置COOKIE最长时间
+                //        //    Response.Cookies["WeChat_Question"].Expires = DateTime.MaxValue;
+
+                //            /// 更新登录时间
+                //            OP_Mode.SQLRUN("Update XMFight_Users set Ltime=getdate() where WeChatOpenID='" + opentid.ToString() + "'");
+
+                //            return;
+                //        }
+                //        else
+                //        {
+                //            try
+                //            {
+
+                //                strSQL = " INSERT INTO XMFight_Users (Nick,HEADImage,WeChatOpenID) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "')";
+
+                //                strSQL += " Select * from XMFight_Users where WeChatOpenID='" + opentid + "'";
+
+                //                DeBugMsg += "+" + strSQL + "+";
+
+                //                if (OP_Mode.SQLRUN(strSQL))
+                //                {
+                //                    if (OP_Mode.Dtv.Count > 0)
+                //                    {
+                //                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                //                        Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                //                        Response.Cookies["WeChat_XMFight"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                //                        Response.Cookies["WeChat_XMFight"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["Nick"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                //                        Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                //                        Response.Cookies["WeChat_XMFight"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
+
+                //                        Response.Cookies["WeChat_XMFight"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
+                //                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
+
+                //                        Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
+                //                        Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
+                //                        ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
+                //                       // Response.Cookies["WeChat_Question"].Expires = DateTime.MaxValue;
+
+                //                        string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
+
+                //                        //MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADImage"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["Nick"].ToString() + " 注册成功。<br/>祝您生活愉快。";
+
+                //                        //MessageBox("", MSG);
+
+                //                        return;
+                //                    }
+                //                }
+                //            }
+                //            catch (Exception ex)
+                //            {
+                //                DeBugMsg += "<br>" + ex.ToString();
+                //               // MessageBox("", "4：" + DeBugMsg);
+                //            }
+                //        }
+                //    }
+                //    else
+                //    {
+                //        DeBugMsg += OP_Mode.strErrMsg;
+                //       // MessageBox("", "5：" + DeBugMsg);
+                //    }
+
                 //}
-
-                //vcity = userInfo["country"].ToString() + userInfo["province"].ToString() + userInfo["city"].ToString();
-                //DeBugMsg += "城市：" + vcity;
-                //if (opentid.Length == 0)
+                //if (DeBugMsg.Length > 0)
                 //{
-                //    opentid = "test111";
-                //}
-                string UserName = "testName";
-                string HeadUserUrl = "";
-
-                UserName = userInfo["nickname"].ToString();
-                DeBugMsg += "昵称：" + UserName;
-                HeadUserUrl = userInfo["headimgurl"].ToString();
-
-                DeBugMsg += "头像：" + HeadUserUrl;
-
-
-                string strSQL;
-                strSQL = " Select * from XMFight_Users where WeChatOpenID='" + opentid.ToString() + "'";
-
-                if (OP_Mode.SQLRUN(strSQL))
-                {
-                    if (OP_Mode.Dtv.Count > 0)
-                    {
-                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
-                        {
-                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
-                            return;
-                        }
-                        /// 如果数据库有ID，则直接登录。
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_XMFight"]["COPENID"] = opentid.ToString();
-                        Response.Cookies["WeChat_XMFight"]["CNAME"] = HttpUtility.UrlEncode(UserName);
-                        Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                        Response.Cookies["WeChat_XMFight"]["HEADURL"] = HeadUserUrl;
-
-                        Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
-
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
-
-                        ///设置COOKIE最长时间
-                    //    Response.Cookies["WeChat_Question"].Expires = DateTime.MaxValue;
-
-                        /// 更新登录时间
-                        OP_Mode.SQLRUN("Update XMFight_Users set Ltime=getdate(),HEADImage='" + HeadUserUrl + "' where WeChatOpenID='" + opentid.ToString() + "'");
-
-                        return;
-                    }
-                    else
-                    {
-                        try
-                        {
-
-                            strSQL = " INSERT INTO XMFight_Users (Nick,HEADImage,WeChatOpenID) VALUES ('" + UserName + "','" + HeadUserUrl + "','" + opentid + "')";
-
-                            strSQL += " Select * from XMFight_Users where WeChatOpenID='" + opentid + "'";
-
-                            DeBugMsg += "+" + strSQL + "+";
-
-                            if (OP_Mode.SQLRUN(strSQL))
-                            {
-                                if (OP_Mode.Dtv.Count > 0)
-                                {
-                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFight"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFight"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["Nick"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
-                                    Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                                    Response.Cookies["WeChat_XMFight"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
-
-                                    Response.Cookies["WeChat_XMFight"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
-                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
-
-                                    Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
-                                    Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
-                                    ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
-                                   // Response.Cookies["WeChat_Question"].Expires = DateTime.MaxValue;
-
-                                    string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
-
-                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADImage"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["Nick"].ToString() + " 注册成功。<br/>祝您生活愉快。";
-
-                                    MessageBox("", MSG);
-
-                                    return;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            DeBugMsg += "<br>" + ex.ToString();
-                            MessageBox("", "4：" + DeBugMsg);
-                        }
-                    }
-                }
-                else
-                {
-                    DeBugMsg += OP_Mode.strErrMsg;
-                    MessageBox("", "5：" + DeBugMsg);
-                }
-
-            }
-            if (DeBugMsg.Length > 0)
-            {
-                MessageBox("", DeBugMsg);
+                //   // MessageBox("", DeBugMsg);
             }
         }
 

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 <html>
-<head>
+<head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="" />
     <meta name="description" content="" />
@@ -26,7 +26,7 @@
     <script src='/assets/alert/makeSy.js'></script>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/XMFightLogo.ico" media="screen" />
-    <title>团购信息</title>
+    <title>旭铭搏击</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -57,8 +57,8 @@
             </div>
         </div>
         <!-- 管理菜单//-->
-       <div class="main-container-inner" runat="server" id="LeftMenu" visible="false" />
-         <%--            <!-- //-->
+        <div class="main-container-inner" runat="server" id="LeftMenu" visible="false" />
+        <%--            <!-- //-->
         <div class="center">
             <div class="page-content" style="height: auto;">
                 <span class="profile-picture">
@@ -80,17 +80,10 @@
             </asp:ContentPlaceHolder>
         </div>
         <!-- 主循环 结束-->
-<%--        <div class="row" style="height: 80px;">
-        </div>--%>
+        <div class="row" style="height: 80px;">&nbsp;
+        </div>
         <!-- 底部代码 开始-->
-        <div runat="server" visible="false" id="FootBut" style="height: auto;">
-            <ul class="footer-nav text-center">
-                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/"><i class="icon-camera-retro"></i>学员风采</a></li>
-                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/MyClass.aspx"><i class="icon-calendar"></i>我的课程</a></li>
-                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Contact.aspx"><i class="icon-comments"></i>联系我们</a></li>
-                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Manage/Class.aspx"><i class="icon-calendar"></i>课程管理</a></li>
-                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Manage/Bance.aspx"><i class="icon-bar-chart"></i>盈利报表</a></li>
-            </ul>
+        <div runat="server" id="FootBut" style="height: auto;">
         </div>
         <!-- 底部代码 结束-->
         <!-- 菜单使用脚本 开始-->

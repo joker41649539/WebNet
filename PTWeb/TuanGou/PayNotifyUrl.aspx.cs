@@ -28,25 +28,25 @@ public partial class PayNotifyUrl : PageBaseXMFight
     }
 
 
-    /// <summary>
-    /// 修改付款状态
-    /// </summary>
-    /// <param name="strNo">订单编号</param>
-    public void UpadateFKZT(string strNo)
-    {
-        string strSQL = "UPDATE w_Buy1 SET FKJG=1,LTIME=GETDATE() WHERE DDNO='" + strNo + "' Select * from w_Buy1 where DDNO='" + strNo + "'";
+    ///// <summary>
+    ///// 修改付款状态
+    ///// </summary>
+    ///// <param name="strNo">订单编号</param>
+    //public void UpadateFKZT(string strNo)
+    //{
+    //    string strSQL = "UPDATE w_Buy1 SET FKJG=1,LTIME=GETDATE() WHERE DDNO='" + strNo + "' Select * from w_Buy1 where DDNO='" + strNo + "'";
 
-        if (OP_Mode.SQLRUN(strSQL))
-        {
-            string strOpenID = "ooUML6EsI6okXuBBhZ-_l4ur204Y";// Request.Cookies["WeChat_Yanwo"]["COPENID"];
-            if (strOpenID.Length > 0)
-            {
-                SendWeiXinDDZFCG(strOpenID, "有人下单咯", OP_Mode.Dtv[0]["ZJE"].ToString(), "不知道买的啥，块去看看", "请尽快处理订单。", "yanwo.x76.com.cn/Manage.aspx");
-            }
-            MessageBox("", "付款成功！<br>我们会尽快安排发货。", "./");
-            return;
-        }
-    }
+    //    if (OP_Mode.SQLRUN(strSQL))
+    //    {
+    //        string strOpenID = "ooUML6EsI6okXuBBhZ-_l4ur204Y";// Request.Cookies["WeChat_Yanwo"]["COPENID"];
+    //        if (strOpenID.Length > 0)
+    //        {
+    //            SendWeiXinDDZFCG(strOpenID, "有人下单咯", OP_Mode.Dtv[0]["ZJE"].ToString(), "不知道买的啥，块去看看", "请尽快处理订单。", "yanwo.x76.com.cn/Manage.aspx");
+    //        }
+    //        MessageBox("", "付款成功！<br>我们会尽快安排发货。", "./");
+    //        return;
+    //    }
+    //}
 
     /// <summary>
     /// 依据销售单ID查询订单支付状态
@@ -104,12 +104,96 @@ public partial class PayNotifyUrl : PageBaseXMFight
         if (return_json == "SUCCESS")
         {/// 支付成功，修改支付状态。
             //UpadateFKZT(strNo);
-            MessageBox("", "付款成功！<br>我们会尽快安排发货。");
+            InsertIntoData();
         }
         else
         {
             MessageBox("", "付款失败！<br>如您确定被扣款了，请联系客服。");
         }
 
+    }
+
+    /// <summary>
+    /// 插入数据
+    /// </summary>
+    private void InsertIntoData()
+    {
+        string strSQL = string.Empty;
+        try
+        {
+            string weixinopenid = Request.Cookies["WeChat_XMFight"]["COPENID"];//"ollQItx5i3C0IUC_sQRvEzzQfXE4";//
+            int iOfferID = Convert.ToInt32(Request["OfferID"]);
+            string DDNo = Request["XSDID"].ToString().Replace("'", "");
+
+            strSQL = "insert into XMFight_Offer_List (OfferDDNo,OfferID,offername,offerprice,openID,payflag) Select '" + DDNo + "'," + iOfferID + ",OfferName,OfferPrice,'" + weixinopenid + "',1 from XMFight_Offer where id=1";
+            strSQL += " Select * from XMFight_Offer Where ID=" + iOfferID;
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                if (OP_Mode.Dtv.Count > 0)
+                {
+                    Label_OfferName.Text = OP_Mode.Dtv[0]["Offername"].ToString();
+                }
+
+                string strOpenID = "ooUML6EsI6okXuBBhZ-_l4ur204Y";// Request.Cookies["WeChat_Yanwo"]["COPENID"];
+                if (strOpenID.Length > 0)
+                {
+                    /// 给管理员推送消息
+                    SendWeiXinDDZFCG(strOpenID, "团购活动抢购成功", OP_Mode.Dtv[0]["OfferPrice"].ToString(), OP_Mode.Dtv[0]["OfferName"].ToString(), "请尽快处理订单。", "ptweb.x76.com.cn/XMFight/");
+                }
+                /// 给用户推送消息
+                SendWeiXinDDZFCG(weixinopenid, "订单号：" + DDNo, OP_Mode.Dtv[0]["OfferPrice"].ToString(), OP_Mode.Dtv[0]["OfferName"].ToString(), "后台工作人员会尽快和您联系。", "ptweb.x76.com.cn/Tuangou/");
+
+                MessageBox("", "恭喜抢购成功！<br>请尽快填写相关信息，工作人员会第一时间联系您。");
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        UpdateDataInfo();
+    }
+
+    /// <summary>
+    /// 更新信息
+    /// </summary>
+    private void UpdateDataInfo()
+    {
+        string strName = TextBox_Name.Text.Replace("'", "");
+        string strTel = TextBox_Tel.Text.Replace("'", "");
+        string strRemark = TextBox_Remark.Text.Replace("'", "");
+
+        string strDDNo = Request["XSDID"];
+        string strErrMsg = string.Empty;
+        int i = 0;
+        if (strName.Length <= 0)
+        {
+            i++;
+            strErrMsg += i.ToString() + "、姓名必须填写。<br>";
+        }
+
+        if (strTel.Length != 11)
+        {
+            i++;
+            strErrMsg += i.ToString() + "、手机号码必须认真填写。<br>";
+        }
+
+        if (i > 0)
+        {
+            strErrMsg += "请认真填写以上信息。";
+            MessageBox("", strErrMsg);
+        }
+        else
+        {
+            string strSQL = "Update XMFight_Offer_List Set ChildName='" + strName + "',Tel='" + strTel + "',Remark='" + strRemark + "',LTime=getdate() where OfferDDNo='" + strDDNo.Replace("'", "") + "'";
+
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                MessageBox("", "您的信息保存成功。<br/>工作人员会尽快和您联系。", "/TuanGou/");
+            }
+        }
     }
 }

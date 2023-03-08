@@ -1,6 +1,22 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/XMFight/MasterPage.master" AutoEventWireup="false" CodeFile="Contact.aspx.vb" Inherits="XMFight_Contact" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/TuanGou/MasterPage.master" AutoEventWireup="false" CodeFile="Contact.aspx.vb" Inherits="XMFight_Contact" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="center">
+        <div class="page-content" style="height: auto;">
+            <span class="profile-picture">
+                <img id="ContentPlaceHolder1_Image_User" class="editable img-responsive" src="/images/XMFightLogo.jpg" style="max-width: 150px" />
+            </span>
+            <div class="space-4"></div>
+            <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                <div class="inline position-relative">
+                    <a href="#" class="user-title-label dropdown-toggle">
+                        <i class="icon-circle light-green middle"></i>
+                        <span id="ContentPlaceHolder1_Label_Name" class="white">旭铭搏击</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row page-content">
         <h2>关于我们：</h2>
         <h5>&nbsp;&nbsp;&nbsp;&nbsp;旭铭搏击是合肥市一家专业少儿自由搏击、自由成人自由搏击的综合训练馆。</h5>

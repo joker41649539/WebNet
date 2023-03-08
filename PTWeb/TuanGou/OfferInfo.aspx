@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/TuanGou/MasterPage.master" AutoEventWireup="true" CodeFile="PayNotifyUrl.aspx.cs" Inherits="PayNotifyUrl" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Tuangou/MasterPage.master" AutoEventWireup="true" CodeFile="OfferInfo.aspx.cs" Inherits="TuanGou_OfferInfo" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <div class="center">
@@ -19,6 +19,14 @@
     </div>
     <div class="panel panel-body">
         <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <h5><b>订单号</b></h5>
+                    <h5 class="red">
+                        <asp:Label ID="Label_DDNo" runat="server" Text="Offer"></asp:Label>
+                    </h5>
+                </div>
+            </div>
             <div class="col-xs-12">
                 <div class="form-group center">
                     <h3><b>
@@ -52,7 +60,7 @@
             </div>
         </div>
         <hr />
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>提交资料</b></asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>更新资料</b></asp:LinkButton>
     </div>
 </asp:Content>
 

@@ -47,7 +47,7 @@ public partial class Partner_PartnerAdd : PageBase
             strErrMsg += i.ToString() + "、真实姓名必须填写。<br>";
         }
 
-        if (TextBox_Tel.Text.Length < 11)
+        if (TextBox_Tel.Text.Length != 11)
         {
             i++;
             strErrMsg += i.ToString() + "、手机号码必须认真填写。<br>";

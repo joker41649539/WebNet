@@ -183,7 +183,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
     {
         string accessToken = string.Empty;
         string DeBugMsg = string.Empty;
-        // 黑瞳账号密码
+        // 旭铭搏击
         string AppId = "wxf60778eb4d1003de";//与微信公众账号后台的AppId设置保持一致，区分大小写。
         string AppSecret = "4224c03a03edeba44cb4aab9b27678be";
 
@@ -198,7 +198,8 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         {
 
         }
-        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf75c5c5ac11d5256&redirect_uri=http://ptweb.x76.com.cn/Question/&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+        // 仅获取OpenID
+        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf75c5c5ac11d5256&redirect_uri=http://ptweb.x76.com.cn/Tuangou/Offer.aspx?ID=1&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect
         if (string.IsNullOrEmpty(code))
         {
 
@@ -264,7 +265,8 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
 
 
                 string strSQL;
-                strSQL = " Select * from XMFight_Users where WeChatOpenID='" + opentid.ToString() + "'";
+                strSQL = " Update XMFight_Users Set Nick='" + UserName + "',HeadImage='" + HeadUserUrl + "',LTime=getdate() where WeChatOpenID='" + opentid.ToString() + "'";
+                strSQL += " Select * from XMFight_Users where WeChatOpenID='" + opentid.ToString() + "'";
 
                 if (OP_Mode.SQLRUN(strSQL))
                 {
@@ -292,7 +294,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                     //    Response.Cookies["WeChat_Question"].Expires = DateTime.MaxValue;
 
                         /// 更新登录时间
-                        OP_Mode.SQLRUN("Update XMFight_Users set Ltime=getdate(),HEADImage='" + HeadUserUrl + "' where WeChatOpenID='" + opentid.ToString() + "'");
+                   //     OP_Mode.SQLRUN("Update XMFight_Users set Ltime=getdate(),HEADImage='" + HeadUserUrl + "' where WeChatOpenID='" + opentid.ToString() + "'");
 
                         return;
                     }
