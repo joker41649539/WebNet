@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="主页面" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="DefaultPH" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
     <script src="/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         function PleaseWaite() {
@@ -47,12 +48,11 @@
                 }
             });
             wx.getLocation({
-
                 type: "gcj02",
                 success: function (res) {
                     $.ajax({
                         type: 'get',
-                        url: 'map.ashx',
+                        url: '/WeChat/map.ashx',
                         dataType: 'json',
                         contentType: 'application/json',
                         data: {
@@ -110,7 +110,6 @@
             </li>
         </ul>
     </div>
-    <input id="Button1" onclick="init()" type="button" value="button" />
     <div class="row">
         <div class="col-xs-6">
             <h3 class="header smaller lighter green">

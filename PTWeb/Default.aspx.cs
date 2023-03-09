@@ -187,6 +187,7 @@ public partial class DefaultPH : PageBase
                 {
                     strTempHtml = "<div class='alert alert-success'>";
                 }
+                strTempHtml += "      <span class='label label-purple label-sm'>已过 " + DiffHours(Convert.ToDateTime(OP_Mode.Dtv[0]["LTime"]), System.DateTime.Now).ToString("F2") + " 小时</span><br/>";
                 if (Convert.ToDateTime(OP_Mode.Dtv[0]["LTime"]).ToString("yyyy-MM-dd") == System.DateTime.Now.ToString("yyyy-MM-dd"))
                 {
                     strTempHtml += "<strong>[" + Convert.ToDateTime(OP_Mode.Dtv[0]["LTime"]).ToString("HH:mm") + "] " + OP_Mode.Dtv[0]["QDFlag"].ToString() + "<br/>" + OP_Mode.Dtv[0]["ZB_NAME"].ToString() + "</strong>";
@@ -231,5 +232,10 @@ public partial class DefaultPH : PageBase
         {
             Div_QDLastData.InnerHtml = strTempHtml;
         }
+    }
+    public double DiffHours(DateTime startTime, DateTime endTime)
+    {
+        TimeSpan hoursSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
+        return hoursSpan.TotalHours;
     }
 }

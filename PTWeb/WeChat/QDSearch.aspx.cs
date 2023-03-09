@@ -94,6 +94,10 @@ public partial class WeChat_QDSearch : PageBase
                     }
                     else if (StrQDFlag == "维修结束")
                     {
+                        if (i + 1 < OP_Mode.Dtv.Count)
+                        {
+                            strTemp += "      <span class='label label-purple label-sm'>" + DiffHours(Convert.ToDateTime(OP_Mode.Dtv[i + 1]["CTime"]), Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"])).ToString("F2") + " 小时</span>";
+                        }
                         strTemp += "      <span class='label label-danger label-sm'>维修结束</span>";
                     }
                     else if (StrQDFlag == "出差")
@@ -102,6 +106,10 @@ public partial class WeChat_QDSearch : PageBase
                     }
                     else if (StrQDFlag == "到达")
                     {
+                        if (i + 1 < OP_Mode.Dtv.Count)
+                        {
+                            strTemp += "      <span class='label label-purple label-sm'>" + DiffHours(Convert.ToDateTime(OP_Mode.Dtv[i + 1]["CTime"]), Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"])).ToString("F2") + " 小时</span>";
+                        }
                         strTemp += "      <span class='label label-success label-sm'>到达</span>";
                     }
                     else if (StrQDFlag == "施工")
@@ -110,6 +118,10 @@ public partial class WeChat_QDSearch : PageBase
                     }
                     else if (StrQDFlag == "离场")
                     {
+                        if (i + 1 < OP_Mode.Dtv.Count)
+                        {
+                            strTemp += "      <span class='label label-purple label-sm'>" + DiffHours(Convert.ToDateTime(OP_Mode.Dtv[i + 1]["CTime"]), Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"])).ToString("F2") + " 小时</span>";
+                        }
                         strTemp += "      <span class='label label-warning label-sm'>离场</span>";
                     }
                     else if (StrQDFlag == "上班")
@@ -151,7 +163,7 @@ public partial class WeChat_QDSearch : PageBase
                     strTemp += OP_Mode.Dtv[i]["Remark"];
                     if (OP_Mode.Dtv[i]["Image1"].ToString().Length > 0)
                     {
-                        strTemp += "             <a href='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "'><img class=\"img-rounded\" width=\"100%\" height=\"100%\" src='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "' /></a>";
+                        strTemp += "             <a href='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "'><img class=\"img-rounded\" width=\"150\" src='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "' /></a>";
                     }
                     strTemp += "       </div>";
                     strTemp += "     </div>";
@@ -611,5 +623,9 @@ public partial class WeChat_QDSearch : PageBase
     }
 
     #endregion 压缩图片
-
+    public double DiffHours(DateTime startTime, DateTime endTime)
+    {
+        TimeSpan hoursSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
+        return hoursSpan.TotalHours;
+    }
 }

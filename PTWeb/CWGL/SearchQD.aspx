@@ -7,7 +7,7 @@
             var a = new qq.maps.LatLng(a1, a2);
             var b = new qq.maps.LatLng(b1, b2);
             //计算两点间的距离
-            alert("两点直线距离为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米");
+            alert("两点直线距离约为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米");
         }
     </script>
     <div class="breadcrumbs" id="breadcrumbs">

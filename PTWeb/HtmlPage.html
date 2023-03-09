@@ -1,12 +1,36 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default4.aspx.cs" Inherits="Default4" %>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Dropzone.js - Bootstrap后台管理系统模版Ace下载</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div id="dropzone">
-        <div class="fallback">
-            <input name="file" type="file" multiple="" />
+    <link rel="stylesheet" href="assets/css/dropzone.css" />
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <script src="assets/js/ace-extra.min.js"></script>
+
+</head>
+
+<body>
+
+    <form action="//dummy111.html" class="dropzone">
+        <div id="dropzone">
+            <div class="fallback">
+                <input name="file" type="file" multiple="" />
+            </div>
         </div>
-    </div>
-    <script src="/assets/js/dropzone.min.js"></script>
+    </form>
+
+    <script src="assets/js/dropzone.min.js"></script>
+
     <script type="text/javascript">
         jQuery(function ($) {
             try {
@@ -23,7 +47,9 @@
             } catch (e) {
                 alert('Dropzone.js does not support older browsers!');
             }
+
         });
     </script>
-</asp:Content>
 
+</body>
+</html>

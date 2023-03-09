@@ -1,18 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="QDSearch.aspx.cs" Inherits="WeChat_QDSearch" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+  
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
     <script src="/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         function add() {
             $("#AddImg").before("<br/> <input type=\"file\" name=\"UpImg\" />");
         }
-        //$("#UpImg").change(function (e) {
-        //    var filec = $("#UpImg").get(0).files[0];
-        //    if (filec) {
-        //        alert("测试一下");
-        //    }
-        //})
         function PleaseWaite() {
             var temp = document.getElementById("demo").innerHTML;
 
@@ -101,7 +96,7 @@
             var a = new qq.maps.LatLng(a1, a2);
             var b = new qq.maps.LatLng(b1, b2);
             //计算两点间的距离
-            alert("两点直线距离为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米");
+            alert("两点直线距离约为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米");
         }
 
     </script>
@@ -120,7 +115,7 @@
             <li class="active"><a href="/WeChat/QDSearch.aspx">签到记录</a></li>
         </ul>
     </div>
-    
+
     <div class="page-content">
         <div class="page-header">
             <h1>签到记录<small><i class="icon-double-angle-right"></i>&nbsp;<a href="/WeChat/QDSearch.aspx">添加详细签到</a>                                </small></h1>
@@ -160,13 +155,17 @@
             <div class="col-xs-12">
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片</label>
-                    <div class="col-sm-9" id="preview1">
-                        <%--<input type="file" name="UpImg" capture="camera" value="拍照" accept="image/*" />
-                        <input id="AddImg" type="button" class="btn btn-info" value="+" onclick="add()" />--%>
+                    <div class="col-sm-9">
+                        <input type="file" name="UpImg" id="id-input1" capture="camera" value="拍照" accept="image/*" />
+                    </div>
 
+                    <%--<div class="col-sm-9" id="preview1">
+                        <input type="file" name="UpImg" capture="camera" value="拍照" accept="image/*" />
+                        <input id="AddImg" type="button" class="btn btn-info" value="+" onclick="add()" />
+                        <input type="file" name="UpImg" capture="camera" value="拍照" id="id-input1" accept="image/*" />
                         <asp:FileUpload ID="FileUpload_TP" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
                         <asp:Image ID="Image1" Width="100px" ClientIDMode="Static" runat="server" />
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <div class="col-xs-12" runat="server" id="WellList" />
@@ -181,4 +180,30 @@
             <div id="QDList" runat="server" class="timeline-container"></div>
         </div>
     </div>
+    <%-- 文件上传样式需要--%>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><" + "/script>");
+    </script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <%-- 文件上传样式需要--%>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            //$('#id-input1,#id-input2').ace_file_input({
+            $('#id-input1,#id-input2,#id-input3').ace_file_input({
+                style: 'well',
+                btn_choose: '点击上传图片',
+                btn_change: null,
+                no_icon: 'icon-cloud-upload',
+                droppable: true,
+                thumbnail: 'large',// large | small
+                preview_error: function (filename, error_code) {
+
+                }
+
+            }).on('change', function () {
+                //alert("修改");
+            });
+        });
+    </script>
 </asp:Content>

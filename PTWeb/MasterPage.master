@@ -32,6 +32,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
 </head>
 <body>
+    <%--<script>
+        (function () {
+            window.alert = function (name) {
+                $(".tip").css("display", "block")
+                $(".tip .content").html(name)
+            }
+        })();
+        alert('这样就没有了title了');
+    </script>--%>
     <%-- <script type="text/javascript">
         javascript: window.history.forward(1); /// 禁止后退按钮
     </script>--%>

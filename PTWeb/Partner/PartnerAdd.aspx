@@ -30,7 +30,7 @@
     <script src='/assets/alert/shCore.js'></script>
     <script src='/assets/alert/makeSy.js'></script>
     <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
-   
+
 </head>
 <body>
     <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
@@ -107,7 +107,7 @@
                     <div class="form-group">
                         <h3><b>身份证头像面</b></h3>
                         <div class="col-sm-9">
-                            <input type="file" name="UpImg" accept="image/*" />
+                            <input type="file" name="UpImg" id="id-input1" accept="image/*" />
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,15 @@
                     <div class="form-group">
                         <h3><b>身份证国徽面</b></h3>
                         <div class="col-sm-9">
-                            <input type="file" name="UpImg" accept="image/*" />
+                            <input type="file" name="UpImg" id="id-input2" accept="image/*" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <h3><b>生活照</b></h3>
+                        <div class="col-sm-9">
+                            <input type="file" name="UpImg" id="id-input3" accept="image/*" />
                         </div>
                     </div>
                 </div>
@@ -132,5 +140,31 @@
             <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>提交申请</b></asp:LinkButton>
         </div>
     </form>
+    <%-- 文件上传样式需要--%>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><" + "/script>");
+    </script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <%-- 文件上传样式需要--%>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            //$('#id-input1,#id-input2').ace_file_input({
+            $('#id-input1,#id-input2,#id-input3').ace_file_input({
+                style: 'well',
+                btn_choose: '点击上传图片',
+                btn_change: null,
+                no_icon: 'icon-cloud-upload',
+                droppable: true,
+                thumbnail: 'large',// large | small
+                preview_error: function (filename, error_code) {
+
+                }
+
+            }).on('change', function () {
+                //alert("修改");
+            });
+        });
+    </script>
 </body>
 </html>

@@ -52,10 +52,12 @@ public partial class Partner_PartnerInfo : PageBase
 
                     strTemp = OP_Mode.Dtv[0]["IDIMG"].ToString().Split(';');
 
-                    if (strTemp.Length > 1)
+                    if (strTemp.Length > 0)
                     {
-                        DivIDImage.InnerHtml = "<a href=\"/IDImage/" + strTemp[0] + "\"><img src=\"/IDImage/" + strTemp[0] + "\" width=\"150\" class=\"img-rounded\" /></a>";
-                        DivIDImage.InnerHtml += "<a href=\"/IDImage/" + strTemp[1] + "\"><img src=\"/IDImage/" + strTemp[1] + "\" width=\"150\" class=\"img-rounded\" /></a>";
+                        for (int i = 0; i < strTemp.Length - 1; i++)
+                        {
+                            DivIDImage.InnerHtml += "<a href=\"/IDImage/" + strTemp[i] + "\"><img src=\"/IDImage/" + strTemp[i] + "\" width=\"150\" class=\"img-rounded\" /></a>";
+                        }
                         DivIDImage.Visible = true;
                     }
                     else
@@ -119,7 +121,7 @@ public partial class Partner_PartnerInfo : PageBase
                         strTemp += "<img whidth='100%' src='" + OP_Mode.Dtv[i]["HeadUrl"].ToString() + "' />";
                     }
 
-                  //  strTemp += "      <span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
+                    //  strTemp += "      <span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
                     strTemp += "  </div>";
 
                     strTemp += " <h5 class='smaller'>";
