@@ -25,6 +25,7 @@ public partial class WeChat_QDSearch : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        // 微信JS签名
         this.appId = WebConfigurationManager.AppSettings["AgentId"]; /// 企业微信ID
         this.timeStamp = getTimestamp();
         this.nonceStr = getNoncestr();
@@ -50,7 +51,7 @@ public partial class WeChat_QDSearch : PageBase
         //{
         //    strSQL = "Select * from w_kq,S_USERINFO where UserID=S_USERINFO.ID and " + GridView_MSG_Label_tj.Text + " order by CName,w_kq.ctime desc";
         //}
-
+        string[] strImages;
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
@@ -161,9 +162,13 @@ public partial class WeChat_QDSearch : PageBase
                         }
                     }
                     strTemp += OP_Mode.Dtv[i]["Remark"];
-                    if (OP_Mode.Dtv[i]["Image1"].ToString().Length > 0)
+                    strImages = OP_Mode.Dtv[i]["Image1"].ToString().Split(';');
+                    for (int j = 0; j < strImages.Length; j++)
                     {
-                        strTemp += "             <br/><a href='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "'><img class=\"img-rounded\" width=\"150\" src='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "' /></a>";
+                        if (strImages[j].Length > 0)
+                        {
+                            strTemp += "             <br/><a href='/KQImage/" + strImages[j] + "'><img class=\"img-rounded\" width=\"150\" src='/KQImage/" + strImages[j] + "' /></a>";
+                        }
                     }
                     strTemp += "       </div>";
                     strTemp += "     </div>";
@@ -223,7 +228,7 @@ public partial class WeChat_QDSearch : PageBase
         for (int i = 0; i < iFilCount; i++)
         {
             HttpPostedFile f = Request.Files[i];
-            Image1 += UploadTPs(f);
+            Image1 += UploadTPs(f) + ";";
         }
 
         if (strJD.Length + strWD.Length + strWZ.Length < 1)

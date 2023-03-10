@@ -1,54 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="QDSearch.aspx.cs" Inherits="WeChat_QDSearch" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         var i = 0;// 用于计算ID
-        function CreateInput() { ///创建图片上传框
-            var input = document.createElement("input");
-            var MaxCount = 5; // 最大数量
-            i++
-            input.type = "file";
-            input.capture = "camera";// 照相机
-            input.accept = "image/*";// 文件类型
-            input.name = "AddImg";
-            input.id = "id-input" + i;
-            document.getElementById("showUpImg").appendChild(input);
-            jQuery(function ($) {
-                $('#' + input.id + '').ace_file_input({
-                    style: 'well',
-                    btn_choose: '请点击拍照',
-                    btn_change: null,
-                    no_icon: 'icon-cloud-upload',
-                    droppable: true,
-                    thumbnail: 'large'
-                }).on('change', function () {
-                    if (i < MaxCount - 1) { //达到最大数量后不添加
-                        CreateInput();//图片选择后，自动添加
-                    }
-                });
-
-            });
-        }
-
-        function PleaseWaite() {
-            var temp = document.getElementById("demo").innerHTML;
-
-            if (temp == "等待地理位置获取") {
-                alert("地理位置获取失败，请等待，或者重新打开。");
-                return false;
-            }
-        }
-        function OpenMap(iJD, iWD, strAddress) {
-            //alert("打开地图");
+        function OpenMap(iJD, iWD) {
             wx.openLocation({
                 latitude: iJD,
                 longitude: iWD,
                 name: '我在这里',
-                address: strAddress,// document.getElementById("TextBox_WZ").value,
+                address: '这在哪',// document.getElementById("TextBox_WZ").value,
                 scale: 14
             });
         }
-
         wx.config({
             beta: true,
             debug: false,
@@ -62,7 +26,6 @@
                 'getLocation',
             ]
         });
-
         wx.ready(function () {
             wx.checkJsApi({
                 jsApiList: [
@@ -121,6 +84,40 @@
             dialog = jqueryAlert({ 'title': '提示信息', 'content': '两点直线距离约为：' + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + ' 千米', 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } })
         }
 
+        function CreateInput() { ///创建图片上传框
+            var input = document.createElement("input");
+            var MaxCount = 5; // 最大数量
+            i++
+            input.type = "file";
+            input.capture = "camera";// 照相机
+            input.accept = "image/*";// 文件类型
+            input.name = "AddImg";
+            input.id = "id-input" + i;
+            document.getElementById("showUpImg").appendChild(input);
+            jQuery(function ($) {
+                $('#' + input.id + '').ace_file_input({
+                    style: 'well',
+                    btn_choose: '请点击拍照',
+                    btn_change: null,
+                    no_icon: 'icon-cloud-upload',
+                    droppable: true,
+                    thumbnail: 'large'
+                }).on('change', function () {
+                    if (i < MaxCount - 1) { //达到最大数量后不添加
+                        CreateInput();//图片选择后，自动添加
+                    }
+                });
+
+            });
+        }
+        function PleaseWaite() {
+            var temp = document.getElementById("demo").innerHTML;
+
+            if (temp == "等待地理位置获取") {
+                alert("地理位置获取失败，请等待，或者重新打开。");
+                return false;
+            }
+        }
     </script>
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
     <script src="/js/jweixin-1.6.0.js"></script>
@@ -197,21 +194,14 @@
         </div>
         <div class="clearfix form-actions">
             <div class="col-md-offset-3 col-md-9">
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_Bug_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Bug_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 签 到</asp:LinkButton>
+                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return PleaseWaite(); this.setAttribute('disabled', 'disabled')" ID="GridView_Bug_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Bug_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 签 到</asp:LinkButton>
             </div>
         </div>
         <div class="page-content">
             <div id="QDList" runat="server" class="timeline-container"></div>
         </div>
     </div>
-    <%-- 文件上传样式需要
-    <script type="text/javascript">
-        window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><" + "/script>");
-    </script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/ace-elements.min.js"></script>--%>
-    <%-- 文件上传样式需要--%>
-    <script type="text/javascript">
+     <script type="text/javascript">
         jQuery(function ($) {
             $('#id-input').ace_file_input({
                 style: 'well',
