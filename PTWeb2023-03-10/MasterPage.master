@@ -1,0 +1,318 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>普田科技</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="robots" content="noarchive" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+
+    <script src="/assets/js/ace-extra.min.js"></script>
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/assets/alert/alert.css" />
+
+    <script src='/assets/alert/alert.js'></script>
+    <script src='/assets/alert/shCore.js'></script>
+    <script src='/assets/alert/makeSy.js'></script>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
+</head>
+<body>
+    <%--<script>
+        (function () {
+            window.alert = function (name) {
+                $(".tip").css("display", "block")
+                $(".tip .content").html(name)
+            }
+        })();
+        alert('这样就没有了title了');
+    </script>--%>
+    <%-- <script type="text/javascript">
+        javascript: window.history.forward(1); /// 禁止后退按钮
+    </script>--%>
+    <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="MSGTitle">提  示
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <h3 class="modal-title" id="ShowMSG">发生了错误！
+                    </h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                        确&nbsp;&nbsp;定
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="Login" tabindex="-2" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="LoginTitle">提 示
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="center">
+                        <img src="/images/loading.gif" />
+                        <h3 class="modal-title" id="LoginMSG">正在努力加载中…………
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <form id="form1" runat="server" enctype="multipart/form-data">
+        <div class="navbar navbar-default" id="navbar">
+            <script type="text/javascript">
+                try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+            </script>
+            <div class="navbar-container" id="navbar-container">
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+                        <small>
+                            <b>
+                                <img src="/images/ptlogo.png" width="23px" />&nbsp;普田科技
+                            </b>
+
+                        </small>
+                    </a>
+                </div>
+                <div class="navbar-header pull-right" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <asp:Image ID="Image_User" class="nav-user-photo" runat="server" />
+                                <span class="user-info">
+                                    <small>欢迎</small>
+                                    <small>
+                                        <asp:Label ID="Label_Name" runat="server" Text="老  鬼"></asp:Label></small>
+                                </span>
+                                <i class="icon-caret-down"></i>
+                            </a>
+                            <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="/SYS/MyUserInfo.aspx">
+                                        <i class="icon-user"></i>
+                                        我的信息
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <asp:LinkButton ID="LinkButton1" OnClick="LinkButton1_Click" runat="server"><i class="icon-off"></i>
+                                        退 出</asp:LinkButton>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- /.ace-nav -->
+                </div>
+                <!-- /.navbar-header -->
+            </div>
+            <!-- /.container -->
+        </div>
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+            </script>
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+                <!-- 引导菜单加载 开始 //-->
+                <div id="sidebar" class="sidebar" runat="server" />
+                <!-- 引导菜单加载 结束 //-->
+                <div class="main-content">
+                    <div id="DivQJGG_body" runat="server">
+                        <asp:LinkButton ID="LinkButton_Close" Class="close" OnClick="LinkButton_Close_Click" runat="server"><i class="icon-remove"></i></asp:LinkButton>
+                        <div id="DivQJGG" class="alert alert-warning" runat="server" visible="false" />
+                    </div>
+                    <!-- 加载主体内容 开始 //-->
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                    <!-- /#ace-settings-container -->
+                </div>
+            </div>
+            <!-- /.main-container-inner -->
+        </div>
+        <%--        <div>
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div>--%>
+
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><script>");
+        </script>
+        <script type="text/javascript">
+            if ("ontouchend" in document) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>" + "<" + "script>");
+        </script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/typeahead-bs2.min.js"></script>
+
+        <script src="/assets/js/fuelux/data/fuelux.tree-sampledata.js"></script>
+        <script src="/assets/js/fuelux/fuelux.tree.min.js"></script>
+
+        <!-- ace scripts -->
+
+        <script src="/assets/js/ace-elements.min.js"></script>
+        <script src="/assets/js/ace.min.js"></script>
+
+        <script src="/js/masonry-docs.min.js"></script>
+        <script src="/assets/js/jquery-2.0.3.min.js"></script>
+
+        <script>
+            // 字符替换 工程工单使用
+            $("#GridView1 tr").each(function () {
+                var mtd = $(this).children("td:eq(8)");
+                if (mtd.text() == 0) {
+                    mtd.html(" <span class=\"label label-success\">等待施工</span>");
+                }
+                else if (mtd.text() > 0) {
+                    mtd.html(" <span class=\"label label-danger\">正在施工</span>");
+                }
+
+                var mtd = $(this).children("td:eq(1)");
+                if (mtd.text() > 0) {
+                    mtd.html(" <span class=\"label label-success\">[" + mtd.text() + "] 人</span>");
+                }
+                else if (mtd.text() == 1) {
+                    mtd.html(" <span class=\"label label-danger\">未指派</span>");
+                }
+            });
+            // 字符替换
+            $("#GridView_Bug0 tr").each(function () {
+                var mtd = $(this).children("td:eq(2)");
+                if (mtd.text() == 0) {
+                    mtd.html(" <span class=\"label label-success\">一般</span>");
+                }
+                else if (mtd.text() == 1) {
+                    mtd.html(" <span class=\"label label-warning\">着急</span>");
+                }
+                else if (mtd.text() == 2) {
+                    mtd.html(" <span class=\"label label-danger\">加急</span>");
+                }
+            });
+            $("#GridView_Bug1 tr").each(function () {
+                var mtd = $(this).children("td:eq(2)");
+                if (mtd.text() == 0) {
+                    mtd.html(" <span class=\"label label-success\">一般</span>");
+                }
+                else if (mtd.text() == 1) {
+                    mtd.html(" <span class=\"label label-warning\">着急</span>");
+                }
+                else if (mtd.text() == 2) {
+                    mtd.html(" <span class=\"label label-danger\">加急</span>");
+                }
+            });
+            $("#GridView_Bug2 tr").each(function () {
+                var mtd = $(this).children("td:eq(2)");
+                if (mtd.text() == 0) {
+                    mtd.html(" <span class=\"label label-success\">一般</span>");
+                }
+                else if (mtd.text() == 1) {
+                    mtd.html(" <span class=\"label label-warning\">着急</span>");
+                }
+                else if (mtd.text() == 2) {
+                    mtd.html(" <span class=\"label label-danger\">加急</span>");
+                }
+            });
+            // 字符替换
+            $("#GridView_BX tr").each(function () {
+                var mtd = $(this).children("td:eq(1)");
+                if (mtd.text() == 0) {
+                    mtd.html(" <span class=\"label label-success\">待提交</span>");
+                }
+                else if (mtd.text() == 1) {
+                    mtd.html(" <span class=\"label label-danger\">已完结</span>");
+                }
+                else if (mtd.text() == 2) {
+                    mtd.html(" <span class=\"label label-info\">综合部</span>");
+                }
+                else if (mtd.text() == 3) {
+                    mtd.html(" <span class=\"label label-info\">物资部</span>");
+                }
+                else if (mtd.text() == 4) {
+                    mtd.html(" <span class=\"label label-pink\">工程部</span>");
+                }
+                else if (mtd.text() == 5) {
+                    mtd.html(" <span class=\"label label-info\">财务部</span>");
+                }
+                else if (mtd.text() == 6) {
+                    mtd.html(" <span class=\"label label-pink\">待放款</span>");
+                }
+                else if (mtd.text() == 7) {
+                    mtd.html(" <span class=\"label label-pink\">待收票</span>");
+                }
+            });
+
+            // 字符替换
+            $("#GridView_BX tr").each(function () {
+                var mtd = $(this).children("td:eq(6)");
+                if (mtd.text() == 0.00) {
+                    mtd.html(" ");
+                }
+            });
+            // 字符替换
+            $("#GridView_BX tr").each(function () {
+                var mtd = $(this).children("td:eq(7)");
+                if (mtd.text() == 0.00) {
+                    mtd.html(" ");
+                }
+            });
+            // 字符替换
+            $("#GridView_BX tr").each(function () {
+                var mtd = $(this).children("td:eq(8)");
+                if (mtd.text() == 0.00) {
+                    mtd.html(" ");
+                }
+            });
+            // 字符替换
+            $("#GridView_BX tr").each(function () {
+                var mtd = $(this).children("td:eq(9)");
+                if (mtd.text() == 0.00) {
+                    mtd.html(" ");
+                }
+            });
+            // 字符替换
+            $("#GridView_BX tr").each(function () {
+                var mtd = $(this).children("td:eq(10)");
+                if (mtd.text() == 0.00) {
+                    mtd.html(" ");
+                }
+            });
+        </script>
+    </form>
+</body>
+</html>

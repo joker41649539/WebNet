@@ -1,13 +1,35 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="QDSearch.aspx.cs" Inherits="WeChat_QDSearch" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-  
-    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
-    <script src="/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
-        function add() {
-            $("#AddImg").before("<br/> <input type=\"file\" name=\"UpImg\" />");
+        var i = 0;// 用于计算ID
+        function CreateInput() { ///创建图片上传框
+            var input = document.createElement("input");
+            var MaxCount = 5; // 最大数量
+            i++
+            input.type = "file";
+            input.capture = "camera";// 照相机
+            input.accept = "image/*";// 文件类型
+            input.name = "AddImg";
+            input.id = "id-input" + i;
+            document.getElementById("showUpImg").appendChild(input);
+            jQuery(function ($) {
+                $('#' + input.id + '').ace_file_input({
+                    style: 'well',
+                    btn_choose: '请点击拍照',
+                    btn_change: null,
+                    no_icon: 'icon-cloud-upload',
+                    droppable: true,
+                    thumbnail: 'large'
+                }).on('change', function () {
+                    if (i < MaxCount - 1) { //达到最大数量后不添加
+                        CreateInput();//图片选择后，自动添加
+                    }
+                });
+
+            });
         }
+
         function PleaseWaite() {
             var temp = document.getElementById("demo").innerHTML;
 
@@ -96,10 +118,13 @@
             var a = new qq.maps.LatLng(a1, a2);
             var b = new qq.maps.LatLng(b1, b2);
             //计算两点间的距离
-            alert("两点直线距离约为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米");
+            dialog = jqueryAlert({ 'title': '提示信息', 'content': '两点直线距离约为：' + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + ' 千米', 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } })
         }
 
     </script>
+    <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
+    <script src="/js/jweixin-1.6.0.js"></script>
+
 
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Name" ClientIDMode="Static" runat="server" />
@@ -155,8 +180,8 @@
             <div class="col-xs-12">
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片</label>
-                    <div class="col-sm-9">
-                        <input type="file" name="UpImg" id="id-input1" capture="camera" value="拍照" accept="image/*" />
+                    <div class="col-sm-9" id="showUpImg">
+                        <input type="file" name="UpImg" id="id-input" capture="camera" accept="image/*" />
                     </div>
 
                     <%--<div class="col-sm-9" id="preview1">
@@ -176,21 +201,19 @@
             </div>
         </div>
         <div class="page-content">
-            <!--Bug提交结束 //-->
             <div id="QDList" runat="server" class="timeline-container"></div>
         </div>
     </div>
-    <%-- 文件上传样式需要--%>
+    <%-- 文件上传样式需要
     <script type="text/javascript">
         window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><" + "/script>");
     </script>
     <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>--%>
     <%-- 文件上传样式需要--%>
     <script type="text/javascript">
         jQuery(function ($) {
-            //$('#id-input1,#id-input2').ace_file_input({
-            $('#id-input1,#id-input2,#id-input3').ace_file_input({
+            $('#id-input').ace_file_input({
                 style: 'well',
                 btn_choose: '点击上传图片',
                 btn_change: null,
@@ -200,9 +223,8 @@
                 preview_error: function (filename, error_code) {
 
                 }
-
             }).on('change', function () {
-                //alert("修改");
+                CreateInput();
             });
         });
     </script>

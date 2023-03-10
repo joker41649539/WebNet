@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>签名</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css"
+          integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css"
+          integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm" style="padding: 10px;">
+                <div id="signature" style="border-style:dashed; border-width:1px;"></div>
+            </div>
+        </div>
+        <input id="Text1" type="text" value="" />
+        <img src="" alt="" id="TempImage" />
+        <div class="row">
+            <div class="col-sm">
+                <button type="button" class="btn btn-success btn-block" data-toggle="modal" id="saveBtn">保存</button>
+            </div>
+            <div class="col-sm">
+                <button id="clearBtn" type="button" class="btn btn-danger btn-block">清除</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js"
+            integrity="sha256-oKpAiD7qu3bXrWRVxnXLV1h7FlNV+p5YJBIr8LOCFYw=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jSignature/2.1.3/jSignature.min.js"
+            integrity="sha256-b34G9qqXQxgjpNr7KcmeldhelpaGOgbt1n3cz8Tkrt8=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            var arguments = {
+                width: '100%',
+                height: '300px',
+                signatureLine: false,
+                lineWidth: '5'
+            };
+            $('#signature').jSignature(arguments);
+            // 清除按钮
+            $('#clearBtn').click(function () {
+                $('#signature').jSignature('reset');
+            });
+            // 保存按钮
+            $('#saveBtn').click(function () {
+                var dataPair = $('#signature').jSignature('getData', 'image');
+                var signatureImage = new Image();
+                signatureImage.src = 'data:' + dataPair[0] + ',' + dataPair[1];
+                signatureImage.image = dataPair[1];
+                // alert(signatureImage.src);
+                //document.getElementById("TempImage").src = "/images/ant2.png";
+                document.getElementById("TempImage").src = signatureImage.src;
+                document.getElementById("Text1").value = signatureImage.src;
+                //$.ajax({
+                //    url: '/ashx/saveSignature.ashx',
+                //    contentType: 'application/json; charset=utf-8',
+                //    data: {
+                //        signatureData: signatureImage.src
+                //    },
+                //    type: 'post',
+                //    cache: false,
+                //    success: function (result) {
+                //        if (result) {
+                //            if (result.status === 200) {
+                //                alert('上传成功');
+                //            } else {
+                //                alert(result.message);
+                //            }
+                //        }
+                //    }
+                //});
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -13,99 +13,101 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets/css/dropzone.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
 
     <link rel="stylesheet" href="/assets/css/ace.min.css" />
     <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
 
-    <script src="/assets/js/ace-extra.min.js"></script>
-
-    <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/assets/alert/alert.css" />
 
     <script src='/assets/alert/alert.js'></script>
-    <script src='/assets/alert/shCore.js'></script>
-    <script src='/assets/alert/makeSy.js'></script>
-    <script src="/assets/js/ace-extra.min.js"></script>
 
-    <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
-    <script src="/js/alert.js"></script>
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-    <form id="form1" runat="server" class="dropzone">
-        <div class="widget-body">
-            <div class="widget-main">
-                <input name="AddImg" type="file" id="id-input" />
-            </div>
-            <div id="file"></div>
-        </div>
-        <hr />
-
-        <div id="dropzone" class="row">
-            <div class="fallback">
-                <input name="file" type="file" multiple="" />
-            </div>
-        </div>
-        <div class="">
-            <asp:LinkButton UseSubmitBehavior="false" OnClientClick="alert('提示');" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>提交申请</b></asp:LinkButton>
-        </div>
-    </form>
-    <%-- 文件上传样式需要--%>
     <script type="text/javascript">
-        window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><" + "/script>");
-    </script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/ace-elements.min.js"></script>
-    <%-- 文件上传样式需要--%>
-    <script src="/assets/js/dropzone.min.js"></script>
-    <script type="text/javascript">
-        (function () {
-            window.alert = function (name) {
-                var iframe = document.createElement("IFRAME");
-                iframe.style.display = "none";
-                iframe.setAttribute("src", 'data:text/plain');
-                document.documentElement.appendChild(iframe);
-                window.frames[0].window.alert(name);
-                iframe.parentNode.removeChild(iframe);
-            }
-        })();
         jQuery(function ($) {
             $('#id-input').ace_file_input({
                 style: 'well',
-                btn_choose: '请点击选择图片',
+                btn_choose: '请点击拍照',
                 btn_change: null,
                 no_icon: 'icon-cloud-upload',
                 droppable: true,
                 thumbnail: 'large'
             }).on('change', function () {
-                //  swal("重要提示", "这么酷？");
-                alert("提示");
+                CreateInput();
             });
         });
-        jQuery(function ($) {
-            try {
-                $(".dropzone").dropzone({
-                    paramName: "file", // The name that will be used to transfer the file
-                    maxFilesize: 5, // MB
-                    dictDefaultMessage:
-                        '<span class="bigger-150 bolder"><i class="icon-caret-right red"></i> 请点击上传文件</span>\
-				<br/>\
-				<i class="upload-icon icon-cloud-upload blue icon-3x"></i>'
-                    ,
-                    addRemoveLinks: true,
-                    dictResponseError: 'Error while uploading file!',
 
-                    //change the previewTemplate to use Bootstrap progress bars
-                    previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
+        var i = 0;// 用于计算ID
+        function CreateInput() {
+            var input = document.createElement("input");
+            var MaxCount = 5; // 最大数量
+            i++
+            input.type = "file";
+            input.capture = "camera";// 照相机
+            input.accept = "image/*";// 文件类型
+            input.name = "AddImg";
+            input.id = "id-input" + i;
+            document.getElementById("showText").appendChild(input);
+            jQuery(function ($) {
+                $('#' + input.id + '').ace_file_input({
+                    style: 'well',
+                    btn_choose: '请点击拍照',
+                    btn_change: null,
+                    no_icon: 'icon-cloud-upload',
+                    droppable: true,
+                    thumbnail: 'large'
+                }).on('change', function () {
+                    if (i < MaxCount - 1) { //达到最大数量后不添加
+                        CreateInput();//图片选择后，自动添加
+                    }
                 });
-            } catch (e) {
-                alert('Dropzone.js does not support older browsers!');
-            }
-        });
+            });
+        }
     </script>
+    <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="MSGTitle">提  示
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <h3 class="modal-title" id="ShowMSG">发生了错误！
+                    </h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                        确&nbsp;&nbsp;定
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <form id="form1" runat="server" enctype="multipart/form-data">
+        <div class="widget-body">
+            <div class="widget-main" id="showText">
+                <input name="AddImg" capture="camera" accept="image/*" type="file" id="id-input" />
+            </div>
+        </div>
+        <hr />
+        <div class="">
+            <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>提交申请</b></asp:LinkButton>
+        </div>
+    </form>
 </body>
 </html>

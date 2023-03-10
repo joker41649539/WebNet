@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Dropzone.js - Bootstrap后台管理系统模版Ace下载</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="assets/css/dropzone.css" />
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+
+    <link rel="stylesheet" href="assets/css/ace.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+
+    <script src="assets/js/ace-extra.min.js"></script>
+
+</head>
+
+<body>
+
+    <form action="//dummy111.html" class="dropzone">
+        <div id="dropzone">
+            <div class="fallback">
+                <input name="file" type="file" multiple="" />
+            </div>
+        </div>
+    </form>
+
+    <script src="assets/js/dropzone.min.js"></script>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            try {
+                $(".dropzone").dropzone({
+                    paramName: "file", // The name that will be used to transfer the file
+                    maxFilesize: 0.5, // MB
+
+                    addRemoveLinks: true,
+                    dictResponseError: 'Error while uploading file!',
+
+                    //change the previewTemplate to use Bootstrap progress bars
+                    previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
+                });
+            } catch (e) {
+                alert('Dropzone.js does not support older browsers!');
+            }
+
+        });
+    </script>
+
+</body>
+</html>

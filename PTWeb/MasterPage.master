@@ -13,34 +13,28 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
-
-    <link rel="stylesheet" href="/assets/css/ace.min.css" />
-    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
-    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
-
-    <script src="/assets/js/ace-extra.min.js"></script>
 
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/assets/alert/alert.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
 
     <script src='/assets/alert/alert.js'></script>
+    <script src="/assets/js/ace-extra.min.js"></script>
     <script src='/assets/alert/shCore.js'></script>
     <script src='/assets/alert/makeSy.js'></script>
+
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
 </head>
 <body>
-    <%--<script>
-        (function () {
-            window.alert = function (name) {
-                $(".tip").css("display", "block")
-                $(".tip .content").html(name)
-            }
-        })();
-        alert('这样就没有了title了');
-    </script>--%>
     <%-- <script type="text/javascript">
         javascript: window.history.forward(1); /// 禁止后退按钮
     </script>--%>
@@ -166,31 +160,16 @@
             </div>
             <!-- /.main-container-inner -->
         </div>
-        <%--        <div>
+        <div>
             <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
                 <i class="icon-double-angle-up icon-only bigger-110"></i>
             </a>
-        </div>--%>
+        </div>
 
-        <script type="text/javascript">
-            window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><script>");
-        </script>
-        <script type="text/javascript">
-            if ("ontouchend" in document) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>" + "<" + "script>");
-        </script>
-        <script src="/assets/js/bootstrap.min.js"></script>
-        <script src="/assets/js/typeahead-bs2.min.js"></script>
 
-        <script src="/assets/js/fuelux/data/fuelux.tree-sampledata.js"></script>
-        <script src="/assets/js/fuelux/fuelux.tree.min.js"></script>
 
-        <!-- ace scripts -->
-
-        <script src="/assets/js/ace-elements.min.js"></script>
-        <script src="/assets/js/ace.min.js"></script>
-
-        <script src="/js/masonry-docs.min.js"></script>
-        <script src="/assets/js/jquery-2.0.3.min.js"></script>
+        <%--     <script src="/js/masonry-docs.min.js"></script>
+        <script src="/assets/js/jquery-2.0.3.min.js"></script>--%>
 
         <script>
             // 字符替换 工程工单使用
@@ -313,6 +292,8 @@
                 }
             });
         </script>
+        <%-- 与树菜单相关，必须放到最后--%>
+        <script src="/assets/js/ace.min.js"></script>
     </form>
 </body>
 </html>
