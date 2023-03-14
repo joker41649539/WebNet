@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -529,9 +530,34 @@ public partial class CWGL_Default2 : PageBase
 
         if (rValue)
         {
-            String imageName = UploadTP(FileUpload1);
-            String imageName2 = UploadTP(FileUpload2);
-            String imageName3 = UploadTP(FileUpload3);
+            string Image1 = String.Empty;
+
+            int iFilCount = Request.Files.Count;
+
+            for (int i1 = 0; i1 < iFilCount; i1++)
+            {
+                HttpPostedFile f = Request.Files[i1];
+                Image1 += UploadTPs(f) + ";";
+            }
+
+            String imageName = String.Empty;// UploadTP(FileUpload1);
+            String imageName2 = String.Empty;// UploadTP(FileUpload2);
+            String imageName3 = String.Empty;// UploadTP(FileUpload3);
+
+            string[] Images = Image1.Split(';');
+
+            if (Images.Length > 2)
+            {
+                imageName3 = Images[2];
+            }
+            if (Images.Length > 1)
+            {
+                imageName2 = Images[1];
+            }
+            if (Images.Length > 0)
+            {
+                imageName = Images[0];
+            }
 
             if (imageName.Length > 0 || DropDownList1.SelectedValue == "补助" || DropDownList1.SelectedValue == "办公费" || DropDownList1.SelectedValue == "福利费" || DropDownList1.SelectedValue == "行政综合" || DropDownList1.SelectedValue == "交通费" || MXID > 0)
             {/// 图片上传成功
@@ -779,67 +805,77 @@ public partial class CWGL_Default2 : PageBase
 
         return rValue;
     }
-
-    private string UploadTP(FileUpload fileName)
+    /// <summary>
+    /// 上传图片信息
+    /// </summary>
+    private string UploadTPs(HttpPostedFile fileName)
     {
-        string name = fileName.PostedFile.FileName;//获取文件名称
+        string SavePath = "BxImages";// 图片保存路径  ，无需/  ~/KQImage/
+        string Prefix = "BX";// 新文件名前缀
+        string strTemp = string.Empty;// = "测试一下";/// 水印文字
+
+        string name = fileName.FileName;//获取文件名称
 
         if (name.Length > 0)
         {
-            if (fileName.HasFile)
+            int i = fileName.ContentLength;   //得到上传文件大小
+
+            int index = name.LastIndexOf(".");
+
+            string lastName = name.Substring(index, name.Length - index);//文件后缀
+
+            string newname = Prefix + DateTime.Now.ToString("yyyyMMddHHmmssfff") + lastName;//新文件名
+                                                                                            //  string newname = "12345" + lastName;
+            string path = Server.MapPath("~/" + SavePath + "/" + newname);
+
+            string URLpath = Server.MapPath("\\" + SavePath + "\\" + newname);
+
+            if (System.IO.File.Exists(URLpath))
             {
-                int i = fileName.PostedFile.ContentLength;   //得到上传文件大小
-
-                int index = name.LastIndexOf(".");
-
-                string lastName = name.Substring(index, name.Length - index);//文件后缀
-
-                string newname = DateTime.Now.ToString("yyyyMMddhhmmssfff") + lastName;//新文件名
-                                                                                       //  string newname = "12345" + lastName;
-                string path = Server.MapPath("~/BxImages/" + newname);
-
-                string URLpath = Server.MapPath("\\BxImages\\" + newname);
-
-                if (System.IO.File.Exists(URLpath))
+                return string.Empty;
+            }
+            else
+            {
+                try
                 {
-                    return string.Empty;
-                }
-                else
-                {
-                    try
+                    if (i < 1048576)
                     {
-                        if (i < 1048576)
-                        {
-                            fileName.PostedFile.SaveAs(path);//保存到服务器上	 小于1M的图片不进行压缩处理
-                        }
-                        else
-                        { /// 大于1M的图片文件压缩后上传
-                            ystp(fileName.PostedFile, "~/BxImages/" + newname);
-                        }
+                        fileName.SaveAs(path);//保存到服务器上	 小于1M的图片不进行压缩处理
+                    }
+                    else
+                    { /// 大于1M的图片文件压缩后上传
+                        ystp(fileName, "~/" + SavePath + "/" + newname);
+                    }
 
-                        //  添加水印
-                        System.Drawing.Image imgSrc = AddText(@URLpath, "0,0", "0, 0", "普田公司报销使用");
-
+                    if (strTemp.Length > 0)
+                    {
                         string imageName = "SY" + newname;
-                        string newpath = Server.MapPath(@"/BxImages/" + imageName);
+                        //添加水印
+                        System.Drawing.Image imgSrc = AddText(@URLpath, "50,50", "300, 100", strTemp);
+
+                        string newpath = Server.MapPath(@"/" + SavePath + "/" + imageName);
                         imgSrc.Save(newpath, System.Drawing.Imaging.ImageFormat.Jpeg);
                         //释放水印图片
                         ///// 水印成功后，删除原图片
-                        if (System.IO.File.Exists(URLpath)) { System.IO.File.Delete(URLpath); }
-
+                        if (File.Exists(URLpath)) { File.Delete(URLpath); }
                         return imageName;
-                        // return newname;
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox("", "服务器正忙，请稍后再试！" + ex.ToString());
-                        return string.Empty;
+                        return newname;
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox("", "服务器正忙，请稍后再试！" + ex.ToString());
+                    return string.Empty;
+                }
+
             }
         }
         return string.Empty;
     }
+
     /// <summary>
     /// 图片添加文字
     /// </summary>

@@ -710,10 +710,11 @@ public partial class GDGL_GCWXD : PageBase
     /// <param name="e"></param>
     protected void Button5_Click(object sender, EventArgs e)
     {
-        int iid = Convert.ToInt32(Request["ID"]);
-        if (iid > 0)
+        string DJBH = Label_dh.Text;
+
+        if (DJBH.Length > 0 & DJBH != "等待生成单号")
         {
-            Response.Redirect("/BGGL/WXDImage.ASPX?id=" + iid);
+            Response.Redirect("/Gallery.ASPX?Class=0&DJBH=" + DJBH);
         }
     }
 

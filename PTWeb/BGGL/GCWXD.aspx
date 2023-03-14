@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
 
+    <link rel="stylesheet" href="/assets/alert/alert.css" />
 
     <script src="/assets/js/ace-extra.min.js"></script>
-
-
-    <link rel="stylesheet" href="/assets/alert/alert.css" />
     <script src='/assets/alert/alert.js'></script>
     <script src='/assets/alert/shCore.js'></script>
 
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
     <script src='/assets/alert/makeSy.js'></script>
     <link rel="shortcut icon" type="image/x-icon" href="/images/PTLOGO.png" media="screen" />
     <title>普田公司工程维修单</title>
@@ -236,7 +235,7 @@
         &nbsp;
         <asp:Button ID="Button5" runat="server" Text="查看图片" class="btn btn-warning" OnClick="Button5_Click" />
         &nbsp;
-        <asp:Button ID="Button6" runat="server" Text="查  看" class="btn btn-info" OnClick="Button6_Click"/>
+        <asp:Button ID="Button6" runat="server" Text="查  看" class="btn btn-info" OnClick="Button6_Click" />
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

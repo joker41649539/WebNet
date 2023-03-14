@@ -26,9 +26,9 @@
                         <div class="list-item">
                             <div class="item-img">
                                 <a href="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1988948143,281225406&fm=26&gp=0.jpg">
-                                    <img src='https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1988948143,281225406&fm=26&gp=0.jpg' /></a>
+                                    <img src='http://5b0988e595225.cdn.sohucs.com/images/20180510/4fb177bf1eb04ef49b55de3f5f6e82bd.png' /></a>
+                                <div class="item-tt"><a href="default.aspx?id=1" class="btn btn-block btn-danger">删 除</a></div>
                             </div>
-                            <div class="item-tt"><a href="#" class="btn btn-block btn-danger">删 除</a></div>
                         </div>
                     </div>
                     <div class="box">
@@ -36,9 +36,9 @@
                             <div class="item-img">
                                 <a href="http://5b0988e595225.cdn.sohucs.com/images/20180510/4fb177bf1eb04ef49b55de3f5f6e82bd.png">
                                     <img src='http://5b0988e595225.cdn.sohucs.com/images/20180510/4fb177bf1eb04ef49b55de3f5f6e82bd.png' /></a>
+                                <div class="item-tt">机房环境1</div>
+                                <div class="item-tt"><a href="#" class="btn btn-block btn-danger">删 除</a></div>
                             </div>
-                            <div class="item-tt">机房环境1</div>
-                            <div class="item-tt"><a href="#" class="btn btn-block btn-danger">删 除</a></div>
                         </div>
                     </div>
                     <div class="box">

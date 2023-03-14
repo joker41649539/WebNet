@@ -120,7 +120,6 @@
         }
     </script>
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
-    <script src="/js/jweixin-1.6.0.js"></script>
 
 
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />

@@ -1,6 +1,47 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ReimbursementAdd.aspx.cs" Inherits="CWGL_Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('#id-input').ace_file_input({
+                style: 'well',
+                btn_choose: '请点击拍照',
+                btn_change: null,
+                no_icon: 'icon-cloud-upload',
+                droppable: true,
+                thumbnail: 'large'
+            }).on('change', function () {
+                CreateInput();
+            });
+        });
+
+        var i = 0;// 用于计算ID
+        function CreateInput() {
+            var input = document.createElement("input");
+            var MaxCount = 3; // 最大数量
+            i++
+            input.type = "file";
+            input.capture = "camera";// 照相机
+            input.accept = "image/*";// 文件类型
+            input.name = "AddImg";
+            input.id = "id-input" + i;
+            document.getElementById("showText").appendChild(input);
+            jQuery(function ($) {
+                $('#' + input.id + '').ace_file_input({
+                    style: 'well',
+                    btn_choose: '请点击拍照',
+                    btn_change: null,
+                    no_icon: 'icon-cloud-upload',
+                    droppable: true,
+                    thumbnail: 'large'
+                }).on('change', function () {
+                    if (i < MaxCount - 1) { //达到最大数量后不添加
+                        CreateInput();//图片选择后，自动添加
+                    }
+                });
+            });
+        }
+    </script>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -102,8 +143,13 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <label runat="server" id="Label2" class="col-sm-3 control-label no-padding-right" for="form-field-1">发生日期：</label>
-                <div class="col-sm-9">
-                    <asp:TextBox ID="TextBoxSTime" ClientIDMode="Static" runat="server" placeholder="请点击选择日期" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <div class="col-xs-9">
+                    <div class="input-group">
+                        <asp:TextBox ID="TextBoxSTime" ClientIDMode="Static" runat="server" placeholder="请点击选择日期" data-date-format="yyyy-mm-dd" class="form-control date-picker"></asp:TextBox>
+                        <span class="input-group-addon">
+                            <i class="icon-calendar bigger-110"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -191,11 +237,14 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <label runat="server" id="Label7" class="col-sm-3 control-label no-padding-right" for="form-field-1">上传图片：</label>
-                <div class="col-sm-9">
+                <div class="col-sm-9 widget-main" id="showText">
+                    <input name="AddImg" capture="camera" accept="image/*" type="file" id="id-input" />
+                </div>
+                <%--                <div class="col-sm-9">
                     <asp:FileUpload ID="FileUpload1" runat="server" accept="image/*" />
                     <asp:FileUpload ID="FileUpload2" runat="server" accept="image/*" />
                     <asp:FileUpload ID="FileUpload3" runat="server" accept="image/*" />
-                </div>
+                </div>--%>
             </div>
         </div>
         <div class="col-xs-12">
@@ -214,12 +263,14 @@
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
         <asp:HyperLink ID="HyperLink1" class="btn btn-info" runat="server" Target="_blank">查看轨迹</asp:HyperLink>
     </div>
+    <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>
 
-    <script type="text/javascript" src="/assets/timepicker/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="/assets/timepicker/js/jquery-ui.js"></script>
-    <script type="text/javascript" src="/assets/timepicker/js/jquery-ui-slide.min.js"></script>
-    <script type="text/javascript" src="/assets/timepicker/js/jquery-ui-timepicker-addon.js"></script>
     <script type="text/javascript">
-        $(function () { $('#TextBoxSTime').datepicker(); });
+        jQuery(function ($) {
+            $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+        });
     </script>
+
 </asp:Content>

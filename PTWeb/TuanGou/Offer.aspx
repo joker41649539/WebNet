@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="微信支付" Language="C#" MasterPageFile="~/TuanGou/MasterPage.master" AutoEventWireup="true" CodeFile="Offer.aspx.cs" Inherits="Pay" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js" type="text/javascript"></script>
     <script type="text/javascript">
-       
+
         wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
             wx.updateTimelineShareData({
                 title: '特惠抢购信息', // 分享标题
@@ -30,17 +31,17 @@
     <div class="panel panel-default">
         <asp:Image ID="Image1" Width="100%" CssClass="img-rounded" runat="server" />
     </div>
+    <h5>距离活动结束还有：<br />
+    </h5>
+    <h1 id="show" class="red center" clientidmode="Static" runat="server">
+        <span></span>天<span></span>小时<span></span>分<span></span>秒</h1>
+    <a id="getBrandWCPayRequest" href="javascript:void(0);" class="btn btn-success btn-lg btn-block">￥&nbsp;<asp:Label ID="Label1" runat="server" Text="299"></asp:Label>&nbsp;&nbsp;立即抢购</a>
     <div class="row center">
         <audio autoplay="autoplay" loop="loop" controls="controls">
             <source src="http://music.163.com/song/media/outer/url?id=1934251776.mp3"
                 type="audio/mpeg">
         </audio>
     </div>
-    <h5>距离活动结束还有：<br />
-    </h5>
-    <h1 id="show" class="red center" clientidmode="Static" runat="server">
-        <span></span>天<span></span>小时<span></span>分<span></span>秒</h1>
-    <a id="getBrandWCPayRequest" href="javascript:void(0);" class="btn btn-success btn-lg btn-block">￥&nbsp;<asp:Label ID="Label1" runat="server" Text="299"></asp:Label>&nbsp;&nbsp;立即抢购</a>
     <script>
         var show = document.getElementById("show").getElementsByTagName("span");
         setInterval(function () {

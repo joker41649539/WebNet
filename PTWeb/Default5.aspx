@@ -20,8 +20,14 @@
     <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
-
     <link rel="stylesheet" href="/assets/alert/alert.css" />
+
+    <link rel="stylesheet" href="/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap-timepicker.css" />
+
+    <%--///////////////////////////////////--%>
+
+    <%--//////////////////////////////////--%>
 
     <script src='/assets/alert/alert.js'></script>
 
@@ -108,6 +114,43 @@
         <div class="">
             <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>提交申请</b></asp:LinkButton>
         </div>
+        <div class="col-xs-9">
+            <div class="input-group">
+                <asp:TextBox ID="TextBoxSTime" ClientIDMode="Static" runat="server" placeholder="请点击选择日期" data-date-format="yyyy-mm-dd" class="form-control date-picker"></asp:TextBox>
+                <span class="input-group-addon">
+                    <i class="icon-calendar bigger-110"></i>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-8 col-sm-11">
+                <div class="input-group">
+                    <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
+                    <span class="input-group-addon">
+                        <i class="icon-calendar bigger-110"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+
     </form>
+
+    <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+    <script src="/assets/js/date-time/moment.min.js"></script>
+    <script src="/assets/js/date-time/daterangepicker.min.js"></script>
+
+    <!-- ace scripts -->
+
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="/assets/js/ace.min.js"></script>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+        });
+    </script>
 </body>
 </html>

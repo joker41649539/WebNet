@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Linq;
-using System.Security.Policy;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using Microsoft.Office.Interop.Excel;
+using Font = System.Drawing.Font;
 
-public partial class Default5 : PageBase
+public partial class Images : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            LoadData();
+        }
     }
 
-    protected void LinkButton1_Click(object sender, EventArgs e)
+    protected void Button1_Click(object sender, EventArgs e)
     {
-        //   this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () { location.href=\"" + sURL + "\"; } } })</script>");
         string Image1 = String.Empty;
 
         int iFilCount = Request.Files.Count;
@@ -28,31 +31,109 @@ public partial class Default5 : PageBase
             HttpPostedFile f = Request.Files[i];
             Image1 += UploadTPs(f) + ";";
         }
-        MessageBox_Test("", "上传成功:" + Image1);
-    }
-
-    public void MessageBox_Test(string sKey, string sMessage)
-    {
-        if (sKey == "")
+        if (Image1.Length > 0)
         {
-            sKey = "提示信息";
+            if (SaveSQLData(Image1))
+            {
+                MessageBox("", "上传成功。");
+                LoadData();
+            }
         }
-        string sTemp = sMessage;
-        sTemp = sTemp.Replace("\r", @"\\r");
-        sTemp = sTemp.Replace("\n", @"\\n");
-        sTemp = sTemp.Replace("'", @"\'");    // javascript 中使用"\'"显示'字符。
-
-        this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () {dialog.destroy();dialog.close();} } })</script>");
-
-
-
-        // this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>confirm('真的要全部提交吗？')</script>");
-        //this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "key", "document.getElementById('ShowMSG').innerHTML='" + sTemp + "';document.getElementById('MSGTitle').innerHTML='" + sKey + "'", true);
-        //this.Page.ClientScript.RegisterStartupScript(typeof(string), sKey, "<script language=JavaScript>$('#MSG').modal('show')</script>");
-
     }
 
+    private void LoadData()
+    {
+        string SavePath = "KQImage";// 图片保存路径  ，无需/  ~/KQImage/
+        string TempHtml = string.Empty;
+        string[] TemgImage;
+        int DB_Class = 0;
+        string DB_DJBH = string.Empty;
+        try
+        {
+            DB_Class = Convert.ToInt32(Request["Class"]);
+            DB_DJBH = Request["DJBH"];
+        }
+        catch
+        {
 
+        }
+        string strSQL = "Select * from W_Images where iClass=" + DB_Class + " and DJBH='" + DB_DJBH + "' order by CTime desc";
+       // string strSQL = "Select * from W_Images order by CTime desc";
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+            {
+                TemgImage = OP_Mode.Dtv[i]["Images"].ToString().Split(';');
+                if (TemgImage.Length > 0)
+                {
+                    for (int ii = 0; ii < TemgImage.Length; ii++)
+                    {
+                        if (TemgImage[ii].Length > 0)
+                        {
+                            TempHtml += " <li>";
+                            TempHtml += "                      <a href=\"/" + SavePath + "/" + TemgImage[ii] + "\" title=\"Photo Title\" data-rel=\"colorbox\">";
+                            TempHtml += " <img alt=\"150x150\" style=\"max-width: 280px\" class=\"img-rounded\" src='/" + SavePath + "/" + TemgImage[ii] + "' />";
+                            TempHtml += " <div class=\"tags\">";
+                            TempHtml += "     <span class=\"label-holder\">";
+                            TempHtml += "        <span class=\"label label-info arrowed-in\">" + OP_Mode.Dtv[i]["Title"].ToString() + "</span>";
+                            TempHtml += "    </span>";
+                            if (OP_Mode.Dtv[i]["Remark"].ToString().Length > 0)
+                            {
+                                TempHtml += "    <span class=\"label-holder\">";
+                                TempHtml += "        <span class=\"label label-success\">" + OP_Mode.Dtv[i]["Remark"].ToString() + "</span>";
+                                TempHtml += "   </span>";
+                            }
+
+                            TempHtml += "    <span class=\"label-holder\">";
+                            TempHtml += "        <span class=\"label label-grey\">" + OP_Mode.Dtv[i]["UserName"].ToString() + "</span>";
+                            TempHtml += "   </span>";
+
+                            TempHtml += "</div>";
+                            TempHtml += "<div class=\"tools\">";
+                            TempHtml += "    <a href =\"#\" >";
+                            TempHtml += "        <i class=\"icon-remove red\"></i>";
+                            TempHtml += "   </a>";
+                            TempHtml += "</div>";
+                            TempHtml += "</a>";
+                            TempHtml += "</li>";
+                        }
+                        else
+                        {
+                            //continue;
+                        }
+                    }
+                }
+            }
+            ShowImages.InnerHtml = TempHtml;
+        }
+    }
+
+    private bool SaveSQLData(string ImagesName)
+    {
+        bool rValue = false;
+
+        string DB_Title = TextBox_Title.Text.Replace("'", "");
+        string DB_Remark = TextBox_Remark.Text.Replace("'", "");
+        string DB_DJBH = "test";
+        int iClass = 0;// 0 代表维修单
+        try
+        {
+            iClass = Convert.ToInt32(Request["Class"]);
+            DB_DJBH = Request["DJBH"];
+        }
+        catch
+        {
+
+        }
+        string strSQL = "Insert into W_Images(Title,Images,DJBH,Remark,iClass,UserName) values ('" + DB_Title + "','" + ImagesName + "','" + DB_DJBH + "','" + DB_Remark + "'," + iClass + ",'" + UserNAME + "')";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            rValue = true;
+        }
+
+        return rValue;
+    }
 
     /// <summary>
     /// 上传图片信息
