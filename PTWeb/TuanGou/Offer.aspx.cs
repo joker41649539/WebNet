@@ -11,6 +11,7 @@ using System.Xml;
 public partial class Pay : PageBaseXMFight
 {
     //  OpMode OP_Mode = new OpMode(DefaultConStr, 0);
+    #region pageParameters
     public static string getNewDate;
 
 
@@ -18,44 +19,28 @@ public partial class Pay : PageBaseXMFight
     protected string XSDValue = "";
     protected string OfferID = "";
 
-    //#region pageParameters
-    //public string appId { get; set; }
-    //public string timeStamp { get; set; }
+    public string appId { get; set; }
+    public string timeStamp { get; set; }
 
-    //public string nonceStr { get; set; }
+    public string nonceStr { get; set; }
 
-    //public string signature { get; set; }
-    //#endregion
+    public string signature { get; set; }
+    #endregion
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        //this.appId = "wxf60778eb4d1003de"; /// w微信公众号
-        //this.timeStamp = getTimestamp();
-        //this.nonceStr = getNoncestr();
-        //this.signature = GenSignature(this.nonceStr, this.timeStamp);
-        //this.DataBind();
+        // 微信JS签名
+        this.appId = "wxf60778eb4d1003de"; /// 企业微信ID
+        this.timeStamp = getTimestamp();
+        this.nonceStr = getNoncestr();
+        this.signature = GenSignature(this.nonceStr, this.timeStamp);
+        this.DataBind();
 
         getNewDate = "2023-03-08";
 
-        //if (!IsPostBack)
-        //{
-        //  MessageBox("","欢迎您");
-        //}
-        //    if (Request.QueryString["No"] != null && Request.QueryString["No"] != "")
-        //    {
-        //        string strNo = Request.QueryString["No"];
-        //        try
-        //        {
         string strDDNo = "Offer" + System.DateTime.Now.ToString("yyyy") + System.DateTime.Now.ToString("MM") + System.DateTime.Now.ToString("dd") + System.DateTime.Now.ToString("HH") + System.DateTime.Now.ToString("mm") + System.DateTime.Now.ToString("fff");
         XSDValue = strDDNo;
         LoadFKXX(strDDNo);
-        
-        //        }
-        //        catch
-        //        {
-
-        //        }
-        //}
 
     }
     /// <summary>

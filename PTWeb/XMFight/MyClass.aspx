@@ -74,6 +74,15 @@
                 </span>
             </div>
         </div>
+        <asp:HiddenField ID="HiddenField_ListMaxID" runat="server" />
+        <div class="page-content" runat="server" id="Vied_Text" visible="false">
+            <div class="input-group">
+                <asp:TextBox ID="TextBox1" runat="server" placeholder="请输入视频网址" class="form-control search-query"></asp:TextBox>
+                <span class="input-group-btn">
+                    <asp:LinkButton OnClick="LinkButton2_Click" ID="LinkButton2" class="btn btn-purple btn-sm" runat="server">保存<i class="icon-save icon-on-right bigger-110"></i></asp:LinkButton>
+                </span>
+            </div>
+        </div>
         <div class="hr hr8 hr-double"></div>
         <h5>&nbsp;&nbsp;最近100次上课记录</h5>
         <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging">
@@ -81,7 +90,12 @@
                 <asp:BoundField DataField="CTime" DataFormatString="{0:yyyy-MM-dd dddd HH:mm}" SortExpression="CTime" HeaderText="日期"></asp:BoundField>
                 <asp:BoundField DataField="iFlag" SortExpression="iFlag" HeaderText="状态"></asp:BoundField>
                 <asp:BoundField DataField="iCount" SortExpression="iCount" DataFormatString="{0:F0}" HeaderText="课时"></asp:BoundField>
-                <asp:ButtonField HeaderText="课程情况" CommandName="Select" SortExpression="ID" Text="课程情况" />
+                <asp:TemplateField HeaderText="课程情况">
+                    <ItemTemplate>
+                        <asp:HyperLink runat="server" Text="查阅视频" NavigateUrl='<%# Eval("VidoUrl") %>' ID="HyperLink1"></asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
             </Columns>
             <PagerTemplate>
                 <div>

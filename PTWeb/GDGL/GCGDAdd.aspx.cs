@@ -173,9 +173,9 @@ public partial class GDGL_GCGDAdd : PageBase
 
         // 获取GridView排序数据列及排序方向
 
-        string sortExpression = this.GridView1.Attributes["SortExpression"];
+        string sortExpression = this.GridView_GDAdd.Attributes["SortExpression"];
 
-        string sortDirection = this.GridView1.Attributes["SortDirection"];
+        string sortDirection = this.GridView_GDAdd.Attributes["SortDirection"];
 
         string strSQL;
 
@@ -194,9 +194,9 @@ public partial class GDGL_GCGDAdd : PageBase
                 OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
 
             }
-            this.GridView1.DataSource = OP_Mode.Dtv;
+            this.GridView_GDAdd.DataSource = OP_Mode.Dtv;
 
-            this.GridView1.DataBind();
+            this.GridView_GDAdd.DataBind();
 
             if (OP_Mode.Dtv.Count > 0)
             {
@@ -224,20 +224,20 @@ public partial class GDGL_GCGDAdd : PageBase
             return;
 
         }
-        if (GridView1.EditIndex > -1)
+        if (GridView_GDAdd.EditIndex > -1)
         {
-            GridView1.Rows[GridView1.EditIndex].Cells[0].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[1].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[2].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[3].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[4].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[5].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[6].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[7].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[8].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[0].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[1].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[2].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[3].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[4].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[5].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[6].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[7].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[8].BackColor = Color.FromName("#FFFF00");
             //GridView1.Rows[GridView1.EditIndex].Cells[9].BackColor = Color.FromName("#FFFF00");
             //GridView1.Rows[GridView1.EditIndex].Cells[10].BackColor = Color.FromName("#FFFF00");
-            GridView1.Rows[GridView1.EditIndex].Cells[11].BackColor = Color.FromName("#FFFF00");
+            GridView_GDAdd.Rows[GridView_GDAdd.EditIndex].Cells[11].BackColor = Color.FromName("#FFFF00");
         }
 
     }
@@ -256,21 +256,21 @@ public partial class GDGL_GCGDAdd : PageBase
 
         // “ASC”与事件参数获取到的排序方向进行比较，进行GridView排序方向参数的修改
 
-        if (sortExpression == this.GridView1.Attributes["SortExpression"])
+        if (sortExpression == this.GridView_GDAdd.Attributes["SortExpression"])
 
         {
 
             //获得下一次的排序状态
 
-            sortDirection = (this.GridView1.Attributes["SortDirection"].ToString() == sortDirection ? "DESC" : "ASC");
+            sortDirection = (this.GridView_GDAdd.Attributes["SortDirection"].ToString() == sortDirection ? "DESC" : "ASC");
 
         }
 
         // 重新设定GridView排序数据列及排序方向
 
-        this.GridView1.Attributes["SortExpression"] = sortExpression;
+        this.GridView_GDAdd.Attributes["SortExpression"] = sortExpression;
 
-        this.GridView1.Attributes["SortDirection"] = sortDirection;
+        this.GridView_GDAdd.Attributes["SortDirection"] = sortDirection;
 
         Load_GridView1();
 
@@ -278,23 +278,23 @@ public partial class GDGL_GCGDAdd : PageBase
 
     protected void GridView1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
     {
-        GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[1].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[1].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[2].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[2].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[3].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[3].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[4].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[4].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[5].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[5].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[6].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[6].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[7].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[7].BackColor = Color.FromName("#FFF68F");
 
-        GridView1.Rows[e.NewSelectedIndex].Cells[8].BackColor = Color.FromName("#FFF68F");
+        GridView_GDAdd.Rows[e.NewSelectedIndex].Cells[8].BackColor = Color.FromName("#FFF68F");
 
     }
     /// <summary>
@@ -304,7 +304,7 @@ public partial class GDGL_GCGDAdd : PageBase
     /// <param name="e"></param>
     protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        string strSQL = "Delete from W_GCGD2 where id= " + GridView1.DataKeys[e.RowIndex][0].ToString();
+        string strSQL = "Delete from W_GCGD2 where id= " + GridView_GDAdd.DataKeys[e.RowIndex][0].ToString();
         if (OP_Mode.SQLRUN(strSQL))
         {
             Load_GridView1();
@@ -551,14 +551,14 @@ public partial class GDGL_GCGDAdd : PageBase
     protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
     {
 
-        GridView1.EditIndex = e.NewEditIndex;
+        GridView_GDAdd.EditIndex = e.NewEditIndex;
 
         Load_GridView1();
     }
 
     protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        GridView1.EditIndex = -1;
+        GridView_GDAdd.EditIndex = -1;
         Load_GridView1();
     }
 
@@ -568,16 +568,16 @@ public partial class GDGL_GCGDAdd : PageBase
         string strTemp = string.Empty;
         if (iid > -1)
         {
-            string DB_AZWZ = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[0].Controls[0])).Text;
-            string DB_SBBH = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[1].Controls[0])).Text;
-            string DB_SBMC = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[2].Controls[0])).Text;
-            string DB_SBPP = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[3].Controls[0])).Text;
-            string DB_SBXH = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[4].Controls[0])).Text;
-            string DB_JLDW = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[5].Controls[0])).Text;
-            double DB_sl = Convert.ToDouble(((TextBox)(GridView1.Rows[e.RowIndex].Cells[6].Controls[0])).Text);
-            string DB_Remark = ((TextBox)(GridView1.Rows[e.RowIndex].Cells[7].Controls[0])).Text;
-            int DB_BXFS = Convert.ToInt32(((TextBox)(GridView1.Rows[e.RowIndex].Cells[8].Controls[0])).Text);
-            int DB_AZFS = Convert.ToInt32(((TextBox)(GridView1.Rows[e.RowIndex].Cells[10].Controls[0])).Text);
+            string DB_AZWZ = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[0].Controls[0])).Text;
+            string DB_SBBH = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[1].Controls[0])).Text;
+            string DB_SBMC = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[2].Controls[0])).Text;
+            string DB_SBPP = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[3].Controls[0])).Text;
+            string DB_SBXH = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[4].Controls[0])).Text;
+            string DB_JLDW = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[5].Controls[0])).Text;
+            double DB_sl = Convert.ToDouble(((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[6].Controls[0])).Text);
+            string DB_Remark = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[7].Controls[0])).Text;
+            int DB_BXFS = Convert.ToInt32(((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[8].Controls[0])).Text);
+            int DB_AZFS = Convert.ToInt32(((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[10].Controls[0])).Text);
 
             if (DB_AZWZ.Length <= 0 || DB_SBBH.Length <= 0 || DB_SBBH.Length <= 0 || DB_SBPP.Length <= 0 || DB_JLDW.Length <= 0 || DB_BXFS < 0 || DB_AZFS < 0)
             {
@@ -599,7 +599,7 @@ public partial class GDGL_GCGDAdd : PageBase
             }
         }
         MessageBox("", strTemp);
-        GridView1.EditIndex = -1;
+        GridView_GDAdd.EditIndex = -1;
         Load_GridView1();
     }
 }

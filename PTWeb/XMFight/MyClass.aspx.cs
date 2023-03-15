@@ -18,10 +18,12 @@ public partial class XMFight_MyClass : PageBaseXMFight
             if (DefaultUser == "6")
             {
                 LoadClassTime();
+                Vied_Text.Visible = true;
             }
             else
             {
                 CheckBoxList1.Visible = false;
+                Vied_Text.Visible = false;
             }
             //  LoadClassList();
         }
@@ -445,16 +447,17 @@ public partial class XMFight_MyClass : PageBaseXMFight
 
             this.GridView1.DataBind();
 
+            if (OP_Mode.Dtv.Count > 0)
+            {/// 存储ID最大值
+                HiddenField_ListMaxID.Value = OP_Mode.Dtv[0]["ID"].ToString();
+                TextBox1.Text = OP_Mode.Dtv[0]["VidoUrl"].ToString();
+                //TextBox1.Text = OP_Mode.Dtv[0]["ID"].ToString();
+            }
         }
-
         else
-
         {
-
             MessageBox("", strSQL + "<br/>" + OP_Mode.strErrMsg);
-
             return;
-
         }
 
     }
@@ -496,11 +499,11 @@ public partial class XMFight_MyClass : PageBaseXMFight
     protected void GridView1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
     {
 
-        if (Convert.ToInt32(GridView1.DataKeys[e.NewSelectedIndex].Value) > 0)
-        {
-            Response.Redirect("https://www.meipian.cn/wap/video-work/view/index.html#/?id=9k5td9y&type=6&share_to=copy_link&user_id=73058088&uuid=8180c5331f6b441eca60031475545ad6&share_depth=1&first_share_uid=73058088&utm_medium=meipian_android&share_user_mpuuid=eebea5e7536df841470f212d37a81bf7", false);
-            ///DeleteRecord(Convert.ToInt32(GridView1.DataKeys[e.NewSelectedIndex].Value));
-        }
+        //if (Convert.ToInt32(GridView1.DataKeys[e.NewSelectedIndex].Value) > 0)
+        //{
+        //    Response.Redirect("https://www.meipian.cn/wap/video-work/view/index.html#/?id=9k5td9y&type=6&share_to=copy_link&user_id=73058088&uuid=8180c5331f6b441eca60031475545ad6&share_depth=1&first_share_uid=73058088&utm_medium=meipian_android&share_user_mpuuid=eebea5e7536df841470f212d37a81bf7", false);
+        //    ///DeleteRecord(Convert.ToInt32(GridView1.DataKeys[e.NewSelectedIndex].Value));
+        //}
         GridView1.Rows[e.NewSelectedIndex].Cells[0].BackColor = Color.FromName("#CAD3E4");
 
         GridView1.Rows[e.NewSelectedIndex].Cells[1].BackColor = Color.FromName("#CAD3E4");
@@ -550,5 +553,30 @@ public partial class XMFight_MyClass : PageBaseXMFight
             MessageBox("", "用户ID获取失败。");
         }
 
+    }
+
+    protected void LinkButton2_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            int IID = Convert.ToInt32(HiddenField_ListMaxID.Value);
+            string VidoURL = TextBox1.Text.Replace("'", "");
+            if (IID > 0)
+            {
+                string strSQL = "Update XMFight_Class_Record set VidoUrl='" + VidoURL + "' where ID= " + IID;
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    MessageBox("", "视频网址保存成功。", Request.RawUrl);
+                }
+                else
+                {
+                    MessageBox("", "失败：" + strSQL);
+                }
+            }
+        }
+        catch
+        {
+
+        }
     }
 }

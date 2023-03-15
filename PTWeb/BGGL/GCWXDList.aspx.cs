@@ -78,8 +78,6 @@ public partial class BGGL_GCWXDList : PageBase
 
             /// 设置翻页层始终显示
 
-
-
             if (OP_Mode.Dtv.Count == 0)
 
             {

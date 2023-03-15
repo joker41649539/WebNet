@@ -4,7 +4,8 @@
     <script>
         function myFunction() {
             var x;
-            alert("人员占比未分配,或者分配错误。\r\n请先点击人员分配人员占比。");
+            dialog = jqueryAlert({ 'title': '提示信息', 'content': '人员占比未分配,或者分配错误。<br/>请先点击人员分配人员占比。<br/>仅负责人可操作。', 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } })
+            //  alert("人员占比未分配,或者分配错误。\r\n请先点击人员分配人员占比。");
             return false;
         }
     </script>

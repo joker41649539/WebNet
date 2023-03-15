@@ -482,7 +482,12 @@ public class PageBase : System.Web.UI.Page
         {
             var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={0}", GetWorkToken());
 
-            var RUrl = string.Format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwcb109f513aaa59b1&redirect_uri=http%3a%2f%2f{0}&response_type=code&scope=snsapi_base&state=#wechat_redirect", strURL);
+
+
+            var RUrl = string.Empty;
+            strURL.Replace("?", ";");
+            RUrl = string.Format("http%3a%2f%2fwww.putian.ink/ReturnURL.aspx?URL={0}", strURL);
+
             var data = "{";
 
             data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 成员ID列表（消息接收者，多个接收者用‘|’分隔，最多支持1000个）。
@@ -496,7 +501,8 @@ public class PageBase : System.Web.UI.Page
             data += "}";
 
             data += "}";
-            // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwcb109f513aaa59b1&redirect_uri=http%3a%2f%2fptweb.x76.com.cn/Default.aspx%3fWechat%3d0&response_type=code&scope=snsapi_base&state=#wechat_redirect
+            //"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwcb109f513aaa59b1&redirect_uri=http%3a%2f%2fwww.putian.ink/Partner/Default.aspx%3fWechat%3d0&response_type=code&scope=snsapi_base&state=#wechat_redirect";
+            // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwcb109f513aaa59b1&redirect_uri=http%3a%2f%2fwww.putian.ink/Default.aspx%3fWechat%3d0&response_type=code&scope=snsapi_base&state=#wechat_redirect
             var serializer = new JavaScriptSerializer();
             var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
 

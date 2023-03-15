@@ -3,16 +3,58 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js" type="text/javascript"></script>
     <script type="text/javascript">
+        wx.config({
+            beta: true,
+            debug: false,
+            appId: '<%=this.appId%>',
+            timestamp: '<%=this.timeStamp%>',
+            nonceStr: '<%=this.nonceStr%>',
+            signature: '<%=this.signature%>',
+            jsApiList: [
+                'updateTimelineShareData',
+                'updateAppMessageShareData',
+                'onMenuShareAppMessage',
+                'onMenuShareTimeline',
+            ]
+        });
 
         wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
             wx.updateTimelineShareData({
                 title: '特惠抢购信息', // 分享标题
                 link: 'http://ptweb.x76.com.cn/Tuangou/ReturnURL.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号 JS 安全域名一致
-                imgUrl: '/images/XMFightLogo.jpg', // 分享图标
+                imgUrl: 'http://ptweb.x76.com.cn/images/XMFightLogo.jpg', // 分享图标
                 success: function () {
                     // 设置成功
                 }
-            })
+            });
+            wx.updateAppMessageShareData({
+                title: '特惠抢购信息', // 分享标题
+                desc: '我的孩子增在参加特惠抢购', // 分享描述
+                link: 'http://ptweb.x76.com.cn/Tuangou/ReturnURL.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://ptweb.x76.com.cn/images/XMFightLogo.jpg', // 分享图标
+                success: function () {
+                    // 设置成功
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: '特惠抢购信息', // 分享标题
+                desc: '我的孩子增在参加特惠抢购', // 分享描述
+                link: 'http://ptweb.x76.com.cn/Tuangou/ReturnURL.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://ptweb.x76.com.cn/images/XMFightLogo.jpg', // 分享图标
+                type: '', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户点击了分享后执行的回调函数
+                }
+            });
+            wx.onMenuShareTimeline({
+                title: '特惠抢购信息', // 分享标题
+                link: 'http://ptweb.x76.com.cn/Tuangou/ReturnURL.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'http://ptweb.x76.com.cn/images/XMFightLogo.jpg', // 分享图标
+                success: function () {
+                    // 用户点击了分享后执行的回调函数
+                }
+            });
         });
         // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
         document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {

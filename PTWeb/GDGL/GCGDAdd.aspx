@@ -140,7 +140,7 @@
                     <asp:UpdatePanel ID="GridView1_UpdatePanel1" runat="server" UpdateMode="Always">
                         <ContentTemplate>
 
-                            <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowUpdating="GridView1_RowUpdating">
+                            <asp:GridView ID="GridView_GDAdd" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowUpdating="GridView1_RowUpdating">
                                 <Columns>
                                     <asp:BoundField DataField="AZWZ" SortExpression="AZWZ" HeaderText="安装位置"></asp:BoundField>
                                     <asp:BoundField DataField="SBBH" SortExpression="SBBH" HeaderText="设备编号"></asp:BoundField>
@@ -170,32 +170,5 @@
         </div>
         <!-- /widget-box -->
     </div>
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script>
-        // 字符替换
-        $("#GridView1 tr").each(function () {
-            var mtd = $(this).children("td:eq(9)");
-            if (mtd.text() == '0') {
-                mtd.html(" <span class=\"label label-success\">" + mtd.text() + " %</span>");
-            }
-            else if (mtd.text() >= 100) {
-                mtd.html(" <span class=\"label label-danger\">" + mtd.text() + " %</span>");
-            }
-            else {
-                mtd.html(" <span class=\"label label-purple\">" + mtd.text() + " %</span>");
-            }
-
-            var mtd = $(this).children("td:eq(12)");
-            if (mtd.text() == '0') {
-                mtd.html(" <span class=\"label label-success\">" + mtd.text() + " %</span>");
-            }
-            else if (mtd.text() >= 100) {
-                mtd.html(" <span class=\"label label-danger\">" + mtd.text() + " %</span>");
-            }
-            else {
-                mtd.html(" <span class=\"label label-purple\">" + mtd.text() + " %</span>");
-            }
-        });
-    </script>
 </asp:Content>
 

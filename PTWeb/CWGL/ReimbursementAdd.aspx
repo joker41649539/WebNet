@@ -21,7 +21,7 @@
             var MaxCount = 3; // 最大数量
             i++
             input.type = "file";
-            input.capture = "camera";// 照相机
+           // input.capture = "camera";// 照相机
             input.accept = "image/*";// 文件类型
             input.name = "AddImg";
             input.id = "id-input" + i;
@@ -238,7 +238,7 @@
             <div class="form-group">
                 <label runat="server" id="Label7" class="col-sm-3 control-label no-padding-right" for="form-field-1">上传图片：</label>
                 <div class="col-sm-9 widget-main" id="showText">
-                    <input name="AddImg" capture="camera" accept="image/*" type="file" id="id-input" />
+                    <input name="AddImg" accept="image/*" type="file" id="id-input" />
                 </div>
                 <%--                <div class="col-sm-9">
                     <asp:FileUpload ID="FileUpload1" runat="server" accept="image/*" />

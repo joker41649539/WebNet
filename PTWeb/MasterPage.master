@@ -291,6 +291,29 @@
                     mtd.html(" ");
                 }
             });
+            $("#GridView_GDAdd tr").each(function () {
+                var mtd = $(this).children("td:eq(9)");
+                if (mtd.text() == '0') {
+                    mtd.html(" <span class=\"label label-success\">" + mtd.text() + " %</span>");
+                }
+                else if (mtd.text() >= 100) {
+                    mtd.html(" <span class=\"label label-danger\">" + mtd.text() + " %</span>");
+                }
+                else {
+                    mtd.html(" <span class=\"label label-purple\">" + mtd.text() + " %</span>");
+                }
+
+                var mtd = $(this).children("td:eq(12)");
+                if (mtd.text() == '0') {
+                    mtd.html(" <span class=\"label label-success\">" + mtd.text() + " %</span>");
+                }
+                else if (mtd.text() >= 100) {
+                    mtd.html(" <span class=\"label label-danger\">" + mtd.text() + " %</span>");
+                }
+                else {
+                    mtd.html(" <span class=\"label label-purple\">" + mtd.text() + " %</span>");
+                }
+            });
         </script>
         <%-- 与树菜单相关，必须放到最后--%>
         <script src="/assets/js/ace.min.js"></script>

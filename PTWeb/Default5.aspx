@@ -105,6 +105,14 @@
         <!-- /.modal-dialog -->
     </div>
     <form id="form1" runat="server" enctype="multipart/form-data">
+        <div class="page-content">
+            <div class="input-group">
+                <asp:TextBox ID="TextBox1" runat="server" placeholder="请输入视频网址" class="form-control search-query"></asp:TextBox>
+                <span class="input-group-btn">
+                    <asp:LinkButton ID="LinkButton2" class="btn btn-purple btn-sm" runat="server">保存<i class="icon-save icon-on-right bigger-110"></i></asp:LinkButton>
+                </span>
+            </div>
+        </div>
         <div class="widget-body">
             <div class="widget-main" id="showText">
                 <input name="AddImg" capture="camera" accept="image/*" type="file" id="id-input" />

@@ -79,7 +79,15 @@ public partial class GDGL_MyGDBXWZ : PageBase
 
                         strHTML += " </a></span> ";
                         strHTML += " <div class='infobox-content'> ";
-                        strHTML += "    <a href = '\\GDGL\\GCBXListPH.ASPX?ID=" + OP_Mode.Dtv[i]["IID"].ToString() + "' > 累计：" + OP_Mode.Dtv[i]["MXCOUNT"].ToString() + " 安装项</a>";
+                        if (HiddenField_ZID.Value == DefaultUser)
+                        {// 如果是主负责才允许修改人员占比
+
+                            strHTML += "    <a href = '\\GDGL\\GCBXListPH.ASPX?ID=" + OP_Mode.Dtv[i]["IID"].ToString() + "' > 累计：" + OP_Mode.Dtv[i]["MXCOUNT"].ToString() + " 安装项</a>";
+                        }
+                        else
+                        {
+                            strHTML += " href='#'>累计：" + OP_Mode.Dtv[i]["MXCOUNT"].ToString() + " 安装项</a> ";
+                        }
                         strHTML += " </div> ";
                         strHTML += "</div> ";
                         strHTML += "</div> ";

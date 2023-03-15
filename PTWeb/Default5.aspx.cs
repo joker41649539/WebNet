@@ -19,16 +19,23 @@ public partial class Default5 : PageBase
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
         //   this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () { location.href=\"" + sURL + "\"; } } })</script>");
-        string Image1 = String.Empty;
+        //string Image1 = String.Empty;
 
-        int iFilCount = Request.Files.Count;
+        //int iFilCount = Request.Files.Count;
 
-        for (int i = 0; i < iFilCount; i++)
-        {
-            HttpPostedFile f = Request.Files[i];
-            Image1 += UploadTPs(f) + ";";
-        }
-        MessageBox_Test("", "上传成功:" + Image1);
+        //for (int i = 0; i < iFilCount; i++)
+        //{
+        //    HttpPostedFile f = Request.Files[i];
+        //    Image1 += UploadTPs(f) + ";";
+        //}
+        //MessageBox_Test("", "上传成功:" + Image1);
+        //string strUsers = "Luxiaojun";
+        //SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "Default.aspx");
+
+        Response.Redirect("http://localhost:59802/RetunUrl.aspx?URL=default.aspx", false);
+
+
+
     }
 
     public void MessageBox_Test(string sKey, string sMessage)
