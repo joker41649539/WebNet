@@ -486,7 +486,7 @@ public class PageBase : System.Web.UI.Page
 
             var RUrl = string.Empty;
             strURL.Replace("?", ";");
-            RUrl = string.Format("http%3a%2f%2fwww.putian.ink/ReturnURL.aspx?URL={0}", strURL);
+            RUrl = string.Format("http://www.putian.ink/ReturnURL.aspx?URL={0}", strURL);
 
             var data = "{";
 

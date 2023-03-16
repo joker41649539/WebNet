@@ -29,10 +29,10 @@ public partial class Default5 : PageBase
         //    Image1 += UploadTPs(f) + ";";
         //}
         //MessageBox_Test("", "上传成功:" + Image1);
-        //string strUsers = "Luxiaojun";
-        //SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "Default.aspx");
+        string strUsers = "Luxiaojun";
+        SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "CWGL/ReimbursementAdd.aspx?ID=10947");
 
-        Response.Redirect("http://localhost:59802/RetunUrl.aspx?URL=default.aspx", false);
+        // Response.Redirect("http://www.putian.ink/ReturnUrl.aspx?URL=CWGL/ReimbursementAdd.aspx;ID=10947", false);
 
 
 

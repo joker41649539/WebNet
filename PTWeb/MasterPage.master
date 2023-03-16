@@ -97,9 +97,8 @@
                     <a href="#" class="navbar-brand">
                         <small>
                             <b>
-                                <img src="/images/ptlogo.png" width="23px" />&nbsp;普田科技
+                                <img src="/images/ptlogo.png" class="img-rounded" width="23px" />&nbsp;普田科技
                             </b>
-
                         </small>
                     </a>
                 </div>

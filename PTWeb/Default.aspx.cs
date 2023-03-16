@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using System;
+using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -41,6 +42,11 @@ public partial class DefaultPH : PageBase
     /// </summary>
     private void LoadJF()
     {
+        int WeekJF = 0;
+        int MonthJF = 0;
+        int YesDayJF = 0;
+        int ToDayJF = 0;
+
         DateTime nowTime = DateTime.Now;
         #region 获取本周第一天
         //星期一为第一天  
@@ -57,28 +63,46 @@ public partial class DefaultPH : PageBase
         // 1、工程安装积分计算、统计。
         strSQL += " Select";
         strSQL += " isnull((Select Sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100)  from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and USERID = " + DefaultUser + " and W_GCGD_FS.CTIME > '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "'),0) DayAZFS,";
+        strSQL += " isnull((Select Sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100)  from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and USERID = " + DefaultUser + " and W_GCGD_FS.CTIME > '" + System.DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") + "' and W_GCGD_FS.CTIME <'" + System.DateTime.Now.ToString("yyyy-MM-dd") + "'),0) YesDayAZFS,";
         strSQL += " isnull((Select Sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100)  from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and USERID = " + DefaultUser + " and W_GCGD_FS.CTIME > '" + FirstDay.ToString("yyyy-MM-dd") + "'),0) WeekAZFS,";
-        strSQL += " isnull((Select Sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100)  from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and USERID = " + DefaultUser + " and W_GCGD_FS.CTIME > '" + System.DateTime.Now.ToString("yyyy-MM-") + "01'),0) MonthAZFS";
+        strSQL += " isnull((Select Sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100)  from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and USERID = " + DefaultUser + " and W_GCGD_FS.CTIME > '" + System.DateTime.Now.ToString("yyyy-MM-") + "01'),0) MonthAZFS,";
         // 2、工程布线积分--按照List表统计。
+
+        // strSQL += " Select";
+        strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS * W_GCGD2.FS / 100) NFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b, W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) DayBXFS,";
+        strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS* W_GCGD2.FS/ 100) NFS,GCMXID from W_GCGD_FS_BXList a,(Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + System.DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") + "' and LTIME < '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + System.DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) YesDayBXFS,";
+        strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS* W_GCGD2.FS/ 100) NFS,GCMXID from W_GCGD_FS_BXList a,(Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + FirstDay.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + FirstDay.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) WeekDayBXFS,";
+        strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS* W_GCGD2.FS/ 100) NFS,GCMXID from W_GCGD_FS_BXList a,(Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + System.DateTime.Now.ToString("yyyy-MM-") + "01' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + System.DateTime.Now.ToString("yyyy-MM-") + "01' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) MonthDayBXFS";
+
+
         // 3、维保单积分。
 
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
             {
-                if (Convert.ToInt32(OP_Mode.Dtv[0]["DayAZFS"]) < 100)
-                {
-                    Label_Day.ForeColor = System.Drawing.Color.Red;
-                    Label_Day.Font.Bold = true;
-                }
-
-                Label_Day.Text = OP_Mode.Dtv[0]["DayAZFS"].ToString();
-                Label_Week.Text = OP_Mode.Dtv[0]["WeekAZFS"].ToString();
-                Label_Month.Text = OP_Mode.Dtv[0]["MonthAZFS"].ToString();
+                WeekJF = Convert.ToInt32(OP_Mode.Dtv[0]["WeekAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["WeekDayBXFS"]);
+                MonthJF = Convert.ToInt32(OP_Mode.Dtv[0]["MonthAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["MonthDayBXFS"]);
+                YesDayJF = Convert.ToInt32(OP_Mode.Dtv[0]["YesDayAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["YesDayBXFS"]);
+                ToDayJF = Convert.ToInt32(OP_Mode.Dtv[0]["DayAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["DayBXFS"]);
             }
         }
-    }
+        if (ToDayJF < 100)
+        {
+            Label_Day.ForeColor = System.Drawing.Color.Red;
+            Label_Day.Font.Bold = true;
+        }
+        if (YesDayJF < 100)
+        {
+            Label_YesDay.ForeColor = System.Drawing.Color.Red;
+            Label_YesDay.Font.Bold = true;
+        }
 
+        Label_Day.Text = ToDayJF.ToString();
+        Label_YesDay.Text = YesDayJF.ToString();
+        Label_Week.Text = WeekJF.ToString();
+        Label_Month.Text = MonthJF.ToString();
+    }
 
     /// <summary>
     /// 我要签到

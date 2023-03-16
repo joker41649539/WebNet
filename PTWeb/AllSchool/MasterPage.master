@@ -1,0 +1,127 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="AllSchool_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>模板页面</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="robots" content="noarchive" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/assets/alert/alert.css" />
+
+    <script src='/assets/alert/alert.js'></script>
+    <script src="/assets/js/ace-extra.min.js"></script>
+    <script src='/assets/alert/shCore.js'></script>
+    <script src='/assets/alert/makeSy.js'></script>
+
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
+
+</head>
+<body>
+    <div class="modal fade" id="MSG" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="MSGTitle">提  示
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <h3 class="modal-title" id="ShowMSG">发生了错误！
+                    </h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                        确&nbsp;&nbsp;定
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="form1" runat="server">
+        <div class="navbar navbar-default" id="navbar">
+            <div class="navbar-container" id="navbar-container">
+                <div class="navbar-header pull-left">
+                    <a href="#" class="navbar-brand">
+                        <small>
+                            <b>
+                                <img src="/images/ptlogo.png" class="img-rounded" width="23px" />&nbsp;普田科技
+                            </b>
+
+                        </small>
+                    </a>
+                </div>
+                <div class="navbar-header pull-right" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue">
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <asp:Image ID="Image_User" class="nav-user-photo" runat="server" />
+                                <span class="user-info">
+                                    <small>欢迎</small>
+                                    <small>
+                                        <asp:Label ID="Label_Name" runat="server" Text="老  鬼"></asp:Label></small>
+                                </span>
+                                <i class="icon-caret-down"></i>
+                            </a>
+                            <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="/SYS/MyUserInfo.aspx">
+                                        <i class="icon-user"></i>
+                                        我的信息
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <asp:LinkButton ID="LinkButton1" runat="server"><i class="icon-off"></i>
+                                        退 出</asp:LinkButton>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- /.ace-nav -->
+                </div>
+                <!-- /.navbar-header -->
+            </div>
+            <!-- /.container -->
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <!-- 底部留空-->
+        <div class="row" style="height: 60px;">
+        </div>
+        <!-- 底部代码 开始-->
+        <div>
+            <ul class="footer-nav text-center">
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/"><i class="icon-camera-retro"></i>学员风采</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/MyClass.aspx"><i class="icon-calendar"></i>我的课程</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Contact.aspx"><i class="icon-comments"></i>联系我们</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Manage/Class.aspx"><i class="icon-calendar"></i>课程管理</a></li>
+                <li><a class="btn btn-app btn-white btn-xs" href="/XMFight/Manage/Bance.aspx"><i class="icon-bar-chart"></i>盈利报表</a></li>
+            </ul>
+        </div>
+        <!-- 底部代码 结束-->
+    </form>
+</body>
+</html>

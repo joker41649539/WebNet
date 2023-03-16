@@ -74,7 +74,7 @@ public partial class GDGL_MyGDBXWZ : PageBase
 
                         if (OP_Mode.Dtv[i]["BXRY"].ToString().Length > 0)
                         {
-                            strHTML += " [" + OP_Mode.Dtv[i]["BXRY"].ToString() + "]";
+                            strHTML += " <br/>[" + OP_Mode.Dtv[i]["BXRY"].ToString() + "]";
                         }
 
                         strHTML += " </a></span> ";
@@ -86,7 +86,7 @@ public partial class GDGL_MyGDBXWZ : PageBase
                         }
                         else
                         {
-                            strHTML += " href='#'>累计：" + OP_Mode.Dtv[i]["MXCOUNT"].ToString() + " 安装项</a> ";
+                            strHTML += " <a href='#'>累计：" + OP_Mode.Dtv[i]["MXCOUNT"].ToString() + " 安装项</a> ";
                         }
                         strHTML += " </div> ";
                         strHTML += "</div> ";

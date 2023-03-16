@@ -333,7 +333,7 @@ public partial class GDGL_GCBXListPH : PageBase
             // 插入积分
             strSQL += " Insert into W_GCGD_FS (GCMXID,USERID,FS,Remark) Select " + iGCMXID + ",USERS,ipercent*" + iAZPercent + "/100,'" + strRemark + "' from W_GCGD_USERS where Flag=0 and GCDID=" + HiddenField_GCID.Value;
             /// 插入记录表，后期统计使用
-            strSQL += " Insert into W_GCGD_FS_BXList (GCMXID,FS,UserID,Remark) Select " + iGCMXID + ",USERS,ipercent*" + iAZPercent + "/100,'" + strRemark + "' from W_GCGD_USERS where Flag=0 and GCDID=" + HiddenField_GCID.Value;
+            strSQL += " Insert into W_GCGD_FS_BXList (GCMXID,UserID,FS,Remark) Select " + iGCMXID + ",USERS,ipercent*" + iAZPercent + "/100,'" + strRemark + "' from W_GCGD_USERS where Flag=0 and GCDID=" + HiddenField_GCID.Value;
         }
 
         if (strSQL.Length > 0)

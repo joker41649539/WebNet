@@ -34,7 +34,6 @@
                 'getLocation',
             ]
         });
-
         wx.ready(function () {
             wx.checkJsApi({
                 jsApiList: [
@@ -211,21 +210,26 @@
                                 <div class="grid1">
                                     <span class="grey">
                                         <i class="icon-calendar blue"></i>
-                                        &nbsp; 本月：<asp:Label ID="Label_Month" runat="server" Text="0"></asp:Label>
+                                        &nbsp;本月：<asp:Label ID="Label_Month" runat="server" Text="0"></asp:Label>
                                     </span>
                                 </div>
 
                                 <div class="grid1">
                                     <span class="grey">
                                         <i class="icon-bar-chart purple"></i>
-                                        &nbsp; 本周：<asp:Label ID="Label_Week" runat="server" Text="0"></asp:Label>
+                                        &nbsp;本周：<asp:Label ID="Label_Week" runat="server" Text="0"></asp:Label>
                                     </span>
                                 </div>
-
+                                <div class="grid1">
+                                    <span class="success">
+                                        <i class="icon-flag success"></i>
+                                        &nbsp;昨日：<asp:Label ID="Label_YesDay" runat="server" Text="0"></asp:Label>
+                                    </span>
+                                </div>
                                 <div class="grid1">
                                     <span class="grey">
                                         <i class="icon-legal red"></i>
-                                        &nbsp; 今日：<asp:Label ID="Label_Day" runat="server" Text="0"></asp:Label>
+                                        &nbsp;今日：<asp:Label ID="Label_Day" runat="server" Text="0"></asp:Label>
                                     </span>
                                 </div>
                                 <%--<div class="grid1">

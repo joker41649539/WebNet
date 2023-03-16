@@ -26,7 +26,7 @@
     <div class="page-content">
         <div class="col-xs-12">
             <div class="form-group">
-                <label runat="server" id="Label9" class="col-sm-1 control-label no-padding-right">报销人：</label>
+                <label runat="server" id="Label9" class="col-sm-1 control-label no-padding-right">姓名：</label>
                 <div class="col-sm-10 left">
                     <asp:TextBox ID="TextBox_Name" class="form-control" runat="server"></asp:TextBox>
                 </div>
@@ -35,11 +35,11 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <label runat="server" id="Label1" class="col-sm-1 control-label no-padding-right">日期：</label>
-                <div class="col-sm-2">
-                    <asp:TextBox ID="TextBox_STime" ClientIDMode="Static" class="form-control date-picker" type="text" data-date-format="yyyy-MM-dd" runat="server"></asp:TextBox>
+                <div class="col-sm-1">
+                    <asp:TextBox ID="TextBox_STime" ClientIDMode="Static" placeholder="请点击选择日期" data-date-format="yyyy-mm-dd" class="form-control date-picker" type="text" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-sm-2">
-                    <asp:TextBox ID="TextBox_ETime" ClientIDMode="Static" class="form-control date-picker" type="text" data-date-format="yyyy-MM-dd" runat="server"></asp:TextBox>
+                <div class="col-sm-1">
+                    <asp:TextBox ID="TextBox_ETime" ClientIDMode="Static" class="form-control date-picker" type="text" placeholder="请点击选择日期" data-date-format="yyyy-mm-dd" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-sm-7">
                     &nbsp;               
@@ -57,5 +57,14 @@
             <div id="QDList" runat="server"></div>
         </div>
     </div>
+    <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+        });
+    </script>
 </asp:Content>
 
