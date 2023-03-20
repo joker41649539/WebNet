@@ -111,7 +111,7 @@
                 </asp:DropDownList>
                 <asp:TextBox ID="GridView_BXD_TextBox_CXTJ" placeholder="条件内容" runat="server"></asp:TextBox>
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" OnClick="GridView_BXD_TJADD_Click" ID="GridView_BXD_TJADD"><i class="icon-plus-sign">&nbsp;条件添加</i></asp:LinkButton>
-                <button class="btn btn-white btn-sm" onclick="javascript:method1('GridView_BXD');" ><i class="icon-plus-sign">&nbsp;导出Excel</i></button>
+                <button class="btn btn-white btn-sm" onclick="javascript:method1('GridView_BXD');"><i class="icon-plus-sign">&nbsp;导出Excel</i></button>
                 <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="LinkButton_AllSubit" OnClientClick="javascript:return confirm('真的要全部提交吗？')" OnClick="LinkButton_AllSubit_Click">&nbsp;全部提交</asp:LinkButton>
                 <div class="widget-toolbar"><a href="#" data-action="collapse"><i class="icon-chevron-up"></i></a></div>
             </div>
@@ -125,8 +125,8 @@
                 <div class="widget-main no-padding">
                     <asp:GridView ID="GridView_BXD" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" OnPageIndexChanging="GridView_BXD_PageIndexChanging" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView_BXD_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView_BXD_SelectedIndexChanging" OnRowCommand="GridView_BXD_RowCommand">
                         <Columns>
-                            <asp:ButtonField DataTextField="BXDH" HeaderText="单据号" CommandName="Select" SortExpression="BXDH" Text="按钮" />
-                            <asp:ButtonField DataTextField="UserName" HeaderText="报销人" CommandName="Select" SortExpression="UserName" Text="按钮" />
+                            <asp:HyperLinkField HeaderText="单据编号" SortExpression="BXDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/CWGL/ReimbursementAdd.aspx?ID={0}" DataTextField="BXDH"></asp:HyperLinkField>
+                            <asp:HyperLinkField HeaderText="报销人" SortExpression="UserName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/CWGL/ReimbursementAdd.aspx?ID={0}" DataTextField="UserName"></asp:HyperLinkField>
                             <asp:BoundField DataField="ZJE" SortExpression="ZJE" HeaderText="总金额"></asp:BoundField>
                             <asp:BoundField DataField="SPR" SortExpression="SPR" HeaderText="审核人"></asp:BoundField>
                             <asp:BoundField DataField="SPRSJ" SortExpression="SPRSJ" HeaderText="关键审核时间" DataFormatString="{0:yyyy-MM-dd}"></asp:BoundField>

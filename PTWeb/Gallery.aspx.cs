@@ -29,7 +29,7 @@ public partial class Images : PageBase
         for (int i = 0; i < iFilCount; i++)
         {
             HttpPostedFile f = Request.Files[i];
-            Image1 += UploadTPs(f) + ";";
+            Image1 += UploadTPs(f, i) + ";";
         }
         if (Image1.Length > 0)
         {
@@ -58,7 +58,7 @@ public partial class Images : PageBase
 
         }
         string strSQL = "Select * from W_Images where iClass=" + DB_Class + " and DJBH='" + DB_DJBH + "' order by CTime desc";
-       // string strSQL = "Select * from W_Images order by CTime desc";
+        // string strSQL = "Select * from W_Images order by CTime desc";
         if (OP_Mode.SQLRUN(strSQL))
         {
             for (int i = 0; i < OP_Mode.Dtv.Count; i++)
@@ -138,10 +138,10 @@ public partial class Images : PageBase
     /// <summary>
     /// 上传图片信息
     /// </summary>
-    private string UploadTPs(HttpPostedFile fileName)
+    private string UploadTPs(HttpPostedFile fileName, int sn)
     {
         string SavePath = "KQImage";// 图片保存路径  ，无需/  ~/KQImage/
-        string Prefix = "Temp";// 新文件名前缀
+        string Prefix = "Temp" + sn;// 新文件名前缀
         string strTemp = string.Empty;// = "测试一下";/// 水印文字
 
         string name = fileName.FileName;//获取文件名称

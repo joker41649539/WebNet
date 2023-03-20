@@ -81,6 +81,7 @@ public partial class WeChat_QDSearch : PageBase
                     }
 
                     strTemp += "<div class='timeline-item clearfix'>";
+
                     strTemp += "  <div class='timeline-info'>";
                     if (OP_Mode.Dtv[i]["HeadUrl"].ToString().Length > 0)
                     {
@@ -228,7 +229,7 @@ public partial class WeChat_QDSearch : PageBase
         for (int i = 0; i < iFilCount; i++)
         {
             HttpPostedFile f = Request.Files[i];
-            Image1 += UploadTPs(f) + ";";
+            Image1 += UploadTPs(f, i) + ";";
         }
 
         if (strJD.Length + strWD.Length + strWZ.Length < 1)
@@ -255,7 +256,7 @@ public partial class WeChat_QDSearch : PageBase
     /// <summary>
     /// 上传图片信息
     /// </summary>
-    private string UploadTPs(HttpPostedFile fileName)
+    private string UploadTPs(HttpPostedFile fileName, int sn)
     {
         string name = fileName.FileName;//获取文件名称
 
@@ -304,7 +305,7 @@ public partial class WeChat_QDSearch : PageBase
                     //添加水印
                     System.Drawing.Image imgSrc = AddText(@URLpath, "50,50", "300, 100", strTemp);
 
-                    string imageName = "SY" + newname;
+                    string imageName = "SY" + sn.ToString() + newname;
                     string newpath = Server.MapPath(@"/KQImage/" + imageName);
                     imgSrc.Save(newpath, System.Drawing.Imaging.ImageFormat.Jpeg);
                     //释放水印图片

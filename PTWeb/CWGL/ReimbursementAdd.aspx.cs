@@ -537,7 +537,7 @@ public partial class CWGL_Default2 : PageBase
             for (int i1 = 0; i1 < iFilCount; i1++)
             {
                 HttpPostedFile f = Request.Files[i1];
-                Image1 += UploadTPs(f) + ";";
+                Image1 += UploadTPs(f, i1) + ";";
             }
 
             String imageName = String.Empty;// UploadTP(FileUpload1);
@@ -808,10 +808,10 @@ public partial class CWGL_Default2 : PageBase
     /// <summary>
     /// 上传图片信息
     /// </summary>
-    private string UploadTPs(HttpPostedFile fileName)
+    private string UploadTPs(HttpPostedFile fileName, int sn)
     {
         string SavePath = "BxImages";// 图片保存路径  ，无需/  ~/KQImage/
-        string Prefix = "BX";// 新文件名前缀
+        string Prefix = "BX" + sn;// 新文件名前缀
         string strTemp = string.Empty;// = "测试一下";/// 水印文字
 
         string name = fileName.FileName;//获取文件名称

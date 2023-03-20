@@ -38,68 +38,73 @@ public partial class CWGL_Search : PageBase
 
         string sortDirection = this.GridView_BX.Attributes["SortDirection"];
 
-        string strSQL;
-        strSQL = "Select w_bxd1.id,username,W_BXD1.bxdh,Occurrence,KZXM,W_BXD1.Remark SY,flag,FLAG,W_BXD2.BREAKFIRST,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,BECITY,ARRIVAL,BXJE,W_BXD2.REMARK,IMAGE from W_BXD1,W_BXD2 where w_bxd1.bxdh=w_bxd2.bxdh and flag>0 ";
+        string strSQL = String.Empty;
 
         if (this.GridView1_Label_tj.Text.Length > 0)
         {
+            strSQL = "Select w_bxd1.id,username,W_BXD1.bxdh,Occurrence,KZXM,W_BXD1.Remark SY,flag,FLAG,W_BXD2.BREAKFIRST,ZCBZ,WCBZ,ZSBZ,DRZS,TXR,MC,BECITY,ARRIVAL,BXJE,W_BXD2.REMARK,IMAGE from W_BXD1,W_BXD2 where w_bxd1.bxdh=w_bxd2.bxdh and flag>0 ";
             strSQL += " And " + this.GridView1_Label_tj.Text.Trim();
-        }
 
-        string strCheckBox = GetChecked(CheckBoxList1);
 
-        if (strCheckBox.Length > 0)
-        {// 添加复选框条线
-            strSQL += " and  KZXM in (" + strCheckBox + ") ";
-        }
+            string strCheckBox = GetChecked(CheckBoxList1);
 
-        /// 增加排序条件
-        strSQL += " Order By username,Occurrence desc";
+            if (strCheckBox.Length > 0)
+            {// 添加复选框条线
+                strSQL += " and  KZXM in (" + strCheckBox + ") ";
+            }
 
-        if (OP_Mode.SQLRUN(strSQL))
+            /// 增加排序条件
+            strSQL += " Order By username,Occurrence desc";
 
-        {
-
-            /// 设置排序
-
-            if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+            if (OP_Mode.SQLRUN(strSQL))
 
             {
 
-                OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+                /// 设置排序
+
+                if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+
+                {
+
+                    OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+
+                }
+
+                /// 设置翻页层始终显示
+
+
+
+                if (OP_Mode.Dtv.Count == 0)
+
+                {
+
+                    OP_Mode.Dtv.AddNew();
+
+                }
+
+
+
+                this.GridView_BX.DataSource = OP_Mode.Dtv;
+
+                this.GridView_BX.DataBind();
 
             }
 
-            /// 设置翻页层始终显示
-
-
-
-            if (OP_Mode.Dtv.Count == 0)
+            else
 
             {
 
-                OP_Mode.Dtv.AddNew();
+                MessageBox("", strSQL + "<br/>" + OP_Mode.strErrMsg);
+
+                return;
 
             }
-
-
-
-            this.GridView_BX.DataSource = OP_Mode.Dtv;
-
-            this.GridView_BX.DataBind();
-
         }
-
         else
-
         {
-
-            MessageBox("", strSQL + "<br/>" + OP_Mode.strErrMsg);
-
-            return;
-
+            GridView_BX.DataSource = null;
+            GridView_BX.DataBind();
         }
-
     }
 
     protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)

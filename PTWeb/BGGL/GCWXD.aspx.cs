@@ -20,6 +20,7 @@ public partial class GDGL_GCWXD : PageBase
                 MessageBox("", "您没维修单的权限。", Defaut_QX_URL);
                 return;
             }
+            LoadJFList();
             LoadData();
         }
     }
@@ -88,7 +89,7 @@ public partial class GDGL_GCWXD : PageBase
             if (OP_Mode.Dtv.Count > 0)
             {
                 Hidden_WXRY.Value = OP_Mode.Dtv[0]["WXRY"].ToString();
-
+                HiddenField_WXJF.Value = OP_Mode.Dtv[0]["SumJF"].ToString();
                 Label_DW.Text = OP_Mode.Dtv[0]["DWMC"].ToString();
                 Label_dh.Text = OP_Mode.Dtv[0]["WXDH"].ToString();
                 Label_WXRY.Text = OP_Mode.Dtv[0]["CNAME"].ToString();
@@ -215,12 +216,16 @@ public partial class GDGL_GCWXD : PageBase
         int IDB_GZTD = Convert.ToInt32(0 + RadioButtonList4.SelectedValue);
         int IDB_WXJG = Convert.ToInt32(0 + RadioButtonList5.SelectedValue);
 
+        int DB_JF = Convert.ToInt32(HiddenField_WXJF.Value);
+
         string DB_Remark = TextBox_Remark.Text.Replace("'", "\"");
         string DB_LXDH = TextBox_LXDH.Text.Replace("'", "\"");
 
         string DB_Sign = Image_Sign.ImageUrl;
 
         string DB_QM = HiddenField1.Value;
+
+
 
         if (HiddenField1.Value.Length > 0)
         {// 需要上传图片
@@ -271,7 +276,7 @@ public partial class GDGL_GCWXD : PageBase
 
         if (ID > 0)
         {
-            strSQL = "Update w_wxd set YHMC='" + DB_YH + "',ZHMC='" + DB_FLC + "',GZXX='" + DB_GZ + "',WXNR='" + DB_WX + "',WXFY=" + DB_FY + ",GZJY=" + iDB_GZ + ",SBJC=" + iDB_SBJC + ",GZTD=" + IDB_GZTD + ",WXJG=" + IDB_WXJG + ",REMARK='" + DB_Remark + "',LXDH='" + DB_LXDH + "',QM='" + DB_QM + "',LTime=getdate() WHERE ID=" + ID;
+            strSQL = "Update w_wxd set YHMC='" + DB_YH + "',ZHMC='" + DB_FLC + "',GZXX='" + DB_GZ + "',WXNR='" + DB_WX + "',WXFY=" + DB_FY + ",GZJY=" + iDB_GZ + ",SBJC=" + iDB_SBJC + ",GZTD=" + IDB_GZTD + ",WXJG=" + IDB_WXJG + ",REMARK='" + DB_Remark + "',LXDH='" + DB_LXDH + "',QM='" + DB_QM + "',SumJF=" + DB_JF + ",LTime=getdate() WHERE ID=" + ID;
             if (OP_Mode.SQLRUN(strSQL))
             {
                 return ID;
@@ -285,9 +290,9 @@ public partial class GDGL_GCWXD : PageBase
         }
         else
         {
-            strSQL = "Insert into w_wxd (DWMC,WXDH,WXRY,WXSJ,YHMC,ZHMC,GZXX,WXNR,WXFY,GZJY,SBJC,GZTD,WXJG,REMARK,LXDH,QM,FLAG,DEL) ";
+            strSQL = "Insert into w_wxd (DWMC,WXDH,WXRY,WXSJ,YHMC,ZHMC,GZXX,WXNR,WXFY,GZJY,SBJC,GZTD,WXJG,REMARK,LXDH,QM,FLAG,DEL,SumJF) ";
             strSQL += " values ('" + DB_DW + "',(SELECT 'SF' + CONVERT(VARCHAR(10), GETDATE(), 120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(WXDH, 4)), '0000') + 1 AS VARCHAR), 4) FROM w_wxd WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10), CTIME, 120)),'" + DB_WXRY + "','" + DB_WXSJ + "','" + DB_YH + "','" + DB_FLC + "','" + DB_GZ + "','" + DB_WX + "'," + DB_FY + "," + iDB_GZ + ",";
-            strSQL += iDB_SBJC + "," + IDB_GZTD + "," + IDB_WXJG + ",'" + DB_Remark + "','" + DB_LXDH + "','" + DB_QM + "',0,0) ";
+            strSQL += iDB_SBJC + "," + IDB_GZTD + "," + IDB_WXJG + ",'" + DB_Remark + "','" + DB_LXDH + "','" + DB_QM + "',0,0," + DB_JF + ") ";
             strSQL += " DECLARE @TNO int  SET @TNO = @@IDENTITY ";
             strSQL += " Select W_WXD.*,CNAME from W_WXD,S_USERINFO where WXRY = S_USERINFO.ID and W_WXD.id = @TNO";
 
@@ -741,6 +746,54 @@ public partial class GDGL_GCWXD : PageBase
                     MessageBox("", "指定单据归档成功。", "/BGGL/GCWXDList.aspx");
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// 加载维保积分列表
+    /// </summary>
+
+    private void LoadJFList()
+    {
+        string strTempHtml = string.Empty;
+        string strSQL = "SELECT * FROM W_WBJFLIST WHERE IFLAG=0 ORDER BY FZSN,ZSN";
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+            {
+                if (i == 0)
+                {
+                    strTempHtml += "<h4>" + OP_Mode.Dtv[i]["FZName"].ToString() + "</h4>";
+                }
+                else
+                {
+                    if (OP_Mode.Dtv[i]["FZsn"].ToString() != OP_Mode.Dtv[i - 1]["FZsn"].ToString())
+                    {
+                        strTempHtml += "<h4>" + OP_Mode.Dtv[i]["FZName"].ToString() + "</h4>";
+                    }
+                }
+                strTempHtml += "<div class=\"checkbox\">";
+                strTempHtml += " <label>";
+                strTempHtml += "   <input name=\"form-field-checkbox\" type=\"checkbox\" value=\"" + OP_Mode.Dtv[i]["CName"].ToString() + "\" class=\"ace\" />";
+                strTempHtml += "   <span class=\"lbl\">" + OP_Mode.Dtv[i]["CName"].ToString() + "</span>";
+                if (Convert.ToInt32(OP_Mode.Dtv[i]["iTextBox"]) == 1)
+                {
+                    strTempHtml += "   &nbsp;<input style=\"width: 30px; height: 20px;\" id=\"Text" + (i + 1).ToString() + "\" type=\"text\" />&nbsp;";
+                    strTempHtml += "   <span class=\"lbl\" id=\"JLDW" + (i + 1).ToString() + "\">" + OP_Mode.Dtv[i]["JLDW"].ToString() + "</span>";
+                }
+
+                /// 存储是否文本框
+                strTempHtml += "   &nbsp;<input style=\"width: 30px; height: 20px;\" hidden=\"hidden\" value=\"" + OP_Mode.Dtv[i]["iTextBox"].ToString() + "\" id=\"HidText" + (i + 1).ToString() + "\" type=\"text\" />&nbsp;";
+                /// 存储ID
+                strTempHtml += "   &nbsp;<input style=\"width: 30px; height: 20px;\" hidden=\"hidden\" value=\"" + OP_Mode.Dtv[i]["ID"].ToString() + "\" id=\"HidID" + (i + 1).ToString() + "\" type=\"text\" />&nbsp;";
+                /// 存储积分
+                strTempHtml += "   &nbsp;<input style=\"width: 30px; height: 20px;\" hidden=\"hidden\" value=\"" + OP_Mode.Dtv[i]["JFZ"].ToString() + "\"  id=\"HidJFZ" + (i + 1).ToString() + "\" type=\"text\" />&nbsp;";
+
+                strTempHtml += " </label>";
+                strTempHtml += "</div>";
+            }
+
+            modal_JSList.InnerHtml = strTempHtml;
         }
     }
 }

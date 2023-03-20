@@ -20,27 +20,94 @@
     <title>普田公司工程维修单</title>
 </head>
 <body>
+    <script type="text/javascript">
+        ///打开维修内容选择框
+        function OpenSelect() {
+            $("#Select").modal('show');
+            return false
+        };
+        function onCheck() {
+            var rValue = true;
+            var i = 0;
+            var ErrMsg = "";
+            if (document.getElementById('TextBox_YH').value.length <= 0) {
+                i++;
+                ErrMsg += i + "、银行名称必须填写。<br/>";
+            }
+            if (document.getElementById('TextBox_FLC').value.length <= 0) {
+                i++;
+                ErrMsg += i + "、支行、分理处必须填写。<br/>";
+            }
+            if (document.getElementById('TextBox_GZ').value.length <= 0) {
+                i++;
+                ErrMsg += i + "、故障原因必须填写。<br/>";
+            }
+            if (document.getElementById('TextBox_WX').value.length <= 0) {
+                i++;
+                ErrMsg += i + "、维修内容必须填写。<br/>";
+            }
+
+            if (ErrMsg.length > 0) {
+                //dialog = jqueryAlert({ 'title': '提示消息', 'content': ErrMsg, 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } });
+                dialog = jqueryAlert({'content': ErrMsg});
+                rValue = false;
+            }
+            
+            return rValue;
+        }
+        function InsertText() {
+            var obj = document.getElementsByName('form-field-checkbox'); //选择所有name="'test'"的对象，返回数组 
+            //取到对象数组后，我们来循环检测它是不是被选中 
+            var s = '';
+            var jf = 0;
+            for (var i = 0; i < obj.length; i++) {
+                if (obj[i].checked) {
+                    //判断是否需要计数
+                    if ((document.getElementById('HidText' + (i + 1)).value).toString() == "1") {
+                        s += obj[i].value + " " + document.getElementById('Text' + (i + 1)).value.toString() + " " + document.getElementById('JLDW' + (i + 1)).textContent + ';'; //如果选中，将value添加到变量s中
+                        jf = Number(jf) + Number(document.getElementById('HidJFZ' + (i + 1)).value) * Number(document.getElementById('Text' + (i + 1)).value);
+                    }
+                    else {
+                        jf = Number(jf) + Number(document.getElementById('HidJFZ' + (i + 1)).value);
+                        s += obj[i].value + ';'; //如果选中，将value添加到变量s中 
+                    }
+                }
+                /// 把备注信息加上。
+            }
+            if (document.getElementById('TextBox1').value.length > 0) {
+                s += document.getElementById('TextBox1').value;
+            }
+            HiddenField_WXJF.value = jf.toString();// 积分赋值
+            document.getElementById("TextBox_WX").value = s;// + " 累计积分：" + jf.toString(); // 完成后给文本框赋值
+        }
+    </script>
     <form id="form1" runat="server">
-        <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
+        <asp:HiddenField ID="HiddenField_WXJF" Value="0" runat="server" />
+        <div class="modal fade" id="Select" tabindex="-1" role="dialog"
             aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog ">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">
-                            ×
-                        </button>
-                        <h4 class="modal-title" id="MSGTitle">提  示
-                        </h4>
+                    <div class="control-group" runat="server" id="modal_JSList">
+                        <h4>一、更换设备</h4>
+                        <div class="checkbox">
+                            <label>
+                                <input name="form-field-checkbox" type="checkbox" value="监控主机" class="ace" />
+                                <span class="lbl">监控主机</span>
+                                <input style="width: 30px; height: 20px;" id="Text1" type="text" />
+                                <span class="lbl" id="JLDW1">台</span>
+                                <input style="width: 30px; height: 20px;" id="HidText1" value="hid" hidden="hidden" type="text" />
+                            </label>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <h3 class="modal-title" id="ShowMSG">发生了错误！
-                        </h3>
-                    </div>
+                    <asp:TextBox ID="TextBox1" Enabled="true" Width="100%" ClientIDMode="Static" runat="server" placeholder="请输入其他情况" class="autosize-transition form-control" TextMode="MultiLine"></asp:TextBox>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default"
-                            data-dismiss="modal">
+                        <button type="button" class="btn btn-info"
+                            data-dismiss="modal" onclick="InsertText()">
                             确&nbsp;&nbsp;定
+                        </button>
+                        <button type="button" class="btn btn-success"
+                            data-dismiss="modal">
+                            关&nbsp;&nbsp;闭
                         </button>
                     </div>
                 </div>
@@ -48,7 +115,6 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
-
         <div class="page-content">
             <div class="col-sm-12 align-content-center">
                 <hr />
@@ -121,7 +187,11 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">维修内容</label>
                     <div class="col-sm-9">
-                        <asp:TextBox ID="TextBox_WX" ClientIDMode="Static" runat="server" placeholder="请输入维修内容" class="col-xs-12 col-sm-12" TextMode="MultiLine"></asp:TextBox>
+                        <%--                        <asp:Label ID="TextBox_WX" ClientIDMode="Static" runat="server" Text=""></asp:Label>--%>
+                        <asp:TextBox ID="TextBox_WX" onfocus="this.blur()" Width="100%" ClientIDMode="Static" runat="server" placeholder="请输入维修内容" class="autosize-transition form-control" TextMode="MultiLine"></asp:TextBox>
+                        <h4>
+                            <asp:LinkButton ID="LinkButton3" OnClientClick="return OpenSelect()" runat="server"><i class="icon-off"></i>
+                                        请点击选择维修内容</asp:LinkButton></h4>
                     </div>
                 </div>
             </div>
@@ -225,9 +295,9 @@
             </div>
         </div>
         <hr />
-        <asp:Button ID="Button1" runat="server" Text="保存表单" class="btn btn-success" OnClick="Button1_Click" />
+        <asp:Button ID="Button1" runat="server" Text="保存表单" OnClientClick="return onCheck()" class="btn btn-success" OnClick="Button1_Click" />
         &nbsp;
-        <asp:Button ID="Button2" runat="server" Text="提交表单" class="btn btn-info" OnClick="Button2_Click" />
+        <asp:Button ID="Button2" runat="server" Text="提交表单" OnClientClick="return onCheck()" class="btn btn-info" OnClick="Button2_Click" />
         &nbsp;
         <asp:Button ID="Button3" runat="server" Text="查看PDF" class="btn btn-warning" OnClick="Button3_Click" />
         &nbsp;

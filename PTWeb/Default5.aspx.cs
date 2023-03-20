@@ -18,6 +18,7 @@ public partial class Default5 : PageBase
 
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
+        MessageBox_Test("","提示信息");
         //   this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () { location.href=\"" + sURL + "\"; } } })</script>");
         //string Image1 = String.Empty;
 
@@ -29,13 +30,20 @@ public partial class Default5 : PageBase
         //    Image1 += UploadTPs(f) + ";";
         //}
         //MessageBox_Test("", "上传成功:" + Image1);
-        string strUsers = "Luxiaojun";
-        SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "CWGL/ReimbursementAdd.aspx?ID=10947");
+        //string strUsers = "Luxiaojun";
+        //SendWorkMsgCard(strUsers, "报销单提交提示", " [" + UserNAME + "] 完成了一张报销单，需要您的审核。", "CWGL/ReimbursementAdd.aspx?ID=10947");
+
+        // MessageBox("","ceshi");
 
         // Response.Redirect("http://www.putian.ink/ReturnUrl.aspx?URL=CWGL/ReimbursementAdd.aspx;ID=10947", false);
 
 
 
+    }
+
+    public void Test()
+    {
+        TextBox1.Text = "测试成功";
     }
 
     public void MessageBox_Test(string sKey, string sMessage)
@@ -49,13 +57,7 @@ public partial class Default5 : PageBase
         sTemp = sTemp.Replace("\n", @"\\n");
         sTemp = sTemp.Replace("'", @"\'");    // javascript 中使用"\'"显示'字符。
 
-        this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () {dialog.destroy();dialog.close();} } })</script>");
-
-
-
-        // this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>confirm('真的要全部提交吗？')</script>");
-        //this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "key", "document.getElementById('ShowMSG').innerHTML='" + sTemp + "';document.getElementById('MSGTitle').innerHTML='" + sKey + "'", true);
-        //this.Page.ClientScript.RegisterStartupScript(typeof(string), sKey, "<script language=JavaScript>$('#MSG').modal('show')</script>");
+        this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () {<%Test()%>;dialog.destroy();dialog.close();},'取消': function () {dialog.destroy();dialog.close();} } })</script>");
 
     }
 
@@ -335,4 +337,9 @@ public partial class Default5 : PageBase
         return d * Math.PI / 180.0;
     }
     #endregion 压缩图片
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Test();
+    }
 }

@@ -50,6 +50,15 @@
             });
         });
 
+        function OpenSelect() {
+            //jQuery(function ($) {
+            $("#YesOrNo").modal('show');
+            //  dialog = jqueryAlert({ 'title': '提示消息', 'content': '您确定吗？', 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close();}, '取消': function () { dialog.destroy(); dialog.close(); } } });
+
+            return false
+            // });
+        };
+
         var i = 0;// 用于计算ID
         function CreateInput() {
             var input = document.createElement("input");
@@ -77,21 +86,30 @@
             });
         }
     </script>
-    <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
+
+    <div class="modal fade" id="Select" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">
-                        ×
-                    </button>
-                    <h4 class="modal-title" id="MSGTitle">提  示
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <h3 class="modal-title" id="ShowMSG">发生了错误！
-                    </h3>
+                <div class="control-group">
+                    <div class="checkbox">
+                        <label>
+                            <input name="form-field-checkbox" type="checkbox" class="ace" />
+                            <span class="lbl">choice 1</span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input name="form-field-checkbox" type="checkbox" class="ace" />
+                            <span class="lbl">choice 2</span>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input name="form-field-checkbox" class="ace ace-checkbox-2" type="checkbox" />
+                            <span class="lbl">choice 3</span>
+                        </label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
@@ -105,6 +123,24 @@
         <!-- /.modal-dialog -->
     </div>
     <form id="form1" runat="server" enctype="multipart/form-data">
+        <div class="modal fade" id="YesOrNo" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    您确定要删除吗？
+                <div class="modal-footer">
+                    <asp:Button ID="Button1" class="btn btn-default"
+                        OnClick="Button1_Click" runat="server" Text="确  定" />
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                        取&nbsp;&nbsp;消
+                    </button>
+                </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
         <div class="page-content">
             <div class="input-group">
                 <asp:TextBox ID="TextBox1" runat="server" placeholder="请输入视频网址" class="form-control search-query"></asp:TextBox>
@@ -131,14 +167,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-8 col-sm-11">
-                <div class="input-group">
-                    <input class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" />
-                    <span class="input-group-addon">
-                        <i class="icon-calendar bigger-110"></i>
-                    </span>
-                </div>
-            </div>
+
+            <asp:LinkButton ID="LinkButton3" OnClientClick="return OpenSelect()" runat="server"><i class="icon-off"></i>
+                                        点击选择</asp:LinkButton>
         </div>
 
     </form>
@@ -158,6 +189,9 @@
             $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
                 $(this).prev().focus();
             });
+
+            $(".chosen-select").chosen();
+
         });
     </script>
 </body>

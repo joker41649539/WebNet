@@ -83,7 +83,7 @@
                 <div class="widget-main no-padding">
                     <asp:GridView ID="GridView_BX" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView1_PageIndexChanging" AllowSorting="True" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" AutoGenerateColumns="False">
                         <Columns>
-                            <asp:ButtonField DataTextField="BXDH" HeaderText="ID" CommandName="Select" SortExpression="ID" Text="报销单号" />
+                            <asp:HyperLinkField HeaderText="单据编号" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/CWGL/ReimbursementAdd.aspx?ID={0}" DataTextField="BXDH"></asp:HyperLinkField>
                             <asp:BoundField DataField="FLAG" SortExpression="FLAG" HeaderText="状态"></asp:BoundField>
                             <asp:BoundField DataField="USERNAME" SortExpression="USERNAME" HeaderText="姓名"></asp:BoundField>
                             <asp:BoundField DataField="SY" SortExpression="SY" HeaderText="施工编号(事由)"></asp:BoundField>
