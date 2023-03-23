@@ -415,8 +415,8 @@ public partial class GDGL_GCGDAdd : PageBase
             DB_01 = dr[0].ToString().Trim();
             DB_02 = dr[1].ToString().Trim();
             DB_03 = dr[2].ToString().Trim();
-            DB_04 = dr[3].ToString().Trim();
-            DB_05 = dr[4].ToString().Trim();
+            DB_04 = dr[4].ToString().Trim();
+            DB_05 = dr[3].ToString().Trim();
             DB_06 = dr[5].ToString().Trim();
             DB_07 = dr[6].ToString().Trim();
             DB_08 = dr[8].ToString().Trim();

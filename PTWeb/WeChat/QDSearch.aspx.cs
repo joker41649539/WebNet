@@ -250,7 +250,6 @@ public partial class WeChat_QDSearch : PageBase
                 return;
             }
         }
-
     }
 
     /// <summary>

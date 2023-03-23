@@ -1,4 +1,5 @@
 ﻿using OfficeOpenXml;
+using Stimulsoft.Report.Dictionary;
 using System;
 using System.Activities.Expressions;
 using System.Collections.Generic;
@@ -72,19 +73,23 @@ public partial class DefaultPH : PageBase
         strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS * W_GCGD2.FS / 100) NFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b, W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) DayBXFS,";
         strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS* W_GCGD2.FS/ 100) NFS,GCMXID from W_GCGD_FS_BXList a,(Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + System.DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") + "' and LTIME < '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + System.DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) YesDayBXFS,";
         strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS* W_GCGD2.FS/ 100) NFS,GCMXID from W_GCGD_FS_BXList a,(Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + FirstDay.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + FirstDay.ToString("yyyy-MM-dd") + "' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) WeekDayBXFS,";
-        strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS* W_GCGD2.FS/ 100) NFS,GCMXID from W_GCGD_FS_BXList a,(Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + System.DateTime.Now.ToString("yyyy-MM-") + "01' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + System.DateTime.Now.ToString("yyyy-MM-") + "01' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) MonthDayBXFS";
+        strSQL += " isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS* W_GCGD2.FS/ 100) NFS,GCMXID from W_GCGD_FS_BXList a,(Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME > '" + System.DateTime.Now.ToString("yyyy-MM-") + "01' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where UserID = " + DefaultUser + " and LTIME < '" + System.DateTime.Now.ToString("yyyy-MM-") + "01' group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) MonthDayBXFS,";
 
 
         // 3、维保单积分。
+        strSQL += " Isnull((Select Sum(SumJF) from W_WXD where wxry=" + DefaultUser + " and Ltime between '" + System.DateTime.Now.ToString("yyyy-MM-") + "01' and getdate() and Del=0 and FLAG=1),0) MonthDayWXFS,";
+        strSQL += " Isnull((Select Sum(SumJF) from W_WXD where wxry=" + DefaultUser + " and Ltime between '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' and getdate() and Del=0 and FLAG=1),0) DayWXFS,";
+        strSQL += " Isnull((Select Sum(SumJF) from W_WXD where wxry=" + DefaultUser + " and Ltime between '" + FirstDay.ToString("yyyy-MM-dd") + "' and getdate() and Del=0 and FLAG=1),0) WeekDayWXFS,";
+        strSQL += " Isnull((Select Sum(SumJF) from W_WXD where wxry=" + DefaultUser + " and Ltime between '" + System.DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") + "' and getdate() and Del=0 and FLAG=1),0) YesDayWXFS ";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
             {
-                WeekJF = Convert.ToInt32(OP_Mode.Dtv[0]["WeekAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["WeekDayBXFS"]);
-                MonthJF = Convert.ToInt32(OP_Mode.Dtv[0]["MonthAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["MonthDayBXFS"]);
-                YesDayJF = Convert.ToInt32(OP_Mode.Dtv[0]["YesDayAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["YesDayBXFS"]);
-                ToDayJF = Convert.ToInt32(OP_Mode.Dtv[0]["DayAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["DayBXFS"]);
+                WeekJF = Convert.ToInt32(OP_Mode.Dtv[0]["WeekAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["WeekDayBXFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["WeekDayWXFS"]);
+                MonthJF = Convert.ToInt32(OP_Mode.Dtv[0]["MonthAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["MonthDayBXFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["MonthDayWXFS"]);
+                YesDayJF = Convert.ToInt32(OP_Mode.Dtv[0]["YesDayAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["YesDayBXFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["YesDayWXFS"]);
+                ToDayJF = Convert.ToInt32(OP_Mode.Dtv[0]["DayAZFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["DayBXFS"]) + Convert.ToInt32(OP_Mode.Dtv[0]["DayWXFS"]);
             }
         }
         if (ToDayJF < 100)

@@ -49,10 +49,10 @@
 
             if (ErrMsg.length > 0) {
                 //dialog = jqueryAlert({ 'title': '提示消息', 'content': ErrMsg, 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } });
-                dialog = jqueryAlert({'content': ErrMsg});
+                dialog = jqueryAlert({ 'content': ErrMsg });
                 rValue = false;
             }
-            
+
             return rValue;
         }
         function InsertText() {
@@ -78,6 +78,7 @@
                 s += document.getElementById('TextBox1').value;
             }
             HiddenField_WXJF.value = jf.toString();// 积分赋值
+            document.getElementById("Label_YJJF").textContent = "此维保单积分：" + jf.toString();// + " 累计积分：" + jf.toString(); // 完成后给文本框赋值
             document.getElementById("TextBox_WX").value = s;// + " 累计积分：" + jf.toString(); // 完成后给文本框赋值
         }
     </script>
@@ -187,11 +188,12 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">维修内容</label>
                     <div class="col-sm-9">
-                        <%--                        <asp:Label ID="TextBox_WX" ClientIDMode="Static" runat="server" Text=""></asp:Label>--%>
                         <asp:TextBox ID="TextBox_WX" onfocus="this.blur()" Width="100%" ClientIDMode="Static" runat="server" placeholder="请输入维修内容" class="autosize-transition form-control" TextMode="MultiLine"></asp:TextBox>
                         <h4>
                             <asp:LinkButton ID="LinkButton3" OnClientClick="return OpenSelect()" runat="server"><i class="icon-off"></i>
                                         请点击选择维修内容</asp:LinkButton></h4>
+                        <h6>
+                            <asp:Label ID="Label_YJJF" ClientIDMode="Static" runat="server" Text="预计：0 积分"></asp:Label></h6>
                     </div>
                 </div>
             </div>

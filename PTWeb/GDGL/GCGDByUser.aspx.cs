@@ -56,7 +56,7 @@ public partial class GDGL_GCGDByUser : PageBase
     private void LoadGCMCByUserID(int UserID)
     {
         HiddenField_UserID.Value = UserID.ToString();
-        strSQL = "Select SGDH,GCMC,GCDD,flag,'True' CheckTrue,W_GCGD_USERS.ID from W_GCGD_USERS,W_GCGD1 where USERS=" + UserID + " and GCDID=W_GCGD1.ID order by flag,SGDH";
+        strSQL = "Select SGDH,GCMC,GCDD,flag,'True' CheckTrue,W_GCGD_USERS.ID,W_GCGD1.ID GCID from W_GCGD_USERS,W_GCGD1 where USERS=" + UserID + " and GCDID=W_GCGD1.ID order by flag,SGDH";
         if (OP_Mode.SQLRUN(strSQL, "gcbh"))
         {
             if (OP_Mode.Dtv1.Count > 0)

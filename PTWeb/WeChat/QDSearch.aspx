@@ -72,7 +72,8 @@
                     //  alert('用户地理位置获取错误。' + err);
                 },
                 cancel: function (res) {
-                    alert('用户拒绝授权获取地理位置');
+                    dialog = jqueryAlert({ 'content': '用户拒绝授权获取地理位置。' });
+                    //  alert('用户拒绝授权获取地理位置');
                 }
             });
         });
@@ -114,13 +115,13 @@
             var temp = document.getElementById("demo").innerHTML;
 
             if (temp == "等待地理位置获取") {
-                alert("地理位置获取失败，请等待，或者重新打开。");
+                dialog = jqueryAlert({ 'content': '地理位置获取失败，请等待，或者重新打开。' });
+                // alert("地理位置获取失败，请等待，或者重新打开。");
                 return false;
             }
         }
     </script>
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
-
 
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Name" ClientIDMode="Static" runat="server" />
@@ -200,7 +201,7 @@
             <div id="QDList" runat="server" class="timeline-container"></div>
         </div>
     </div>
-     <script type="text/javascript">
+    <script type="text/javascript">
         jQuery(function ($) {
             $('#id-input').ace_file_input({
                 style: 'well',

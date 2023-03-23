@@ -58,6 +58,7 @@ public partial class Partner_PartnerInfo : PageBase
                         {
                             DivIDImage.InnerHtml += "<a href=\"/IDImage/" + strTemp[i] + "\"><img src=\"/IDImage/" + strTemp[i] + "\" width=\"150\" class=\"img-rounded\" /></a>";
                         }
+                        
                         DivIDImage.Visible = true;
                     }
                     else

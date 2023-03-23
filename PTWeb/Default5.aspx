@@ -24,7 +24,7 @@
 
     <link rel="stylesheet" href="/assets/css/datepicker.css" />
     <link rel="stylesheet" href="/assets/css/bootstrap-timepicker.css" />
-
+    <link rel="stylesheet" href="/assets/css/daterangepicker.css" />
     <%--///////////////////////////////////--%>
 
     <%--//////////////////////////////////--%>
@@ -171,7 +171,7 @@
             <asp:LinkButton ID="LinkButton3" OnClientClick="return OpenSelect()" runat="server"><i class="icon-off"></i>
                                         点击选择</asp:LinkButton>
         </div>
-
+        <input class="form-control" data-date-format="yyyy-mm-dd" type="text" name="date-range-picker" id="id-date-range-picker-1" />
     </form>
 
     <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>
@@ -186,6 +186,9 @@
 
     <script type="text/javascript">
         jQuery(function ($) {
+            $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function () {
+                $(this).next().focus();
+            });
             $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
                 $(this).prev().focus();
             });

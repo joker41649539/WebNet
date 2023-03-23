@@ -157,7 +157,21 @@ public class PageBase : System.Web.UI.Page
         }
         return user_IP;
     }
+    /// <summary>
+    /// 弹出消息框
+    /// </summary>
+    /// <param name="sKey"></param>
+    /// <param name="sMessage">提示消息</param>
+    public void MessageBox(string sMessage)
+    {
+        string sTemp = sMessage;
+        sTemp = sTemp.Replace("\r", @"\\r");
+        sTemp = sTemp.Replace("\n", @"\\n");
+        sTemp = sTemp.Replace("'", @"\'");    // javascript 中使用"\'"显示'字符。
 
+        this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({'content': '" + sTemp + "'})</script>");
+
+    }
     /// <summary>
     /// 弹出消息框
     /// </summary>

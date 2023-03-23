@@ -126,6 +126,8 @@
                             </asp:GridView>
                             <div id="Div1" runat="server" class="alert alert-success" visible="false">
                                 <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
+                                <h5>预计工期：<asp:TextBox ID="TextBox2" Width="50px" runat="server"></asp:TextBox>
+                                    &nbsp;天&nbsp;&nbsp;<asp:LinkButton runat="server" OnClick="LinkButton2_Click" class="btn btn-white btn-sm" ID="LinkButton2"><i class="icon-save">&nbsp;保 存</i></asp:LinkButton></h5>
                                 <h2>布线人员选择：</h2>
                                 <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatColumns="10">
                                     <asp:ListItem Value="1">人员1</asp:ListItem>

@@ -8,7 +8,8 @@
             var temp = document.getElementById("demo").innerHTML;
 
             if (temp == "等待地理位置获取") {
-                alert("地理位置获取失败，请等待，或者重新打开。");
+                // alert("地理位置获取失败，请等待，或者重新打开。");
+                dialog = jqueryAlert({ 'content': '地理位置获取失败，请稍后，或者重新打开。' });
                 return false;
             }
         }
@@ -41,7 +42,8 @@
                 ],
                 success: function (res) {
                     if (res.checkResult.getLocation == false) {
-                        alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+                        dialog = jqueryAlert({ 'content': '你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！' });
+                        // alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
                         return;
                     }
                 }
@@ -79,7 +81,8 @@
                     //alert('用户地理位置获取错误。');
                 },
                 cancel: function (res) {
-                    alert('用户拒绝授权获取地理位置');
+                    dialog = jqueryAlert({ 'content': '用户拒绝授权获取地理位置！' });
+                    //         alert('用户拒绝授权获取地理位置');
                 }
             });
             //  地理位置接口   //alert(JSON.stringify(res));

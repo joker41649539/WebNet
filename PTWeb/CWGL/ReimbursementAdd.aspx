@@ -21,7 +21,7 @@
             var MaxCount = 3; // 最大数量
             i++
             input.type = "file";
-           // input.capture = "camera";// 照相机
+            // input.capture = "camera";// 照相机
             input.accept = "image/*";// 文件类型
             input.name = "AddImg";
             input.id = "id-input" + i;
@@ -42,6 +42,28 @@
             });
         }
     </script>
+    <div class="modal fade" id="SPList" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <asp:GridView ID="GridView_Examine" AutoGenerateColumns="False" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" runat="server">
+                    <Columns>
+                        <asp:BoundField DataField="UserName" SortExpression="UserName" HeaderText="操作人"></asp:BoundField>
+                        <asp:BoundField DataField="CTime" SortExpression="CTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="操作时间"></asp:BoundField>
+                        <asp:BoundField DataField="Remark" SortExpression="Remark" HeaderText="说明信息"></asp:BoundField>
+                    </Columns>
+                </asp:GridView>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info"
+                        data-dismiss="modal">
+                        确&nbsp;&nbsp;定
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -261,6 +283,7 @@
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Return" class="btn btn-pink" runat="server" OnClick="LinkButton4_Click"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-grey" runat="server" OnClick="LinkButton3_Click1"> <i class=" icon-search bigger-110"></i>审批记录</asp:LinkButton>
         <asp:HyperLink ID="HyperLink1" class="btn btn-info" runat="server" Target="_blank">查看轨迹</asp:HyperLink>
     </div>
     <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>

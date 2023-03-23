@@ -37,10 +37,9 @@
                             <asp:CheckBox runat="server" Checked="true" Enabled="true" ID="CheckBox1"></asp:CheckBox>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:ButtonField HeaderText="工程编号" CommandName="Select" SortExpression="SGDH" DataTextField="SGDH" />
+                    <asp:HyperLinkField DataTextField="SGDH" HeaderText="工程编号" SortExpression="SGDH" DataNavigateUrlFields="GCID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
                     <asp:ButtonField HeaderText="施工" CommandName="Select" SortExpression="flag" DataTextField="flag" />
-                    <asp:ButtonField HeaderText="工程名称" CommandName="Select" SortExpression="GCMC" DataTextField="GCMC" />
-<%--                    <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" ShowHeader="True" ShowInsertButton="True" ShowSelectButton="True"></asp:CommandField>--%>
+                    <asp:HyperLinkField DataTextField="GCMC" HeaderText="工程名称" SortExpression="GCMC" DataNavigateUrlFields="GCID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
                 </Columns>
             </asp:GridView>
             <asp:LinkButton UseSubmitBehavior="false" Visible="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Save" class="btn btn-info" runat="server" OnClick="LinkButton_Save_Click"><i class="icon-save bigger-110"></i>保  存</asp:LinkButton>

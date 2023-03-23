@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -1453,5 +1454,33 @@ public partial class CWGL_Default2 : PageBase
             }
         }
         return rValue;
+    }
+
+    /// <summary>
+    /// 查看审批记录
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton3_Click1(object sender, EventArgs e)
+    {
+        string strSQL = string.Empty;
+
+        strSQL = "Select * from W_Examine where DJBH='" + Label_No.Text + "' and Class='BXD'";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                GridView_Examine.DataSource = OP_Mode.Dtv;
+                GridView_Examine.DataBind();
+            }
+            else
+            {
+                GridView_Examine.DataSource = null;
+                GridView_Examine.DataBind();
+            }
+        }
+
+        this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>$(\"#SPList\").modal('show');</script>");
     }
 }
