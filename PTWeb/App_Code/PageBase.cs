@@ -913,6 +913,7 @@ public class PageBase : System.Web.UI.Page
             request.CookieContainer = cookieContainer;
             request.AllowAutoRedirect = true;
             request.Method = "POST";
+            //request.ContentType = "application/json";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
             outstream = request.GetRequestStream();

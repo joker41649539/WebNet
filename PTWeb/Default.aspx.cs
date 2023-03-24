@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows;
 
 public partial class DefaultPH : PageBase
 {
@@ -43,6 +44,8 @@ public partial class DefaultPH : PageBase
     /// </summary>
     private void LoadJF()
     {
+        /// 私有库查询地址信息
+        //https://apis.map.qq.com/place_cloud/search/nearby?key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX&table_id=0p14UnzPpSeGP5XMT1&location=31.85367,117.3034&radius=200
         int WeekJF = 0;
         int MonthJF = 0;
         int YesDayJF = 0;
@@ -138,11 +141,13 @@ public partial class DefaultPH : PageBase
         string strScreen = Hidden_Screen.Value; /// 设备分辨率
         string strName = Hidden_Name.Value; // 位置名称
 
+        // https://apis.map.qq.com/ws/geocoder/v1/?location=31.85367,117.3034&key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX&get_poi=0
+
         // 依据坐标地址，获取简单名称
         var client = new WebClient();
         client.Encoding = Encoding.UTF8;
         string TententMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
-        string strURL = "https://apis.map.qq.com/ws/geocoder/v1/?location=" + strWD + "," + strJD + "&key=" + TententMapKey + "&get_poi=0";
+        string strURL = "https://apis.map.qq.com/ws/direction/v1/transit/?form" + strWD + "," + strJD + "&key=" + TententMapKey + "&get_poi=0";
         var data = client.DownloadString(strURL);
         //"{\n    \"status\": 0,\n    \"message\": \"query ok\",\n    \"request_id\": \"77fd3d94-063d-453f-8e35-eeffa9a0eb8a\",\n    \"result\": {\n        \"location\": {\n            \"lat\": 31.85383,\n            \"lng\": 117.303457\n        },\n        \"address\": \"安徽省合肥市包河区巢湖路茶叶市场D区1号\",\n        \"formatted_addresses\": {\n            \"recommend\": \"包河区锦绣园(巢湖路西)\",\n            \"rough\": \"包河区锦绣园(巢湖路西)\"\n        },\n        \"address_component\": {\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\",\n            \"street\": \"巢湖路茶叶市场D区\",\n            \"street_number\": \"巢湖路茶叶市场D区1号\"\n        },\n        \"ad_info\": {\n            \"nation_code\": \"156\",\n            \"adcode\": \"340111\",\n            \"city_code\": \"156340100\",\n            \"name\": \"中国,安徽省,合肥市,包河区\",\n            \"location\": {\n                \"lat\": 31.793801,\n                \"lng\": 117.310133\n            },\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\"\n        },\n        \"address_reference\": {\n            \"business_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"famous_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"crossroad\": {\n                \"id\": \"258053\",\n                \"title\": \"马鞍山路/迎屏巷(路口)\",\n                \"location\": {\n                    \"lat\": 31.85514,\n                    \"lng\": 117.3011\n                },\n                \"_distance\": 260.5,\n                \"_dir_desc\": \"东南\"\n            },\n            \"town\": {\n                \"id\": \"340111002\",\n                \"title\": \"包公街道\",\n                \"location\": {\n                    \"lat\": 31.837959,\n                    \"lng\": 117.29163\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"street_number\": {\n                \"id\": \"475762619026716799429010\",\n                \"title\": \"巢湖路茶叶市场D区1号\",\n                \"location\": {\n                    \"lat\": 31.853847,\n                    \"lng\": 117.303718\n                },\n                \"_distance\": 24.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"street\": {\n                \"id\": \"9103225048745597629\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.842798,\n                    \"lng\": 117.32119\n                },\n                \"_distance\": 49.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"landmark_l2\": {\n                \"id\": \"11384582867635718374\",\n                \"title\": \"锦绣园\",\n                \"location\": {\n                    \"lat\": 31.853819,\n                    \"lng\": 117.30229\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            }\n        }\n    }\n}"
 
@@ -164,6 +169,28 @@ public partial class DefaultPH : PageBase
                 MessageBox("", "签到成功。", "/WeChat/QDSearch.aspx");
             }
         }
+    }
+
+    private void Temp()
+    {
+        var client = new WebClient();
+        client.Encoding = Encoding.UTF8;
+        string TententMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
+        /// 驾车
+        //string strURL = "https://apis.map.qq.com/ws/direction/v1/driving/?from=31.853832,117.303437&to=31.88075,117.345877&key=" + TententMapKey;
+        // 公交
+        string strURL = "https://apis.map.qq.com/ws/direction/v1/transit/?from=31.853832,117.303437&to=31.88075,117.345877&key=" + TententMapKey;
+        var data = client.DownloadString(strURL);
+        // distance":6966,"duration":40,"
+        string JL = string.Empty;
+        string sTime = string.Empty;
+
+        string temp = data.Substring(data.IndexOf("distance") + 10);
+        JL = temp.Substring(0, temp.IndexOf(','));
+        temp = data.Substring(data.IndexOf("duration") + 10);
+        sTime = temp.Substring(0, temp.IndexOf(','));
+
+        MessageBox("", "距离：" + JL + " 米 时间：" + sTime + " 分钟");
     }
 
     /// <summary>
@@ -266,5 +293,10 @@ public partial class DefaultPH : PageBase
     {
         TimeSpan hoursSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
         return hoursSpan.TotalHours;
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        Temp();
     }
 }

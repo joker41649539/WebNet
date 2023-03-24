@@ -61,15 +61,14 @@
                             latitude: res.latitude
                         },
                         success: function (responseData) {
-                            if (responseData) {
-
+                            
                                 document.getElementById("Hidden_WZ").value = responseData.address;
                                 document.getElementById("Hidden_Name").value = responseData.name;
                                 document.getElementById("Hidden_Screen").value = "[" + screen.width + "]*[" + screen.height + "]";
                                 document.getElementById("Hidden_JD").value = res.longitude; // 精度赋值
                                 document.getElementById("Hidden_WD").value = res.latitude; // 维度赋值
 
-                                document.getElementById("demo").innerHTML = responseData.address;// + "[" + responseData.address.name + "]" + "[" + responseData.name + "]";
+                                document.getElementById("demo").innerHTML += responseData.address;// + "[" + responseData.address.name + "]" + "[" + responseData.name + "]";
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -261,6 +260,7 @@
                 <asp:ListItem>到达</asp:ListItem>
             </asp:RadioButtonList>
             <asp:Button ID="Button1" class="btn btn-danger btn-block" OnClientClick="return PleaseWaite()" runat="server" Text="快速签到" OnClick="Button1_Click" />
+<%--            <asp:Button ID="Button2" class="btn btn-danger btn-block" runat="server" Text="快速签到" OnClick="Button2_Click" />--%>
             <div class="alert alert-success" id="alertClass">
                 <b>
                     <p id="demo">等待地理位置获取</p>

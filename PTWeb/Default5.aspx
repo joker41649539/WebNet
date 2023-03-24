@@ -37,6 +37,30 @@
 </head>
 <body>
     <script type="text/javascript">
+        //$.ajax({
+        //    type: "get",
+        //    data: { from: "31.853832,117.303437", to: "31.88075,117.345877", key: "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX" },
+        //    dataType: "jsonp",//数据类型为jsonp  
+        //    processData: false,
+        //    jsonp: "jsonpCallback",//服务端用于接收callback调用的function名的参数
+        //    url: "https://apis.map.qq.com/ws/direction/v1/transit/",
+        //    //接收数据
+        //    success: function (res) {
+        //        alert("成功了");
+        //        //$("#s1").text(res.result.province);
+        //        //$("#s2").text(res.result.city);
+        //        //$("#s3").text(res.result.areacode);
+        //        //$("#s4").text(res.result.zip);
+        //        //$("#s5").text(res.result.company);
+        //    },
+        //    error: function (msg) {
+        //        alert("错误：" + msg.responseText);
+        //    }
+
+        //});
+
+
+
         jQuery(function ($) {
             $('#id-input').ace_file_input({
                 style: 'well',

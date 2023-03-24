@@ -90,7 +90,7 @@ public partial class GDGL_GCWXD : PageBase
             {
                 Hidden_WXRY.Value = OP_Mode.Dtv[0]["WXRY"].ToString();
                 HiddenField_WXJF.Value = OP_Mode.Dtv[0]["SumJF"].ToString();
-                Label_YJJF.Text = "此维保单积分：" + OP_Mode.Dtv[0]["SumJF"].ToString().TrimEnd('0').TrimEnd('.');
+                Label_YJJF.Text = "此维保单积分：" + OP_Mode.Dtv[0]["SumJF"].ToString();
                 Label_DW.Text = OP_Mode.Dtv[0]["DWMC"].ToString();
                 Label_dh.Text = OP_Mode.Dtv[0]["WXDH"].ToString();
                 Label_WXRY.Text = OP_Mode.Dtv[0]["CNAME"].ToString();

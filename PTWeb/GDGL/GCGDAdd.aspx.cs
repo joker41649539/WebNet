@@ -577,7 +577,7 @@ public partial class GDGL_GCGDAdd : PageBase
             double DB_sl = Convert.ToDouble(((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[6].Controls[0])).Text);
             string DB_Remark = ((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[7].Controls[0])).Text;
             int DB_BXFS = Convert.ToInt32(((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[8].Controls[0])).Text);
-            int DB_AZFS = Convert.ToInt32(((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[10].Controls[0])).Text);
+            int DB_AZFS = Convert.ToInt32(((TextBox)(GridView_GDAdd.Rows[e.RowIndex].Cells[11].Controls[0])).Text);
 
             if (DB_AZWZ.Length <= 0 || DB_SBBH.Length <= 0 || DB_SBBH.Length <= 0 || DB_SBPP.Length <= 0 || DB_JLDW.Length <= 0 || DB_BXFS < 0 || DB_AZFS < 0)
             {
@@ -601,5 +601,57 @@ public partial class GDGL_GCGDAdd : PageBase
         MessageBox("", strTemp);
         GridView_GDAdd.EditIndex = -1;
         Load_GridView1();
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        PostZBData("", "", "");
+    }
+
+    /// <summary>
+    /// 提交到腾讯地图存储坐标信息
+    /// </summary>
+    /// <param name="DB_1">内部名称</param>
+    /// <param name="DB_2">坐标地址</param>
+    /// <param name="DB_3">坐标</param>
+    /// <returns></returns>
+    private string PostZBData(string DB_1, string DB_2, string DB_3)
+    {
+        // 规划线路两点线路，公交
+        //https://apis.map.qq.com/ws/direction/v1/transit/?from=31.853897,117.303472&to=31.88075,117.345877&key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX
+        // 规划线路两点线路，驾车
+        //https://apis.map.qq.com/ws/direction/v1/driving/?from=31.853832,117.303437&to=31.88075,117.345877&key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX
+        string rValue = string.Empty;
+        // 腾讯地图插入数据URL
+        string PostURL = "https://apis.map.qq.com/place_cloud/data/create";
+        // 腾讯地图Key
+        string TententMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
+        // 腾讯地图云签到点 ID
+        string TententTableID = "0p14UnzPpSeGP5XMT1";
+        DB_1 = "临时设置地址名称";
+        DB_3 = "31.705859,117.302176";
+        DB_2 = "测试地址";
+        string data = string.Empty;
+
+        data = "{";
+        data += "\"key\":\"" + TententMapKey + "\",";
+        data += "\"table_id\":\"" + TententTableID + "\",";
+        data += "\"data\":[";
+        data += "{";
+        data += "\"title\":\"" + DB_1 + "\",";
+        // "address":"北京市海淀区海淀南路24号院",
+        data += "\"address\":\"" + DB_2 + "\",";
+        data += "\"location\":{";
+        data += "\"lat\":" + DB_3.Substring(0, DB_3.IndexOf(",") + 1) + "";
+        data += "\"lng\":" + DB_3.Substring(DB_3.IndexOf(",") + 1, DB_3.Length - DB_3.IndexOf(",") - 1) + "";
+        data += "}";
+        data += "}";
+        data += "]";
+
+        string ReturnTemp = PostWeixinPage(PostURL, data);
+
+        TextBox_YQSM.Text = ReturnTemp + "\r\n" + data;
+
+        return rValue;
     }
 }
