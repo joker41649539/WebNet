@@ -4,6 +4,7 @@
     <script src="/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         var i = 0;// 用于计算ID
+        var QDRemark = false; //是否需要写签到说明
         function OpenMap(iJD, iWD) {
             wx.openLocation({
                 latitude: iJD,
@@ -39,28 +40,59 @@
                 }
             });
             wx.getLocation({
-
                 type: "gcj02",
                 success: function (res) {
                     $.ajax({
                         type: 'get',
-                        url: 'map.ashx',
+                        url: '/TencentMap/PrivateMap.ashx',
                         dataType: 'json',
                         contentType: 'application/json',
                         data: {
                             longitude: res.longitude,
                             latitude: res.latitude
+                            //longitude: 117.30343,
+                            //latitude: 31.853798
                         },
                         success: function (responseData) {
                             if (responseData) {
-
+                                var address = responseData.address;
+                                // 0 地址 1 标题 2 mapid 3 计划目的 4 手工单号 5 工程名称
+                                const arr1 = address.split(';');
+                                if (arr1.length > 2) { // 在工程地点签到的
+                                    if (arr1.length > 5) {// 完整工程签到
+                                        // 签到默认设置为施工开始
+                                        //if ($("[name='ctl00$ContentPlaceHolder1$RadioButtonList1']").get(1).checked) {
+                                        //    // 如果已经签到了，设置为离场
+                                        //$("[name='ctl00$ContentPlaceHolder1$RadioButtonList1']").get(4).checked = true;
+                                        //}
+                                        //else { // 
+                                        //    $("[name='ctl00$ContentPlaceHolder1$RadioButtonList1']").get(1).checked = true;
+                                        //}
+                                        document.getElementById("TextBox_MDD").value = arr1[1]; // 目的地设置为私有库标题
+                                        document.getElementById("TextBox_Remark").value = arr1[4] + ";" + arr1[5]; // 说明设置为工程编号和工程名称
+                                    }
+                                    else {// 仅在私有库签到，算正常签到
+                                        // 签到默认设置为 维修开始
+                                        //if ($("[name='ctl00$ContentPlaceHolder1$RadioButtonList1']").get(0).checked) {
+                                        //    // 如果已经签到了，设置为 维修结束
+                                        //    $("[name='ctl00$ContentPlaceHolder1$RadioButtonList1']").get(3).checked = true;
+                                        //}
+                                        //else { // 
+                                        //    $("[name='ctl00$ContentPlaceHolder1$RadioButtonList1']").get(0).checked = true;
+                                        //}
+                                        document.getElementById("TextBox_MDD").value = arr1[1]; // 目的地设置为私有库标题
+                                    }
+                                }
+                                else { /// 私有库未查询到信息，算非正常签到
+                                    dialog = jqueryAlert({ 'content': '签到地址异常。如需签到，请说明原因。' });
+                                    QDRemark = true;
+                                }
                                 document.getElementById("Hidden_WZ").value = responseData.address;
-                                document.getElementById("Hidden_Name").value = responseData.name;
+                                //   document.getElementById("Hidden_Name").value = arr1[1];
                                 document.getElementById("Hidden_Screen").value = "[" + screen.width + "]*[" + screen.height + "]";
+                                document.getElementById("demo").innerHTML = arr1[0] + ";" + arr1[1]; //+ "[" + responseData.innerHTML + "]";
                                 document.getElementById("Hidden_JD").value = res.longitude; // 精度赋值
                                 document.getElementById("Hidden_WD").value = res.latitude; // 维度赋值
-
-                                document.getElementById("demo").innerHTML = responseData.address; //+ "[" + responseData.innerHTML + "]";
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -78,11 +110,34 @@
             });
         });
 
+        ///依据两点间坐标查询 路程和时间
         function init(a1, a2, b1, b2) {
-            var a = new qq.maps.LatLng(a1, a2);
-            var b = new qq.maps.LatLng(b1, b2);
+            $.ajax({
+                type: 'get',
+                url: '/TencentMap/Distance.ashx',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: {
+                    From1: a1,
+                    From2: a2,
+                    To1: b1,
+                    To2: b2
+                },
+                success: function (responseData) {
+                    if (responseData) {
+                        var Distance = responseData.Distance;
+                        // 0 地址 1 标题 2 mapid 3 计划目的 4 手工单号 5 工程名称
+                        dialog = jqueryAlert({ 'title': '提示消息', 'content': Distance, 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } })
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+            //var a = new qq.maps.LatLng(a1, a2);
+            //var b = new qq.maps.LatLng(b1, b2);
             //计算两点间的距离
-            dialog = jqueryAlert({ 'title': '提示信息', 'content': '两点直线距离约为：' + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + ' 千米', 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } })
+            //dialog = jqueryAlert({ 'content': '两点直线距离约为：' + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + ' 千米' })
         }
 
         function CreateInput() { ///创建图片上传框
@@ -111,13 +166,27 @@
 
             });
         }
+
+        ///签到数据判断
         function PleaseWaite() {
             var temp = document.getElementById("demo").innerHTML;
+
+            var Remark = document.getElementById("TextBox_Remark").value;
 
             if (temp == "等待地理位置获取") {
                 dialog = jqueryAlert({ 'content': '地理位置获取失败，请等待，或者重新打开。' });
                 // alert("地理位置获取失败，请等待，或者重新打开。");
                 return false;
+            } else {
+                if (QDRemark) {
+                    if (Remark.length > 0) {
+                        return true;
+                    }
+                    else {
+                        dialog = jqueryAlert({ 'content': '签到位置异常，必须填写说明。' });
+                        return false;
+                    }
+                }
             }
         }
     </script>
@@ -142,7 +211,7 @@
         <div class="page-header">
             <h1>签到记录<small><i class="icon-double-angle-right"></i>&nbsp;<a href="/WeChat/QDSearch.aspx">添加详细签到</a>                                </small></h1>
         </div>
-        <div class="alert alert-info content">
+        <%--        <div class="alert alert-info content">
             <h5><b>签到说明：</b></h5>
             <h6>&nbsp;&nbsp;&nbsp;&nbsp;签到分为<b>[快速签到]</b>和<b>[详细签到]</b>两种。</h6>
             <h5><b>快速签到</b></h5>
@@ -151,18 +220,29 @@
             <h6>&nbsp;&nbsp;&nbsp;&nbsp;当签到类别选择 <b>维修开始、施工、出差</b>并完成签到后，下一次的签到系统会默认对应上 <b>维修结束、离场、到达</b>；直接点击快速签到即可完成签到任务。</h6>
             <h5><b>详细签到</b></h5>
             <h6>&nbsp;&nbsp;&nbsp;&nbsp;当您需要<b>上传照片</b>，或者备注<b>说明信息</b>的时候需要用到。</h6>
-        </div>
+        </div>--%>
         <div class="row">
+            <div runat="server" id="Div_QDLastData" />
             <div class="alert alert-success" id="alertClass">
                 <b>
                     <p id="demo">等待地理位置获取</p>
                 </b>
             </div>
+            <div class="col-xs-12 page-content">
+                <asp:RadioButtonList RepeatColumns="3" ClientIDMode="Static" ID="RadioButtonList1" runat="server">
+                    <asp:ListItem>维修开始</asp:ListItem>
+                    <asp:ListItem>维修结束</asp:ListItem>
+                    <asp:ListItem>施工</asp:ListItem>
+                    <asp:ListItem>离场</asp:ListItem>
+                    <asp:ListItem>出差</asp:ListItem>
+                    <asp:ListItem>到达</asp:ListItem>
+                </asp:RadioButtonList>
+            </div>
             <div class="col-xs-12">
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">目的地</label>
                     <div class="col-sm-9">
-                        <asp:TextBox ID="TextBox_MDD" runat="server" placeholder="请输入目的地" class="col-xs-12 col-sm-12"></asp:TextBox>
+                        <asp:TextBox ID="TextBox_MDD" ClientIDMode="Static" runat="server" placeholder="请输入目的地" class="col-xs-12 col-sm-12"></asp:TextBox>
                     </div>
                 </div>
             </div>
@@ -170,7 +250,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1">详细说明</label>
                     <div class="col-sm-9">
-                        <asp:TextBox ID="TextBox_Remark" TextMode="MultiLine" runat="server" placeholder="请输入详细说明" class="col-xs-12 col-sm-12"></asp:TextBox>
+                        <asp:TextBox ID="TextBox_Remark" ClientIDMode="Static" TextMode="MultiLine" runat="server" placeholder="请输入详细说明" class="col-xs-12 col-sm-12"></asp:TextBox>
                     </div>
                 </div>
             </div>

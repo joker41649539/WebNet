@@ -330,7 +330,7 @@ public partial class GDGL_Default : PageBase
             string strSQL = " Select (Select top 1 gsdays from W_GCGD1  where ID=" + iID + ") GSDays,* from(SELECT S_USERINFO.ID,'&nbsp;'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO,S_YH_QXZ where FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and QXZID =3 ";//order by cname";
 
             strSQL += " union all ";
-            strSQL += " SELECT S_USERINFO.ID,'&nbsp;(协)'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO where FLAG=3) a order by NAME desc";
+            strSQL += " SELECT S_USERINFO.ID,'&nbsp;(协)'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO where FLAG=4) a order by NAME desc";
             if (OP_Mode.SQLRUN(strSQL))
             {
                 if (OP_Mode.Dtv.Count > 0)
@@ -375,7 +375,7 @@ public partial class GDGL_Default : PageBase
             /// 施工员和安装员组用户才加载
             strSQL = " Select * from(SELECT S_USERINFO.ID,'&nbsp;'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO,S_YH_QXZ where FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and QXZID =4";// order by cname";
             strSQL += " union all ";
-            strSQL += " SELECT S_USERINFO.ID,'&nbsp;(协)'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO where FLAG=3) a order by NAME desc";
+            strSQL += " SELECT S_USERINFO.ID,'&nbsp;(协)'+CNAME+' '+ISNULL(SSDZ,'')+'&nbsp;&nbsp;' NAME,(Select count(id) from W_GCGD_USERS where W_GCGD_USERS.USERS=S_USERINFO.ID and GCDID=" + iID + ") Selected from S_USERINFO where FLAG=4) a order by NAME desc";
 
             if (OP_Mode.SQLRUN(strSQL))
             {
@@ -475,7 +475,7 @@ public partial class GDGL_Default : PageBase
 
                 strSQL += " Select @iCount=Count(id) from W_GCGD_USERS where GCDID=" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + " and USERS=" + lst.Value + " and flag=0 ";
                 strSQL += " if(@iCount=0) begin";
-                strSQL += "  insert into W_GCGD_USERS (GCDID,USERS,flag) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',0) ";
+                strSQL += "  insert into W_GCGD_USERS (GCDID,USERS,flag,charge) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',0,isnull((Select Charge from W_GCGD_USERS where GCDID=585 and USERS=" + DefaultUser + "),0)) ";
                 strSQL += " end";
             }
         }
@@ -487,7 +487,7 @@ public partial class GDGL_Default : PageBase
                 qxsz2 += lst.Value + ",";
                 strSQL += " Select @iCount=Count(id) from W_GCGD_USERS where GCDID=" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + " and USERS=" + lst.Value + " and flag=1 ";
                 strSQL += " if(@iCount=0) begin";
-                strSQL += " insert into W_GCGD_USERS (GCDID,USERS,flag) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',1) ";
+                strSQL += " insert into W_GCGD_USERS (GCDID,USERS,flag,charge) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',1,isnull((Select Charge from W_GCGD_USERS where GCDID=585 and USERS=" + DefaultUser + "),0)) ";
                 strSQL += " end";
             }
         }

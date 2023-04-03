@@ -36,6 +36,7 @@ public partial class DefaultPH : PageBase
             ShowLastQD();
             LoadGCNum();
             LoadJF();
+            LoadData();
         }
     }
 
@@ -44,8 +45,6 @@ public partial class DefaultPH : PageBase
     /// </summary>
     private void LoadJF()
     {
-        /// 私有库查询地址信息
-        //https://apis.map.qq.com/place_cloud/search/nearby?key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX&table_id=0p14UnzPpSeGP5XMT1&location=31.85367,117.3034&radius=200
         int WeekJF = 0;
         int MonthJF = 0;
         int YesDayJF = 0;
@@ -119,15 +118,35 @@ public partial class DefaultPH : PageBase
     /// <param name="e"></param>
     protected void Button1_Click(object sender, EventArgs e)
     {
-        string strQDRemark = RadioButtonList1.SelectedValue;
-        if (strQDRemark.Length > 0)
-        {
-            InsertQZData(strQDRemark);
-        }
-        else
-        {
-            MessageBox("", "请点击选择签到类型。");
-        }
+        //string strQDRemark = RadioButtonList1.SelectedValue;
+        //if (strQDRemark.Length > 0)
+        //{
+        //    InsertQZData(strQDRemark);
+        //}
+        //else
+        //{
+        //    MessageBox("", "请点击选择签到类型。");
+        //}
+    }
+
+    /// <summary>
+    /// 依据坐标，到腾讯地图私有库查询工程信息
+    /// </summary>
+    /// <param name="strZB">31.85367,117.3034</param>
+    private void GetGCBHByZB(string strZB)
+    {
+        strZB = "31.85367,117.3034";
+        int iScope = 200;//搜索范围
+        /// 私有库查询地址信息
+        var client = new WebClient();
+        client.Encoding = Encoding.UTF8;
+        string TententMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
+        string strURL = "https://apis.map.qq.com/place_cloud/search/nearby?key=" + TententMapKey + "&table_id=0p14UnzPpSeGP5XMT1&location=" + strZB + "&radius=" + iScope;
+        var data = client.DownloadString(strURL);
+
+        string temp = data.Substring(data.IndexOf("rough") + 9);
+
+        //   strName = data.Substring(data.IndexOf("rough") + 9, temp.IndexOf('"'));
     }
 
     /// <summary>
@@ -192,13 +211,51 @@ public partial class DefaultPH : PageBase
 
         MessageBox("", "距离：" + JL + " 米 时间：" + sTime + " 分钟");
     }
+    /// <summary>
+    /// 加载数据
+    /// </summary>
+    private void LoadData()
+    {
+
+        string sortExpression = this.GridView_WorkPlan.Attributes["SortExpression"];
+
+        string sortDirection = this.GridView_WorkPlan.Attributes["SortDirection"];
+        string strSQL = String.Empty;
+
+        string STime = System.DateTime.Now.ToString("yyyy-MM-dd");
+
+        /// 查询工程和布线所有人员名单。
+        strSQL = "SELECT S_USERINFO.ID,CName,GCID,WID,a.UserID,CZRID,nFlag,a.LTime,GCDD,GCMC,a.Remark,case gcid when 0 then '['+nFlag+']'+a.Remark else  '['+nFlag+']'+GCMC end NRemark from S_USERINFO left join (Select GCID,UserID,CZRID,nFlag,W_WorkPlan.LTime,GCDD,GCMC,Remark,W_WorkPlan.ID WID from W_WorkPlan left join W_GCGD1 on GCID= W_GCGD1.id where W_WorkPlan.ltime between '" + STime + "' and '" + STime + "') a on UserID=S_USERINFO.ID,S_YH_QXZ where S_USERINFO.ID=" + DefaultUser + " group by S_USERINFO.ID,CNAME,GCID,a.UserID,CZRID,nFlag,a.LTime,GCDD,GCMC,a.Remark,WID order by S_USERINFO.ID";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                /// 设置排序
+                if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+                {
+                    OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+                }
+                GridView_WorkPlan.DataSource = OP_Mode.Dtv;
+                GridView_WorkPlan.DataBind();
+            }
+        }
+    }
 
     /// <summary>
     /// 加载工程数量
     /// </summary>
     private void LoadGCNum()
     {
-        string strSQL = "Select (Select count(*) BXCOUNT from (SELECT isnull(count(GCDID), 0) temp FROM S_YH_QXZ, W_GCGD_USERS WHERE QXZID = 3 AND USERID = " + DefaultUser + " AND W_GCGD_USERS.USERS = USERID group by GCDID) a) BXCOUNT,(Select count(*) BXCOUNT from (SELECT isnull(count(GCDID), 0) temp FROM S_YH_QXZ, W_GCGD_USERS WHERE QXZID = 4 AND USERID = " + DefaultUser + " AND W_GCGD_USERS.USERS = USERID group by GCDID) a) AZCOUNT";
+        if (!QXBool(53, Convert.ToInt32(DefaultUser)))
+        {/// 工作计划安排权限
+            Div_WorkPlan.Visible = false;
+        }
+        else
+        {
+            Div_WorkPlan.Visible = true;
+        }
+        string strSQL = "Select (Select count(*) BXCOUNT from (SELECT isnull(count(GCDID), 0) temp FROM S_YH_QXZ, W_GCGD_USERS WHERE QXZID = 3 AND USERID = " + DefaultUser + " AND W_GCGD_USERS.USERS = USERID and flag=0 group by GCDID) a) BXCOUNT,(Select count(*) BXCOUNT from (SELECT isnull(count(GCDID), 0) temp FROM S_YH_QXZ, W_GCGD_USERS WHERE QXZID = 4 AND USERID = " + DefaultUser + " AND W_GCGD_USERS.USERS = USERID and flag=1 group by GCDID) a) AZCOUNT";
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
@@ -206,23 +263,23 @@ public partial class DefaultPH : PageBase
                 Label_MyBXNum.Text = "[" + OP_Mode.Dtv[0]["BXCOUNT"].ToString() + "] 条布线工程";
                 Label_MyAZNum.Text = "[" + OP_Mode.Dtv[0]["AZCOUNT"].ToString() + "] 条安装工程";
 
-                //if (Convert.ToInt32(OP_Mode.Dtv[0]["BXCOUNT"]) > 0)
-                //{
-                //    DivBX.Visible = true;
-                //}
-                //else
-                //{
-                //    DivBX.Visible = false;
-                //}
+                if (Convert.ToInt32(OP_Mode.Dtv[0]["BXCOUNT"]) > 0)
+                {
+                    DivBX.Visible = true;
+                }
+                else
+                {
+                    DivBX.Visible = false;
+                }
 
-                //if (Convert.ToInt32(OP_Mode.Dtv[0]["AZCOUNT"]) > 0)
-                //{
-                //    DivAZ.Visible = true;
-                //}
-                //else
-                //{
-                //    DivAZ.Visible = false;
-                //}
+                if (Convert.ToInt32(OP_Mode.Dtv[0]["AZCOUNT"]) > 0)
+                {
+                    DivAZ.Visible = true;
+                }
+                else
+                {
+                    DivAZ.Visible = false;
+                }
             }
         }
     }
@@ -257,31 +314,31 @@ public partial class DefaultPH : PageBase
 
                 strCFlag = OP_Mode.Dtv[0]["QDFlag"].ToString();
 
-                if (strCFlag == "维修开始")
-                {
-                    RadioButtonList1.SelectedValue = "维修结束";
-                    RadioButtonList1.Enabled = false;
-                }
-                else if (strCFlag == "施工")
-                {
-                    RadioButtonList1.SelectedValue = "离场";
-                    RadioButtonList1.Enabled = false;
-                }
-                else if (strCFlag == "出差")
-                {
-                    RadioButtonList1.SelectedValue = "到达";
-                    RadioButtonList1.Enabled = false;
-                }
+                //if (strCFlag == "维修开始")
+                //{
+                //    RadioButtonList1.SelectedValue = "维修结束";
+                //    RadioButtonList1.Enabled = false;
+                //}
+                //else if (strCFlag == "施工")
+                //{
+                //    RadioButtonList1.SelectedValue = "离场";
+                //    RadioButtonList1.Enabled = false;
+                //}
+                //else if (strCFlag == "出差")
+                //{
+                //    RadioButtonList1.SelectedValue = "到达";
+                //    RadioButtonList1.Enabled = false;
+                //}
 
-                RadioButtonList1.Items.FindByValue("到达").Enabled = false;
-                RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
-                RadioButtonList1.Items.FindByValue("离场").Enabled = false;
+                //RadioButtonList1.Items.FindByValue("到达").Enabled = false;
+                //RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
+                //RadioButtonList1.Items.FindByValue("离场").Enabled = false;
             }
             else
             {
-                RadioButtonList1.Items.FindByValue("到达").Enabled = false;
-                RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
-                RadioButtonList1.Items.FindByValue("离场").Enabled = false;
+                //RadioButtonList1.Items.FindByValue("到达").Enabled = false;
+                //RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
+                //RadioButtonList1.Items.FindByValue("离场").Enabled = false;
             }
         }
         if (strTempHtml.Length > 0)

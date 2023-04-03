@@ -18,7 +18,7 @@ public partial class Partner_Default : PageBase
     }
 
     private void LoadData()
-    {// flag=2 待审核  3 审核过
+    {// flag=2 待审核  3 审核过 停用 ， 4 启用
 
         strSQL = "Select * from s_UserInfo where flag=2";
         if (OP_Mode.SQLRUN(strSQL))
@@ -39,11 +39,20 @@ public partial class Partner_Default : PageBase
                 GridView_Partner3.DataBind();
             }
         }
+        strSQL = "Select * from s_UserInfo where flag=4";
+        if (OP_Mode.SQLRUN(strSQL))
+        {//加载审核完成
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                GridView_Partner4.DataSource = OP_Mode.Dtv;
+                GridView_Partner4.DataBind();
+            }
+        }
     }
 
     protected void GridView_Partner3_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-       
+
     }
 
     protected void GridView_Partner2_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -54,7 +63,7 @@ public partial class Partner_Default : PageBase
 
         if (OP_Mode.SQLRUN(strSQL))
         {
-            MessageBox("", "指定人员数据删除成功^_^！","/Partner/");
+            MessageBox("", "指定人员数据删除成功^_^！", "/Partner/");
         }
         else
         {

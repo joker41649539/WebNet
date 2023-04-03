@@ -1,18 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Web;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Web;
 using System.Web.Script.Serialization;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text;
-using System.Security.Policy;
-using System.Text.RegularExpressions;
-using System.Collections;
 
 public partial class Partner_PartnerInfo : PageBase
 {
@@ -58,7 +48,7 @@ public partial class Partner_PartnerInfo : PageBase
                         {
                             DivIDImage.InnerHtml += "<a href=\"/IDImage/" + strTemp[i] + "\"><img src=\"/IDImage/" + strTemp[i] + "\" width=\"150\" class=\"img-rounded\" /></a>";
                         }
-                        
+
                         DivIDImage.Visible = true;
                     }
                     else
@@ -164,8 +154,9 @@ public partial class Partner_PartnerInfo : PageBase
         string accessToken = GetWorkToken();
         var serializer = new JavaScriptSerializer();
         var client = new System.Net.WebClient();
-
+        client.Encoding = System.Text.Encoding.UTF8;//定义对象语言
         var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token={0}&userid={1}", accessToken, UserID);
+
         var getJson = client.DownloadString(url);
         //{ "errcode":0,"errmsg":"ok","userid":"ceshizhanghao","name":"测试账号","department":[19],"position":"","mobile":"12312223333","gender":"0","email":"","avatar":"","status":4,"isleader":0,"extattr":{ "attrs":[]},"telephone":"","enable":1,"hide_mobile":0,"order":[0],"main_department":19,"qr_code":"https://open.work.weixin.qq.com/wwopen/userQRCode?vcode=vc5e6d55d02cefaebd","alias":"","is_leader_in_dept":[0],"thumb_avatar":"","direct_leader":[],"biz_mail":"ceshizhanghao@hfptkjyxgs.wecom.work"}
 
@@ -175,7 +166,7 @@ public partial class Partner_PartnerInfo : PageBase
         {
             if (rt.department.Length > 0)
             {
-                LinkButton1.Visible = false;
+                //LinkButton1.Visible = false;
                 HiddenField_department.Value = rt.department[0].ToString();
             }
         }
@@ -186,7 +177,7 @@ public partial class Partner_PartnerInfo : PageBase
         public int errcode { get; set; }
         public string errmsg { get; set; }
         public string userid { get; set; }
-        public string name { get; set; }
+        //   public string name { get; set; }
         public int[] department { get; set; }
         public string position { get; set; }
         public string mobile { get; set; }
@@ -303,7 +294,7 @@ public partial class Partner_PartnerInfo : PageBase
     {
         int iUserID = Convert.ToInt32(Request["ID"]);
 
-        strSQL = " Update s_userinfo set Flag=4 where id=" + iUserID;
+        strSQL = " Update s_userinfo set Flag=3 where id=" + iUserID;
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -392,5 +383,40 @@ public partial class Partner_PartnerInfo : PageBase
             }
         }
         return s;
+    }
+
+    /// <summary>
+    /// 启用 4;/// 人员启用状态
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton2_Click(object sender, EventArgs e)
+    {
+        int iUserID = Convert.ToInt32(Request["ID"]);
+        int iFlag = 4;/// 人员启用状态
+
+        strSQL = " Update s_userinfo set Flag="+ iFlag + ",LTime=getdate() where id=" + iUserID;
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            MessageBox("", "人员启用成功。", "/Partner/");
+        }
+    }
+
+    /// <summary>
+    /// 停用 3;/// 人员 状态 停用 已审核
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton3_Click(object sender, EventArgs e)
+    {
+        int iUserID = Convert.ToInt32(Request["ID"]);
+        int iFlag = 3;/// 人员 状态 停用 已审核
+        strSQL = " Update s_userinfo set Flag="+ iFlag + ",LTime=getdate() where id=" + iUserID;
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            MessageBox("", "人员已经停用，系统中暂不可用。", "/Partner/");
+        }
     }
 }

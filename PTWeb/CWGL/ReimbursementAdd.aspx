@@ -2,6 +2,22 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
+        function check() {// 强制要求单人住宿超过80，多人住宿超过100 上传付款截图
+            var rValue = true;
+            var DRZSJE = document.getElementById("TextBox_ZS").value;
+            var DRZSJED = document.getElementById("TextBox_DRZS").value;
+            var input = document.getElementById("id-input").value;
+
+            if (DRZSJE > 80 && input.length <= 0) {
+                rValue = false;
+                dialog = jqueryAlert({ 'content': "单人住宿金额超过80元，必须上传付款截图。" });
+            }
+            if (DRZSJED > 100 && input.length <= 0) {
+                rValue = false;
+                dialog = jqueryAlert({ 'content': "多人住宿金额超过100元，必须上传付款截图。" });
+            }
+            return rValue;
+        }
         jQuery(function ($) {
             $('#id-input').ace_file_input({
                 style: 'well',
@@ -273,14 +289,14 @@
             <div class="form-group">
                 <div runat="server" id="UpdateImages"></div>
                 <%--  <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-mini btn-success" runat="server" OnClick="LinkButton1_Click1"><b>保&nbsp;&nbsp;存</b></asp:LinkButton>--%>
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-mini" runat="server" OnClick="LinkButton1_Click1"><b>添加下一条</b></asp:LinkButton>
+                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return check();" ID="LinkButton1" class="btn btn-mini" runat="server" OnClick="LinkButton1_Click1"><b>添加下一条</b></asp:LinkButton>
             </div>
         </div>
     </div>
     <div class="hr-10"></div>
     <div class="btn-group">
         <%--        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-save bigger-110"></i> 保  存</asp:LinkButton>--%>
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return check();" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Return" class="btn btn-pink" runat="server" OnClick="LinkButton4_Click"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-grey" runat="server" OnClick="LinkButton3_Click1"> <i class=" icon-search bigger-110"></i>审批记录</asp:LinkButton>

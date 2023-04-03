@@ -53,41 +53,41 @@ public partial class GDGL_GCAZ : PageBase
                 Label8.Text = OP_Mode.Dtv[0]["YQSM"].ToString();
                 Label11.Text = OP_Mode.Dtv[0]["AZFS"].ToString();
 
-                /// 加载已经安装的人员
-                strSQL = "Select CNAME,AZFS,remark,S_USERINFO.ID ID,W_GCGD_FS.ID FSID from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
-                if (OP_Mode.SQLRUN(strSQL))
-                {
-                    string strTemp = string.Empty;
-                    for (int i = 0; i < OP_Mode.Dtv.Count; i++)
-                    {
-                        sumSL += Convert.ToInt16(OP_Mode.Dtv[i]["AZFS"]);
+                ///// 加载已经安装的人员
+                //strSQL = "Select CNAME,AZFS,remark,S_USERINFO.ID ID,W_GCGD_FS.ID FSID from W_GCGD_FS,S_USERINFO where GCMXID=" + Request["ID"] + " and S_USERINFO.ID=W_GCGD_FS.USERID";
+                //if (OP_Mode.SQLRUN(strSQL))
+                //{
+                //    string strTemp = string.Empty;
+                //    for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                //    {
+                //        sumSL += Convert.ToInt16(OP_Mode.Dtv[i]["AZFS"]);
 
-                        if (Convert.ToInt16(OP_Mode.Dtv[i]["ID"]) == Convert.ToInt16(DefaultUser))
-                        {/// 如果是本用户，则绑定文本框的值
-                            TextBox3.Text = OP_Mode.Dtv[i]["AZFS"].ToString();
-                            TextBox_Remark.Text = OP_Mode.Dtv[i]["Remark"].ToString();
-                            bUser = true;
-                        }
-                        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 安装【" + OP_Mode.Dtv[i]["AZFS"].ToString() + " %】<a OnClick=\"javascript:return confirm('确定删除【" + OP_Mode.Dtv[i]["CNAME"].ToString() + "】的积分吗？')\" href='GCAZDel.aspx?ID=" + OP_Mode.Dtv[i]["FSID"].ToString() + "'>删除</a><br/>";
-                    }
-                    if (strTemp.Length > 0)
-                    {
-                        Label10.Text = "<br/>" + strTemp;
-                    }
-                }
+                //        if (Convert.ToInt16(OP_Mode.Dtv[i]["ID"]) == Convert.ToInt16(DefaultUser))
+                //        {/// 如果是本用户，则绑定文本框的值
+                //            TextBox3.Text = OP_Mode.Dtv[i]["AZFS"].ToString();
+                //            TextBox_Remark.Text = OP_Mode.Dtv[i]["Remark"].ToString();
+                //            bUser = true;
+                //        }
+                //        strTemp += OP_Mode.Dtv[i]["CNAME"].ToString() + ": 安装【" + OP_Mode.Dtv[i]["AZFS"].ToString() + " %】<a OnClick=\"javascript:return confirm('确定删除【" + OP_Mode.Dtv[i]["CNAME"].ToString() + "】的积分吗？')\" href='GCAZDel.aspx?ID=" + OP_Mode.Dtv[i]["FSID"].ToString() + "'>删除</a><br/>";
+                //    }
+                //    if (strTemp.Length > 0)
+                //    {
+                //        Label10.Text = "<br/>" + strTemp;
+                //    }
+                //}
 
-                if (bUser == false)
-                {/// 如果积分>0 并且 自己没有干过活，则把剩下的赋值给文本框
-                    if (sumSL > 0)
-                    {// 如果不是有人干过活了，则默认值还是0，否则为剩下的。
-                        TextBox3.Text = (100 - sumSL).ToString();
-                    }
-                    HiddenField_SYFS.Value = (100 - sumSL).ToString();// 记录剩余分数百分比
-                }
-                else
-                {
-                    HiddenField_SYFS.Value = (100 - sumSL + Convert.ToInt32(TextBox3.Text)).ToString();
-                }
+                //if (bUser == false)
+                //{/// 如果积分>0 并且 自己没有干过活，则把剩下的赋值给文本框
+                //    if (sumSL > 0)
+                //    {// 如果不是有人干过活了，则默认值还是0，否则为剩下的。
+                //        TextBox3.Text = (100 - sumSL).ToString();
+                //    }
+                //    HiddenField_SYFS.Value = (100 - sumSL).ToString();// 记录剩余分数百分比
+                //}
+                //else
+                //{
+                //    HiddenField_SYFS.Value = (100 - sumSL + Convert.ToInt32(TextBox3.Text)).ToString();
+                //}
             }
         }
     }
@@ -99,47 +99,47 @@ public partial class GDGL_GCAZ : PageBase
     /// <param name="e"></param>
     protected void Button1_Click(object sender, EventArgs e)
     {
-        try
-        {
-            int iFS = Convert.ToInt32(TextBox3.Text);
-            if (iFS <= 0)
-            {
-                MessageBox("", "安装百分比必须 >0 。请认真填写。");
-                return;
-            }
-            if (iFS > Convert.ToInt32(HiddenField_SYFS.Value))
-            {
-                MessageBox("", "安装百分比不允许大于 [" + HiddenField_SYFS.Value + "]。");
-                return;
-            }
+        //try
+        //{
+        //    int iFS = Convert.ToInt32(TextBox3.Text);
+        //    if (iFS <= 0)
+        //    {
+        //        MessageBox("", "安装百分比必须 >0 。请认真填写。");
+        //        return;
+        //    }
+        //    if (iFS > Convert.ToInt32(HiddenField_SYFS.Value))
+        //    {
+        //        MessageBox("", "安装百分比不允许大于 [" + HiddenField_SYFS.Value + "]。");
+        //        return;
+        //    }
 
-            string strSQL = string.Empty; // 先删除之前数据，再添加数据
+        //    string strSQL = string.Empty; // 先删除之前数据，再添加数据
 
-            strSQL += " DECLARE @Cont INT ";
+        //    strSQL += " DECLARE @Cont INT ";
 
-            strSQL += " Select @Cont = count(ID) from w_gcgd_fs where gcmxid=" + Request["ID"] + " and userid=" + DefaultUser + " ";
+        //    strSQL += " Select @Cont = count(ID) from w_gcgd_fs where gcmxid=" + Request["ID"] + " and userid=" + DefaultUser + " ";
 
-            strSQL += " if @Cont>0 ";
-            strSQL += " BEGIN ";
-            strSQL += " Update w_gcgd_fs set AZFS=" + iFS.ToString() + ",Remark='" + TextBox_Remark.Text.Replace("'", "") + "',Ltime=getdate() where gcmxid=" + Request["ID"] + " and userid=" + DefaultUser + " ";
-            strSQL += " End";
-            strSQL += " Else";
-            strSQL += " BEGIN ";
-            strSQL += " Insert into w_gcgd_fs (GCMXID,USERID,AZFS,Remark) values (" + Request["ID"] + "," + DefaultUser + "," + iFS.ToString() + ",'" + TextBox_Remark.Text.Replace("'", "") + "')";
-            strSQL += " End";
-            if (OP_Mode.SQLRUN(strSQL))
-            {
-                MessageBox("", "安装信息录入成功，您辛苦了。", "/GDGL/GCAZListph.ASPX?ID=" + Request["ID"]);
-            }
-            else
-            {
-                MessageBox("", "信息保存失败，请重试。<br>错误：" + OP_Mode.strErrMsg);
-                return;
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox("", "安装失败。<BR>错误：" + ex.ToString() + "<br>请重试。");
-        }
+        //    strSQL += " if @Cont>0 ";
+        //    strSQL += " BEGIN ";
+        //    strSQL += " Update w_gcgd_fs set AZFS=" + iFS.ToString() + ",Remark='" + TextBox_Remark.Text.Replace("'", "") + "',Ltime=getdate() where gcmxid=" + Request["ID"] + " and userid=" + DefaultUser + " ";
+        //    strSQL += " End";
+        //    strSQL += " Else";
+        //    strSQL += " BEGIN ";
+        //    strSQL += " Insert into w_gcgd_fs (GCMXID,USERID,AZFS,Remark) values (" + Request["ID"] + "," + DefaultUser + "," + iFS.ToString() + ",'" + TextBox_Remark.Text.Replace("'", "") + "')";
+        //    strSQL += " End";
+        //    if (OP_Mode.SQLRUN(strSQL))
+        //    {
+        //        MessageBox("", "安装信息录入成功，您辛苦了。", "/GDGL/GCAZListph.ASPX?ID=" + Request["ID"]);
+        //    }
+        //    else
+        //    {
+        //        MessageBox("", "信息保存失败，请重试。<br>错误：" + OP_Mode.strErrMsg);
+        //        return;
+        //    }
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox("", "安装失败。<BR>错误：" + ex.ToString() + "<br>请重试。");
+        //}
     }
 }

@@ -18,6 +18,7 @@ using System.Drawing;
 using System.Web.Script.Serialization;
 using System.Web.Configuration;
 using System.Xml;
+using System.Security.Policy;
 
 /// <summary>
 /// Summary description for PageBase
@@ -830,6 +831,143 @@ public class PageBase : System.Web.UI.Page
 
         return sValue;
 
+    }
+
+    /// <summary>
+    /// 工作安排消息推送
+    /// </summary>
+    /// <param name="WeiXinOpenID">普田 OPID</param>
+    /// <param name="sURL">链接网址 不填写，默认进入首页</param>
+    /// <param name="sFrist">头部文字描述</param>
+    /// <param name="sKey1">工作内容</param>
+    /// <param name="sKey2">创建时间</param>
+    /// <param name="sRemark">底部文字描述</param>
+    public void SendMSGByWeChart(string WeiXinOpenID, string sURL, string sFrist, string sKey1, string sKey2, string sRemark)
+    {
+        // WeiXinOpenID = "oDg2PuFTJIO5P0o_Q3KRG_HplGJ0"; 陆晓钧的 普田公众号OPID
+        if (sURL.Length == 0)
+        {
+            sURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fwww.putian.ink%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        }
+
+        if (WeiXinOpenID != null)
+        {
+            var url = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());
+
+            var data = "{";
+            //{ { first.DATA} }
+            //工作内容：{ { keyword1.DATA} }
+            //创建时间：{ { keyword2.DATA} }
+            //{ { remark.DATA} }
+            data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 微信ID
+            data += "\"template_id\":\"2zc0i0hbanse6Rfmi0i9ZlBW14-rockfxR-OGhmUgT8\",";     /// 模板ID
+            data += "\"url\":\"" + sURL + "\",";
+            data += "\"topcolor\":\"#FF0000\",";
+            data += "\"data\":{";
+
+            data += "\"first\": {";
+            data += "\"value\":\"" + sFrist + " \",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword1\":{";
+            data += "\"value\":\"" + sKey1 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword2\":{";
+            data += "\"value\":\"" + sKey2 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"remark\":{";
+            data += "\"value\":\"" + sRemark + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "}";
+
+            data += "}";
+
+            data += "}";
+
+            var serializer = new JavaScriptSerializer();
+            var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+
+            string MSG = "openid:" + WeiXinOpenID;
+
+            foreach (var key in obj.Keys)
+            {
+                MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+            }
+        }
+    }
+
+    /// <summary>
+    /// 微信公众号 考勤信息推送
+    /// </summary>
+    /// <param name="WeiXinOpenID">公众号OPID </param>
+    /// <param name="sURL">链接网址 不填写，默认进入首页</param>
+    /// <param name="sKey1">姓名</param>
+    /// <param name="sKey2">时间</param>
+    /// <param name="sKey3">状态</param>
+    public void SendMSGByWeChart_KQ(string WeiXinOpenID, string sURL, string sFrist, string sKey1, string sKey2, string sKey3, string sRemark)
+    {
+        if (sURL.Length == 0)
+        {
+            sURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fwww.putian.ink%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        }
+
+        // WeiXinOpenID = "oDg2PuFTJIO5P0o_Q3KRG_HplGJ0"; 陆晓钧的 普田公众号OPID
+        //{ { first.DATA} }
+        //姓名：{ { keyword1.DATA} }
+        //时间：{ { keyword2.DATA} }
+        //状态：{ { keyword3.DATA} }
+        //{ { remark.DATA} }
+
+        //sFrist = "测试工作内容";
+        //sRemark = "请抓紧时间完成";
+        if (WeiXinOpenID != null)
+        {
+            var url = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());
+
+            var data = "{";
+            data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 微信ID
+            data += "\"template_id\":\"2zc0i0hbanse6Rfmi0i9ZlBW14-rockfxR-OGhmUgT8\",";     /// 模板ID
+            data += "\"url\":\"" + sURL + "\",";
+            data += "\"topcolor\":\"#FF0000\",";
+            data += "\"data\":{";
+
+            data += "\"first\": {";
+            data += "\"value\":\"" + sFrist + " \",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword1\":{";
+            data += "\"value\":\"" + sKey1 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword2\":{";
+            data += "\"value\":\"" + sKey2 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword3\":{";
+            data += "\"value\":\"" + sKey3 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"remark\":{";
+            data += "\"value\":\"" + sRemark + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "}";
+
+            data += "}";
+
+            data += "}";
+
+            var serializer = new JavaScriptSerializer();
+            var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+
+            string MSG = "openid:" + WeiXinOpenID;
+
+            foreach (var key in obj.Keys)
+            {
+                MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+            }
+        }
     }
 
     /// <summary>

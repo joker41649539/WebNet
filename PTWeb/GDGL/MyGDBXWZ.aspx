@@ -23,7 +23,7 @@
         <h1>
             <asp:Label ID="Label_GCMC" runat="server" Text="Label"></asp:Label></h1>
     </div>
-    <span class="page-content">人员： <b>[<asp:HyperLink ID="Label_BXRY" runat="server">无</asp:HyperLink>]</b></span>
+    <span class="page-content">人员： <b><asp:HyperLink ID="Label_BXRY" runat="server">无</asp:HyperLink></b></span>
     <div runat="server" class="page-content" id="Dtv_HTML"></div>
 </asp:Content>
 

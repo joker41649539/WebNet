@@ -122,6 +122,10 @@ public partial class Partner_PartnerAdd : PageBase
                 MessageBox("", "申请提交成功。<br>请等待审核人员审核。", "/Partner/WellCome.aspx");
                 return;
             }
+            else
+            {
+                MessageBox("", "错误：" + OP_Mode.strErrMsg + " " + strSQL);
+            }
         }
         else
         {

@@ -2,11 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
-        ///打开维修内容选择框
-        function OpenMapEdit() {
-            $("#MapEdit").modal('show');
-            return false
-        };
         /// 数据前端检测
         function onCheck() {
             var rValue = true;
@@ -31,48 +26,6 @@
             return rValue;
         }
     </script>
-    <div class="modal fade" id="MapEdit" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">地点名称</label>
-                            <div class="col-sm-9">
-                                <asp:TextBox ID="TextBox1" ClientIDMode="Static" runat="server" placeholder="请输入内部打卡名称" class="col-xs-12 col-sm-12"></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">地点位置信息</label>
-                            <div class="col-sm-9">
-                                <asp:TextBox ID="TextBox2" ClientIDMode="Static" runat="server" placeholder="请输入地点位置信息" class="col-xs-12 col-sm-12"></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">经纬度信息</label>
-                            <div class="col-sm-9">
-                                <asp:TextBox ID="TextBox3" ClientIDMode="Static" runat="server" placeholder="请输入腾讯地图的经纬度信息数据" class="col-xs-12 col-sm-12"></asp:TextBox>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="height: 70px">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="Button2" OnClientClick="return onCheck()" OnClick="Button2_Click" class="btn btn-success" runat="server" Text="确 定" />
-                    <button type="button" class="btn btn-info"
-                        data-dismiss="modal">
-                        取&nbsp;&nbsp;消
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -139,6 +92,14 @@
     </div>
     <div class="col-xs-12">
         <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">腾讯地图坐标ID</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox_Map" runat="server" placeholder="请输入腾讯地图坐标ID" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-field-1">要求说明</label>
             <div class="col-sm-9">
                 <asp:TextBox ID="TextBox_YQSM" runat="server" TextMode="MultiLine" placeholder="请输入施工要求说明" class="col-xs-12 col-sm-12"></asp:TextBox>
@@ -147,23 +108,22 @@
     </div>
     <div class="hr-10"></div>
     <div class="col-md-offset-3 col-md-9">
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-danger" runat="server" OnClick="LinkButton3_Click"><i class=" icon-barcode bigger-130"></i> 上一单</asp:LinkButton>
-        &nbsp; &nbsp;                        
+        <div class="btn-group">
+            <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-danger" runat="server" OnClick="LinkButton3_Click"><i class=" icon-barcode bigger-130"></i> 上一单</asp:LinkButton>
+            &nbsp; &nbsp;                        
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_YZ_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 保  存</asp:LinkButton>
-        &nbsp; &nbsp;                        
+            &nbsp; &nbsp;                        
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"><i class=" icon-barcode bigger-130"></i> 添加工程明细</asp:LinkButton>
-        &nbsp; &nbsp;                        
-        <asp:Button ID="Button_Del" runat="server" Text="整单删除" class="btn btn-warning" OnClick="Button_Del_Click" />
-        &nbsp; &nbsp;                        
-        <asp:Button ID="Button_DelMX" runat="server" Text="明细删除" class="btn btn-default" OnClick="Button_DelMX_Click" />
-        &nbsp; &nbsp;                        
-       <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-danger" runat="server" OnClick="LinkButton2_Click"><i class=" icon-barcode bigger-130"></i> 下一单</asp:LinkButton>
-        &nbsp; &nbsp;                        
-       <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton4" class="btn btn-info" runat="server" OnClick="LinkButton4_Click"><i class=" icon-barcode bigger-130"></i> 查看报表</asp:LinkButton>
-        &nbsp; &nbsp;                        
-       <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return OpenMapEdit()" ID="LinkButton5" class="btn btn-success" runat="server"><i class="icon-globe"></i> 坐标信息</asp:LinkButton>
+            &nbsp; &nbsp;                        
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="Button_Del" class="btn btn-warning" OnClick="Button_Del_Click" runat="server"><i class=" icon-trash bigger-130"></i> 整单删除</asp:LinkButton>
+            &nbsp; &nbsp;                        
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="Button_DelMX" class="btn btn-default" OnClick="Button_DelMX_Click" runat="server"><i class=" icon-trash bigger-130"></i> 明细删除</asp:LinkButton>
+            &nbsp; &nbsp;                        
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-danger" runat="server" OnClick="LinkButton2_Click"><i class=" icon-barcode bigger-130"></i> 下一单</asp:LinkButton>
+            &nbsp; &nbsp;                        
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton4" class="btn btn-info" runat="server" OnClick="LinkButton4_Click"><i class=" icon-barcode bigger-130"></i> 查看报表</asp:LinkButton>
+        </div>
     </div>
-
     <div>
         <asp:FileUpload ID="FileUpload1" runat="server" class="btn btn-info" />&nbsp;
         <asp:Button ID="Button1" class="btn btn-info" runat="server" Text="导入Excel" OnClick="Button1_Click" />

@@ -204,35 +204,49 @@ public partial class GDGL_BXPercent : PageBase
     private void SaveData()
     {
         string strSQL = string.Empty;
-
+        int SumPercent = 0;
         if (HiddenField6.Value.Length > 0)
         {
+            SumPercent += Convert.ToInt32(TextBox6.Text.Replace("'", ""));
             strSQL += " Update W_GCGD_USERS Set iPercent=" + TextBox6.Text.Replace("'", "") + ",LTime=Getdate() Where ID=" + HiddenField6.Value;
         }
         if (HiddenField5.Value.Length > 0)
         {
+            SumPercent += Convert.ToInt32(TextBox5.Text.Replace("'", ""));
             strSQL += " Update W_GCGD_USERS Set iPercent=" + TextBox5.Text.Replace("'", "") + ",LTime=Getdate() Where ID=" + HiddenField5.Value;
         }
         if (HiddenField4.Value.Length > 0)
         {
+            SumPercent += Convert.ToInt32(TextBox4.Text.Replace("'", ""));
             strSQL += " Update W_GCGD_USERS Set iPercent=" + TextBox4.Text.Replace("'", "") + ",LTime=Getdate() Where ID=" + HiddenField4.Value;
         }
         if (HiddenField3.Value.Length > 0)
         {
+            SumPercent += Convert.ToInt32(TextBox3.Text.Replace("'", ""));
             strSQL += " Update W_GCGD_USERS Set iPercent=" + TextBox3.Text.Replace("'", "") + ",LTime=Getdate() Where ID=" + HiddenField3.Value;
         }
         if (HiddenField2.Value.Length > 0)
         {
+            SumPercent += Convert.ToInt32(TextBox2.Text.Replace("'", ""));
             strSQL += " Update W_GCGD_USERS Set iPercent=" + TextBox2.Text.Replace("'", "") + ",LTime=Getdate() Where ID=" + HiddenField2.Value;
         }
         if (HiddenField1.Value.Length > 0)
         {
+            SumPercent += Convert.ToInt32(TextBox1.Text.Replace("'", ""));
             strSQL += " Update W_GCGD_USERS Set iPercent=" + TextBox1.Text.Replace("'", "") + ",LTime=Getdate() Where ID=" + HiddenField1.Value;
         }
 
-        if (OP_Mode.SQLRUN(strSQL))
+        if (SumPercent != 100)
         {
-            MessageBox("", "人员占比保存成功。", "/GDGL/MyGDBXWZ.aspx?ID=" + Request["ID"]);
+            MessageBox("占比和必须为100%。<br>请检查后重新填写。");
+            return;
+        }
+        else
+        {
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                MessageBox("", "人员占比保存成功。", "/GDGL/MyGDBXWZ.aspx?ID=" + Request["ID"]);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="BXPercent.aspx.cs" Inherits="GDGL_BXPercent" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -22,7 +23,7 @@
                 <h3>
                     <asp:Label ID="Label1" Font-Bold="true" runat="server" Text="姓名1"></asp:Label></h3>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="TextBox1" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
+                    <asp:TextBox ID="TextBox1" ClientIDMode="Static" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
             </div>
         </div>
@@ -32,7 +33,7 @@
                 <h3>
                     <asp:Label ID="Label2" Font-Bold="true" runat="server" Text="姓名1"></asp:Label></h3>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="TextBox2" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
+                    <asp:TextBox ID="TextBox2" ClientIDMode="Static" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
             </div>
         </div>
@@ -42,7 +43,7 @@
                 <h3>
                     <asp:Label ID="Label3" Font-Bold="true" runat="server" Text="姓名1"></asp:Label></h3>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="TextBox3" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
+                    <asp:TextBox ID="TextBox3" ClientIDMode="Static" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
             </div>
         </div>
@@ -52,7 +53,7 @@
                 <h3>
                     <asp:Label ID="Label4" Font-Bold="true" runat="server" Text="姓名1"></asp:Label></h3>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="TextBox4" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
+                    <asp:TextBox ID="TextBox4" ClientIDMode="Static" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
             </div>
         </div>
@@ -62,7 +63,7 @@
                 <h3>
                     <asp:Label ID="Label5" Font-Bold="true" runat="server" Text="姓名1"></asp:Label></h3>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="TextBox5" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
+                    <asp:TextBox ID="TextBox5" ClientIDMode="Static" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
             </div>
         </div>
@@ -72,7 +73,7 @@
                 <h3>
                     <asp:Label ID="Label6" Font-Bold="true" runat="server" Text="姓名1"></asp:Label></h3>
                 <div class="col-sm-9">
-                    <asp:TextBox ID="TextBox6" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
+                    <asp:TextBox ID="TextBox6" ClientIDMode="Static" runat="server" placeholder="请输入他的占比，不用输入‘%’" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
             </div>
         </div>

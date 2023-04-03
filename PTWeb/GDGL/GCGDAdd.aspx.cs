@@ -56,6 +56,7 @@ public partial class GDGL_GCGDAdd : PageBase
                     // Label_YAZFS.Text = OP_Mode.Dtv[0]["YAZFS"].ToString();
                     HiddenField_UserID.Value = OP_Mode.Dtv[0]["ZDRID"].ToString();
                     TextBox_SGBH.Text = OP_Mode.Dtv[0]["SGDH"].ToString();
+                    TextBox_Map.Text = OP_Mode.Dtv[0]["TencentMapID"].ToString();
                 }
             }
         }
@@ -76,14 +77,13 @@ public partial class GDGL_GCGDAdd : PageBase
 
     private void SaveData()
     {
-        string DB_01 = TextBox_GCMC.Text;
-        string DB_02 = TextBox_gcdd.Text;
-        string DB_03 = TextBox_FZR.Text;
-        string DB_04 = TextBox_DH.Text;
-        string DB_05 = TextBox_YQSM.Text;
+        string DB_01 = TextBox_GCMC.Text.Replace("'", "");
+        string DB_02 = TextBox_gcdd.Text.Replace("'", "");
+        string DB_03 = TextBox_FZR.Text.Replace("'", "");
+        string DB_04 = TextBox_DH.Text.Replace("'", "");
+        string DB_05 = TextBox_YQSM.Text.Replace("'", "");
 
-
-
+        string DB_Map = TextBox_Map.Text.Replace("'", "");
 
         if (DB_01.Length == 0 || DB_02.Length == 0 || DB_03.Length == 0 || DB_04.Length == 0 || DB_05.Length == 0)
         {
@@ -108,7 +108,7 @@ public partial class GDGL_GCGDAdd : PageBase
         if (Label_GCBH.Text.Length == strGCDH.Length)
         {/// 修改数据
 
-            strSQL = "Update W_GCGD1 set SGDH='" + TextBox_SGBH.Text.Replace("'", "") + "', GCMC='" + DB_01 + "',GCDD='" + DB_02 + "',JFFZR='" + DB_03 + "',JFDH='" + DB_04 + "',QKSM='" + DB_05 + "',LTIME=GETDATE() WHERE GCDH='" + Label_GCBH.Text + "'";
+            strSQL = "Update W_GCGD1 set TencentMapID='" + DB_Map + "', SGDH='" + TextBox_SGBH.Text.Replace("'", "") + "', GCMC='" + DB_01 + "',GCDD='" + DB_02 + "',JFFZR='" + DB_03 + "',JFDH='" + DB_04 + "',QKSM='" + DB_05 + "',LTIME=GETDATE() WHERE GCDH='" + Label_GCBH.Text + "'";
             if (OP_Mode.SQLRUN(strSQL))
             {
                 MessageBox("", "工单信息已经修改成功。");
@@ -120,7 +120,7 @@ public partial class GDGL_GCGDAdd : PageBase
             return;
         }
 
-        strSQL = " Insert into W_GCGD1 (SGDH,GCDH,GCMC,GCDD,JFFZR,JFDH,QKSM,ZDRID) values ('" + TextBox_SGBH.Text.Replace("'", "") + "',(SELECT  'GC'+CONVERT(VARCHAR(10),GETDATE(),120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(GCDH,4)),'0000') + 1 AS VARCHAR),4) FROM W_GCGD1 WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10),CTIME,120)),'" + DB_01 + "','" + DB_02 + "','" + DB_03 + "','" + DB_04 + "','" + DB_05 + "'," + DefaultUser + ")";
+        strSQL = " Insert into W_GCGD1 (SGDH,GCDH,GCMC,GCDD,JFFZR,JFDH,QKSM,ZDRID,TencentMapID) values ('" + TextBox_SGBH.Text.Replace("'", "") + "',(SELECT  'GC'+CONVERT(VARCHAR(10),GETDATE(),120) + '-' + RIGHT('0000' + CAST(ISNULL(MAX(RIGHT(GCDH,4)),'0000') + 1 AS VARCHAR),4) FROM W_GCGD1 WHERE CONVERT(VARCHAR(10),GETDATE(),120) = CONVERT(VARCHAR(10),CTIME,120)),'" + DB_01 + "','" + DB_02 + "','" + DB_03 + "','" + DB_04 + "','" + DB_05 + "'," + DefaultUser + ",'" + DB_Map + "')";
         strSQL += " SELECT * FROM W_GCGD1 WHERE ID=SCOPE_IDENTITY()";
 
         if (OP_Mode.SQLRUN(strSQL))

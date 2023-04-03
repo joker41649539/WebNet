@@ -110,7 +110,16 @@
                                 </div>
                             </div>
                         </div>
-                        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>申请通过</b></asp:LinkButton>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name">&nbsp;</div>
+                            <div class="profile-info-value">
+                                <div class="btn-group">
+                                    <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-info" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok"></i> <b>申请通过</b></asp:LinkButton>
+                                    <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-check"></i> <b>启用</b></asp:LinkButton>
+                                    <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-danger" runat="server" OnClick="LinkButton3_Click"><i class="icon-check-empty"></i> <b>停用</b></asp:LinkButton>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

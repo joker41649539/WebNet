@@ -42,8 +42,7 @@
                 ],
                 success: function (res) {
                     if (res.checkResult.getLocation == false) {
-                        dialog = jqueryAlert({ 'content': '你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！' });
-                        // alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+                        alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
                         return;
                     }
                 }
@@ -53,7 +52,7 @@
                 success: function (res) {
                     $.ajax({
                         type: 'get',
-                        url: '/WeChat/map.ashx',
+                        url: '/TencentMap/PrivateMap.ashx',
                         dataType: 'json',
                         contentType: 'application/json',
                         data: {
@@ -61,14 +60,18 @@
                             latitude: res.latitude
                         },
                         success: function (responseData) {
-                            
+                            if (responseData) {
+                                var address = responseData.address;
+                                // 0 地址 1 标题 2 mapid 3 计划目的 4 手工单号 5 工程名称
+                                const arr1 = address.split(';');
+
                                 document.getElementById("Hidden_WZ").value = responseData.address;
                                 document.getElementById("Hidden_Name").value = responseData.name;
                                 document.getElementById("Hidden_Screen").value = "[" + screen.width + "]*[" + screen.height + "]";
                                 document.getElementById("Hidden_JD").value = res.longitude; // 精度赋值
                                 document.getElementById("Hidden_WD").value = res.latitude; // 维度赋值
 
-                                document.getElementById("demo").innerHTML += responseData.address;// + "[" + responseData.address.name + "]" + "[" + responseData.name + "]";
+                                document.getElementById("demo").innerHTML = arr1[0] + ";" + arr1[1]; //+ "[" + responseData.innerHTML + "]";
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -77,24 +80,13 @@
                     });
                 },
                 fail: function (err) {
-                    //alert('用户地理位置获取错误。');
+                    //  alert('用户地理位置获取错误。' + err);
                 },
                 cancel: function (res) {
-                    dialog = jqueryAlert({ 'content': '用户拒绝授权获取地理位置！' });
-                    //         alert('用户拒绝授权获取地理位置');
+                    dialog = jqueryAlert({ 'content': '用户拒绝授权获取地理位置。' });
+                    //  alert('用户拒绝授权获取地理位置');
                 }
             });
-            //  地理位置接口   //alert(JSON.stringify(res));
-            //  查看地理位置
-            document.querySelector('#openLocation').onclick = function () {
-                wx.openLocation({
-                    //latitude: document.getElementById("TextBox_JD").value,
-                    //longitude: document.getElementById("TextBox_WD").value,
-                    //name: '我在这里',
-                    //address: document.getElementById("TextBox_WZ").value,
-                    scale: 14
-                });
-            };
         });
     </script>
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
@@ -155,15 +147,15 @@
                     </a>
                 </div>
             </div>
-            <div class="infobox infobox-blue3">
+            <div class="infobox infobox-blue3" runat="server" id="Div_WorkPlan">
                 <div class="infobox-icon">
                     <i class="icon-briefcase"></i>
                 </div>
                 <div class="infobox-data">
-                    <span class="infobox-data-number">工作汇报</span>
-                    <a href="#">
+                    <span class="infobox-data-number">工作计划</span>
+                    <a href="/GDGL/WorkPlan.aspx">
                         <div class="infobox-content">
-                            <asp:Label ID="Label2" runat="server" Text="填报工作汇报"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="填报工作计划"></asp:Label>
                         </div>
                     </a>
                 </div>
@@ -249,7 +241,7 @@
                 <!-- /widget-box -->
             </div>
             <!-- /span -->
-            <asp:RadioButtonList RepeatColumns="4" ID="RadioButtonList1" runat="server">
+            <%--<asp:RadioButtonList RepeatColumns="4" ID="RadioButtonList1" runat="server">
                 <asp:ListItem>上班</asp:ListItem>
                 <asp:ListItem>下班</asp:ListItem>
                 <asp:ListItem>维修开始</asp:ListItem>
@@ -260,70 +252,27 @@
                 <asp:ListItem>到达</asp:ListItem>
             </asp:RadioButtonList>
             <asp:Button ID="Button1" class="btn btn-danger btn-block" OnClientClick="return PleaseWaite()" runat="server" Text="快速签到" OnClick="Button1_Click" />
-<%--            <asp:Button ID="Button2" class="btn btn-danger btn-block" runat="server" Text="快速签到" OnClick="Button2_Click" />--%>
+            --%>  <%--            <asp:Button ID="Button2" class="btn btn-danger btn-block" runat="server" Text="快速签到" OnClick="Button2_Click" />--%>
             <div class="alert alert-success" id="alertClass">
                 <b>
                     <p id="demo">等待地理位置获取</p>
                 </b>
             </div>
             <div runat="server" id="Div_QDLastData" />
-            <a href='/WeChat/QDSearch.aspx' class="btn btn-default btn-block">详细签到</a>
+            <a href='/WeChat/QDSearch.aspx' class="btn btn-default btn-block">我要签到</a>
         </div>
     </div>
     <div class="col-xs-12">
         <div class="page-header">
-            <h1><i class="icon-bullhorn"></i>工作提示</h1>
+            <h1><i class="icon-bullhorn"></i>工作计划</h1>
         </div>
-        <div class="tabbable">
-            <%--<ul id="myTab" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
-                <li class="active">
-                    <a data-toggle="tab" href="#inbox">
-                        <i class="blue icon-inbox bigger-130"></i>
-                        <span class="bigger-110">待处理</span>
-                    </a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#sent">
-                        <i class="orange icon-location-arrow bigger-130 "></i>
-                        <span class="bigger-110">处理中</span>
-                    </a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#finsh">
-                        <i class="purple icon-location-arrow bigger-130 "></i>
-                        <span class="bigger-110">已完成</span>
-                    </a>
-                </li>
-            </ul>--%>
-            <div class="tab-content">
-                <div id="inbox" class="tab-pane in active">
-                    <div class="page-content">
-                        <!--待处理开始 //-->
-
-                        <!--待处理结束 //-->
-                    </div>
-                </div>
-                <div id="sent" class="tab-pane">
-                    <div class="page-content">
-                        <!--处理中开始 //-->
-
-                        <!--处理中结束 //-->
-                    </div>
-                </div>
-                <div id="finsh" class="tab-pane">
-                    <div class="page-content">
-                        <!--处理完成开始 //-->
-
-                        <!--处理完成结束 //-->
-                    </div>
-                </div>
-                <div id="write" class="tab-pane">
-                    <!--Bug提交 //-->
-
-                    <!--Bug提交结束 //-->
-                </div>
-            </div>
-        </div>
+        <asp:GridView ID="GridView_WorkPlan" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID,WID" >
+            <Columns>
+                <asp:BoundField DataField="NRemark" SortExpression="NRemark" HeaderText="说明"></asp:BoundField>
+                <asp:BoundField DataField="GCDD" SortExpression="GCDD" HeaderText="地点"></asp:BoundField>
+                <asp:BoundField DataField="LTime" DataFormatString="{0:yyyy-MM-dd}" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" SortExpression="lt" HeaderText="日期"></asp:BoundField>
+            </Columns>
+        </asp:GridView>
     </div>
 </asp:Content>
 

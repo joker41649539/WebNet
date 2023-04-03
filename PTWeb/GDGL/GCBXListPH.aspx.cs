@@ -347,43 +347,6 @@ public partial class GDGL_GCBXListPH : PageBase
                 MessageBox("", "布线信息填写失败。<br>错误：" + OP_Mode.strErrMsg);
             }
         }
-
-        //foreach (GridViewRow item in GridView_List.Rows)
-        //{
-        //    if (item.RowType != DataControlRowType.Header)
-        //    {
-        //        if ((item.FindControl("CheckBox1") as CheckBox).Checked)
-        //        {
-        //            iGCMXID = Convert.ToInt32(GridView_List.DataKeys[Convert.ToInt32(item.RowIndex)].Value);
-        //            // strSQL += " Delete from W_GCGD_USERS where id=" + GridView_List.DataKeys[Convert.ToInt32(item.RowIndex)].Value.ToString();
-        //            //strTempMSG += GridView2.DataKeys[Convert.ToInt32(item.RowIndex)].Value.ToString() + ";";//cells[0]表示id在gridview中的第一列
-        //            // strTempMSG += GridView_List.DataKeys[Convert.ToInt32(item.RowIndex)].Value.ToString() + ";";
-        //            // 删除自己原积分
-        //            strSQL += " Delete from W_GCGD_FS where GCMXID=" + iGCMXID + " and userID=" + DefaultUser;
-
-        //            // 更新所有人的积分
-        //            strSQL += " Update W_GCGD_FS set FS=" + RadioButtonList1.SelectedValue.ToString() + "/(Select count(USERID)+1 from W_GCGD_FS where GCMXID=" + iGCMXID + " and USERID!=" + DefaultUser + ") where GCMXID=" + iGCMXID;
-        //            // 插入积分
-        //            strSQL += " Insert into W_GCGD_FS (GCMXID,USERID,FS) values (" + iGCMXID + "," + DefaultUser + "," + RadioButtonList1.SelectedValue.ToString() + "/(Select count(USERID)+1 from W_GCGD_FS where GCMXID=" + iGCMXID + " and USERID!=" + DefaultUser + ")) ";
-        //        }
-        //    }
-        //}
-        //if (strSQL.Length > 0)
-        //{
-        //    if (OP_Mode.SQLRUN(strSQL))
-        //    {/// 积分添加成功后重新加载页面
-        //        Load_GridView_List();
-        //        /// 记录积分记录
-        //     //   strSQL = "Insert into W_GCGD_FS_BXlist (GCMXID,FS,USERID) Select GCMXID,FS,";
-
-        //        RadioButtonList1.SelectedValue = null;
-        //    }
-        //    else
-        //    {
-        //        MessageBox("", "进度信息保存错误：<br>" + OP_Mode.strErrMsg);
-        //    }
-        //}
-
     }
 
 }

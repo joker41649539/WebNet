@@ -209,7 +209,6 @@ public partial class GCAZListPh : PageBase
                 // 更新主装分数 主安装扣除指定分数
                 strSQL += " update W_GCGD_FS set AZFS=AZFS - " + iFZFS + " where ID=( Select top 1 ID from W_GCGD_FS where gcmxid=" + MXID + " and USERID!=" + DefaultUser + " and AZFS>49 order by azfs desc)";
 
-
                 if (!OP_Mode.SQLRUN(strSQL))
                 { /// 主装填写失败
                     MessageBox("", "设备安装失败，请重试。<br/>错误:" + OP_Mode.strErrMsg);
@@ -232,7 +231,7 @@ public partial class GCAZListPh : PageBase
 
         // 取消辅装后，将自己的分数给主装，如无主装则不添加。 百分比>49的为主装
         strSQL += " update W_GCGD_FS set AZFS=AZFS + ISNULL((Select sum(azfs) from W_GCGD_FS where GCMXID=" + MXID + " and USERID=" + DefaultUser + "),0) where ID=( Select top 1 ID from W_GCGD_FS where gcmxid=" + MXID + " and USERID!=" + DefaultUser + " and AZFS>49 order by azfs desc)";
-        strSQL += " Delete from W_GCGD_FS where USERID=" + DefaultUser + " and GCMXID=" + MXID;
+        strSQL += " Delete from W_GCGD_FS where USERID=" + DefaultUser + " and azfs>0 and GCMXID=" + MXID;
 
         if (!OP_Mode.SQLRUN(strSQL))
         {

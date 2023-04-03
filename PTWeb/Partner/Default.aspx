@@ -25,6 +25,12 @@
                     </a>
                 </li>
                 <li class="active">
+                    <a data-toggle="tab" href="#QY">
+                        <i class="green icon-check bigger-130"></i>
+                        <span class="bigger-110">已启用</span>
+                    </a>
+                </li>
+                <li>
                     <a data-toggle="tab" href="#finsh">
                         <i class="blue icon-inbox bigger-130"></i>
                         <span class="bigger-110">已审核</span>
@@ -38,7 +44,28 @@
                 </li>
             </ul>
             <div class="tab-content">
-                <div id="finsh" class="tab-pane in active">
+                <div id="QY" class="tab-pane in active">
+                    <div class="page-content">
+                        <!--人员启用 开始 //-->
+                        <div class="widget-main no-padding">
+                            <asp:GridView ID="GridView_Partner4" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDeleting="GridView_Partner3_RowDeleting" OnRowDataBound="GridView_Partner3_RowDataBound" OnDataBinding="GridView_Partner3_DataBinding">
+                                <Columns>
+                                    <asp:HyperLinkField DataTextField="CName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Partner/PartnerInfo.aspx?id={0}" HeaderText="姓名"></asp:HyperLinkField>
+                                    <asp:TemplateField HeaderText="电话">
+                                        <ItemTemplate>
+                                            <asp:HyperLink runat="server" Text='<%# Eval("ssdz") %>' NavigateUrl='<%#"tel:"+Eval("ssdz") %>' ID="HyperLink1"></asp:HyperLink>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="zjhm" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" SortExpression="zjhm" HeaderText="证件号码"></asp:BoundField>
+                                    <asp:BoundField DataField="CTime" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" DataFormatString="{0:yyyy-MM-dd}" SortExpression="CTime" HeaderText="提交日期"></asp:BoundField>
+                                    <asp:BoundField DataField="LTime" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="更新日期"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <!--人员启用 结束 //-->
+                    </div>
+                </div>
+                <div id="finsh" class="tab-pane">
                     <div class="page-content">
                         <!--已审核开始 //-->
                         <div class="widget-main no-padding">

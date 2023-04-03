@@ -14,7 +14,7 @@
         <h1>
             <asp:Label ID="Label_GCMC" runat="server" Text="Label"></asp:Label></h1>
     </div>
-    <span >安装人员： <b>[<asp:Label ID="Label_AZRY" runat="server" Text="无"></asp:Label>]</b></span>
+    <span >安装人员： <b><asp:Label ID="Label_AZRY" runat="server" Text="无"></asp:Label></b></span>
     <div runat="server" class="page-content" id="Dtv_HTML"></div>
 </asp:Content>
 

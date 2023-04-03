@@ -740,7 +740,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
 
                 string strSQL;
-                strSQL = " Select * from S_USERINFO where COPENID='" + opentid.ToString() + "'";
+                strSQL = " Select * from S_USERINFO where OPENID='" + opentid.ToString() + "'";
 
                 if (OP_Mode.SQLRUN(strSQL))
                 {
@@ -768,7 +768,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                         Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
 
                         /// 更新登录时间
-                        OP_Mode.SQLRUN("Update S_USERINFO set Ltime=getdate(),HEADURL='" + HeadUserUrl + "',XB=" + vsex + " where COPENID='" + opentid.ToString() + "'");
+                        OP_Mode.SQLRUN("Update S_USERINFO set Ltime=getdate(),HEADURL='" + HeadUserUrl + "',XB=" + vsex + " where OPENID='" + opentid.ToString() + "'");
 
                         return;
                     }
@@ -777,9 +777,9 @@ public partial class MasterPage : System.Web.UI.MasterPage
                         try
                         {
 
-                            strSQL = " INSERT INTO S_USERINFO (LOGINNAME,PASSWORD,COPENID,CNAME,HEADURL,XB) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "','" + UserName + "','" + HeadUserUrl + "'," + vsex + ")";
+                            strSQL = " INSERT INTO S_USERINFO (LOGINNAME,PASSWORD,OPENID,CNAME,HEADURL,XB) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "','" + UserName + "','" + HeadUserUrl + "'," + vsex + ")";
 
-                            strSQL += " Select * from S_USERINFO where COPENID='" + opentid + "'";
+                            strSQL += " Select * from S_USERINFO where OPENID='" + opentid + "'";
 
                             DeBugMsg += "+" + strSQL + "+";
 
@@ -789,7 +789,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                                 {
                                     Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
                                     Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["COPENID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["OPENID"].ToString().Trim();
                                     Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
                                     Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
                                     Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();

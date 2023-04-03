@@ -27,11 +27,6 @@
             <h4><b>数量：</b><asp:Label ID="Label7" runat="server" Text="Label"></asp:Label></h4>
             <h4><b>注意事项：</b><asp:Label ID="Label8" runat="server" Text="Label"></asp:Label></h4>
             <h4><b>安装分数：</b><asp:Label ID="Label11" runat="server" Text="Label"></asp:Label></h4>
-            <h4><b>安装分数：</b><asp:TextBox ID="TextBox3" Text="0" Width="50px" runat="server"></asp:TextBox>% 请填写百分比</h4>
-            <h4><b>已安装人员：</b><asp:Label ID="Label10" runat="server" Text="无"></asp:Label></h4>
-            <h4><b>备注说明：</b><asp:TextBox ID="TextBox_Remark" Width="100%" runat="server" Height="60px" TextMode="MultiLine"></asp:TextBox></h4>
-            <h4>
-                <asp:Button ID="Button1" class='btn btn-info' runat="server" Text="确认安装" OnClick="Button1_Click" /></h4>
             <asp:HiddenField ID="HiddenField_SYFS" runat="server" />
 
             <hr />

@@ -18,7 +18,8 @@ public partial class Default5 : PageBase
 
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
-        MessageBox_Test("","提示信息");
+        // MessageBox_Test("","提示信息");
+       //SendMSGByWeChart("", "#", "工作内容信息", "时间：" + System.DateTime.Now.ToString("yyyy-MM-dd"));
         //   this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () { location.href=\"" + sURL + "\"; } } })</script>");
         //string Image1 = String.Empty;
 
@@ -341,5 +342,10 @@ public partial class Default5 : PageBase
     protected void Button1_Click(object sender, EventArgs e)
     {
         Test();
+    }
+
+    protected void LinkButton2_Click(object sender, EventArgs e)
+    {
+
     }
 }

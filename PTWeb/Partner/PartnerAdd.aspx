@@ -14,52 +14,30 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
 
-    <link rel="stylesheet" href="/assets/css/ace.min.css" />
-    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
-    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
-
-    <script src="/assets/js/ace-extra.min.js"></script>
 
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/assets/alert/alert.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
 
     <script src='/assets/alert/alert.js'></script>
+    <script src="/assets/js/ace-extra.min.js"></script>
     <script src='/assets/alert/shCore.js'></script>
     <script src='/assets/alert/makeSy.js'></script>
+
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
     <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
 
 </head>
 <body>
-    <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">
-                        ×
-                    </button>
-                    <h4 class="modal-title" id="MSGTitle">提  示
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <h3 class="modal-title" id="ShowMSG">发生了错误！
-                    </h3>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                        data-dismiss="modal">
-                        确&nbsp;&nbsp;定
-                    </button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
     <form id="form1" runat="server" enctype="multipart/form-data">
         <div class="panel panel-body">
             <div class="panel-heading">
@@ -141,9 +119,6 @@
         </div>
     </form>
     <%-- 文件上传样式需要--%>
-    <script type="text/javascript">
-        window.jQuery || document.write("<script src='/assets/js/jquery-2.0.3.min.js'><" + "/script>");
-    </script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/ace-elements.min.js"></script>
     <%-- 文件上传样式需要--%>

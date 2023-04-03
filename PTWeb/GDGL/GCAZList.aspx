@@ -21,7 +21,7 @@
                 <div class="widget-main no-padding">
                     <asp:GridView ID="GridView_List" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView_List_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView_List_SelectedIndexChanging" OnRowCancelingEdit="GridView_List_RowCancelingEdit" OnRowEditing="GridView_List_RowEditing" OnRowUpdating="GridView_List_RowUpdating" OnRowDataBound="GridView_List_RowDataBound" OnRowDeleting="GridView_List_RowDeleting">
                         <Columns>
-                            <asp:BoundField DataField="SBBH" SortExpression="SBBH" HeaderText="设备编号"></asp:BoundField>
+                            <asp:HyperLinkField DataNavigateUrlFields="ID" SortExpression="SBBH" DataNavigateUrlFormatString="/GDGL/GCAZ.aspx?id={0}" DataTextField="SBBH" HeaderText="设备编号"></asp:HyperLinkField>
                             <asp:BoundField DataField="AZFS" SortExpression="FS" HeaderText="安装分数"></asp:BoundField>
                             <asp:BoundField DataField="YAZ" SortExpression="YAZ" HeaderText="已安装百分比"></asp:BoundField>
                             <asp:ButtonField HeaderText="安装" CommandName="Select" SortExpression="ID" Text="安装" />
