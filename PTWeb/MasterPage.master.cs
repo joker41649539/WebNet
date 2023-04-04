@@ -16,6 +16,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
     ///https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fptweb.x76.com.cn%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\
     ///https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fptweb.x76.com.cn%2FWeChat%2FKQ.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect\
 
+
+    //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fwww.putian.ink%2Fdefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+    //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Fwww.putian.ink%2Fdefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+
     /// <summary>
     /// 数据库连接字符串
     /// </summary>
@@ -38,7 +42,6 @@ public partial class MasterPage : System.Web.UI.MasterPage
             //    return;
             //}
             string strURL = Request.Url.AbsoluteUri;
-
             if (strURL.IndexOf("putian") > -1 || strURL.IndexOf("localhost") > -1 || strURL.IndexOf("10.3.8.123") > -1)
             {
                 try
@@ -66,7 +69,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 }
                 catch (Exception ex)
                 {
-                    MessageBox("", "您还未登陆！<br/>请先登陆！", "/Login.aspx");
+                    MessageBox("", "您还未登陆！!!<br/>请先登陆！" + ex.ToString(), "/Login.aspx");
                     return;
                 }
 
@@ -144,7 +147,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
         catch
         {
-            MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
+            MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！！！", "/Login.aspx");
             return;
         }
         string strSQL = string.Empty;
@@ -827,6 +830,6 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
             }
         }
-
+        //  MessageBox("", DeBugMsg);
     }
 }
