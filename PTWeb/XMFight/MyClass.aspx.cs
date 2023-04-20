@@ -8,11 +8,24 @@ using System.Web.UI.WebControls;
 
 public partial class XMFight_MyClass : PageBaseXMFight
 {
-    public int iUserID = 0;
+
+    public int PStudentID = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
+        // 用户首主界面
+        // 1、判断是否有CODE。 有CODE 依据CODE获取用户信息，并且写入COOKE。
         if (!IsPostBack)
         {
+            string strURL = Request.Url.AbsoluteUri;
+            if (strURL.IndexOf("localhost") > -1)
+            {/// 测试程序，默认ID
+                LoadUserInfo(6);
+            }
+            else
+            {
+                WeChatLoad();// 
+            }
+
             LoadMSG();
             LoadStudentsByOpID();
             if (DefaultUser == "6")
@@ -25,7 +38,9 @@ public partial class XMFight_MyClass : PageBaseXMFight
                 CheckBoxList1.Visible = false;
                 Vied_Text.Visible = false;
             }
-            //  LoadClassList();
+            LoadClassList();
+
+            //  MessageBox("", "MyClass|UID：" + Request.Cookies["WeChat_XMFight"]["USERID"].ToString() + " OID:" + Request.Cookies["WeChat_XMFight"]["COPENID"].ToString());
         }
     }
 
@@ -69,6 +84,9 @@ public partial class XMFight_MyClass : PageBaseXMFight
 
     }
 
+    /// <summary>
+    /// 加载公告信息
+    /// </summary>
     private void LoadMSG()
     {
         string TempHtml = string.Empty;
@@ -159,8 +177,9 @@ public partial class XMFight_MyClass : PageBaseXMFight
                     {// 女孩紫色标签
                         strTempDiv += " <a href=\"?SID=" + OP_Mode.Dtv[i]["ID"].ToString() + "\" class=\"btn btn-sm btn-pink\">" + OP_Mode.Dtv[i]["Name"].ToString() + "</a>";
                     }
+
                     /// 赋值ID
-                    iUserID = Convert.ToInt32(OP_Mode.Dtv[0]["ID"].ToString());
+                    PStudentID = Convert.ToInt32(OP_Mode.Dtv[0]["ID"].ToString());
                 }
             }
         }
@@ -171,7 +190,11 @@ public partial class XMFight_MyClass : PageBaseXMFight
 
         if (Convert.ToInt32(Request["SID"]) > 0)
         {
-            iUserID = Convert.ToInt32(Request["SID"]);
+            PStudentID = Convert.ToInt32(Request["SID"]);
+        }
+        else
+        {
+            PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
         }
 
         if (strTempDiv.Length > 0)
@@ -185,9 +208,9 @@ public partial class XMFight_MyClass : PageBaseXMFight
             Div_Students.Visible = false;
         }
         /// 加载并绑定用户信息
-        LoadData(iUserID);
-        LoadMyClassTime(iUserID);
-        Load_GridView1(iUserID);
+        LoadData(PStudentID);
+        LoadMyClassTime(PStudentID);
+        Load_GridView1(PStudentID);
     }
 
     /// <summary>
@@ -427,7 +450,7 @@ public partial class XMFight_MyClass : PageBaseXMFight
 
         string strSQL;
 
-        strSQL = "Select top 100 * from XMFight_Class_Record where StudentID=" + iStudentID + " order by ctime desc";
+        strSQL = "Select top 100 *,case  when  vidourl is NULL then '' else '查阅视频' end NewText from XMFight_Class_Record where StudentID=" + iStudentID + " order by ctime desc";
 
         if (OP_Mode.SQLRUN(strSQL))
 
@@ -465,6 +488,14 @@ public partial class XMFight_MyClass : PageBaseXMFight
     protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
 
     {
+        if (Convert.ToInt32(Request["SID"]) > 0)
+        {
+            PStudentID = Convert.ToInt32(Request["SID"]);
+        }
+        else
+        {
+            PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
+        }
 
         // 从事件参数获取排序数据列
 
@@ -492,7 +523,7 @@ public partial class XMFight_MyClass : PageBaseXMFight
 
         this.GridView1.Attributes["SortDirection"] = sortDirection;
 
-        Load_GridView1(iUserID);
+        Load_GridView1(PStudentID);
 
     }
 
@@ -559,14 +590,38 @@ public partial class XMFight_MyClass : PageBaseXMFight
     {
         try
         {
+            if (Convert.ToInt32(Request["SID"]) > 0)
+            {
+                PStudentID = Convert.ToInt32(Request["SID"]);
+            }
+            else
+            {
+                PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
+            }
+
+            //int SID = 0;
+            //SID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["USERID"]);
             int IID = Convert.ToInt32(HiddenField_ListMaxID.Value);
             string VidoURL = TextBox1.Text.Replace("'", "");
+            string[] airOpenid;
+            string cName = string.Empty;
             if (IID > 0)
             {
                 string strSQL = "Update XMFight_Class_Record set VidoUrl='" + VidoURL + "' where ID= " + IID;
+                strSQL += " Select OpenID,Name from XMFight_Student where id=" + PStudentID;
                 if (OP_Mode.SQLRUN(strSQL))
                 {
-                    MessageBox("", "视频网址保存成功。", Request.RawUrl);
+                    if (OP_Mode.Dtv.Count > 0)
+                    {
+                        airOpenid = OP_Mode.Dtv[0]["OpenID"].ToString().Split(';');
+                        cName = OP_Mode.Dtv[0]["Name"].ToString();
+                        for (int i = 0; i < airOpenid.Length; i++)
+                        {
+                            /// 推送视频消息反馈
+                            SendFKMsg(airOpenid[i], "您孩子 [" + cName + "] 本期上课视频已经生成。分享朋友圈立即享受10元储备金优惠。", "散打", System.DateTime.Now.ToString("yyyy-MM-dd"), "点击查看后可以分享朋友圈，每次分享后可联系工作人员增加10元储备金。储备金可报名直接抵扣报名费。", VidoURL);
+                        }
+                        MessageBox("", "视频网址保存成功。", Request.RawUrl);
+                    }
                 }
                 else
                 {
@@ -577,6 +632,34 @@ public partial class XMFight_MyClass : PageBaseXMFight
         catch
         {
 
+        }
+    }
+
+    protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        if (e.CommandName == "select")
+        {
+            try
+            {
+                string strOPID = Request.Cookies["WeChat_XMFight"]["COPENID"];
+                if (strOPID.Length > 0)
+                {
+                    int rowNum = int.Parse(e.CommandArgument.ToString());
+                    string strUrl = GridView1.DataKeys[rowNum][1].ToString();
+
+                    if (strUrl.Length > 0 & strOPID.Length > 0)
+                    {
+                        /// 推送视频消息反馈
+
+                        SendFKMsg(strOPID, "您孩子 [" + GridView1.Rows[rowNum].Cells[0].Text.Substring(0, 14) + "] 上课视频已经生成。分享朋友圈立即享受10元储备金优惠。", "散打", System.DateTime.Now.ToString("yyyy-MM-dd"), "点击查看后可以分享朋友圈，每次分享后可联系工作人员增加10元储备金。储备金可报名直接抵扣报名费。", strUrl);
+                        MessageBox("您孩子 [" + GridView1.Rows[rowNum].Cells[0].Text.Substring(0, 14) + "] 上课视频已成功推送给您，请打开公众号查阅。欢迎分享。");
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox("OpenID获取错误，无法查阅视频。");
+            }
         }
     }
 }

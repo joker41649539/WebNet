@@ -11,6 +11,7 @@
         </ul>
     </div>
     <asp:HiddenField ID="HiddenField_department" runat="server" />
+    <asp:HiddenField ID="HiddenField_WorkerOpenID" runat="server" />
     <div class="col-xs-12">
         <div class="page-header">
             <h1><a href="/Partner/">协同人员管理</a><small><i class="icon-double-angle-right"></i>&nbsp;&nbsp;协同人员信息</small></h1>
@@ -40,8 +41,18 @@
                         <div class="profile-contact-links align-center">
                             <asp:HyperLink ID="HyperLink_Remark" runat="server"><i class="icon-plus-sign bigger-120 green"></i>
                                 &nbsp;添加人员描述</asp:HyperLink>
+                            <a href="/Partner/Tags.aspx"><i class="icon-bookmark bigger-120 red"></i>&nbsp;标签管理</a>
                         </div>
                     </div>
+                    <hr />
+                    <h3>用户标签</h3>
+                    <div class="profile-contact-info" runat="server" id="Div_MyTags">
+                    </div>
+                    <hr />
+                    <h3>所有标签</h3>
+                    <div class="profile-contact-info left" runat="server" id="Div_Tags">
+                    </div>
+                    <br />
                 </div>
                 <div class="col-sm-9">
                     <div class="profile-user-info profile-user-info-striped">

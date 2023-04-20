@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Web.Configuration;
+using Newtonsoft.Json;
 
 public partial class Partner_PartnerAdd : PageBase
 {
@@ -15,7 +16,83 @@ public partial class Partner_PartnerAdd : PageBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            PartnerWeChatLoad();
+        }
+    }
 
+    /// <summary>
+    /// 微信登录
+    /// </summary>
+    private void PartnerWeChatLoad()
+    {
+        /// 链接地址
+        /// https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Fwww.putian.ink%2FPartner%2FPartnerAdd.aspx&response_type=code&scope=snsapi_base#wechat_redirect
+        string accessToken = string.Empty;
+        string DeBugMsg = string.Empty;
+
+        string AppId = WebConfigurationManager.AppSettings["CorpId"];//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+
+        var code = string.Empty;
+        var opentid = string.Empty;
+        try
+        {
+            code = Request.QueryString["code"];
+        }
+        catch
+        {
+            MessageBox("", "微信Code获取错误，请重试或者联系管理员。", "/Partner/WellCome.aspx");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(code))
+        {
+            MessageBox("", "微信Code获取错误，请重试或者联系管理员。", "/Partner/WellCome.aspx");
+            return;
+        }
+        else
+        {
+            string strWeixin_OpenID = string.Empty;
+
+            string STRUSERID = string.Empty;
+
+            if (strWeixin_OpenID == string.Empty || STRUSERID == string.Empty)
+            {
+                DeBugMsg += "<br> 没有所需的OPENID！";
+
+                var client = new System.Net.WebClient();
+                client.Encoding = System.Text.Encoding.UTF8;
+
+                var url = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", AppId, AppSecret, code);
+                var data = client.DownloadString(url);
+                //正确{"access_token":"67_ueOj0O0G5oECEyuIzILVqaQ4Xw53m3jTcm_4mwHgKthN1qC4ZWMkWgf41BTnTfTc4uAgon2b4bMjAVKsP5PKhGgNHwXy8M5_qVPSdkMyIoc","expires_in":7200,"refresh_token":"67_4VHmQ4Z2Y7nFSsanLvyEBs-b91DL4YKu_BxCX7wz7GYHHwjEX0aDRiqJGX0N7KMpqf7Iw-ISGeVBTSi9VaggpXBYOPYkXMGi-QkUYz-ZPVA","openid":"oDg2PuFTJIO5P0o_Q3KRG_HplGJ0","scope":"snsapi_userinfo"}
+                //错误 {"errcode":40013,"errmsg":"invalid appid, rid: 642e2686-41db056e-17d82e67"}
+
+                Rootobject rb = JsonConvert.DeserializeObject<Rootobject>(data);
+
+                try
+                {
+                    opentid = rb.openid;
+                    accessToken = rb.access_token;
+                    if (opentid.Length <= 0)
+                    {
+                        MessageBox("", "微信登录Code获取OpID错误。<br>" + data.ToString(), "/Partner/WellCome.aspx");
+                        return;
+                    }
+                    else
+                    {
+                        HiddenField_OpenID.Value = rb.openid;
+                    }
+                }
+                catch
+                {
+                    MessageBox("", "微信登录Code获取OpID错误。<br>" + data.ToString(), "/Partner/WellCome.aspx");
+                    return;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -40,6 +117,12 @@ public partial class Partner_PartnerAdd : PageBase
         Boolean rValue = true;
         string strErrMsg = string.Empty;
         int i = 0;
+
+        if (HiddenField_OpenID.Value.Length <= 0)
+        {
+            i++;
+            strErrMsg += i.ToString() + "、OpenID获取错误，请重新打开页面。<br>";
+        }
 
         if (TextBox_Name.Text.Length <= 0)
         {
@@ -111,7 +194,7 @@ public partial class Partner_PartnerAdd : PageBase
         if (strIMGName.Length > 0)
         {
             /// S_USERINFO FLAG=2 为待审核 3为审核通过的协同人员
-            strSQL = " Insert into S_USERINFO (LoginName,Password,CName,XB,SSDZ,ZJHM,FLAG,IDIMG,Remark) values ('" + strIDNo + "','" + strIDNo + "','" + strCName + "'," + iSex + ",'" + strTel + "','" + strIDNo + "',2,'" + strIMGName + "','" + strRemark + "')";
+            strSQL = " Insert into S_USERINFO (LoginName,Password,CName,XB,SSDZ,ZJHM,FLAG,IDIMG,Remark,OpenID) values ('" + strIDNo + "','" + strIDNo + "','" + strCName + "'," + iSex + ",'" + strTel + "','" + strIDNo + "',2,'" + strIMGName + "','" + strRemark + "','" + HiddenField_OpenID.Value + "')";
 
             if (OP_Mode.SQLRUN(strSQL))
             {

@@ -9,9 +9,17 @@ public partial class Partner_PartnerRemarkAdd : PageBase
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (!QXBool(52, Convert.ToInt32(DefaultUser)))
         {
-            DefaultData();
+            MessageBox("", "您没有查看协同人员的权限。", Defaut_QX_URL);
+            return;
+        }
+        else
+        {
+            if (!IsPostBack)
+            {
+                DefaultData();
+            }
         }
     }
 

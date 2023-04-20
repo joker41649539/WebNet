@@ -35,9 +35,16 @@
     <link rel="shortcut icon" type="image/x-icon" href="/images/ptlogo.png" media="screen" />
 </head>
 <body>
-    <%-- <script type="text/javascript">
-        javascript: window.history.forward(1); /// 禁止后退按钮
-    </script>--%>
+    <script type="text/javascript">
+       // var input = document.getElementById("myInput");
+       // input.addEventListener("keyup", function (event) {
+       //     event.preventDefault();
+       //     if (event.keyCode === 13) {
+       //         document.getElementById("myBtn").click();
+       //     }
+       // });
+       // javascript: window.history.forward(1); /// 禁止后退按钮
+    </script>
     <div class="modal fade" id="MSG" tabindex="-1" role="dialog"
         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -110,7 +117,7 @@
                                 <span class="user-info">
                                     <small>欢迎</small>
                                     <small>
-                                        <asp:Label ID="Label_Name" runat="server" Text="老  鬼"></asp:Label></small>
+                                        <asp:Label ID="Label_Name" runat="server" Text="游  客"></asp:Label></small>
                                 </span>
                                 <i class="icon-caret-down"></i>
                             </a>

@@ -3,18 +3,92 @@ using System.Web;
 using System;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
+using System.Activities.Statements;
+using System.IO;
 
 public partial class Partner_PartnerInfo : PageBase
 {
     public string strSQL = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+        if (!QXBool(52, Convert.ToInt32(DefaultUser)))
         {
-            //string s = GetSpell("黄飞鸿");
-            //MessageBox("", "拼音：" + s);
-            LoadUserInfo();
-            LoadBMByWork();
+            MessageBox("", "您没有查看协同人员的权限。", Defaut_QX_URL);
+            return;
+        }
+        else
+        {
+            if (!IsPostBack)
+            {
+                if (!IsPostBack)
+                {
+                    LoadUserInfo();
+                    LoadBMByWork();
+                    LoadAllTags();
+                    LoadMyTags();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 读取所有标签并显示
+    /// </summary>
+    private void LoadAllTags()
+    {
+        int UserID = 0;
+
+        try
+        {
+            UserID = Convert.ToInt32(Request["id"]);
+
+            string strSQL = "Select * from W_Tags order by SN desc";
+            string strTemp = string.Empty;
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                {
+                    strTemp += "<a href=\"TagsEdid.aspx?UserID=" + UserID + "&Edit=Add&TagID=" + OP_Mode.Dtv[i]["ID"].ToString().Trim() + "\" class=\"label label-" + OP_Mode.Dtv[i]["Stytle"].ToString().Trim() + "\">" + OP_Mode.Dtv[i]["TagName"].ToString() + "</a>&nbsp;";
+                }
+            }
+            if (strTemp.Length > 0)
+            {
+                Div_Tags.InnerHtml = strTemp;
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// 读取用户标签
+    /// </summary>
+    private void LoadMyTags()
+    {
+        int UserID = 0;
+
+        try
+        {
+            UserID = Convert.ToInt32(Request["id"]);
+            string strSQL = "Select * from W_Tags,W_Tag_User where TagID=W_Tags.ID and UserID=" + UserID.ToString() + " order by SN desc";
+            string strTemp = string.Empty;
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                for (int i = 0; i < OP_Mode.Dtv.Count; i++)
+                {// 链接点击删除标签
+                    strTemp += "<a onclick=\"javascript:return confirm('您确定要删除[" + OP_Mode.Dtv[i]["TagName"].ToString() + "]标签吗？')\" href=\"TagsEdid.aspx?UserID=" + UserID + "&Edit=Del&TagID=" + OP_Mode.Dtv[i]["ID"].ToString().Trim() + "\" class=\"label label-" + OP_Mode.Dtv[i]["Stytle"].ToString().Trim() + "\">" + OP_Mode.Dtv[i]["TagName"].ToString() + "</a>&nbsp;";
+                }
+            }
+            if (strTemp.Length > 0)
+            {
+                Div_MyTags.InnerHtml = strTemp;
+            }
+        }
+        catch
+        {
+
         }
     }
 
@@ -39,7 +113,7 @@ public partial class Partner_PartnerInfo : PageBase
                     Label_Name1.Text = OP_Mode.Dtv[0]["CName"].ToString();
                     DropDownList_Sex.SelectedValue = OP_Mode.Dtv[0]["XB"].ToString();
                     DropDownList_Sex.Enabled = false;
-
+                    HiddenField_WorkerOpenID.Value = OP_Mode.Dtv[0]["cOpenID"].ToString();
                     strTemp = OP_Mode.Dtv[0]["IDIMG"].ToString().Split(';');
 
                     if (strTemp.Length > 0)
@@ -166,7 +240,6 @@ public partial class Partner_PartnerInfo : PageBase
         {
             if (rt.department.Length > 0)
             {
-                //LinkButton1.Visible = false;
                 HiddenField_department.Value = rt.department[0].ToString();
             }
         }
@@ -217,7 +290,7 @@ public partial class Partner_PartnerInfo : PageBase
         int iXTRYBMID = 18;// 协同人员部门ID，固定
         var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token={0}&id={1}", accessToken, iXTRYBMID);
         var getJson = client.DownloadString(url);
-
+        //"{"errcode":0,"errmsg":"ok","department":[{"id":18,"name":"协同人员","parentid":1,"order":99992000,"department_leader":[]},{"id":19,"name":"合肥协同","parentid":18,"order":100000000,"department_leader":[]},{"id":20,"name":"六安协同","parentid":18,"order":99999000,"department_leader":[]},{"id":21,"name":"芜湖协同","parentid":18,"order":99998000,"department_leader":[]},{"id":22,"name":"安庆协同","parentid":18,"order":99997000,"department_leader":[]},{"id":23,"name":"马鞍山协同","parentid":18,"order":99996000,"department_leader":[]},{"id":24,"name":"安庆宿松协同","parentid":18,"order":99995000,"department_leader":[]},{"id":25,"name":"安庆桐城协同","parentid":18,"order":99994000,"department_leader":[]},{"id":27,"name":"六安舒城协同","parentid":18,"order":99993000,"department_leader":[]},{"id":28,"name":"六安金寨协同","parentid":18,"order":99992000,"department_leader":[]},{"id":29,"name":"安庆池州协同","parentid":18,"order":99991000,"department_leader":[]},{"id":30,"name":"测试部门1","parentid":19,"order":100000000,"department_leader":[]}]}"
         Rootobject rt = JsonConvert.DeserializeObject<Rootobject>(getJson);
 
         string strRadioHtml = "";
@@ -226,9 +299,13 @@ public partial class Partner_PartnerInfo : PageBase
 
         for (int i = 1; i < rt.department.Count; i++)
         {
+            if (rt.department[i].parentid != iXTRYBMID)
+            {// 当父节点不是一级菜单的时候直接结束
+                break;//
+            }
             strRadioHtml += "<div class=\"radio\">";
             strRadioHtml += "  <label>";
-            strRadioHtml += "   <input name=\"radioBM\" value=\"" + rt.department[i].id + "\" type=\"radio\" class=\"ace\" ";
+            strRadioHtml += "   <input name=\"radioBM\" value=\"" + rt.department[i].id + ";" + rt.department[i].name + "\" type=\"radio\" class=\"ace\" ";
             if (iDepartment.Length > 0)
             {
                 if (rt.department[i].id.ToString() == iDepartment)
@@ -240,12 +317,32 @@ public partial class Partner_PartnerInfo : PageBase
             strRadioHtml += "<span class=\"lbl\" >&nbsp;" + rt.department[i].name + "</span>";
             strRadioHtml += "  </label>";
             strRadioHtml += "</div>";
+
+            for (int ii = i; ii < rt.department.Count; ii++)
+            { // 循环寻找子菜单
+                if (rt.department[ii].parentid == rt.department[i].id)
+                {
+                    strRadioHtml += "<div class=\"radio\">";
+                    strRadioHtml += "  <label>";
+                    strRadioHtml += "   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name=\"radioBM\" value=\"" + rt.department[ii].id + ";" + rt.department[ii].name + "\" type=\"radio\" class=\"ace\" ";
+                    if (iDepartment.Length > 0)
+                    {
+                        if (rt.department[ii].id.ToString() == iDepartment)
+                        {
+                            strRadioHtml += " checked=\"checked\" ";
+                        }
+                    }
+                    strRadioHtml += "/>";
+                    strRadioHtml += "<span class=\"lbl\" >&nbsp;" + rt.department[ii].name + "</span>";
+                    strRadioHtml += "  </label>";
+                    strRadioHtml += "</div>";
+                }
+            }
         }
         if (strRadioHtml.Length > 0)
         {
             RadioBM.InnerHtml = strRadioHtml;
         }
-        // {"errcode":0,"errmsg":"ok","department":[{"id":18,"name":"协同人员","parentid":1,"order":99992000,"department_leader":[]},{"id":19,"name":"合肥协同","parentid":18,"order":100000000,"department_leader":[]},{"id":20,"name":"六安协同","parentid":18,"order":99999000,"department_leader":[]}]}
     }
 
     public class Rootobject
@@ -293,13 +390,71 @@ public partial class Partner_PartnerInfo : PageBase
     private void SaveSQLData()
     {
         int iUserID = Convert.ToInt32(Request["ID"]);
+        string strBM = Request["radioBM"].Split(';')[1];
 
-        strSQL = " Update s_userinfo set Flag=3 where id=" + iUserID;
+        int iFlag = 3;/// 
+
+        strSQL = " Update s_userinfo set Flag=" + iFlag + ",SSDW='" + strBM + "',LTime=getdate() where id=" + iUserID;
+
+        if (HiddenField_WorkerOpenID.Value.Length > 0)
+        {/// 如果有企业微信ID ，则更新部门
+            UpdateWorkerDepart();
+        }
 
         if (OP_Mode.SQLRUN(strSQL))
         {
             MessageBox("", "人员信息审核成功。", "/Partner/");
         }
+    }
+
+
+    /// <summary>
+    /// 更新用户数据
+    /// </summary>
+    /// <returns></returns>
+    private bool UpdateWorkerDepart()
+    {
+        bool rValue = false;
+        int idepartment = Convert.ToInt32(Request["radioBM"].Split(';')[0]);
+        string strWorkerOpenID = HiddenField_WorkerOpenID.Value;
+        //请求方式：POST（HTTPS）
+        // 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/update?access_token=ACCESS_TOKEN
+        var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/update?access_token={0}", GetWorkTokenByAddress());
+
+        var data = "{";
+
+        data += "\"userid\":\"" + strWorkerOpenID + "\",";
+        data += "\"name\":\"" + Label_Name.Text + "\",";
+        data += "\"mobile\":\"" + Label_LXDH.Text + "\",";
+        data += "\"department\":[" + idepartment + "]";
+
+        data += "}";
+
+        var serializer = new JavaScriptSerializer();
+        var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+
+        string MSG = string.Empty;
+
+        foreach (var key in obj.Keys)
+        {
+            if (key == "errmsg")
+            {
+                if (obj[key] == "created" || obj[key] == "updated")
+                {
+                    // MSG = "创建成功。";
+                    rValue = true;
+                }
+                else
+                {
+                    MSG = "部门信息更新失败。错误：" + obj[key];
+                }
+            }
+        }
+        if (MSG != string.Empty)
+        {
+            MessageBox("", MSG);
+        }
+        return rValue;
     }
 
     /// <summary>
@@ -308,7 +463,7 @@ public partial class Partner_PartnerInfo : PageBase
     private bool InsertWorker()
     {
         bool rValue = false;
-        int idepartment = Convert.ToInt32(Request["radioBM"]);
+        int idepartment = Convert.ToInt32(Request["radioBM"].Split(';')[0]);
 
         var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token={0}", GetWorkTokenByAddress());
 
@@ -393,9 +548,15 @@ public partial class Partner_PartnerInfo : PageBase
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
         int iUserID = Convert.ToInt32(Request["ID"]);
+        string strBM = Request["radioBM"].Split(';')[1];
+
         int iFlag = 4;/// 人员启用状态
 
-        strSQL = " Update s_userinfo set Flag="+ iFlag + ",LTime=getdate() where id=" + iUserID;
+        strSQL = " Update s_userinfo set Flag=" + iFlag + ",SSDW='" + strBM + "',LTime=getdate() where id=" + iUserID;
+        if (HiddenField_WorkerOpenID.Value.Length > 0)
+        {/// 如果有企业微信ID ，则更新部门
+            UpdateWorkerDepart();
+        }
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -411,8 +572,11 @@ public partial class Partner_PartnerInfo : PageBase
     protected void LinkButton3_Click(object sender, EventArgs e)
     {
         int iUserID = Convert.ToInt32(Request["ID"]);
-        int iFlag = 3;/// 人员 状态 停用 已审核
-        strSQL = " Update s_userinfo set Flag="+ iFlag + ",LTime=getdate() where id=" + iUserID;
+        string strBM = Request["radioBM"].Split(';')[1];
+
+        int iFlag = 3;/// 人员启用状态
+
+        strSQL = " Update s_userinfo set Flag=" + iFlag + ",SSDW='" + strBM + "',LTime=getdate() where id=" + iUserID;
 
         if (OP_Mode.SQLRUN(strSQL))
         {

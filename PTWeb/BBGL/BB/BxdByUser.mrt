@@ -51,7 +51,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
     <Report isRef="0" />
     <Variables isList="true" count="2">
       <value>,STIME,STIME,,System.String,_x0032_023-02-13,False,False,True</value>
-      <value>,ETIME,ETIME,,System.String,_x0032_023-02-17,False,False,True</value>
+      <value>,ETIME,ETIME,,System.String,_x0032_025-02-17,False,False,True</value>
     </Variables>
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
@@ -114,7 +114,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
         <Table主数据 Ref="9" type="Stimulsoft.Report.Components.Table.StiTable" isKey="true">
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
-          <ClientRectangle>0,3.6,19,2.4</ClientRectangle>
+          <ClientRectangle>0,3.6,19,1.6</ClientRectangle>
           <ColumnCount>9</ColumnCount>
           <Components isList="true" count="27">
             <Table主数据_Cell1 Ref="10" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
@@ -304,7 +304,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>0,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>0,0.8,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -329,7 +329,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
               <CanShrink>True</CanShrink>
-              <ClientRectangle>1.4,0.8,2.4,0.8</ClientRectangle>
+              <ClientRectangle>1.4,0.8,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -351,7 +351,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>3.8,0.8,1.8,0.8</ClientRectangle>
+              <ClientRectangle>3.8,0.8,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -375,7 +375,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>5.6,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>5.6,0.8,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -396,7 +396,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>7,0.8,1.4,0.8</ClientRectangle>
+              <ClientRectangle>7,0.8,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -418,7 +418,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
-              <ClientRectangle>8.4,0.8,3,0.8</ClientRectangle>
+              <ClientRectangle>8.4,0.8,3,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -444,7 +444,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
               <CanShrink>True</CanShrink>
-              <ClientRectangle>11.4,0.8,4.2,0.8</ClientRectangle>
+              <ClientRectangle>11.4,0.8,4.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -465,7 +465,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>15.6,0.8,1.2,0.8</ClientRectangle>
+              <ClientRectangle>15.6,0.8,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -491,7 +491,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <CanBreak>True</CanBreak>
               <CanGrow>True</CanGrow>
               <CanShrink>True</CanShrink>
-              <ClientRectangle>16.8,0.8,2.2,0.8</ClientRectangle>
+              <ClientRectangle>16.8,0.8,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <GrowToHeight>True</GrowToHeight>
@@ -513,7 +513,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>0,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>0,1.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Right</HorAlignment>
@@ -532,7 +532,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>1.4,1.6,2.4,0.8</ClientRectangle>
+              <ClientRectangle>1.4,1.2,2.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
@@ -551,7 +551,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>3.8,1.6,1.8,0.8</ClientRectangle>
+              <ClientRectangle>3.8,1.2,1.8,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
@@ -569,7 +569,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>5.6,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>5.6,1.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Right</HorAlignment>
@@ -589,7 +589,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>7,1.6,1.4,0.8</ClientRectangle>
+              <ClientRectangle>7,1.2,1.4,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Right</HorAlignment>
@@ -612,7 +612,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>8.4,1.6,3,0.8</ClientRectangle>
+              <ClientRectangle>8.4,1.2,3,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
@@ -630,7 +630,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>11.4,1.6,4.2,0.8</ClientRectangle>
+              <ClientRectangle>11.4,1.2,4.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
@@ -648,7 +648,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>15.6,1.6,1.2,0.8</ClientRectangle>
+              <ClientRectangle>15.6,1.2,1.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
@@ -666,7 +666,7 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
               <CanBreak>True</CanBreak>
-              <ClientRectangle>16.8,1.6,2.2,0.8</ClientRectangle>
+              <ClientRectangle>16.8,1.2,2.2,0.4</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
@@ -720,10 +720,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>2/22/2023 11:39:48 AM</ReportChanged>
+  <ReportChanged>4/18/2023 2:42:07 PM</ReportChanged>
   <ReportCreated>4/6/2021 10:09:27 AM</ReportCreated>
   <ReportFile>D:\WebNet\PTWeb\BBGL\BB\BxdByUser.mrt</ReportFile>
-  <ReportGuid>33f6fce41773473e991f1ee6bfac2727</ReportGuid>
+  <ReportGuid>77da19a9fe85494296649d3ecaaaa040</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

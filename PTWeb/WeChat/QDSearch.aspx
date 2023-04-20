@@ -229,7 +229,9 @@
                 </b>
             </div>
             <div class="col-xs-12 page-content">
-                <asp:RadioButtonList RepeatColumns="3" ClientIDMode="Static" ID="RadioButtonList1" runat="server">
+                <asp:RadioButtonList RepeatColumns="4" ClientIDMode="Static" ID="RadioButtonList1" runat="server">
+                    <asp:ListItem>上班</asp:ListItem>
+                    <asp:ListItem>下班</asp:ListItem>
                     <asp:ListItem>维修开始</asp:ListItem>
                     <asp:ListItem>维修结束</asp:ListItem>
                     <asp:ListItem>施工</asp:ListItem>

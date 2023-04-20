@@ -1,17 +1,7 @@
-﻿using OfficeOpenXml;
-using Stimulsoft.Report.Dictionary;
-using System;
-using System.Activities.Expressions;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net;
 using System.Text;
-using System.Web;
 using System.Web.Configuration;
-using System.Web.Script.Serialization;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Windows;
 
 public partial class DefaultPH : PageBase
 {
@@ -47,6 +37,14 @@ public partial class DefaultPH : PageBase
                     else
                     {/// 1 表示正常微信
                         WeChatLoad();
+                        //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Ftest.putian.ink%2Fdefault3.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+                        //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Flocalhost:59802%2Fdefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+                    }
+
+                    if (Convert.ToInt32(DefaultUser) <= 0)
+                    {
+                        MessageBox("", "您还未登陆！!!<br/>请先登陆！", "/Login.aspx");
+                        return;
                     }
                 }
                 catch (Exception ex)
@@ -54,6 +52,7 @@ public partial class DefaultPH : PageBase
                     MessageBox("", "您还未登陆！!!<br/>请先登陆！" + ex.ToString(), "/Login.aspx");
                     return;
                 }
+
                 ShowLastQD();
                 LoadGCNum();
                 LoadJF();
@@ -140,15 +139,15 @@ public partial class DefaultPH : PageBase
     /// <param name="e"></param>
     protected void Button1_Click(object sender, EventArgs e)
     {
-        //string strQDRemark = RadioButtonList1.SelectedValue;
-        //if (strQDRemark.Length > 0)
-        //{
-        //    InsertQZData(strQDRemark);
-        //}
-        //else
-        //{
-        //    MessageBox("", "请点击选择签到类型。");
-        //}
+        string strQDRemark = RadioButtonList1.SelectedValue;
+        if (strQDRemark.Length > 0)
+        {
+            InsertQZData(strQDRemark);
+        }
+        else
+        {
+            MessageBox("", "请点击选择签到类型。");
+        }
     }
 
     /// <summary>
@@ -182,19 +181,19 @@ public partial class DefaultPH : PageBase
         string strScreen = Hidden_Screen.Value; /// 设备分辨率
         string strName = Hidden_Name.Value; // 位置名称
 
-        // https://apis.map.qq.com/ws/geocoder/v1/?location=31.85367,117.3034&key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX&get_poi=0
+        //// https://apis.map.qq.com/ws/geocoder/v1/?location=31.85367,117.3034&key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX&get_poi=0
 
-        // 依据坐标地址，获取简单名称
-        var client = new WebClient();
-        client.Encoding = Encoding.UTF8;
-        string TententMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
-        string strURL = "https://apis.map.qq.com/ws/direction/v1/transit/?form" + strWD + "," + strJD + "&key=" + TententMapKey + "&get_poi=0";
-        var data = client.DownloadString(strURL);
-        //"{\n    \"status\": 0,\n    \"message\": \"query ok\",\n    \"request_id\": \"77fd3d94-063d-453f-8e35-eeffa9a0eb8a\",\n    \"result\": {\n        \"location\": {\n            \"lat\": 31.85383,\n            \"lng\": 117.303457\n        },\n        \"address\": \"安徽省合肥市包河区巢湖路茶叶市场D区1号\",\n        \"formatted_addresses\": {\n            \"recommend\": \"包河区锦绣园(巢湖路西)\",\n            \"rough\": \"包河区锦绣园(巢湖路西)\"\n        },\n        \"address_component\": {\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\",\n            \"street\": \"巢湖路茶叶市场D区\",\n            \"street_number\": \"巢湖路茶叶市场D区1号\"\n        },\n        \"ad_info\": {\n            \"nation_code\": \"156\",\n            \"adcode\": \"340111\",\n            \"city_code\": \"156340100\",\n            \"name\": \"中国,安徽省,合肥市,包河区\",\n            \"location\": {\n                \"lat\": 31.793801,\n                \"lng\": 117.310133\n            },\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\"\n        },\n        \"address_reference\": {\n            \"business_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"famous_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"crossroad\": {\n                \"id\": \"258053\",\n                \"title\": \"马鞍山路/迎屏巷(路口)\",\n                \"location\": {\n                    \"lat\": 31.85514,\n                    \"lng\": 117.3011\n                },\n                \"_distance\": 260.5,\n                \"_dir_desc\": \"东南\"\n            },\n            \"town\": {\n                \"id\": \"340111002\",\n                \"title\": \"包公街道\",\n                \"location\": {\n                    \"lat\": 31.837959,\n                    \"lng\": 117.29163\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"street_number\": {\n                \"id\": \"475762619026716799429010\",\n                \"title\": \"巢湖路茶叶市场D区1号\",\n                \"location\": {\n                    \"lat\": 31.853847,\n                    \"lng\": 117.303718\n                },\n                \"_distance\": 24.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"street\": {\n                \"id\": \"9103225048745597629\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.842798,\n                    \"lng\": 117.32119\n                },\n                \"_distance\": 49.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"landmark_l2\": {\n                \"id\": \"11384582867635718374\",\n                \"title\": \"锦绣园\",\n                \"location\": {\n                    \"lat\": 31.853819,\n                    \"lng\": 117.30229\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            }\n        }\n    }\n}"
+        //// 依据坐标地址，获取简单名称
+        //var client = new WebClient();
+        //client.Encoding = Encoding.UTF8;
+        //string TententMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
+        //string strURL = "https://apis.map.qq.com/ws/direction/v1/transit/?form" + strWD + "," + strJD + "&key=" + TententMapKey + "&get_poi=0";
+        //var data = client.DownloadString(strURL);
+        ////"{\n    \"status\": 0,\n    \"message\": \"query ok\",\n    \"request_id\": \"77fd3d94-063d-453f-8e35-eeffa9a0eb8a\",\n    \"result\": {\n        \"location\": {\n            \"lat\": 31.85383,\n            \"lng\": 117.303457\n        },\n        \"address\": \"安徽省合肥市包河区巢湖路茶叶市场D区1号\",\n        \"formatted_addresses\": {\n            \"recommend\": \"包河区锦绣园(巢湖路西)\",\n            \"rough\": \"包河区锦绣园(巢湖路西)\"\n        },\n        \"address_component\": {\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\",\n            \"street\": \"巢湖路茶叶市场D区\",\n            \"street_number\": \"巢湖路茶叶市场D区1号\"\n        },\n        \"ad_info\": {\n            \"nation_code\": \"156\",\n            \"adcode\": \"340111\",\n            \"city_code\": \"156340100\",\n            \"name\": \"中国,安徽省,合肥市,包河区\",\n            \"location\": {\n                \"lat\": 31.793801,\n                \"lng\": 117.310133\n            },\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\"\n        },\n        \"address_reference\": {\n            \"business_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"famous_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"crossroad\": {\n                \"id\": \"258053\",\n                \"title\": \"马鞍山路/迎屏巷(路口)\",\n                \"location\": {\n                    \"lat\": 31.85514,\n                    \"lng\": 117.3011\n                },\n                \"_distance\": 260.5,\n                \"_dir_desc\": \"东南\"\n            },\n            \"town\": {\n                \"id\": \"340111002\",\n                \"title\": \"包公街道\",\n                \"location\": {\n                    \"lat\": 31.837959,\n                    \"lng\": 117.29163\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"street_number\": {\n                \"id\": \"475762619026716799429010\",\n                \"title\": \"巢湖路茶叶市场D区1号\",\n                \"location\": {\n                    \"lat\": 31.853847,\n                    \"lng\": 117.303718\n                },\n                \"_distance\": 24.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"street\": {\n                \"id\": \"9103225048745597629\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.842798,\n                    \"lng\": 117.32119\n                },\n                \"_distance\": 49.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"landmark_l2\": {\n                \"id\": \"11384582867635718374\",\n                \"title\": \"锦绣园\",\n                \"location\": {\n                    \"lat\": 31.853819,\n                    \"lng\": 117.30229\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            }\n        }\n    }\n}"
 
-        string temp = data.Substring(data.IndexOf("rough") + 9);
+        //string temp = data.Substring(data.IndexOf("rough") + 9);
 
-        strName = data.Substring(data.IndexOf("rough") + 9, temp.IndexOf('"'));
+        //strName = data.Substring(data.IndexOf("rough") + 9, temp.IndexOf('"'));
         // 依据坐标地址，获取简单名称 结束
 
         if (strJD.Length + strWD.Length + strWZ.Length < 1)
@@ -372,404 +371,5 @@ public partial class DefaultPH : PageBase
     {
         TimeSpan hoursSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
         return hoursSpan.TotalHours;
-    }
-
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        Temp();
-    }
-
-    /// <summary>
-    /// 企业微信登录
-    /// </summary>
-    private void WeChatWorkLoad()
-    {
-        string accessToken = string.Empty;
-        string DeBugMsg = string.Empty;
-
-        string AppId = WebConfigurationManager.AppSettings["AgentId"];//与企业微信ID。
-        string AppSecret = WebConfigurationManager.AppSettings["Secret"];
-
-        var code = string.Empty;
-        var opentid = string.Empty;
-        try
-        {
-            code = Request.QueryString["code"];
-            DeBugMsg += "code:" + code;
-        }
-        catch
-        {
-
-        }
-
-        if (string.IsNullOrEmpty(code))
-        {
-
-        }
-        else
-        {
-            string strWeixin_OpenID = string.Empty;
-
-            string STRUSERID = string.Empty;
-
-            if (strWeixin_OpenID == string.Empty || STRUSERID == string.Empty)
-            {
-                accessToken = GetWorkToken();
-
-                if (accessToken.Length <= 0)
-                {
-                    MessageBox("", "您非企业员工！<br/>请先登陆！", "/Login.aspx");
-                    return;
-                }
-
-                DeBugMsg += "<br> 没有所需的OPENID！";
-
-                // this.Label1.Text = "没有所需的OPENID";
-                var client = new System.Net.WebClient();
-                client.Encoding = System.Text.Encoding.UTF8;
-
-                //var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}", AppId, AppSecret);
-                //var data = client.DownloadString(url);
-                var serializer = new JavaScriptSerializer();
-                //var obj = serializer.Deserialize<Dictionary<string, string>>(data);
-
-                //if (!obj.TryGetValue("access_token", out accessToken))
-                //{
-                //    DeBugMsg += "<br> Token获取错误！";
-                //}
-                //else
-                //{
-                //    //opentid = obj["openid"];
-                //    //MessageBox("", "opentid：" + opentid);
-                //}
-                // string tempToken = GetaccessWebToken(code);
-
-                var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={0}&code={1}", accessToken, code);
-                var data = client.DownloadString(url);
-                var userInfo = serializer.Deserialize<Dictionary<string, object>>(data);
-                DeBugMsg += "userInfo：" + data.ToString();
-
-                //                {
-                //                    "errcode": 0,
-                //   "errmsg": "ok",
-                //   "UserId":"USERID",// 企业用户         OpenId// 非企业会员
-                //   "DeviceId":"DEVICEID"
-                //}
-
-                string UserName = "testName";
-                string HeadUserUrl = "";
-                string Mobile = "";
-                int vsex = 2;
-                try
-                {
-                    /// 企业用户
-                    opentid = userInfo["UserId"].ToString();
-                    url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token={0}&userid={1}", accessToken, opentid);
-                    data = client.DownloadString(url);
-                    var userInfo2 = serializer.Deserialize<Dictionary<string, object>>(data);//gender 性别。0表示未定义，1表示男性，2表示女性
-                    UserName = userInfo2["name"].ToString();
-                    HeadUserUrl = userInfo2["thumb_avatar"].ToString();
-                    Mobile = userInfo2["mobile"].ToString();
-                    vsex = Convert.ToInt32(userInfo2["gender"]);
-
-                    //         Label2.Text = "姓名：" + userInfo2["name"].ToString() + "<br>性别：" + userInfo2["gender"].ToString() + "<br>头像：" + userInfo2["thumb_avatar"].ToString();
-                }
-                catch
-                {
-                    /// 出错了，则是非企业用户
-                    MessageBox("", "您非企业员工！<br/>请先登陆！", "/Login.aspx");
-                    return;
-                }
-
-
-
-                //var vcity = "中国";
-
-                //if (userInfo["sex"].ToString() == "1")
-                //{
-                //    vsex = 0;
-                //}
-
-                //vcity = userInfo["country"].ToString() + userInfo["province"].ToString() + userInfo["city"].ToString();
-                //DeBugMsg += "城市：" + vcity;
-                //if (opentid.Length == 0)
-                //{
-                //    opentid = "test111";
-                //}
-
-                //UserName = userInfo["nickname"].ToString();
-                //DeBugMsg += "昵称：" + UserName;
-                //HeadUserUrl = userInfo["headimgurl"].ToString();
-
-                //DeBugMsg += "头像：" + HeadUserUrl;
-
-
-                string strSQL;
-                strSQL = " Select * from S_USERINFO where COPENID='" + opentid.ToString() + "'";
-
-                if (OP_Mode.SQLRUN(strSQL))
-                {
-                    if (OP_Mode.Dtv.Count > 0)
-                    {
-                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
-                        {
-                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
-                            return;
-                        }
-
-                        /// 如果数据库有ID，则直接登录。
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["COPENID"] = opentid.ToString();
-                        Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(UserName);
-                        Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["HEADURL"] = HeadUserUrl;
-
-                        Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
-
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
-
-                        ///设置COOKIE最长时间
-                        Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
-
-                        /// 更新登录时间
-                        OP_Mode.SQLRUN("Update S_USERINFO set Ltime=getdate(),SSDZ='" + Mobile + "',HEADURL='" + HeadUserUrl + "' where COPENID='" + opentid.ToString() + "'");
-
-                        return;
-                    }
-                    else
-                    {
-                        try
-                        {
-
-                            strSQL = " INSERT INTO S_USERINFO (LOGINNAME,PASSWORD,COPENID,CNAME,HEADURL,XB,SSDZ,flag) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "','" + UserName + "','" + HeadUserUrl + "'," + vsex + ",'" + Mobile + "',0)";
-
-                            strSQL += " Select * from S_USERINFO where COPENID='" + opentid + "'";
-
-                            DeBugMsg += "+" + strSQL + "+";
-
-                            if (OP_Mode.SQLRUN(strSQL))
-                            {
-                                if (OP_Mode.Dtv.Count > 0)
-                                {
-                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["COPENID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
-                                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
-
-                                    Response.Cookies["WeChat_Yanwo"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["CNAME"].ToString().Trim();
-                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
-
-                                    Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
-                                    Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
-                                    ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
-                                    Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
-
-                                    string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
-
-                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADURL"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["CNAME"].ToString() + " 注册成功。<br/>祝您生活愉快。";
-
-                                    MessageBox("", MSG);
-
-                                    return;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            DeBugMsg += "<br>" + ex.ToString();
-                            MessageBox("", "4：" + DeBugMsg);
-                        }
-                    }
-                }
-                else
-                {
-                    DeBugMsg += OP_Mode.strErrMsg;
-                    MessageBox("", "5：" + DeBugMsg);
-                }
-
-            }
-        }
-    }
-
-    /// <summary>
-    /// 微信登录
-    /// </summary>
-    private void WeChatLoad()
-    {
-        string accessToken = string.Empty;
-        string DeBugMsg = string.Empty;
-
-        string AppId = WebConfigurationManager.AppSettings["CorpId"];//与微信公众账号后台的AppId设置保持一致，区分大小写。
-        string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
-
-        var code = string.Empty;
-        var opentid = string.Empty;
-        try
-        {
-            code = Request.QueryString["code"];
-            DeBugMsg += "code:" + code;
-        }
-        catch
-        {
-
-        }
-
-        if (string.IsNullOrEmpty(code))
-        {
-
-        }
-        else
-        {
-            string strWeixin_OpenID = string.Empty;
-
-            string STRUSERID = string.Empty;
-
-            if (strWeixin_OpenID == string.Empty || STRUSERID == string.Empty)
-            {
-                DeBugMsg += "<br> 没有所需的OPENID！";
-
-                // this.Label1.Text = "没有所需的OPENID";
-                var client = new System.Net.WebClient();
-                client.Encoding = System.Text.Encoding.UTF8;
-
-                var url = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", AppId, AppSecret, code);
-                var data = client.DownloadString(url);
-                var serializer = new JavaScriptSerializer();
-                var obj = serializer.Deserialize<Dictionary<string, string>>(data);
-
-                if (!obj.TryGetValue("access_token", out accessToken))
-                {
-                    DeBugMsg += "<br> Token获取错误！";
-                }
-                else
-                {
-                    opentid = obj["openid"];
-                    //MessageBox("", "opentid：" + opentid);
-                }
-
-                // string tempToken = GetaccessWebToken(code);
-
-                url = string.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN", accessToken, opentid);
-                data = client.DownloadString(url);
-                var userInfo = serializer.Deserialize<Dictionary<string, object>>(data);
-                DeBugMsg += "userInfo：" + data.ToString();
-                int vsex = 2;
-
-                var vcity = "中国";
-
-                if (userInfo["sex"].ToString() == "1")
-                {
-                    vsex = 0;
-                }
-
-                vcity = userInfo["country"].ToString() + userInfo["province"].ToString() + userInfo["city"].ToString();
-                DeBugMsg += "城市：" + vcity;
-                if (opentid.Length == 0)
-                {
-                    opentid = "test111";
-                }
-                string UserName = "testName";
-                string HeadUserUrl = "";
-
-                UserName = userInfo["nickname"].ToString();
-                DeBugMsg += "昵称：" + UserName;
-                HeadUserUrl = userInfo["headimgurl"].ToString();
-
-                DeBugMsg += "头像：" + HeadUserUrl;
-
-
-                string strSQL;
-                strSQL = " Select * from S_USERINFO where OPENID='" + opentid.ToString() + "'";
-
-                if (OP_Mode.SQLRUN(strSQL))
-                {
-                    if (OP_Mode.Dtv.Count > 0)
-                    {
-                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
-                        {
-                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
-                            return;
-                        }
-                        /// 如果数据库有ID，则直接登录。
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["COPENID"] = opentid.ToString();
-                        Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(UserName);
-                        Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                        Response.Cookies["WeChat_Yanwo"]["HEADURL"] = HeadUserUrl;
-
-                        Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
-
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
-                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
-
-                        ///设置COOKIE最长时间
-                        Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
-
-                        /// 更新登录时间
-                        OP_Mode.SQLRUN("Update S_USERINFO set Ltime=getdate(),HEADURL='" + HeadUserUrl + "',XB=" + vsex + " where OPENID='" + opentid.ToString() + "'");
-
-                        return;
-                    }
-                    else
-                    {
-                        try
-                        {
-
-                            strSQL = " INSERT INTO S_USERINFO (LOGINNAME,PASSWORD,OPENID,CNAME,HEADURL,XB) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "','" + UserName + "','" + HeadUserUrl + "'," + vsex + ")";
-
-                            strSQL += " Select * from S_USERINFO where OPENID='" + opentid + "'";
-
-                            DeBugMsg += "+" + strSQL + "+";
-
-                            if (OP_Mode.SQLRUN(strSQL))
-                            {
-                                if (OP_Mode.Dtv.Count > 0)
-                                {
-                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["OPENID"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
-                                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
-                                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
-
-                                    Response.Cookies["WeChat_Yanwo"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["CNAME"].ToString().Trim();
-                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
-
-                                    Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
-                                    Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
-                                    ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
-                                    Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
-
-                                    string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
-
-                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADURL"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["CNAME"].ToString() + " 注册成功。<br/>祝您生活愉快。";
-
-                                    MessageBox("", MSG);
-
-                                    return;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            DeBugMsg += "<br>" + ex.ToString();
-                            MessageBox("", "4：" + DeBugMsg);
-                        }
-                    }
-                }
-                else
-                {
-                    DeBugMsg += OP_Mode.strErrMsg;
-                    MessageBox("", "5：" + DeBugMsg);
-                }
-
-            }
-        }
-        MessageBox("", DeBugMsg);
     }
 }

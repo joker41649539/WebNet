@@ -241,7 +241,7 @@
                 <!-- /widget-box -->
             </div>
             <!-- /span -->
-            <%--<asp:RadioButtonList RepeatColumns="4" ID="RadioButtonList1" runat="server">
+            <asp:RadioButtonList RepeatColumns="4" ID="RadioButtonList1" runat="server">
                 <asp:ListItem>上班</asp:ListItem>
                 <asp:ListItem>下班</asp:ListItem>
                 <asp:ListItem>维修开始</asp:ListItem>
@@ -252,7 +252,7 @@
                 <asp:ListItem>到达</asp:ListItem>
             </asp:RadioButtonList>
             <asp:Button ID="Button1" class="btn btn-danger btn-block" OnClientClick="return PleaseWaite()" runat="server" Text="快速签到" OnClick="Button1_Click" />
-            --%>  <%--            <asp:Button ID="Button2" class="btn btn-danger btn-block" runat="server" Text="快速签到" OnClick="Button2_Click" />--%>
+            <%--            <asp:Button ID="Button2" class="btn btn-danger btn-block" runat="server" Text="快速签到" OnClick="Button2_Click" />--%>
             <div class="alert alert-success" id="alertClass">
                 <b>
                     <p id="demo">等待地理位置获取</p>
@@ -266,7 +266,7 @@
         <div class="page-header">
             <h1><i class="icon-bullhorn"></i>工作计划</h1>
         </div>
-        <asp:GridView ID="GridView_WorkPlan" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID,WID" >
+        <asp:GridView ID="GridView_WorkPlan" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID,WID">
             <Columns>
                 <asp:BoundField DataField="NRemark" SortExpression="NRemark" HeaderText="说明"></asp:BoundField>
                 <asp:BoundField DataField="GCDD" SortExpression="GCDD" HeaderText="地点"></asp:BoundField>

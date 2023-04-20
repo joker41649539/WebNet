@@ -44,6 +44,7 @@
                 <h3><b>
                     <img src="/images/PTlogo.png" />合肥普田科技有限公司</b></h3>
             </div>
+            <asp:HiddenField ID="HiddenField_OpenID" runat="server" />
             <hr />
             <h5>协同人员信息申请</h5>
             <div class="row">

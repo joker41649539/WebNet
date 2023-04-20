@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stimulsoft.Report.Components;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,6 +91,7 @@ public partial class CWGL_SearchQD : PageBase
         {
             strTJ = " and cname in (" + strTJ.Substring(0, strTJ.Length - 1) + ") ";
         }
+        string[] strImages;
 
         strSQL = "Select w_kq.*,CName,HeadUrl,DefaultScreen from w_kq,S_USERINFO where UserID=S_USERINFO.ID " + strTJ + " and W_KQ.Ctime between '" + TextBox_STime.Text.Replace("'", "") + "' and '" + TextBox_ETime.Text.Replace("'", "") + "' order by cname, w_kq.ctime";
 
@@ -196,42 +198,15 @@ public partial class CWGL_SearchQD : PageBase
                     }
 
                     strTemp += OP_Mode.Dtv[i]["Remark"];
-                    if (OP_Mode.Dtv[i]["Image1"].ToString().Length > 0)
+                    strImages = OP_Mode.Dtv[i]["Image1"].ToString().Split(';');
+                    for (int j = 0; j < strImages.Length; j++)
                     {
-                        strTemp += "             <a href='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "'><img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image1"].ToString() + "' /></a>";
+                        if (strImages[j].Length > 0)
+                        {
+                            strTemp += "             <br/><a href='/KQImage/" + strImages[j] + "'><img class=\"img-rounded\" width=\"150\" src='/KQImage/" + strImages[j] + "' /></a>";
+                        }
                     }
-                    if (OP_Mode.Dtv[i]["Image2"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image2"].ToString() + "' />";
-                    }
-                    if (OP_Mode.Dtv[i]["Image3"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100%\" src='/KQImage/" + OP_Mode.Dtv[i]["Image3"].ToString() + "' />";
-                    }
-                    if (OP_Mode.Dtv[i]["Image4"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image4"].ToString() + "' />";
-                    }
-                    if (OP_Mode.Dtv[i]["Image5"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image5"].ToString() + "' />";
-                    }
-                    if (OP_Mode.Dtv[i]["Image6"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image6"].ToString() + "' />";
-                    }
-                    if (OP_Mode.Dtv[i]["Image7"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image7"].ToString() + "' />";
-                    }
-                    if (OP_Mode.Dtv[i]["Image8"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image8"].ToString() + "' />";
-                    }
-                    if (OP_Mode.Dtv[i]["Image9"].ToString().Length > 0)
-                    {
-                        strTemp += "             <img class=\"img-rounded\" width=\"100\" src='/KQImage/" + OP_Mode.Dtv[i]["Image9"].ToString() + "' />";
-                    }
+
                     strTemp += "       </div>";
                     strTemp += "     </div>";
                     strTemp += "   </div>";

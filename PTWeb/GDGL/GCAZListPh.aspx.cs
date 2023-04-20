@@ -194,7 +194,7 @@ public partial class GCAZListPh : PageBase
     private void SaveSecendary(int MXID)
     { /// 1、每人次为10%，如果超过100%，则从最多的人处扣除。
         int iFZFS = 10;// 设置辅助安装默认分数为10分；
-        string strSQL = "Select ID from W_GCGD_FS where USERID=" + DefaultUser + " and GCMXID=" + MXID; // 判断是否安装过了。
+        string strSQL = "Select ID from W_GCGD_FS where USERID=" + DefaultUser + " and azfs>0 and GCMXID=" + MXID; // 判断是否安装过了。
 
         if (OP_Mode.SQLRUN(strSQL))
         {

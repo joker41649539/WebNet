@@ -14,7 +14,6 @@ public partial class Pay : PageBaseXMFight
     #region pageParameters
     public static string getNewDate;
 
-
     protected string wx_packageValue = "";
     protected string XSDValue = "";
     protected string OfferID = "";
@@ -53,7 +52,7 @@ public partial class Pay : PageBaseXMFight
         try
         {
             int iOfferID = Convert.ToInt32(Request["ID"]);
-
+            string Images = string.Empty;
             string strSQL = "Select * from XMFight_Offer where ID=" + iOfferID;
 
             if (OP_Mode.SQLRUN(strSQL))
@@ -64,7 +63,24 @@ public partial class Pay : PageBaseXMFight
                     getNewDate = OP_Mode.Dtv[0]["OfferETime"].ToString();
                     Label1.Text = OP_Mode.Dtv[0]["OfferPrice"].ToString();
                     Master.Page.Title = OP_Mode.Dtv[0]["OfferName"].ToString();
-                    Image1.ImageUrl = OP_Mode.Dtv[0]["OfferImage"].ToString();
+                    Images = OP_Mode.Dtv[0]["OfferImage"].ToString();
+
+                    DateTime dt1 = DateTime.Now;
+
+                    DateTime dt2 = Convert.ToDateTime(OP_Mode.Dtv[0]["OfferETime"].ToString());
+
+                    TimeSpan ts = dt2 - dt1;
+
+                    if (ts.Days > 5)
+                    {// 有效期超过5天以上，不显示倒计时
+                        show.Visible = false;
+                        LastText.Visible = false;
+                    }
+                    else
+                    {
+                        show.Visible = true;
+                        LastText.Visible = true;
+                    }
 
                     //读取用户微信ID。
                     weixinopenid = Request.Cookies["WeChat_XMFight"]["COPENID"];//"ollQItx5i3C0IUC_sQRvEzzQfXE4";//

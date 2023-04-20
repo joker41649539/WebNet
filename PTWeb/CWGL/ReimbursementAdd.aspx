@@ -2,6 +2,43 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
+        $(function () {
+            $("#TextBox1").bind('input porpertychange', function () {
+                sum();
+            });
+            $("#TextBox2").bind('input porpertychange', function () {
+                sum();
+            });
+            $("#TextBox3").bind('input porpertychange', function () {
+                sum();
+            });
+        });
+        function sum() {
+            var one = document.getElementById("TextBox1");
+            var two = document.getElementById("TextBox2");
+            var three = document.getElementById("TextBox3");
+            var SumYF = document.getElementById("ContentPlaceHolder1_SumYF");
+            var SumYF1 = parseInt(two.value) - parseInt(one.value);
+
+            var check1 = document.getElementsByName('ctl00$ContentPlaceHolder1$Check_SW');
+
+            // dialog = jqueryAlert({ 'content': "文本1：" + one.value + " 文本2：" + two.value + " 合计：" + SumYF1 + " 选中：" + check1[0].checked });
+            // 选中为市内车费  反之为市外车费
+            if (check1[0].checked) {
+                SumYF1 = Math.ceil(0.8 * SumYF1 + parseInt(three.value));
+            }
+            else {
+                SumYF1 = Math.ceil(1.2 * SumYF1 + parseInt(three.value));
+            }
+
+            if (SumYF1 > 0) {
+                SumYF.innerHTML = parseInt(two.value) - parseInt(one.value);
+                document.getElementById("TextBox_Num").value = SumYF1;
+            }
+            else {
+                SumYF.innerHTML = "出发公里数和到达公里数填写不正确，请检查。";
+            }
+        }
         function check() {// 强制要求单人住宿超过80，多人住宿超过100 上传付款截图
             var rValue = true;
             var DRZSJE = document.getElementById("TextBox_ZS").value;
@@ -256,6 +293,49 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-12" runat="server" visible="false" id="Div_JYF">
+            <div class="form-group">
+                <label runat="server" id="Label21" class="col-sm-3 control-label no-padding-right" for="form-field-1">是否市外：</label>
+                <div class="col-sm-9">
+                    <label>
+                        <input name="Check_SW" id="Check_SW" runat="server" onchange="sum();" class="ace ace-switch ace-switch-6" type="checkbox" />
+                        <span class="lbl"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" runat="server" visible="false" id="Div_JYF1">
+            <div class="form-group">
+                <label runat="server" id="Label18" class="col-sm-3 control-label no-padding-right" for="form-field-1">出发公里数：</label>
+                <div class="col-sm-9">
+                    <asp:TextBox ID="TextBox1" ClientIDMode="Static" runat="server" placeholder="请输入出发时的公里数"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" runat="server" visible="false" id="Div_JYF2">
+            <div class="form-group">
+                <label runat="server" id="Label19" class="col-sm-3 control-label no-padding-right" for="form-field-1">到达公里数：</label>
+                <div class="col-sm-9">
+                    <asp:TextBox ID="TextBox2" ClientIDMode="Static" runat="server" placeholder="请输入到达时的公里数"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" runat="server" visible="false" id="Div_JYF4">
+            <div class="form-group">
+                <label runat="server" id="Label20" class="col-sm-3 control-label no-padding-right" for="form-field-1">总公里数：</label>
+                <div class="col-sm-9">
+                    <span id="SumYF" name="SumYF" runat="server">0</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12" runat="server" visible="false" id="Div_JYF3">
+            <div class="form-group">
+                <label runat="server" id="Label22" class="col-sm-3 control-label no-padding-right" for="form-field-1">过路过桥费：</label>
+                <div class="col-sm-9">
+                    <asp:TextBox ID="TextBox3" ClientIDMode="Static" runat="server" Text="0" placeholder="请输入过路过桥费"></asp:TextBox>
+                </div>
+            </div>
+        </div>
         <div class="col-xs-12">
             <div class="form-group">
                 <label runat="server" id="Label5" class="col-sm-3 control-label no-padding-right" for="form-field-1">总金额：</label>
@@ -298,7 +378,7 @@
         <%--        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-save bigger-110"></i> 保  存</asp:LinkButton>--%>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return check();" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Return" class="btn btn-pink" runat="server" OnClick="LinkButton4_Click"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"> <i class=" icon-trash bigger-110"></i> 删  除</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"> <i class=" icon-trash bigger-110"></i>删  除</asp:LinkButton>
         <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-grey" runat="server" OnClick="LinkButton3_Click1"> <i class=" icon-search bigger-110"></i>审批记录</asp:LinkButton>
         <asp:HyperLink ID="HyperLink1" class="btn btn-info" runat="server" Target="_blank">查看轨迹</asp:HyperLink>
     </div>
@@ -311,5 +391,6 @@
             });
         });
     </script>
-
+</div>
+    </div>
 </asp:Content>

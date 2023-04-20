@@ -12,14 +12,28 @@ public partial class XMFight_Default : PageBaseXMFight
     {
         if (!IsPostBack)
         {
-            Server.Transfer("MyClass.aspx");
+            try
+            {
+                string strURL = Request.Url.AbsoluteUri;
+
+                //if (strURL.IndexOf("localhost") > -1)
+                //{/// 测试程序，默认ID
+                //    LoadUserInfo(6);
+                //}
+                //else
+                //{
+                //    WeChatLoad();
+                //}
+                Server.Transfer("MyClass.aspx");
+            }
+            catch
+            { 
+            
+            }
             //LoadPhoto();
         }
     }
 
-    /// <summary>
-    /// 加载并绑定盈利情况
-    /// </summary>
     private void LoadPhoto()
     {
         string strSQL = string.Empty;

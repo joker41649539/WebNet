@@ -1,24 +1,19 @@
 using System;
-using System.Data;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Drawing;
+using System.IO;
+using System.Net;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Drawing.Imaging;
-using System.Net;
-using System.IO;
-using System.Drawing;
-using System.Web.Script.Serialization;
+using System.Web;
 using System.Web.Configuration;
+using System.Web.Script.Serialization;
+using System.Web.UI;
 using System.Xml;
-using System.Security.Policy;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Summary description for PageBase
@@ -28,6 +23,30 @@ public class PageBase : System.Web.UI.Page
     public static string DefaultConStr = ConfigurationManager.ConnectionStrings["DefaultConnectionString"].ConnectionString;
 
     public static OpMode OP_Mode = new OpMode(DefaultConStr, 0);
+
+    // "{"openid":"oDg2PuFTJIO5P0o_Q3KRG_HplGJ0","nickname":"老鬼","sex":0,"language":"","city":"","province":"","country":"","headimgurl":"https://thirdwx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEJJ57iaLobYO9uZhdlsvDIkmxlOfGUyejlWQr3iaDCWuhoRjjziaGZdTKZoZhVKX2hYeuMKkfRfoJQ1Q/132","privilege":[]}"
+    public class RootobjectUserInfo
+    {
+        public string openid { get; set; }
+        public string nickname { get; set; }
+        public int sex { get; set; }
+        public string language { get; set; }
+        public string city { get; set; }
+        public string province { get; set; }
+        public string country { get; set; }
+        public string headimgurl { get; set; }
+        public object[] privilege { get; set; }
+    }
+
+    //
+    public class Rootobject
+    {
+        public string access_token { get; set; }
+        public int expires_in { get; set; }
+        public string refresh_token { get; set; }
+        public string openid { get; set; }
+        public string scope { get; set; }
+    }
 
     // OpModeJBZ OP_ModeJBZ = new OpModeJBZ(JBZConStr, 0);
 
@@ -42,6 +61,351 @@ public class PageBase : System.Web.UI.Page
     /// </summary>
     public static string Defaut_QX_URL = "/Default.aspx";
 
+    /// <summary>
+    /// 企业微信登录
+    /// </summary>
+    public void WeChatWorkLoad()
+    {
+        string accessToken = string.Empty;
+        string DeBugMsg = string.Empty;
+
+        string AppId = WebConfigurationManager.AppSettings["AgentId"];//与企业微信ID。
+        string AppSecret = WebConfigurationManager.AppSettings["Secret"];
+
+        var code = string.Empty;
+        var opentid = string.Empty;
+        try
+        {
+            code = Request.QueryString["code"];
+            DeBugMsg += "code:" + code;
+        }
+        catch
+        {
+
+        }
+
+        if (string.IsNullOrEmpty(code))
+        {
+
+        }
+        else
+        {
+            string strWeixin_OpenID = string.Empty;
+
+            string STRUSERID = string.Empty;
+
+            if (strWeixin_OpenID == string.Empty || STRUSERID == string.Empty)
+            {
+                accessToken = GetWorkToken();
+
+                if (accessToken.Length <= 0)
+                {
+                    MessageBox("", "您非企业员工！<br/>请先登陆！", "/Login.aspx");
+                    return;
+                }
+
+                DeBugMsg += "<br> 没有所需的OPENID！";
+
+                // this.Label1.Text = "没有所需的OPENID";
+                var client = new System.Net.WebClient();
+                client.Encoding = System.Text.Encoding.UTF8;
+
+                //var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}", AppId, AppSecret);
+                //var data = client.DownloadString(url);
+                var serializer = new JavaScriptSerializer();
+
+                var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={0}&code={1}", accessToken, code);
+                var data = client.DownloadString(url);
+                var userInfo = serializer.Deserialize<Dictionary<string, object>>(data);
+                DeBugMsg += "userInfo：" + data.ToString();
+
+                string UserName = "testName";
+                string HeadUserUrl = "";
+                string Mobile = "";
+                int vsex = 2;
+                try
+                {
+                    /// 企业用户
+                    opentid = userInfo["UserId"].ToString();
+                    url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token={0}&userid={1}", accessToken, opentid);
+                    data = client.DownloadString(url);
+                    var userInfo2 = serializer.Deserialize<Dictionary<string, object>>(data);//gender 性别。0表示未定义，1表示男性，2表示女性
+                    UserName = userInfo2["name"].ToString();
+                    HeadUserUrl = userInfo2["thumb_avatar"].ToString();
+                    Mobile = userInfo2["mobile"].ToString();
+                    vsex = Convert.ToInt32(userInfo2["gender"]);
+                }
+                catch
+                {
+                    /// 出错了，则是非企业用户
+                    MessageBox("", "您非企业员工！<br/>请先登陆！", "/Login.aspx");
+                    return;
+                }
+
+                string strSQL;
+                strSQL = " Select * from S_USERINFO where COPENID='" + opentid.ToString() + "'";
+
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    if (OP_Mode.Dtv.Count > 0)
+                    {
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0 && Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 4)
+                        {
+                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
+                            return;
+                        }
+
+                        /// 如果数据库有ID，则直接登录。
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_Yanwo"]["COPENID"] = opentid.ToString();
+                        Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(UserName);
+                        Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                        Response.Cookies["WeChat_Yanwo"]["HEADURL"] = HeadUserUrl;
+
+                        Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
+
+                        ///设置COOKIE最长时间
+                        Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+
+                        /// 更新登录时间
+                        OP_Mode.SQLRUN("Update S_USERINFO set Ltime=getdate(),SSDZ='" + Mobile + "',HEADURL='" + HeadUserUrl + "' where COPENID='" + opentid.ToString() + "'");
+
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+
+                            strSQL = " INSERT INTO S_USERINFO (LOGINNAME,PASSWORD,COPENID,CNAME,HEADURL,XB,SSDZ,flag) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "','" + UserName + "','" + HeadUserUrl + "'," + vsex + ",'" + Mobile + "',0)";
+
+                            strSQL += " Select * from S_USERINFO where COPENID='" + opentid + "'";
+
+                            DeBugMsg += "+" + strSQL + "+";
+
+                            if (OP_Mode.SQLRUN(strSQL))
+                            {
+                                if (OP_Mode.Dtv.Count > 0)
+                                {
+                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["COPENID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+
+                                    Response.Cookies["WeChat_Yanwo"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["CNAME"].ToString().Trim();
+                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+
+                                    Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+                                    Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
+                                    ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
+                                  //  Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+
+                                    string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
+
+                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADURL"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["CNAME"].ToString() + " 注册成功。<br/>祝您生活愉快。";
+
+                                    MessageBox("", MSG);
+
+                                    return;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            DeBugMsg += "<br>" + ex.ToString();
+                            MessageBox("", "4：" + DeBugMsg);
+                        }
+                    }
+                }
+                else
+                {
+                    DeBugMsg += OP_Mode.strErrMsg;
+                    MessageBox("", "5：" + DeBugMsg);
+                }
+
+            }
+        }
+    }
+
+    /// <summary>
+    /// 微信登录
+    /// </summary>
+    public void WeChatLoad()
+    {
+        string accessToken = string.Empty;
+        string DeBugMsg = string.Empty;
+
+        string AppId = WebConfigurationManager.AppSettings["CorpId"];//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        string AppSecret = WebConfigurationManager.AppSettings["WeixinAppSecret"];
+
+        var code = string.Empty;
+        var opentid = string.Empty;
+        try
+        {
+            code = Request.QueryString["code"];
+            DeBugMsg += "code:" + code;
+        }
+        catch
+        {
+
+        }
+
+        if (string.IsNullOrEmpty(code))
+        {
+
+        }
+        else
+        {
+            string strWeixin_OpenID = string.Empty;
+
+            string STRUSERID = string.Empty;
+
+            if (strWeixin_OpenID == string.Empty || STRUSERID == string.Empty)
+            {
+                DeBugMsg += "<br> 没有所需的OPENID！";
+
+                // this.Label1.Text = "没有所需的OPENID";
+                var client = new System.Net.WebClient();
+                client.Encoding = System.Text.Encoding.UTF8;
+
+                var url = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", AppId, AppSecret, code);
+                var data = client.DownloadString(url);
+                //正确{"access_token":"67_ueOj0O0G5oECEyuIzILVqaQ4Xw53m3jTcm_4mwHgKthN1qC4ZWMkWgf41BTnTfTc4uAgon2b4bMjAVKsP5PKhGgNHwXy8M5_qVPSdkMyIoc","expires_in":7200,"refresh_token":"67_4VHmQ4Z2Y7nFSsanLvyEBs-b91DL4YKu_BxCX7wz7GYHHwjEX0aDRiqJGX0N7KMpqf7Iw-ISGeVBTSi9VaggpXBYOPYkXMGi-QkUYz-ZPVA","openid":"oDg2PuFTJIO5P0o_Q3KRG_HplGJ0","scope":"snsapi_userinfo"}
+                //错误 {"errcode":40013,"errmsg":"invalid appid, rid: 642e2686-41db056e-17d82e67"}
+
+                Rootobject rb = JsonConvert.DeserializeObject<Rootobject>(data);
+
+                opentid = rb.openid;
+                accessToken = rb.access_token;
+                if (opentid.Length <= 0)
+                {
+                    MessageBox("", "微信登录Code获OpID错误。<br>" + data.ToString());
+                    return;
+                }
+
+                url = string.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN", accessToken, opentid);
+                data = client.DownloadString(url);
+                RootobjectUserInfo rbUser = JsonConvert.DeserializeObject<RootobjectUserInfo>(data);
+
+                int vsex = 3;
+
+                /// 性别调整为本系统
+                if (rbUser.sex == 0)
+                {
+                    vsex = 1;
+                }
+                else //if (rbUser.sex == 1 || rbUser.sex == 2)
+                {
+                    vsex = 0;
+                }
+
+                var vcity = rbUser.city;
+                string UserName = rbUser.nickname;
+                string HeadUserUrl = rbUser.headimgurl;
+
+                if (rbUser.openid.Length <= 0)
+                { /// 用户信息获取错误
+                    MessageBox("", "微信登录用户详细信息获取错误。<br>" + data.ToString());
+                    return;
+                }
+
+                string strSQL;
+                strSQL = " Select * from S_USERINFO where OPENID='" + opentid.ToString() + "'";
+
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    if (OP_Mode.Dtv.Count > 0)
+                    {
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0 && Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 4)
+                        {
+                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
+                            return;
+                        }
+                        /// 如果数据库有ID，则直接登录。
+                        UserName = OP_Mode.Dtv[0]["CNAME"].ToString();
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_Yanwo"]["COPENID"] = opentid.ToString();
+                        Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(UserName);
+                        Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                        Response.Cookies["WeChat_Yanwo"]["HEADURL"] = HeadUserUrl;
+
+                        Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
+
+                        ///设置COOKIE最长时间
+                     //   Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+
+                        /// 更新登录时间
+                        OP_Mode.SQLRUN("Update S_USERINFO set Ltime=getdate(),HEADURL='" + HeadUserUrl + "' where OPENID='" + opentid.ToString() + "'");
+
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+
+                            strSQL = " INSERT INTO S_USERINFO (LOGINNAME,PASSWORD,OPENID,CNAME,HEADURL,XB) VALUES ('" + opentid + "','" + opentid + "','" + opentid + "','" + UserName + "','" + HeadUserUrl + "'," + vsex + ")";
+
+                            strSQL += " Select * from S_USERINFO where OPENID='" + opentid + "'";
+
+                            DeBugMsg += "+" + strSQL + "+";
+
+                            if (OP_Mode.SQLRUN(strSQL))
+                            {
+                                if (OP_Mode.Dtv.Count > 0)
+                                {
+                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["COPENID"] = OP_Mode.Dtv[0]["OPENID"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["CNAME"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                                    Response.Cookies["WeChat_Yanwo"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                                    Response.Cookies["WeChat_Yanwo"]["HEADURL"] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+
+                                    Response.Cookies["WeChat_Yanwo"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["CNAME"].ToString().Trim();
+                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADURL"].ToString().Trim();
+
+                                    Response.Cookies["WeChat_Yanwo"]["LOGIN"] = "true";
+                                    Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
+                                    ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
+                                 //   Response.Cookies["WeChat_Yanwo"].Expires = DateTime.MaxValue;
+
+                                    string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
+
+                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADURL"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["CNAME"].ToString() + " 注册成功。<br/>祝您生活愉快。";
+
+                                    MessageBox("", MSG);
+
+                                    return;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            DeBugMsg += "<br>" + ex.ToString();
+                            MessageBox("", "4：" + DeBugMsg);
+                        }
+                    }
+                }
+                else
+                {
+                    DeBugMsg += OP_Mode.strErrMsg;
+                    MessageBox("", "5：" + DeBugMsg);
+                }
+
+            }
+        }
+        // MessageBox("", DeBugMsg);
+    }
     /// <summary>
     /// 依据权限ID和用户ID判断是否有此功能权限。有返回TURE，反之返回FALSE;
     /// </summary>
@@ -83,7 +447,7 @@ public class PageBase : System.Web.UI.Page
             }
             catch
             {
-                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Login.aspx\"; } } })</script>");
+                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Login.aspx\"; } } })</script>");
                 //this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "key", "document.getElementById('ShowMSG').innerHTML='您还未登陆，无权查看该页！<br/>请先登陆！';document.getElementById('MSGTitle').innerHTML='提 示'", true);
                 //this.Page.ClientScript.RegisterStartupScript(typeof(string), "sKey", "<script language=JavaScript>$('#MSG').modal('show');$(function () {$('#MSG').on('hide.bs.modal', function () {setTimeout(parent.location.href = '/Login.aspx', 0);})});</script>");
             }
@@ -110,7 +474,7 @@ public class PageBase : System.Web.UI.Page
             }
             catch
             {
-                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Login.aspx\"; } } })</script>");
+                this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({ 'title': '提 示', 'content': '您还未登陆，无权查看该页！<br/>请先登陆！', 'modal': true, 'buttons': { '确定': function () { location.href=\"/Login.aspx\"; } } })</script>");
                 //this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "key", "document.getElementById('ShowMSG').innerHTML='您还未登陆，无权查看该页！<br/>请先登陆！';document.getElementById('MSGTitle').innerHTML='提 示'", true);
                 //this.Page.ClientScript.RegisterStartupScript(typeof(string), "sKey", "<script language=JavaScript>$('#MSG').modal('show');$(function () {$('#MSG').on('hide.bs.modal', function () {setTimeout(parent.location.href = '/Login.aspx', 0);})});</script>");
             }
@@ -848,6 +1212,10 @@ public class PageBase : System.Web.UI.Page
         if (sURL.Length == 0)
         {
             sURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fwww.putian.ink%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        }
+        else
+        {
+            sURL = string.Format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fwww.putian.ink%2F{0}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect", sURL);
         }
 
         if (WeiXinOpenID != null)

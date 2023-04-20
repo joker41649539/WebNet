@@ -3,11 +3,34 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
     <script type="text/javascript">
+        ///依据两点间坐标查询 路程和时间
         function init(a1, a2, b1, b2) {
-            var a = new qq.maps.LatLng(a1, a2);
-            var b = new qq.maps.LatLng(b1, b2);
+            $.ajax({
+                type: 'get',
+                url: '/TencentMap/Distance.ashx',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: {
+                    From1: a1,
+                    From2: a2,
+                    To1: b1,
+                    To2: b2
+                },
+                success: function (responseData) {
+                    if (responseData) {
+                        var Distance = responseData.Distance;
+                        // 0 地址 1 标题 2 mapid 3 计划目的 4 手工单号 5 工程名称
+                        dialog = jqueryAlert({ 'title': '提示消息', 'content': Distance, 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } })
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
+            //var a = new qq.maps.LatLng(a1, a2);
+            //var b = new qq.maps.LatLng(b1, b2);
             //计算两点间的距离
-            dialog = jqueryAlert({ 'content': "距离前一次签到直线距离约为：" + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + " 千米" });
+            //dialog = jqueryAlert({ 'content': '两点直线距离约为：' + (qq.maps.geometry.spherical.computeDistanceBetween(a, b) / 1000).toFixed(2) + ' 千米' })
         }
     </script>
     <div class="breadcrumbs" id="breadcrumbs">

@@ -346,7 +346,6 @@ public class PrivateMap : IHttpHandler
                 rValue = MapID;
             }
         }
-
         return rValue;
     }
 
@@ -357,6 +356,4 @@ public class PrivateMap : IHttpHandler
             return false;
         }
     }
-
-
 }

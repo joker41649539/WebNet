@@ -70,10 +70,10 @@
             });
         }, false)
     </script>
-    <div class="panel panel-default">
-        <asp:Image ID="Image1" Width="100%" CssClass="img-rounded" runat="server" />
+    <div class="panel panel-default" runat="server" id="DivImage">
+      <%--  <asp:Image ID="Image1" Width="100%" CssClass="img-rounded" runat="server" />--%>
     </div>
-    <h5>距离活动结束还有：<br />
+    <h5 runat="server" id="LastText">距离活动结束还有：<br />
     </h5>
     <h1 id="show" class="red center" clientidmode="Static" runat="server">
         <span></span>天<span></span>小时<span></span>分<span></span>秒</h1>

@@ -31,67 +31,18 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         if (!IsPostBack)
         {
-            //try
-            //{
-            //    string LoginID;
-            //    LoginID = Request.Cookies["WeChat_Yanwo"]["USERID"].ToString();
-            //}
-            //catch
-            //{
-            //    MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！", "/Login.aspx");
-            //    return;
-            //}
-            string strURL = Request.Url.AbsoluteUri;
-            if (strURL.IndexOf("putian") > -1 || strURL.IndexOf("localhost") > -1 || strURL.IndexOf("10.3.8.123") > -1)
+            try
             {
-                try
-                {
-                    if (Request["WeChat"] == "0")
-                    {/// 0 表示企业微信
-                        WeChatWorkLoad();
-                    }
-                    else
-                    {/// 1 表示正常微信
-                        WeChatLoad();
-                    }
-                    this.Label_Name.Text = HttpUtility.UrlDecode(Request.Cookies["WeChat_Yanwo"]["CNAME"], Encoding.GetEncoding("UTF-8"));
-
-                    string strTemp = Request.Cookies["WeChat_Yanwo"]["HEADURL"];
-
-                    if (strTemp.Length > 0)
-                    {
-                        this.Image_User.ImageUrl = strTemp;
-                    }
-                    else
-                    {
-                        this.Image_User.ImageUrl = "/images/luLogo.png";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox("", "您还未登陆！!!<br/>请先登陆！" + ex.ToString(), "/Login.aspx");
-                    return;
-                }
-
-                //string weekstr = DateTime.Now.DayOfWeek.ToString();
-                //switch (weekstr)
-                //{
-                //    case "Monday": weekstr = "星期一"; break;
-                //    case "Tuesday": weekstr = "星期二"; break;
-                //    case "Wednesday": weekstr = "星期三"; break;
-                //    case "Thursday": weekstr = "星期四"; break;
-                //    case "Friday": weekstr = "星期五"; break;
-                //    case "Saturday": weekstr = "星期六"; break;
-                //    case "Sunday": weekstr = "星期日"; break;
-                //}
-
-                //  Label_Data.Text = DateTime.Now.Year + "年" + DateTime.Now.Month + "月" + DateTime.Now.Day + "日 ";// + weekstr;
+                Label_Name.Text = HttpUtility.UrlDecode(Request.Cookies["WeChat_Yanwo"]["CNAME"], Encoding.GetEncoding("UTF-8"));
 
                 LoadMenu();
             }
-            // LoadQJGG();
+            catch
+            {
+                MessageBox("", "您还未登陆，无权查看该页！<br/>请先登陆！！！", "/Login.aspx");
+                return;
+            }
         }
-        // GetaccessToken();
     }
 
     /// <summary>
@@ -571,7 +522,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 {
                     if (OP_Mode.Dtv.Count > 0)
                     {
-                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0 && Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 4)
                         {
                             MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
                             return;
@@ -749,7 +700,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
                 {
                     if (OP_Mode.Dtv.Count > 0)
                     {
-                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0 && Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 4)
                         {
                             MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
                             return;

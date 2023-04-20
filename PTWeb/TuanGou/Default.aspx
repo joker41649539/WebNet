@@ -17,7 +17,7 @@
             <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID">
                 <Columns>
                     <asp:HyperLinkField DataTextField="OfferName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Tuangou/OfferInfo.aspx?id={0}" HeaderText="团购名称"></asp:HyperLinkField>
-                    <asp:BoundField DataField="OfferPrice" SortExpression="LTime" HeaderText="团购金额"></asp:BoundField>
+                    <asp:HyperLinkField DataTextField="OfferPrice" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Tuangou/Offer.aspx?id={0}" HeaderText="团购金额"></asp:HyperLinkField>
                     <asp:BoundField DataField="ctime" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="团购日期"></asp:BoundField>
                 </Columns>
             </asp:GridView>

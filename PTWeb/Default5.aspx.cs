@@ -16,10 +16,74 @@ public partial class Default5 : PageBase
 
     }
 
+    private void CreatTextBox()
+    {
+        TableRow row = new TableRow();
+        TableCell cell = new TableCell();
+        TextBox textBox = new TextBox();
+        textBox.ID = "tb1";
+        textBox.CssClass = "form-control";
+        //textBox.placeholder = "";
+        cell.Controls.Add(textBox);
+        row.Cells.Add(cell);
+        Table1.Rows.Add(row);
+    }
+
+    //void CreateControl()
+    //{
+    //    ///批量创建100个按钮
+    //    ///
+
+    //    if (ViewState["CreateControl"] == null) return; //第一次的时候应该不要创建这些控件
+
+    //    for (int x = 0; x < 10; x++)
+    //    {
+    //        TableRow row = new TableRow();
+    //        for (int y = 0; y < 10; y++)
+    //        {
+    //            TableCell cell = new TableCell();
+
+    //            Button bt = new Button();
+    //            bt.Text = string.Format("  x={0},y={1}  ", x, y);
+    //            bt.Click += new EventHandler(bt_Click);
+    //            cell.Controls.Add(bt);
+
+    //            row.Cells.Add(cell);
+    //        }
+
+    //        HolderTable.Rows.Add(row);
+    //    }
+    //}
+
+    //void bt_Click(object sender, EventArgs e)
+    //{
+    //    Trace.Write("控件动态事件");
+    //    ((Button)sender).BackColor = System.Drawing.Color.Red;
+    //    Response.Write(string.Format("你点击了该按钮：{0}", ((Button)sender).Text));
+    //}
+
+    ///// <summary>
+    ///// 显示动态创建的控件的信息
+    ///// </summary>
+    ///// <param name="sender"></param>
+    ///// <param name="e"></param>
+    //protected void displaybutton_Click(object sender, EventArgs e)
+    //{
+    //    for (int x = 0; x < 10; x++)
+    //    {
+    //        TableRow row = HolderTable.Rows[x];
+    //        for (int y = 0; y < 10; y++)
+    //        {
+    //            Button bt = (Button)row.Cells[y].Controls[0];
+    //            Response.Write(bt.Text);
+    //        }
+    //    }
+    //}
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
+        CreatTextBox();
         // MessageBox_Test("","提示信息");
-       //SendMSGByWeChart("", "#", "工作内容信息", "时间：" + System.DateTime.Now.ToString("yyyy-MM-dd"));
+        //SendMSGByWeChart("", "#", "工作内容信息", "时间：" + System.DateTime.Now.ToString("yyyy-MM-dd"));
         //   this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script src=\"/assets/js/jquery-2.0.3.min.js\"></script> <script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () { location.href=\"" + sURL + "\"; } } })</script>");
         //string Image1 = String.Empty;
 
@@ -347,5 +411,12 @@ public partial class Default5 : PageBase
     protected void LinkButton2_Click(object sender, EventArgs e)
     {
 
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        string Temp;
+        Temp = Request["Text1"].ToString();// Request.Form["Text1"].ToString();
+        MessageBox("", "文本值：" + Temp);
     }
 }

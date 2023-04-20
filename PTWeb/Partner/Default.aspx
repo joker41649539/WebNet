@@ -48,17 +48,23 @@
                     <div class="page-content">
                         <!--人员启用 开始 //-->
                         <div class="widget-main no-padding">
-                            <asp:GridView ID="GridView_Partner4" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDeleting="GridView_Partner3_RowDeleting" OnRowDataBound="GridView_Partner3_RowDataBound" OnDataBinding="GridView_Partner3_DataBinding">
+                            <asp:GridView ID="GridView_Partner4" AllowSorting="True" OnSorting="GridView_Partner4_Sorting" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDeleting="GridView_Partner3_RowDeleting" OnRowDataBound="GridView_Partner3_RowDataBound" OnDataBinding="GridView_Partner3_DataBinding">
                                 <Columns>
-                                    <asp:HyperLinkField DataTextField="CName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Partner/PartnerInfo.aspx?id={0}" HeaderText="姓名"></asp:HyperLinkField>
+                                    <asp:HyperLinkField DataTextField="CName" SortExpression="CName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Partner/PartnerInfo.aspx?id={0}" HeaderText="姓名"></asp:HyperLinkField>
                                     <asp:TemplateField HeaderText="电话">
                                         <ItemTemplate>
                                             <asp:HyperLink runat="server" Text='<%# Eval("ssdz") %>' NavigateUrl='<%#"tel:"+Eval("ssdz") %>' ID="HyperLink1"></asp:HyperLink>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="SSDW" SortExpression="SSDW" HeaderText="部门"></asp:BoundField>
+                                    <asp:TemplateField HeaderText="标签" SortExpression="Tags">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" Text='<%# ToHtml(Eval("Tags").ToString()) %>' ID="Label1"></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="zjhm" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" SortExpression="zjhm" HeaderText="证件号码"></asp:BoundField>
                                     <asp:BoundField DataField="CTime" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" DataFormatString="{0:yyyy-MM-dd}" SortExpression="CTime" HeaderText="提交日期"></asp:BoundField>
-                                    <asp:BoundField DataField="LTime" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="更新日期"></asp:BoundField>
+                                    <asp:BoundField DataField="LTime" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="更新日期"></asp:BoundField>
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -69,17 +75,23 @@
                     <div class="page-content">
                         <!--已审核开始 //-->
                         <div class="widget-main no-padding">
-                            <asp:GridView ID="GridView_Partner3" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDeleting="GridView_Partner3_RowDeleting" OnRowDataBound="GridView_Partner3_RowDataBound" OnDataBinding="GridView_Partner3_DataBinding">
+                            <asp:GridView ID="GridView_Partner3" AllowSorting="True" OnSorting="GridView_Partner3_Sorting" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDeleting="GridView_Partner3_RowDeleting" OnRowDataBound="GridView_Partner3_RowDataBound" OnDataBinding="GridView_Partner3_DataBinding">
                                 <Columns>
-                                    <asp:HyperLinkField DataTextField="CName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Partner/PartnerInfo.aspx?id={0}" HeaderText="姓名"></asp:HyperLinkField>
+                                    <asp:HyperLinkField DataTextField="CName" SortExpression="CName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Partner/PartnerInfo.aspx?id={0}" HeaderText="姓名"></asp:HyperLinkField>
                                     <asp:TemplateField HeaderText="电话">
                                         <ItemTemplate>
                                             <asp:HyperLink runat="server" Text='<%# Eval("ssdz") %>' NavigateUrl='<%#"tel:"+Eval("ssdz") %>' ID="HyperLink1"></asp:HyperLink>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="SSDW" SortExpression="SSDW" HeaderText="部门"></asp:BoundField>
+                                    <asp:TemplateField HeaderText="标签" SortExpression="Tags">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" Text='<%# ToHtml(Eval("Tags").ToString()) %>' ID="Label1"></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="zjhm" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" SortExpression="zjhm" HeaderText="证件号码"></asp:BoundField>
                                     <asp:BoundField DataField="CTime" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" DataFormatString="{0:yyyy-MM-dd}" SortExpression="CTime" HeaderText="提交日期"></asp:BoundField>
-                                    <asp:BoundField DataField="LTime" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="更新日期"></asp:BoundField>
+                                    <asp:BoundField DataField="LTime" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="更新日期"></asp:BoundField>
                                 </Columns>
                             </asp:GridView>
                         </div>
@@ -90,17 +102,23 @@
                     <div class="page-content">
                         <!--待审核开始 //-->
                         <div class="widget-main no-padding">
-                            <asp:GridView ID="GridView_Partner2" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDeleting="GridView_Partner2_RowDeleting">
+                            <asp:GridView ID="GridView_Partner2" AllowSorting="True" OnSorting="GridView_Partner2_Sorting" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID" OnRowDeleting="GridView_Partner2_RowDeleting">
                                 <Columns>
-                                    <asp:HyperLinkField DataTextField="CName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Partner/PartnerInfo.aspx?id={0}" HeaderText="姓名"></asp:HyperLinkField>
+                                    <asp:HyperLinkField DataTextField="CName" SortExpression="CName" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Partner/PartnerInfo.aspx?id={0}" HeaderText="姓名"></asp:HyperLinkField>
                                     <asp:TemplateField HeaderText="电话">
                                         <ItemTemplate>
                                             <asp:HyperLink runat="server" Text='<%# Eval("ssdz") %>' NavigateUrl='<%#"tel:"+Eval("ssdz") %>' ID="HyperLink1"></asp:HyperLink>
                                         </ItemTemplate>
                                     </asp:TemplateField>
+                                    <asp:BoundField DataField="SSDW" SortExpression="SSDW" HeaderText="部门"></asp:BoundField>
+                                    <asp:TemplateField HeaderText="标签" SortExpression="Tags">
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" Text='<%# ToHtml(Eval("Tags").ToString()) %>' ID="Label1"></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:BoundField DataField="zjhm" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" SortExpression="zjhm" HeaderText="证件号码"></asp:BoundField>
                                     <asp:BoundField DataField="CTime" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" DataFormatString="{0:yyyy-MM-dd}" SortExpression="CTime" HeaderText="提交日期"></asp:BoundField>
-                                    <asp:BoundField DataField="LTime" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="更新日期"></asp:BoundField>
+                                    <asp:BoundField DataField="LTime" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" DataFormatString="{0:yyyy-MM-dd}" SortExpression="LTime" HeaderText="更新日期"></asp:BoundField>
                                     <asp:TemplateField InsertVisible="False" ShowHeader="False">
                                         <ItemTemplate>
                                             <asp:LinkButton ID="LinkButton2" OnClientClick="javascript:return confirm('你确认要删除吗?')" runat="server" CausesValidation="False" CommandName="Delete" Text="&lt;i class='icon-remove-sign bigger-130'&gt;&lt;/i&gt;"></asp:LinkButton>

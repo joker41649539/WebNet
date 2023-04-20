@@ -85,17 +85,17 @@
         </div>
         <div class="hr hr8 hr-double"></div>
         <h5>&nbsp;&nbsp;最近100次上课记录</h5>
-        <asp:GridView ID="GridView1" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" OnSelectedIndexChanging="GridView1_SelectedIndexChanging">
+        <asp:GridView ID="GridView1" OnRowCommand="GridView1_RowCommand" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID,VidoUrl" OnSelectedIndexChanging="GridView1_SelectedIndexChanging">
             <Columns>
                 <asp:BoundField DataField="CTime" DataFormatString="{0:yyyy-MM-dd dddd HH:mm}" SortExpression="CTime" HeaderText="日期"></asp:BoundField>
                 <asp:BoundField DataField="iFlag" SortExpression="iFlag" HeaderText="状态"></asp:BoundField>
                 <asp:BoundField DataField="iCount" SortExpression="iCount" DataFormatString="{0:F0}" HeaderText="课时"></asp:BoundField>
-                <asp:TemplateField HeaderText="课程情况">
+                <asp:ButtonField HeaderText="课程情况" DataTextField="NewText" CommandName="select"></asp:ButtonField>
+                <%--<asp:TemplateField HeaderText="课程情况">
                     <ItemTemplate>
-                        <asp:HyperLink runat="server" Text="查阅视频" NavigateUrl='<%# Eval("VidoUrl") %>' ID="HyperLink1"></asp:HyperLink>
+                        <asp:HyperLink runat="server" Text='<%# Eval("NewText") %>' NavigateUrl='<%# Eval("VidoUrl") %>' ID="HyperLink1"></asp:HyperLink>
                     </ItemTemplate>
-                </asp:TemplateField>
-
+                </asp:TemplateField>--%>
             </Columns>
             <PagerTemplate>
                 <div>

@@ -1,23 +1,19 @@
+using Newtonsoft.Json;
 using System;
-using System.Data;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using System.Drawing;
+using System.IO;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Drawing.Imaging;
-using System.Net;
-using System.IO;
-using System.Drawing;
-using System.Web.Script.Serialization;
+using System.Web;
 using System.Web.Configuration;
+using System.Web.Script.Serialization;
+using System.Web.UI;
 using System.Xml;
+using System.Xml.Linq;
 
 /// <summary>
 /// Summary description for PageBase
@@ -29,7 +25,28 @@ public class PageBaseXMFight : System.Web.UI.Page
     public static OpMode OP_Mode = new OpMode(DefaultConStr, 0);
 
     // OpModeJBZ OP_ModeJBZ = new OpModeJBZ(JBZConStr, 0);
+    public class RootobjectUserInfo
+    {
+        public string openid { get; set; }
+        public string nickname { get; set; }
+        public int sex { get; set; }
+        public string language { get; set; }
+        public string city { get; set; }
+        public string province { get; set; }
+        public string country { get; set; }
+        public string headimgurl { get; set; }
+        public object[] privilege { get; set; }
+    }
 
+    //
+    public class Rootobject
+    {
+        public string access_token { get; set; }
+        public int expires_in { get; set; }
+        public string refresh_token { get; set; }
+        public string openid { get; set; }
+        public string scope { get; set; }
+    }
     #region "Web Service"
 
     //    public localhost.Service WebService = new localhost.Service();
@@ -41,6 +58,228 @@ public class PageBaseXMFight : System.Web.UI.Page
     /// </summary>
     public static string Defaut_QX_URL = "/XMFight/Default.aspx";
 
+    /// <summary>
+    /// 微信登录
+    /// </summary>
+    public void WeChatLoad()
+    {
+        string accessToken = string.Empty;
+        string DeBugMsg = string.Empty;
+        // 旭铭搏击
+        string AppId = "wxf60778eb4d1003de";//与微信公众账号后台的AppId设置保持一致，区分大小写。
+        string AppSecret = "4224c03a03edeba44cb4aab9b27678be";
+
+        var code = string.Empty;
+        var opentid = string.Empty;
+        try
+        {
+            code = Request.QueryString["code"];
+            DeBugMsg += "code:" + code;
+        }
+        catch
+        {
+
+        }
+        // 仅获取OpenID
+        // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf75c5c5ac11d5256&redirect_uri=http://ptweb.x76.com.cn/Tuangou/Offer.aspx?ID=1&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect
+        if (string.IsNullOrEmpty(code))
+        {
+
+        }
+        else
+        {
+            string strWeixin_OpenID = string.Empty;
+
+            string STRUSERID = string.Empty;
+
+            if (strWeixin_OpenID == string.Empty || STRUSERID == string.Empty)
+            {
+                DeBugMsg += "<br> 没有所需的OPENID！";
+
+                var client = new System.Net.WebClient();
+                client.Encoding = System.Text.Encoding.UTF8;
+
+                var url = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", AppId, AppSecret, code);
+                var data = client.DownloadString(url);
+                //正确{"access_token":"67_ueOj0O0G5oECEyuIzILVqaQ4Xw53m3jTcm_4mwHgKthN1qC4ZWMkWgf41BTnTfTc4uAgon2b4bMjAVKsP5PKhGgNHwXy8M5_qVPSdkMyIoc","expires_in":7200,"refresh_token":"67_4VHmQ4Z2Y7nFSsanLvyEBs-b91DL4YKu_BxCX7wz7GYHHwjEX0aDRiqJGX0N7KMpqf7Iw-ISGeVBTSi9VaggpXBYOPYkXMGi-QkUYz-ZPVA","openid":"oDg2PuFTJIO5P0o_Q3KRG_HplGJ0","scope":"snsapi_userinfo"}
+                //错误 {"errcode":40013,"errmsg":"invalid appid, rid: 642e2686-41db056e-17d82e67"}
+
+                Rootobject rb = JsonConvert.DeserializeObject<Rootobject>(data);
+
+                opentid = rb.openid;
+                accessToken = rb.access_token;
+                if (opentid.Length <= 0)
+                {
+                    MessageBox("", "微信登录Code获OpID错误。<br>" + data.ToString());
+                    return;
+                }
+
+                url = string.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN", accessToken, opentid);
+                data = client.DownloadString(url);
+                RootobjectUserInfo rbUser = JsonConvert.DeserializeObject<RootobjectUserInfo>(data);
+
+                var vcity = rbUser.city;
+                string UserName = rbUser.nickname;
+                string HeadUserUrl = rbUser.headimgurl;
+
+                if (rbUser.openid.Length <= 0)
+                { /// 用户信息获取错误
+                    MessageBox("", "微信登录用户详细信息获取错误。<br>" + data.ToString());
+                    return;
+                }
+
+                string strSQL;
+                strSQL = " Update XMFight_Users Set Nick='" + UserName + "',HeadImage='" + HeadUserUrl + "',LTime=getdate() where WeChatOpenID='" + opentid.ToString() + "'";
+                strSQL += " Select *,isnull((Select top 1 ID from XMFight_Student where XMFight_Student.OpenID in (XMFight_Users.WeChatOpenID)),0) SID from XMFight_Users where WeChatOpenID='" + opentid.ToString() + "'";
+
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    if (OP_Mode.Dtv.Count > 0)
+                    {
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0 && Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 4)
+                        {
+                            MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
+                            return;
+                        }
+                        /// 如果数据库有ID，则直接登录。
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                        Response.Cookies["WeChat_XMFight"]["COPENID"] = opentid.ToString();
+                        Response.Cookies["WeChat_XMFight"]["CNAME"] = HttpUtility.UrlEncode(UserName);
+                        Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                        Response.Cookies["WeChat_XMFight"]["StudentID"] = OP_Mode.Dtv[0]["SID"].ToString().Trim();
+                        Response.Cookies["WeChat_XMFight"]["HEADURL"] = HeadUserUrl;
+
+                        Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
+
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = UserName;
+                        Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = HeadUserUrl;
+
+                        ///设置COOKIE最长时间
+                        Response.Cookies["WeChat_XMFight"].Expires = DateTime.MaxValue;
+
+                        /// 更新登录时间
+                   //     OP_Mode.SQLRUN("Update XMFight_Users set Ltime=getdate(),HEADImage='" + HeadUserUrl + "' where WeChatOpenID='" + opentid.ToString() + "'");
+
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+
+                            strSQL = " INSERT INTO XMFight_Users (Nick,HEADImage,WeChatOpenID) VALUES ('" + UserName + "','" + HeadUserUrl + "','" + opentid + "')";
+
+                            strSQL += " Select *,isnull((Select top 1 ID from XMFight_Student where XMFight_Student.OpenID in (XMFight_Users.WeChatOpenID)),0) SID from XMFight_Users where WeChatOpenID='" + opentid.ToString() + "'";
+
+                            DeBugMsg += "+" + strSQL + "+";
+
+                            if (OP_Mode.SQLRUN(strSQL))
+                            {
+                                if (OP_Mode.Dtv.Count > 0)
+                                {
+                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["CNAME"] = HttpUtility.UrlEncode(OP_Mode.Dtv[0]["Nick"].ToString()); //HttpUtility.UrlDecode(Request.Cookies["SK_WZGY"]["CNAME"].ToString().Trim(), Encoding.GetEncoding("UTF-8"))
+                                    Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["HEADURL"] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
+                                    Response.Cookies["WeChat_XMFight"]["StudentID"] = OP_Mode.Dtv[0]["SID"].ToString().Trim();
+
+                                    Response.Cookies["WeChat_XMFight"][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["WeChatName"].ToString().Trim();
+                                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HEADImage"].ToString().Trim();
+
+                                    Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
+                                    Response.Cookies[Constant.COOKIENAMEOPENDOOR][Constant.COOKIENAMEOPENDOOR_LGOIN] = "true";
+                                    ///设置COOKIE最长时间  不设置时间，窗口关闭则丢失
+                                    Response.Cookies["WeChat_XMFight"].Expires = DateTime.MaxValue;
+
+                                    string MSG = string.Empty;// string.Format("<img class=\"img-rounded\" src=\"{1}\" width=\"60PX\" />欢迎 {0} 注册成功。<br/>祝您生活愉快。", OP_Mode.Dtv[0]["CNAME"].ToString(), OP_Mode.Dtv[0]["HEADURL"].ToString());
+
+                                    MSG = "<img class=\"img-rounded\" src=\"" + OP_Mode.Dtv[0]["HEADImage"].ToString() + "\" width=\"60PX\" />欢迎 " + OP_Mode.Dtv[0]["Nick"].ToString() + " 注册成功。<br/>祝您生活愉快。";
+
+                                    MessageBox("", MSG);
+
+                                    return;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            DeBugMsg += "<br>" + ex.ToString();
+                            MessageBox("", "4：" + DeBugMsg);
+                        }
+                    }
+                }
+                else
+                {
+                    DeBugMsg += OP_Mode.strErrMsg;
+                    MessageBox("", "5：" + DeBugMsg);
+                }
+
+            }
+            if (DeBugMsg.Length > 0)
+            {
+                MessageBox("", DeBugMsg);
+            }
+        }
+    }
+
+    public bool LoadUserInfo(int iWeChatID)
+    {
+        bool rValue = false;
+
+        if (iWeChatID > 0)
+        {
+            string strSQL = "Select *,isnull((Select top 1 ID from XMFight_Student where XMFight_Student.OpenID in (XMFight_Users.WeChatOpenID)),0) SID from XMFight_Users Where ID=" + iWeChatID;
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                if (OP_Mode.Dtv.Count > 0)
+                {
+                    // 临时登录
+                    /// 如果数据库有ID，则直接登录。
+                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_USERID] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["USERID"] = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["COPENID"] = OP_Mode.Dtv[0]["WeChatOpenID"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["CNAME"] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["LTIME"] = OP_Mode.Dtv[0]["LTIME"].ToString().Trim();
+                    Response.Cookies["WeChat_XMFight"]["HEADURL"] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+
+                    Response.Cookies["WeChat_XMFight"]["LOGIN"] = "true";
+
+                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CNAME] = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    Response.Cookies[Constant.COOKIENAMEUSER][Constant.COOKIENAMEUSER_CTX] = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+
+                    ///设置COOKIE最长时间
+                    //Response.Cookies["WeChat_Question"].Expires = DateTime.MaxValue;
+
+
+                    /// 给用户ID赋值
+                   // HiddenField_UserID.Value = OP_Mode.Dtv[0]["ID"].ToString().Trim();
+                    //  Label_Nick.Text = OP_Mode.Dtv[0]["Nick"].ToString().Trim();
+                    //if (OP_Mode.Dtv[0]["HeadImage"].ToString().Trim().Length > 0)
+                    //{
+                    //    Image_Header.ImageUrl = OP_Mode.Dtv[0]["HeadImage"].ToString().Trim();
+                    //}
+                    /// 更新登录时间
+                    OP_Mode.SQLRUN("Update XMFight_Users set Ltime=getdate() where ID=" + iWeChatID);
+                }
+            }
+        }
+        else
+        {
+            try
+            {
+                iWeChatID = Convert.ToInt32(Request.Cookies["WeChat_XMFigth"]["USERID"]);
+            }
+            catch
+            {
+
+            }
+        }
+
+        return rValue;
+    }
     /// <summary>
     /// 依据权限ID和用户ID判断是否有此功能权限。有返回TURE，反之返回FALSE;
     /// </summary>
@@ -161,6 +400,20 @@ public class PageBaseXMFight : System.Web.UI.Page
     /// <summary>
     /// 弹出消息框
     /// </summary>
+    /// <param name="sMessage">提示消息</param>
+    public void MessageBox(string sMessage)
+    {
+        string sTemp = sMessage;
+        sTemp = sTemp.Replace("\r", @"\\r");
+        sTemp = sTemp.Replace("\n", @"\\n");
+        sTemp = sTemp.Replace("'", @"\'");    // javascript 中使用"\'"显示'字符。
+
+        this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({'content': '" + sTemp + "'})</script>");
+    }
+
+    /// <summary>
+    /// 弹出消息框
+    /// </summary>
     /// <param name="sKey"></param>
     /// <param name="sMessage">提示消息</param>
     public void MessageBox(string sKey, string sMessage)
@@ -175,9 +428,6 @@ public class PageBaseXMFight : System.Web.UI.Page
         sTemp = sTemp.Replace("'", @"\'");    // javascript 中使用"\'"显示'字符。
 
         this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>dialog = jqueryAlert({ 'title': '" + sKey + "', 'content': '" + sTemp + "', 'modal': true, 'buttons': { '确定': function () {dialog.destroy();dialog.close();} } })</script>");
-        //this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "key", "document.getElementById('ShowMSG').innerHTML='" + sTemp + "';document.getElementById('MSGTitle').innerHTML='" + sKey + "'", true);
-        //this.Page.ClientScript.RegisterStartupScript(typeof(string), sKey, "<script language=JavaScript>$('#MSG').modal('show')</script>");
-
     }
 
     /// <summary>
@@ -1140,6 +1390,74 @@ public class PageBaseXMFight : System.Web.UI.Page
     }
 
     /// <summary>
+    /// 课后反馈信息
+    /// </summary>
+    /// <param name="WeiXinOpenID"></param>
+    /// <param name="sFrist"></param>
+    /// <param name="sKey1">课程内容</param>
+    /// <param name="sKey2">课程时间</param>
+    /// <param name="sRemark"></param>
+    /// <param name="sURL"></param>
+    /// <returns></returns>
+
+    public string SendFKMsg(string WeiXinOpenID, string sFrist, string sKey1, string sKey2, string sRemark, string sURL)
+    {
+        string RValue = string.Empty;
+        /// 检测微信ID是否存在，不存在则不可以发送微信消息。
+        if (WeiXinOpenID != null)
+        {
+            //{ { first.DATA} }
+            //课程内容：{ { keyword1.DATA} }
+            //课程时间：{ { keyword2.DATA} }
+            //{ { remark.DATA} }
+            var url = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());
+
+            var data = "{";
+
+            data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 微信ID
+            data += "\"template_id\":\"7_bf4liTLRtGrter65UZs9va3KTKCamDX3CAi2vBRm0\",";     /// 模板ID
+            data += "\"url\":\"" + sURL + "\",";
+            data += "\"topcolor\":\"#FF0000\",";
+            data += "\"data\":{";
+
+            data += "\"first\": {";
+            data += "\"value\":\"" + sFrist + "\" ,";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword1\":{";
+            data += "\"value\":\"" + sKey1 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword2\":{";
+            data += "\"value\":\"" + sKey2 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"remark\":{";
+            data += "\"value\":\"" + sRemark + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "}";
+
+            data += "}";
+
+            data += "}";
+
+            var serializer = new JavaScriptSerializer();
+            var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+
+            string MSG = "openid:" + WeiXinOpenID;
+
+            foreach (var key in obj.Keys)
+            {
+                MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+            }
+            if (MSG.Length > 0)
+            {
+                RValue = MSG;
+            }
+        }
+        return RValue;
+    }
+    /// <summary>
     /// 消课通知
     /// </summary>
     /// <param name="WeiXinOpenID">收信人OPENID</param>
@@ -1277,5 +1595,27 @@ public class PageBaseXMFight : System.Web.UI.Page
             }
         }
         return RValue;
+    }
+
+    public void WriteCookie(string key, string strValue)
+    {
+        string CookName = "XMFight";
+        //if (HttpContext.Current.Request.Cookies[CookName] != null)
+        //{
+        //HttpCookie cookie = new HttpCookie(CookName);//初使化并设置Cookie的名称
+        //cookie.Values.Add(key, strValue);
+        Response.Cookies[CookName][key] = strValue;
+
+    }
+    public string GetCookie(string key)
+    {
+        string CookName = "XMFight";
+
+        if (HttpContext.Current.Request.Cookies[CookName] != null && HttpContext.Current.Request.Cookies[CookName][key] != null)
+
+            return HttpContext.Current.Request.Cookies[CookName][key].ToString();
+
+        return string.Empty;
+
     }
 }

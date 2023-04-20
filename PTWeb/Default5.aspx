@@ -150,23 +150,64 @@
         <!-- /.modal-dialog -->
     </div>
     <form id="form1" runat="server" enctype="multipart/form-data">
-        <div class="modal fade" id="YesOrNo" tabindex="-1" role="dialog"
-            aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    您确定要删除吗？
-                <div class="modal-footer">
-                    <asp:Button ID="Button1" class="btn btn-default"
-                        OnClick="Button1_Click" runat="server" Text="确  定" />
-                    <button type="button" class="btn btn-default"
-                        data-dismiss="modal">
-                        取&nbsp;&nbsp;消
-                    </button>
+        <div class="profile-info-value">
+            <div id="ContentPlaceHolder1_RadioBM" class="control-group">
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="19;合肥协同" type="radio" class="ace" /><span class="lbl">&nbsp;合肥协同</span>
+                    </label>
                 </div>
+                <div class="radio">
+                    <label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="radioBM" value="20;六安协同" type="radio" class="ace" /><span class="lbl">&nbsp;六安协同</span>
+                    </label>
                 </div>
-                <!-- /.modal-content -->
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="21;芜湖协同" type="radio" class="ace" /><span class="lbl">&nbsp;芜湖协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="22;安庆协同" type="radio" class="ace" /><span class="lbl">&nbsp;安庆协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="23;马鞍山协同" type="radio" class="ace" /><span class="lbl">&nbsp;马鞍山协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="24;安庆宿松协同" type="radio" class="ace" checked="checked" /><span class="lbl">&nbsp;安庆宿松协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="25;安庆桐城协同" type="radio" class="ace" /><span class="lbl">&nbsp;安庆桐城协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="27;六安舒城协同" type="radio" class="ace" /><span class="lbl">&nbsp;六安舒城协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="28;六安金寨协同" type="radio" class="ace" /><span class="lbl">&nbsp;六安金寨协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="29;安庆池州协同" type="radio" class="ace" /><span class="lbl">&nbsp;安庆池州协同</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input name="radioBM" value="30;测试部门1" type="radio" class="ace" /><span class="lbl">&nbsp;测试部门1</span>
+                    </label>
+                </div>
             </div>
-            <!-- /.modal-dialog -->
         </div>
         <div class="page-content">
             <div class="input-group">
@@ -193,36 +234,42 @@
                 </span>
             </div>
         </div>
+        <input name="Text1" type="text" />
+        <input name="Text1" type="text" />
         <div class="row">
 
             <asp:LinkButton ID="LinkButton3" OnClientClick="return OpenSelect()" runat="server"><i class="icon-off"></i>
                                         点击选择</asp:LinkButton>
         </div>
         <input class="form-control" data-date-format="yyyy-mm-dd" type="text" name="date-range-picker" id="id-date-range-picker-1" />
+        <asp:Table ID="Table1" runat="server">
+        </asp:Table>
+        <asp:Button ID="Button2" OnClick="Button2_Click" runat="server" Text="Button" />
+        <div id="Div_Temp" runat="server"></div>
+        <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+        <script src="/assets/js/date-time/moment.min.js"></script>
+        <script src="/assets/js/date-time/daterangepicker.min.js"></script>
+
+        <!-- ace scripts -->
+
+        <script src="/assets/js/ace-elements.min.js"></script>
+        <script src="/assets/js/ace.min.js"></script>
+
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function () {
+                    $(this).next().focus();
+                });
+                $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
+                    $(this).prev().focus();
+                });
+
+                $(".chosen-select").chosen();
+
+            });
+        </script>
     </form>
 
-    <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>
-    <script src="/assets/js/date-time/bootstrap-timepicker.min.js"></script>
-    <script src="/assets/js/date-time/moment.min.js"></script>
-    <script src="/assets/js/date-time/daterangepicker.min.js"></script>
-
-    <!-- ace scripts -->
-
-    <script src="/assets/js/ace-elements.min.js"></script>
-    <script src="/assets/js/ace.min.js"></script>
-
-    <script type="text/javascript">
-        jQuery(function ($) {
-            $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function () {
-                $(this).next().focus();
-            });
-            $('.date-picker').datepicker({ autoclose: true }).next().on(ace.click_event, function () {
-                $(this).prev().focus();
-            });
-
-            $(".chosen-select").chosen();
-
-        });
-    </script>
 </body>
 </html>

@@ -206,7 +206,7 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
                 {
                     if (OP_Mode.Dtv.Count > 0)
                     {
-                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0)
+                        if (Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 0 && Convert.ToInt32(OP_Mode.Dtv[0]["flag"]) != 4)
                         {
                             MessageBox("", "您被禁止登陆！<br>请联系管理员。", "/Login.aspx");
                             return;

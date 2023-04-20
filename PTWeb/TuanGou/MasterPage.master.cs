@@ -53,11 +53,12 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         LeftMenu.Visible = false;
 
         string strTemp = string.Empty;
-        strTemp += "<ul class=\"footer-nav text-center\">";
+        strTemp += "<ul class=\"footer-nav2 text-center\">";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/#\"><i class=\"icon-home\"></i>首页</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/XMFight/\"><i class=\"icon-camera-retro\"></i>学员风采</a></li>";
-        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-credit-card\"></i>我的订单</a></li>";
-        strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/Contact.aspx\"><i class=\"icon-info\"></i>关于我们</a></li>";
+        strTemp += "  <li  style=\"width:33%\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/Offer.aspx?ID=1\"><i class=\"icon-home\"></i>首页</a></li>";
+        strTemp += "  <li  style=\"width:33%\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-credit-card\"></i>我的订单</a></li>";
+        strTemp += "  <li  style=\"width:33%\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/Contact.aspx\"><i class=\"icon-info\"></i>关于我们</a></li>";
         //strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/pay.aspx\"><i class=\"icon-book\"></i>测试付款</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/TuanGou/\"><i class=\"icon-comments\"></i>联系我们</a></li>";
         // strTemp += "  <li><a class=\"btn btn-app btn-white btn-xs\" href=\"/Question/UserInfo.aspx\"><i class=\"icon-exclamation-sign\"></i>个人信息</a></li>";
@@ -94,16 +95,15 @@ public partial class Fil_MasterPage : System.Web.UI.MasterPage
         strDiv += " <ul class=\"nav nav-list\">";
 
         strDiv += "  <li class=\"active\">";
-        strDiv += "    <a href='/XMFight/Manage/AddStudent.aspx' >";
+        strDiv += "    <a href='/TuanGou/OfferAdd.aspx' >";
         strDiv += "      <i class=\"icon-dashboard\"></i>";
-        strDiv += "      <span class=\"menu-text\">添加学生 </span>";
+        strDiv += "      <span class=\"menu-text\">添加团购信息</span>";
         strDiv += "    </a>";
         strDiv += "   </li>";
-
         strDiv += "  <li class=\"active\">";
-        strDiv += "    <a href=\"/XMFight/Manage/AddClass.aspx\">";
+        strDiv += "    <a href='/TuanGou/Offers.aspx' >";
         strDiv += "      <i class=\"icon-dashboard\"></i>";
-        strDiv += "      <span class=\"menu-text\">添加课程 </span>";
+        strDiv += "      <span class=\"menu-text\">所有团购信息</span>";
         strDiv += "    </a>";
         strDiv += "   </li>";
 

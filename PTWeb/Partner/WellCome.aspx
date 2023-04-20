@@ -38,12 +38,17 @@
         <div class="panel panel-body">
             <div class="panel-heading">
                 <h3><b>
-                    <img src="/images/PTlogo.png"/>合肥普田科技有限公司</b></h3>
+                    <img src="/images/PTlogo.png" />合肥普田科技有限公司</b></h3>
             </div>
             <hr />
             <div class="panel panel-body center">
                 <h1>谢谢使用</h1>
             </div>
+            <img src="/images/Partner.png" width="100%" class="img-rounded" />
+            <div class="panel panel-body center">
+                <h5><a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Fwww.putian.ink%2FPartner%2FPartnerAdd.aspx&response_type=code&scope=snsapi_base#wechat_redirect">点击重新填写资料</a></h5>
+            </div>
+
         </div>
     </form>
 </body>

@@ -97,7 +97,6 @@ public partial class GDGL_Default : PageBase
         }
 
     }
-
     protected void GridView1_Sorting(object sender, GridViewSortEventArgs e)
 
     {
@@ -475,7 +474,7 @@ public partial class GDGL_Default : PageBase
 
                 strSQL += " Select @iCount=Count(id) from W_GCGD_USERS where GCDID=" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + " and USERS=" + lst.Value + " and flag=0 ";
                 strSQL += " if(@iCount=0) begin";
-                strSQL += "  insert into W_GCGD_USERS (GCDID,USERS,flag,charge) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',0,isnull((Select Charge from W_GCGD_USERS where GCDID=585 and USERS=" + DefaultUser + "),0)) ";
+                strSQL += "  insert into W_GCGD_USERS (GCDID,USERS,flag,charge) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',0,isnull((Select Charge from W_GCGD_USERS where GCDID=" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + " and USERS=" + lst.Value + "),0)) ";
                 strSQL += " end";
             }
         }
@@ -487,7 +486,7 @@ public partial class GDGL_Default : PageBase
                 qxsz2 += lst.Value + ",";
                 strSQL += " Select @iCount=Count(id) from W_GCGD_USERS where GCDID=" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + " and USERS=" + lst.Value + " and flag=1 ";
                 strSQL += " if(@iCount=0) begin";
-                strSQL += " insert into W_GCGD_USERS (GCDID,USERS,flag,charge) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',1,isnull((Select Charge from W_GCGD_USERS where GCDID=585 and USERS=" + DefaultUser + "),0)) ";
+                strSQL += " insert into W_GCGD_USERS (GCDID,USERS,flag,charge) values (" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + ",'" + lst.Value + "',1,isnull((Select Charge from W_GCGD_USERS where GCDID=" + GridView1.DataKeys[GridView1.SelectedIndex].Values[0] + " and USERS=" + lst.Value + "),0)) ";
                 strSQL += " end";
             }
         }
