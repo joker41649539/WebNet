@@ -12,6 +12,10 @@
                 dialog = jqueryAlert({ 'content': '地理位置获取失败，请稍后，或者重新打开。' });
                 return false;
             }
+            else if (temp == "签到地址异常。如需签到请进入详细签到，并填写说明原因。") {
+                dialog = jqueryAlert({ 'content': '签到地址异常。如需签到请进入详细签到，并填写说明原因。' });
+                return false;
+            }
         }
         function OpenMap(iJD, iWD) {
             wx.openLocation({
@@ -57,21 +61,25 @@
                         contentType: 'application/json',
                         data: {
                             longitude: res.longitude,
-                            latitude: res.latitude
+                            latitude: res.latitude,
+                            UserID:<%=DefaultUser%>,
                         },
                         success: function (responseData) {
                             if (responseData) {
                                 var address = responseData.address;
                                 // 0 地址 1 标题 2 mapid 3 计划目的 4 手工单号 5 工程名称
                                 const arr1 = address.split(';');
-
+                                if (arr1.length > 2) { // 在工程地点签到的
+                                    document.getElementById("demo").innerHTML = arr1[0]; //+ "[" + responseData.innerHTML + "]";
+                                }
+                                else { /// 私有库未查询到信息，算非正常签到
+                                    document.getElementById("demo").innerHTML = "签到地址异常。如需签到请进入详细签到，并填写说明原因。";
+                                }
                                 document.getElementById("Hidden_WZ").value = responseData.address;
-                                document.getElementById("Hidden_Name").value = responseData.name;
+
                                 document.getElementById("Hidden_Screen").value = "[" + screen.width + "]*[" + screen.height + "]";
                                 document.getElementById("Hidden_JD").value = res.longitude; // 精度赋值
                                 document.getElementById("Hidden_WD").value = res.latitude; // 维度赋值
-
-                                document.getElementById("demo").innerHTML = arr1[0] + ";" + arr1[1]; //+ "[" + responseData.innerHTML + "]";
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -259,7 +267,7 @@
                 </b>
             </div>
             <div runat="server" id="Div_QDLastData" />
-            <a href='/WeChat/QDSearch.aspx' class="btn btn-default btn-block">我要签到</a>
+            <a href='/WeChat/QDSearch.aspx' class="btn btn-default btn-block">详细签到</a>
         </div>
     </div>
     <div class="col-xs-12">

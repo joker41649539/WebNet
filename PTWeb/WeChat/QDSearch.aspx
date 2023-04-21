@@ -49,9 +49,8 @@
                         contentType: 'application/json',
                         data: {
                             longitude: res.longitude,
-                            latitude: res.latitude
-                            //longitude: 117.30343,
-                            //latitude: 31.853798
+                            latitude: res.latitude,
+                            UserID:<%=DefaultUser%>,
                         },
                         success: function (responseData) {
                             if (responseData) {

@@ -140,7 +140,10 @@ public partial class XMFight_MyClass : PageBaseXMFight
         string strTempDiv = string.Empty;
         try
         {
-            strOPID = Request.Cookies["WeChat_XMFight"]["COPENID"];
+            if (Request.Cookies["WeChat_XMFight"]["COPENID"] != null)
+            {
+                strOPID = Request.Cookies["WeChat_XMFight"]["COPENID"];
+            }
             if (strOPID.Length < 1)
             {
                 return;
@@ -192,10 +195,13 @@ public partial class XMFight_MyClass : PageBaseXMFight
         {
             PStudentID = Convert.ToInt32(Request["SID"]);
         }
-        else
-        {
-            PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
-        }
+        //else
+        //{
+        //    if (Request.Cookies["WeChat_XMFight"]["STudentID"] != null)
+        //    {
+        //        PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
+        //    }
+        //}
 
         if (strTempDiv.Length > 0)
         {
@@ -494,7 +500,11 @@ public partial class XMFight_MyClass : PageBaseXMFight
         }
         else
         {
-            PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
+
+            if (Request.Cookies["WeChat_XMFight"]["STudentID"] != null)
+            {
+                PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
+            }
         }
 
         // 从事件参数获取排序数据列
@@ -596,7 +606,10 @@ public partial class XMFight_MyClass : PageBaseXMFight
             }
             else
             {
-                PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
+                if (Request.Cookies["WeChat_XMFight"]["STudentID"] != null)
+                {
+                    PStudentID = Convert.ToInt32(Request.Cookies["WeChat_XMFight"]["STudentID"]);
+                }
             }
 
             //int SID = 0;
@@ -641,7 +654,11 @@ public partial class XMFight_MyClass : PageBaseXMFight
         {
             try
             {
-                string strOPID = Request.Cookies["WeChat_XMFight"]["COPENID"];
+                string strOPID = String.Empty;
+                if (Request.Cookies["WeChat_XMFight"]["COPENID"] != null)
+                {
+                    strOPID = Request.Cookies["WeChat_XMFight"]["COPENID"];
+                }
                 if (strOPID.Length > 0)
                 {
                     int rowNum = int.Parse(e.CommandArgument.ToString());

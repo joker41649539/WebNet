@@ -177,7 +177,7 @@ public partial class CWGL_SearchQD : PageBase
                         strTemp += " <span class='label label-warning label-sm'>设备异常</span>";
                     }
 
-                    strTemp += "  <a target='_blank' href='/CWGL/MapTencent.aspx?iJD=" + OP_Mode.Dtv[i]["ZB_WD"] + "&iWD=" + OP_Mode.Dtv[i]["ZB_JD"] + "'><span class='grey'>" + OP_Mode.Dtv[i]["ZB_WZ"] + "<br/>" + OP_Mode.Dtv[i]["ZB_Name"] + "</span></a>";
+                    strTemp += "  <a target='_blank' href='/CWGL/MapTencent.aspx?iJD=" + OP_Mode.Dtv[i]["ZB_WD"] + "&iWD=" + OP_Mode.Dtv[i]["ZB_JD"] + "'><span class='grey'>" + OP_Mode.Dtv[i]["ZB_Name"] + "<br/>" + OP_Mode.Dtv[i]["ZB_WZ"] + "</span></a>";
 
                     strTemp += " </h5>";
                     strTemp += "          <span class='widget-toolbar'>";
@@ -198,6 +198,16 @@ public partial class CWGL_SearchQD : PageBase
                     }
 
                     strTemp += OP_Mode.Dtv[i]["Remark"];
+
+                    if (OP_Mode.Dtv[i]["GCSGBH"].ToString().Length > 0)
+                    {
+                        strTemp += ";" + OP_Mode.Dtv[i]["GCSGBH"];
+                    }
+                    if (OP_Mode.Dtv[i]["GCMC"].ToString().Length > 0)
+                    {
+                        strTemp += ";" + OP_Mode.Dtv[i]["GCMC"];
+                    }
+
                     strImages = OP_Mode.Dtv[i]["Image1"].ToString().Split(';');
                     for (int j = 0; j < strImages.Length; j++)
                     {

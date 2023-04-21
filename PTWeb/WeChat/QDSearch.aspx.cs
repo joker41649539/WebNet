@@ -142,7 +142,7 @@ public partial class WeChat_QDSearch : PageBase
                     strTemp += "      <div class='widget-header widget-header-small'>";
                     strTemp += " <h5 class='smaller'>";
 
-                    strTemp += "  <a target='_blank' href='/CWGL/MapTencent.aspx?iJD=" + OP_Mode.Dtv[i]["ZB_WD"] + "&iWD=" + OP_Mode.Dtv[i]["ZB_JD"] + "'><span class='grey'>" + OP_Mode.Dtv[i]["ZB_WZ"] + "<br/>" + OP_Mode.Dtv[i]["ZB_Name"] + "</span></a>";
+                    strTemp += "  <a target='_blank' href='/CWGL/MapTencent.aspx?iJD=" + OP_Mode.Dtv[i]["ZB_WD"] + "&iWD=" + OP_Mode.Dtv[i]["ZB_JD"] + "'><span class='grey'>" + OP_Mode.Dtv[i]["ZB_Name"] + "<br/>" + OP_Mode.Dtv[i]["ZB_WZ"] + "</span></a>";
 
                     strTemp += " </h5>";
 
@@ -164,6 +164,16 @@ public partial class WeChat_QDSearch : PageBase
                         }
                     }
                     strTemp += OP_Mode.Dtv[i]["Remark"];
+
+                    if (OP_Mode.Dtv[i]["GCSGBH"].ToString().Length > 0)
+                    {
+                        strTemp += ";" + OP_Mode.Dtv[i]["GCSGBH"];
+                    }
+                    if (OP_Mode.Dtv[i]["GCMC"].ToString().Length > 0)
+                    {
+                        strTemp += ";" + OP_Mode.Dtv[i]["GCMC"];
+                    }
+
                     strImages = OP_Mode.Dtv[i]["Image1"].ToString().Split(';');
                     for (int j = 0; j < strImages.Length; j++)
                     {
@@ -229,21 +239,6 @@ public partial class WeChat_QDSearch : PageBase
         }
 
         string strName = strWZ[1]; // 位置名称
-
-        //// 依据坐标地址，获取简单名称
-        //var client = new WebClient();
-        //client.Encoding = Encoding.UTF8;
-        //string TententMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
-        //string strURL = "https://apis.map.qq.com/ws/geocoder/v1/?location=" + strWD + "," + strJD + "&key=" + TententMapKey + "&get_poi=0";
-        //var data = client.DownloadString(strURL);
-        ////"{\n    \"status\": 0,\n    \"message\": \"query ok\",\n    \"request_id\": \"77fd3d94-063d-453f-8e35-eeffa9a0eb8a\",\n    \"result\": {\n        \"location\": {\n            \"lat\": 31.85383,\n            \"lng\": 117.303457\n        },\n        \"address\": \"安徽省合肥市包河区巢湖路茶叶市场D区1号\",\n        \"formatted_addresses\": {\n            \"recommend\": \"包河区锦绣园(巢湖路西)\",\n            \"rough\": \"包河区锦绣园(巢湖路西)\"\n        },\n        \"address_component\": {\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\",\n            \"street\": \"巢湖路茶叶市场D区\",\n            \"street_number\": \"巢湖路茶叶市场D区1号\"\n        },\n        \"ad_info\": {\n            \"nation_code\": \"156\",\n            \"adcode\": \"340111\",\n            \"city_code\": \"156340100\",\n            \"name\": \"中国,安徽省,合肥市,包河区\",\n            \"location\": {\n                \"lat\": 31.793801,\n                \"lng\": 117.310133\n            },\n            \"nation\": \"中国\",\n            \"province\": \"安徽省\",\n            \"city\": \"合肥市\",\n            \"district\": \"包河区\"\n        },\n        \"address_reference\": {\n            \"business_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"famous_area\": {\n                \"id\": \"14866831454685969030\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.8555,\n                    \"lng\": 117.303\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"crossroad\": {\n                \"id\": \"258053\",\n                \"title\": \"马鞍山路/迎屏巷(路口)\",\n                \"location\": {\n                    \"lat\": 31.85514,\n                    \"lng\": 117.3011\n                },\n                \"_distance\": 260.5,\n                \"_dir_desc\": \"东南\"\n            },\n            \"town\": {\n                \"id\": \"340111002\",\n                \"title\": \"包公街道\",\n                \"location\": {\n                    \"lat\": 31.837959,\n                    \"lng\": 117.29163\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            },\n            \"street_number\": {\n                \"id\": \"475762619026716799429010\",\n                \"title\": \"巢湖路茶叶市场D区1号\",\n                \"location\": {\n                    \"lat\": 31.853847,\n                    \"lng\": 117.303718\n                },\n                \"_distance\": 24.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"street\": {\n                \"id\": \"9103225048745597629\",\n                \"title\": \"巢湖路\",\n                \"location\": {\n                    \"lat\": 31.842798,\n                    \"lng\": 117.32119\n                },\n                \"_distance\": 49.8,\n                \"_dir_desc\": \"西\"\n            },\n            \"landmark_l2\": {\n                \"id\": \"11384582867635718374\",\n                \"title\": \"锦绣园\",\n                \"location\": {\n                    \"lat\": 31.853819,\n                    \"lng\": 117.30229\n                },\n                \"_distance\": 0,\n                \"_dir_desc\": \"内\"\n            }\n        }\n    }\n}"
-
-        //string temp = data.Substring(data.IndexOf("rough") + 9);
-
-        //strName = data.Substring(data.IndexOf("rough") + 9, temp.IndexOf('"'));
-        //// 依据坐标地址，获取简单名称 结束
-
-        //string Image1 = UploadTP(FileUpload_TP);
 
         string Image1 = String.Empty;
 

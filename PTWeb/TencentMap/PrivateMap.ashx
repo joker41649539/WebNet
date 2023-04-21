@@ -23,7 +23,7 @@ public class PrivateMap : IHttpHandler
         context.Response.ContentType = "application/json";
         var resObj = new
         {
-            address = GetZBToString(context.Request["longitude"].ToString(), context.Request["latitude"].ToString())
+            address = GetZBToString(context.Request["longitude"].ToString(), context.Request["latitude"].ToString(), Convert.ToInt32(context.Request["UserID"].ToString()))
         };
         context.Response.Write(JsonUtils.SerializeToJson(resObj));
     }
@@ -279,7 +279,7 @@ public class PrivateMap : IHttpHandler
     /// 依据坐标获得地址
     /// </summary>
     /// <returns></returns>
-    public string GetZBToString(string latitude, string longitude)
+    public string GetZBToString(string latitude, string longitude, int iUserID)
     {
         string QQMapKey = "Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX";
         int iScope = 200;//搜索范围
@@ -300,7 +300,7 @@ public class PrivateMap : IHttpHandler
             {
                 if (rbP.result.count > 0)
                 {/// 查询到数据了
-                    rValue = rbP.result.data[0].address + ";" + rbP.result.data[0].title + ";" + GetGCMCByMapID(rbP.result.data[0].id);
+                    rValue = rbP.result.data[0].address + ";" + rbP.result.data[0].title + ";" + GetGCMCByMapID(rbP.result.data[0].id, iUserID);
                 }
                 else
                 { // 未查询到数据
@@ -329,11 +329,11 @@ public class PrivateMap : IHttpHandler
     /// </summary>
     /// <param name="MapID"></param>
     /// <returns>返回工程手工编号和工程名称</returns>
-    private string GetGCMCByMapID(string MapID)
+    private string GetGCMCByMapID(string MapID, int iUserID)
     {
         string rValue = string.Empty;
         // 641139784e0d8c84a62637a3 普田总部ID
-        string strSQL = "Select SGDH,GCMC,nFlag from W_GCGD1,W_WorkPlan where TencentMapID='" + MapID + "' and W_GCGD1.ID=GCID and UserID=2 and W_WorkPlan.LTime between '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' and '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "'";
+        string strSQL = "Select SGDH,GCMC,nFlag from W_GCGD1,W_WorkPlan where TencentMapID='" + MapID + "' and W_GCGD1.ID=GCID and UserID=" + iUserID.ToString() + " and W_WorkPlan.LTime between '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "' and '" + System.DateTime.Now.ToString("yyyy-MM-dd") + "'";
 
         if (OP_Mode.SQLRUN(strSQL))
         {

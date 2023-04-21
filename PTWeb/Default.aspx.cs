@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Text;
+using System.Web;
 using System.Web.Configuration;
 
 public partial class DefaultPH : PageBase
@@ -39,6 +40,9 @@ public partial class DefaultPH : PageBase
                         WeChatLoad();
                         //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Ftest.putian.ink%2Fdefault3.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
                         //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Flocalhost:59802%2Fdefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+
+
+                        //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Fwww.putian.ink%2Fdefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
                     }
 
                     if (Convert.ToInt32(DefaultUser) <= 0)
@@ -142,7 +146,8 @@ public partial class DefaultPH : PageBase
         string strQDRemark = RadioButtonList1.SelectedValue;
         if (strQDRemark.Length > 0)
         {
-            InsertQZData(strQDRemark);
+            SaveData();
+            //  InsertQZData(strQDRemark);
         }
         else
         {
@@ -170,6 +175,51 @@ public partial class DefaultPH : PageBase
         //   strName = data.Substring(data.IndexOf("rough") + 9, temp.IndexOf('"'));
     }
 
+    private void SaveData()
+    {
+        string strJD = Hidden_JD.Value; //经度
+        string strWD = Hidden_WD.Value; // 维度
+        // 0 地址 1 标题 2 mapid 3 计划目的 4 手工单号 5 工程名称
+        string[] strWZ = Hidden_WZ.Value.Split(';');// 具体位置信息
+        string strScreen = Hidden_Screen.Value; /// 设备分辨率
+
+        string strGCMC = string.Empty;
+        string strMapID = string.Empty;
+        string strSGDH = string.Empty;
+
+        if (strWZ.Length > 2)
+        {
+            strMapID = strWZ[2];
+        }
+        if (strWZ.Length > 4)
+        {
+            strSGDH = strWZ[4];
+            strGCMC = strWZ[5];
+        }
+
+        string strName = strWZ[1]; // 位置名称
+
+        int iFilCount = Request.Files.Count;
+
+        if (strJD.Length + strWD.Length + strWZ.Length < 1)
+        { /// 判断是否获取到位置信息
+            MessageBox("", "位置信息获取失败。请重试。");
+            return;
+        }
+        else
+        {
+            string strSQL = "Insert into W_KQ (Userid,QDFlag,ZB_JD,ZB_WD,ZB_WZ,CTIME,Screen,MDD,Remark,ZB_Name,MapID,GCSGBH,GCMC) values (" + DefaultUser + ",'" + RadioButtonList1.SelectedValue + "'," + strJD + "," + strWD + ",'" + strWZ[0] + "',getdate(),'" + strScreen + "','','快速签到','" + strName + "','" + strMapID + "','" + strSGDH + "','" + strGCMC + "')";
+            if (OP_Mode.SQLRUN(strSQL))
+            {
+                MessageBox("", "签到成功。", "/WeChat/QDSearch.aspx");
+            }
+            else
+            {
+                MessageBox("", "签到失败。错误：<br>" + OP_Mode.strErrMsg);
+                return;
+            }
+        }
+    }
     /// <summary>
     /// 插入签到数据
     /// </summary>
@@ -335,31 +385,31 @@ public partial class DefaultPH : PageBase
 
                 strCFlag = OP_Mode.Dtv[0]["QDFlag"].ToString();
 
-                //if (strCFlag == "维修开始")
-                //{
-                //    RadioButtonList1.SelectedValue = "维修结束";
-                //    RadioButtonList1.Enabled = false;
-                //}
-                //else if (strCFlag == "施工")
-                //{
-                //    RadioButtonList1.SelectedValue = "离场";
-                //    RadioButtonList1.Enabled = false;
-                //}
-                //else if (strCFlag == "出差")
-                //{
-                //    RadioButtonList1.SelectedValue = "到达";
-                //    RadioButtonList1.Enabled = false;
-                //}
+                if (strCFlag == "维修开始")
+                {
+                    RadioButtonList1.SelectedValue = "维修结束";
+                    RadioButtonList1.Enabled = false;
+                }
+                else if (strCFlag == "施工")
+                {
+                    RadioButtonList1.SelectedValue = "离场";
+                    RadioButtonList1.Enabled = false;
+                }
+                else if (strCFlag == "出差")
+                {
+                    RadioButtonList1.SelectedValue = "到达";
+                    RadioButtonList1.Enabled = false;
+                }
 
-                //RadioButtonList1.Items.FindByValue("到达").Enabled = false;
-                //RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
-                //RadioButtonList1.Items.FindByValue("离场").Enabled = false;
+                RadioButtonList1.Items.FindByValue("到达").Enabled = false;
+                RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
+                RadioButtonList1.Items.FindByValue("离场").Enabled = false;
             }
             else
             {
-                //RadioButtonList1.Items.FindByValue("到达").Enabled = false;
-                //RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
-                //RadioButtonList1.Items.FindByValue("离场").Enabled = false;
+                RadioButtonList1.Items.FindByValue("到达").Enabled = false;
+                RadioButtonList1.Items.FindByValue("维修结束").Enabled = false;
+                RadioButtonList1.Items.FindByValue("离场").Enabled = false;
             }
         }
         if (strTempHtml.Length > 0)

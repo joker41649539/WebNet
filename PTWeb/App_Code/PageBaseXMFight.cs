@@ -1597,25 +1597,94 @@ public class PageBaseXMFight : System.Web.UI.Page
         return RValue;
     }
 
-    public void WriteCookie(string key, string strValue)
+    /// <summary>
+    /// 课程调整消息通知
+    /// </summary>
+    /// <param name="WeiXinOpenID"></param>
+    /// <param name="sFrist">第一行说明信息</param>
+    /// <param name="sKey1">学员姓名</param>
+    /// <param name="sKey2">课程名称</param>
+    /// <param name="sKey3">原上课时间</param>
+    /// <param name="sKey4">变更后时间</param>
+    /// <param name="sKey5">便更原因</param>
+    /// <param name="sRemark">底部说明信息</param>
+    /// <param name="sURL">链接</param>
+    /// <returns></returns>
+    public string SendClassChageMSG(string WeiXinOpenID, string sFrist, string sKey1, string sKey2, string sKey3, string sKey4, string sKey5, string sRemark, string sURL)
     {
-        string CookName = "XMFight";
-        //if (HttpContext.Current.Request.Cookies[CookName] != null)
-        //{
-        //HttpCookie cookie = new HttpCookie(CookName);//初使化并设置Cookie的名称
-        //cookie.Values.Add(key, strValue);
-        Response.Cookies[CookName][key] = strValue;
+        //课程调整通知
 
-    }
-    public string GetCookie(string key)
-    {
-        string CookName = "XMFight";
+        //{ { first.DATA} }
+        //        学员姓名：{ { keyword1.DATA} }
+        //        课程名称：{ { keyword2.DATA} }
+        //        原上课时间：{ { keyword3.DATA} }
+        //        变更后时间：{ { keyword4.DATA} }
+        //        变更原因：{ { keyword5.DATA} }
+        //        { { remark.DATA} }
+        string RValue = string.Empty;
+        /// 检测微信ID是否存在，不存在则不可以发送微信消息。
+        if (WeiXinOpenID != null)
+        {
+            var url = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());
 
-        if (HttpContext.Current.Request.Cookies[CookName] != null && HttpContext.Current.Request.Cookies[CookName][key] != null)
+            var data = "{";
 
-            return HttpContext.Current.Request.Cookies[CookName][key].ToString();
+            data += "\"touser\":\"" + WeiXinOpenID.Trim() + "\",";     /// 微信ID
+            data += "\"template_id\":\"hYCPudT0UhEXHZDbII_SrQwcQczYob21CrZPxERFDzs\",";     /// 模板ID
+            if (sURL.Length > 0)
+            {
+                data += "\"url\":\"" + sURL + "\",";
+            }
+            data += "\"topcolor\":\"#FF0000\",";
+            data += "\"data\":{";
 
-        return string.Empty;
+            data += "\"first\": {";
+            data += "\"value\":\"" + sFrist + "\" ,";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword1\":{";
+            data += "\"value\":\"" + sKey1 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword2\":{";
+            data += "\"value\":\"" + sKey2 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword3\":{";
+            data += "\"value\":\"" + sKey3 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword4\":{";
+            data += "\"value\":\"" + sKey4 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"keyword5\":{";
+            data += "\"value\":\"" + sKey5 + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "},";
+            data += "\"remark\":{";
+            data += "\"value\":\"" + sRemark + "\",";
+            data += "\"color\":\"#173177\"";
+            data += "}";
 
+            data += "}";
+
+            data += "}";
+
+            var serializer = new JavaScriptSerializer();
+            var obj = serializer.Deserialize<Dictionary<string, string>>(PostWeixinPage(url, data));
+
+            string MSG = "openid:" + WeiXinOpenID;
+
+            foreach (var key in obj.Keys)
+            {
+                MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+            }
+            if (MSG.Length > 0)
+            {
+                RValue = MSG;
+            }
+        }
+        return RValue;
     }
 }
