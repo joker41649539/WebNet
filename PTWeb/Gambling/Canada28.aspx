@@ -30,7 +30,13 @@
         <div class="col-xs-12">
             <hr />
             <div class="form-group">
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>提交申请</b></asp:LinkButton>
+                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-info btn-block" runat="server" OnClick="LinkButton1_Click"><i class="icon-ok bigger-110"></i> <b>加载数据</b></asp:LinkButton>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <hr />
+            <div class="form-group">
+                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton2" class="btn btn-info btn-block" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i> <b>下注</b></asp:LinkButton>
             </div>
         </div>
         <div class="col-xs-12">

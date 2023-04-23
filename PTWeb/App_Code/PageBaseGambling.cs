@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Web;
 
@@ -118,7 +120,7 @@ public class PageBaseGambling : System.Web.UI.Page
     /// <param name="posturl">string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());</param>
     /// <param name="postData">josn数据</param>
     /// <returns></returns>
-    public string PostPage(string posturl, string postData, string strUrl)
+    public string PostPage(string posturl, string postData, string strUrl,string strCoolin)
     {
         Stream outstream = null;
         Stream instream = null;
@@ -137,21 +139,50 @@ public class PageBaseGambling : System.Web.UI.Page
             request.AllowAutoRedirect = true;
             request.Method = "POST";
 
+            //HttpWebRequest rq = (HttpWebRequest)WebRequest.Create("Url");
+            //rq.Method = "GET";
+            //SetHeaderValue(rq.Headers, "Host", "127.0.0.1");
+            //SetHeaderValue(rq.Headers, "Connection", "keep-alive");
+            //SetHeaderValue(rq.Headers, "Accept", "*/*");
+            //SetHeaderValue(rq.Headers, "X-Requested-With", "XMLHttpRequest");
+            //SetHeaderValue(rq.Headers, "User-Agent", "...");
+            //SetHeaderValue(rq.Headers, "Referer", "http://127.0.0.1/index.php?m=Index&a=indexs");
+            //SetHeaderValue(rq.Headers, "Accept-Encoding", "gzip, deflate");
+            //SetHeaderValue(rq.Headers, "Accept-Language", "1.5");
+            //SetHeaderValue(rq.Headers, "Cookie", "This is Cookie");
+            //   SetHeaderValue(request.Headers, "AppCode", "XXX");
+            //HttpWebResponse resp = (HttpWebResponse)rq.GetResponse();
+
+            //using (Stream stream = resp.GetResponseStream())
+            //{
+            //    StreamReader reader = new StreamReader(stream, Encoding.Default);
+            //    string responseString = reader.ReadToEnd();
+            //    MessageBox.Show(responseString);
+            //}
             request.ContentLength = data.Length;
-            request.Headers.Add("accept", "application/json, text/plain, */*");
-            request.Headers.Add("accept-encoding", "gzip, deflate, br");
-            request.Headers.Add("accept-language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6");
-            request.Headers.Add("content-length", "112");
+            SetHeaderValue(request.Headers, "accept", "application/json, text/plain, */*");
+            SetHeaderValue(request.Headers, "accept-encoding", "gzip, deflate, br");
+            SetHeaderValue(request.Headers, "accept-language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6");
+            SetHeaderValue(request.Headers, "content-length", "112");
+
             request.ContentType = "application/x-www-form-urlencoded";
-            request.Headers.Add("cookie", "x-session-token=29E9lOpUfamRjyHlwuKD1L2umR2oUaOR%2FYl70rdcgB7aaw1Gm4yN8A%3D%3D; checkCode=83b01372-1e8f-44ad-840c-8c9c5772e3a6");
 
-            request.Headers.Add("origin", "https://" + strUrl);
+            SetHeaderValue(request.Headers, "cookie", strCoolin);
+            SetHeaderValue(request.Headers, "origin", "112");
+            SetHeaderValue(request.Headers, "content-length", "https://" + strUrl);
+            SetHeaderValue(request.Headers, "sec-fetch-dest", "empty");
+            SetHeaderValue(request.Headers, "sec-fetch-mode", "cors");
+            SetHeaderValue(request.Headers, "sec-fetch-site", "same-origin");
+            SetHeaderValue(request.Headers, "user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0");
+            //request.Headers.Add("cookie", strCoolin);
 
-            request.Headers.Add("referer", "https://" + strUrl + "/game/");
-            request.Headers.Add("sec-fetch-dest", "empty");
-            request.Headers.Add("sec-fetch-mode", "cors");
-            request.Headers.Add("sec-fetch-site", "same-origin");
-            request.Headers.Add("user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0");
+            //request.Headers.Add("origin", "https://" + strUrl);
+
+            //request.Headers.Add("referer", "https://" + strUrl + "/game/");
+            //request.Headers.Add("sec-fetch-dest", "empty");
+            //request.Headers.Add("sec-fetch-mode", "cors");
+            //request.Headers.Add("sec-fetch-site", "same-origin");
+            //request.Headers.Add("user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0");
 
             outstream = request.GetRequestStream();
             outstream.Write(data, 0, data.Length);
@@ -171,6 +202,15 @@ public class PageBaseGambling : System.Web.UI.Page
         {
             string err = ex.Message;
             return string.Empty;
+        }
+    }
+    public static void SetHeaderValue(WebHeaderCollection header, string name, string value)
+    {
+        var property = typeof(WebHeaderCollection).GetProperty("InnerCollection", BindingFlags.Instance | BindingFlags.NonPublic);
+        if (property != null)
+        {
+            var collection = property.GetValue(header, null) as NameValueCollection;
+            collection[name] = value;
         }
     }
 
@@ -212,26 +252,81 @@ public class PageBaseGambling : System.Web.UI.Page
         public string statDate { get; set; }
     }
 
-
     public class UserInfo
     {
-        public float balance { get; set; }
-        public float unbalancedMoney { get; set; }
-        public float totalTotalMoney { get; set; }
-        public object totalMoneyMap { get; set; }
-        public object userBetWinList { get; set; }
-        public object userBetNew { get; set; }
-        public object pushMessage { get; set; }
-        public int userNoticeMsg { get; set; }
-        public object refreshRechType { get; set; }
-        public object balanceMap { get; set; }
-        public object unbalancedMap { get; set; }
+        public string token { get; set; }
+        public string serverTime { get; set; }
+        public int userId { get; set; }
+        public string userName { get; set; }
+        public string fullName { get; set; }
+        public string loginTime { get; set; }
+        public string lastLoginTime { get; set; }
+        public float money { get; set; }
+        public string email { get; set; }
+        public string wx { get; set; }
+        public string phone { get; set; }
+        public string qq { get; set; }
+        public string rechLevel { get; set; }
+        public bool hasFundPwd { get; set; }
+        public int testFlag { get; set; }
+        public int updatePw { get; set; }
+        public int updatePayPw { get; set; }
+        public int state { get; set; }
+        public object hotGames { get; set; }
+        public object nickName { get; set; }
+        public object iconUrl { get; set; }
+        public int setted { get; set; }
+        public string platCode { get; set; }
+        public object gameIds { get; set; }
+        public int testType { get; set; }
         public string currency { get; set; }
-        public object maintainStatus { get; set; }
-        public object tradingNotice { get; set; }
+        public Userwalletview[] userWalletViews { get; set; }
+        public string tradingPhone { get; set; }
+        public float tradingCredit { get; set; }
+        public int hyType { get; set; }
+        public Userrebatelist[] userRebateList { get; set; }
+        public bool tradingStandSwitch { get; set; }
         public float point { get; set; }
-        public object refreshGameList { get; set; }
+        public Gameblacklistmap gameBlackListMap { get; set; }
     }
 
+    public class Gameblacklistmap
+    {
+        public object[] third { get; set; }
+        public object[] lottery { get; set; }
+    }
+
+    public class Userwalletview
+    {
+        public float money { get; set; }
+        public string currency { get; set; }
+    }
+
+    public class Userrebatelist
+    {
+        public int cateId { get; set; }
+        public int rebate { get; set; }
+    }
+
+
+    public class NextNum
+    {
+        public string issue { get; set; }
+        public string endtime { get; set; }
+        public object nums { get; set; }
+        public string lotteryTime { get; set; }
+        public string preIssue { get; set; }
+        public string preLotteryTime { get; set; }
+        public string preNum { get; set; }
+        public object n11 { get; set; }
+        public object n12 { get; set; }
+        public object n13 { get; set; }
+        public object n14 { get; set; }
+        public object n15 { get; set; }
+        public object n16 { get; set; }
+        public bool preIsOpen { get; set; }
+        public string serverTime { get; set; }
+        public int gameId { get; set; }
+    }
 
 }

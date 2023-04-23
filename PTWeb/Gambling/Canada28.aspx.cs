@@ -17,12 +17,12 @@ public partial class Gambling_Canada28 : PageBaseGambling
     private void LoadData()
     {
         TextBox_Url.Text = "www.sy0002.com";
-        TextBox_Cookie.Text = "x-session-token=1%2BsushW22Q1yLmMQJp40wacKDIpxhllljYDHHAXtgUjX4SH93aIXNg%3D%3D; checkCode=9bcbc156-a8ff-4cec-9819-cd633bb68930";
+        TextBox_Cookie.Text = "x-session-token=IDjAmiAZJzrHp996%2BQmUP9uV87cF9bvQnu3xsYKz0NsnzRR8Ykb7j6jfywY%3D; checkCode=29ba55a7-3327-4a8d-b136-3329c86e43f1";
     }
 
     protected void LinkButton1_Click(object sender, EventArgs e)
     {
-        // LoadGamblingResult();
+        LoadGamblingResult();
         LoadUserInfo();
     }
 
@@ -109,12 +109,13 @@ public partial class Gambling_Canada28 : PageBaseGambling
         gZipWebClient client = new gZipWebClient();
         string strURL = TextBox_Url.Text.Trim();
         string strDataTime = GetTimeStamp(System.DateTime.Now).ToString();
-        var url = string.Format("https://{0}/game/getLotteryData.do?_t={1}&gameId=41", strURL, strDataTime);
+
+        var url = string.Format("https://{0}/api/init.do?_t={1}", strURL, strDataTime);
 
         client.Headers.Add("accept", "application/json, text/plain, */*");
         client.Headers.Add("accept-encoding", "gzip, deflate, br");
         client.Headers.Add("accept-language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6");
-        client.Headers.Add("cookie", "x-session-token=29E9lOpUfamRjyHlwuKD1L2umR2oUaOR%2FYl70rdcgB7aaw1Gm4yN8A%3D%3D; checkCode=83b01372-1e8f-44ad-840c-8c9c5772e3a6");
+        client.Headers.Add("cookie", TextBox_Cookie.Text);
 
         client.Headers.Add("referer", "https://" + strURL + "/game/");
         client.Headers.Add("sec-fetch-dest", "empty");
@@ -125,14 +126,97 @@ public partial class Gambling_Canada28 : PageBaseGambling
         var data = client.DownloadString(url);
         UserInfo User = JsonConvert.DeserializeObject<UserInfo>(data);
 
-        TextBox1.Text = "余额：" + User.balance + " 盈利：" + User.totalTotalMoney;
+        TextBox1.Text += "余额：" + User.userWalletViews[0].money;
     }
+
+    //    accept: application/json, text/plain, */*
+    //accept-encoding: gzip, deflate, br
+    //accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    //cookie: x-session-token=IDjAmiAZJzrHp996%2BQmUP9uV87cF9bvQnu3xsYKz0NsnzRR8Ykb7j6jfywY%3D; checkCode=29ba55a7-3327-4a8d-b136-3329c86e43f1
+    //referer: https://www.sy0002.com/game/
+    //sec-fetch-dest: empty
+    //sec-fetch-mode: cors
+    //sec-fetch-site: same-origin
+    //user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0
 
     private void PostBet(int BetMoney, string BetContent, string BetNum)
     {
+        string postData = string.Empty;
 
+        string strURL = TextBox_Url.Text.Trim();
+        string strDataTime = GetTimeStamp(System.DateTime.Now).ToString();
+        //4144601 大
+        //4144602 小
+
+        string strBetCount = "0";
+
+        if (BetContent == "大")
+        {
+            strBetCount = "4144601";
+        }
+        else if (BetContent == "小")
+        {
+            strBetCount = "4144602";
+        }
+
+        postData = "{";
+        postData += "gameId:41,";
+        postData += "totalNums:totalNums,";
+        postData += "totalMoney:" + BetMoney + ",";
+        postData += "betSrc:0,";
+        postData += "turnNum:" + BetNum + ",";
+        postData += "betBean[0].playId:" + strBetCount + ",";
+        postData += "betBean[0]:" + BetMoney + "";
+        postData += "]";
+
+        var url = string.Format("https://{0}/bet/bet.do?_t={1}", strURL, strDataTime);
+
+        PostPage(url, postData, TextBox_Url.Text, TextBox_Cookie.Text);
     }
 
+    private string LoadNextNum()
+    {
+        string sRvalue = string.Empty;
+        gZipWebClient client = new gZipWebClient();
+        string strURL = TextBox_Url.Text.Trim();
+        string strDataTime = GetTimeStamp(System.DateTime.Now).ToString();
+
+        var url = string.Format("https://{0}/lottery/getNextIssue.do?_t={1}&gameId=41", strURL, strDataTime);
+
+        client.Headers.Add("accept", "application/json, text/plain, */*");
+        client.Headers.Add("accept-encoding", "gzip, deflate, br");
+        client.Headers.Add("accept-language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6");
+        client.Headers.Add("cookie", TextBox_Cookie.Text);
+
+        client.Headers.Add("referer", "https://" + strURL + "/game/");
+        client.Headers.Add("sec-fetch-dest", "empty");
+        client.Headers.Add("sec-fetch-mode", "cors");
+        client.Headers.Add("sec-fetch-site", "same-origin");
+        client.Headers.Add("user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0");
+
+        var data = client.DownloadString(url);
+        NextNum nextNum = JsonConvert.DeserializeObject<NextNum>(data);
+
+        TextBox1.Text += "下一局：" + nextNum.issue;
+        sRvalue = nextNum.issue;
+        return sRvalue;
+    }
+
+    //请求 URL: https://www.sy0002.com/lottery/getNextIssue.do?_t=1682259564108&gameId=41
+    //请求方法: GET
+    //状态代码: 200 
+    //远程地址: 154.218.13.234:443
+    //引用者策略: strict-origin-when-cross-origin
+
+    //accept: application/json, text/plain, */*
+    //accept-encoding: gzip, deflate, br
+    //accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    //cookie: x-session-token=IDjAmiAZJzrHp996%2BQmUP9uV87cF9bvQnu3xsYKz0NsnzRR8Ykb7j6jfywY%3D; checkCode=29ba55a7-3327-4a8d-b136-3329c86e43f1
+    //referer: https://www.sy0002.com/game/
+    //sec-fetch-dest: empty
+    //sec-fetch-mode: cors
+    //sec-fetch-site: same-origin
+    //user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0
     //请求 URL: https://www.sy0002.com/bet/bet.do?_t=1682239065642
     //请求方法: POST
     //状态代码: 200 
@@ -214,4 +298,10 @@ public partial class Gambling_Canada28 : PageBaseGambling
     //sec-fetch-mode: cors
     //sec-fetch-site: same-origin
     //user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0
+
+    protected void LinkButton2_Click(object sender, EventArgs e)
+    {
+
+        PostBet(1, "大", LoadNextNum());
+    }
 }
