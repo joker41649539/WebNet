@@ -58,13 +58,13 @@
         <div class="col-xs-12">
             <div class="form-group">
                 <label runat="server" id="Label1" class="col-sm-1 control-label no-padding-right">日期：</label>
-                <div class="col-sm-1">
+                <div class="col-sm-3">
                     <asp:TextBox ID="TextBox_STime" ClientIDMode="Static" placeholder="请点击选择日期" data-date-format="yyyy-mm-dd" class="form-control date-picker" type="text" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-sm-1">
+                <div class="col-sm-3">
                     <asp:TextBox ID="TextBox_ETime" ClientIDMode="Static" class="form-control date-picker" type="text" placeholder="请点击选择日期" data-date-format="yyyy-mm-dd" runat="server"></asp:TextBox>
                 </div>
-                <div class="col-sm-7">
+                <div class="col-sm-4">
                     &nbsp;               
                 </div>
             </div>

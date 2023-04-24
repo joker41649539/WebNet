@@ -42,17 +42,15 @@ public partial class Boss_Boss : PageBase
             TextBox_SETime.Text = Convert.ToDateTime(StartTime).ToString("MM/dd/yyyy") + " - " + Convert.ToDateTime(EndTime).ToString("MM/dd/yyyy");
         }
 
-
         string sortExpression = this.GridView_Partner.Attributes["SortExpression"];
         string sortDirection = this.GridView_Partner.Attributes["SortDirection"];
 
         strSQL = "Select *,AZJF+YesDayBXFS+YesDayWXFS SumFS from ";
-        strSQL += " (SELECT S_USERINFO.ID,CName,isnull((Select top 1 '['+format(CTime,'yyyy-MM-dd HH:mm')+']'+ZB_Name from W_KQ where UserID=S_USERINFO.ID order by ctime desc),'未签到') QD";
+        strSQL += " (SELECT S_USERINFO.ID,CName,isnull((Select top 1 '['+format(CTime,'yyyy-MM-dd HH:mm')+']'+ZB_Name from W_KQ where UserID=S_USERINFO.ID order by ctime desc),'') QD";
         strSQL += " ,isnull((Select sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100) from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and W_GCGD_FS.CTIME between '" + StartTime + "' and '" + EndTime + "' and USERID = S_USERINFO.ID),0) AZJF";
         strSQL += " ,isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS * W_GCGD2.FS / 100) NFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where LTIME between '" + StartTime + "' and '" + EndTime + "' and USERID = S_USERINFO.ID group by GCMXID, UserID) b, W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where LTIME < '" + StartTime + "' and USERID = S_USERINFO.ID group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) YesDayBXFS";
         strSQL += " ,Isnull((Select Sum(SumJF) from W_WXD where Ltime between '" + StartTime + "' and '" + EndTime + "' and W_WXD.WXRY = S_USERINFO.ID and Del = 0 and FLAG = 1),0) YesDayWXFS";
-        strSQL += " from S_USERINFO,S_YH_QXZ where FLAG = 0  and S_USERINFO.id = S_YH_QXZ.USERID and(QXZID = 3 or QXZID = 4) group by S_USERINFO.ID,CNAME,SSDZ) aa";
-
+        strSQL += " from S_USERINFO,S_YH_QXZ where FLAG = 0  and S_USERINFO.id = S_YH_QXZ.USERID and(QXZID = 3 or QXZID = 4) group by S_USERINFO.ID,CNAME,SSDZ) aa order by QD desc";
 
         if (OP_Mode.SQLRUN(strSQL))
         {

@@ -14,6 +14,57 @@
         </ul>
     </div>
     <div class="page-content">
+        <div class="col-xs-12">
+            <h3 class="header smaller lighter green">快捷功能</h3>
+            <p>
+                <asp:LinkButton ID="LinkButton3" PostBackUrl="/Boss/Boss.aspx" class="btn btn-app btn-primary" runat="server"><i class="icon-home bigger-230"></i>
+                    主&nbsp;&nbsp;页</asp:LinkButton>
+                <a href="/CWGL/SearchQD.aspx" class="btn btn-app btn-info">
+                    <i class="icon-globe bigger-230"></i>
+                    签到情况
+                </a>
+                <a href="/GDGL/" class="btn btn-app btn-info">
+                    <i class="icon-legal bigger-230"></i>
+                    工程信息
+                </a>
+                <a href="/Partner/" class="btn btn-app btn-pink ">
+                    <i class="icon-group bigger-230"></i>
+                    协同人员
+                </a>
+                <a href="/CWGL/" class="btn btn-app btn-pink ">
+                    <i class="icon-coffee bigger-230"></i>
+                    报销情况
+                </a>
+                <a href="/BGGL/GCWXDList.ASPX" class="btn btn-app btn-success">
+                    <i class="icon-book bigger-230"></i>
+                    维&nbsp;保&nbsp;单
+                </a>
+                <a href="/GDGL/" class="btn btn-app btn-info">
+                    <i class="icon-legal bigger-230"></i>
+                    等待施工
+                </a>
+                <a href="/GDGL/" class="btn btn-app btn-success">
+                    <i class="icon-legal bigger-230"></i>
+                    正在施工
+                </a>
+                <a href="/GDGL/" class="btn btn-app btn-danger">
+                    <i class="icon-legal bigger-230"></i>
+                    暂停施工
+                </a>
+                <a href="/GDGL/" class="btn btn-app btn-info">
+                    <i class="icon-legal bigger-230"></i>
+                    完成施工
+                </a>
+                <a href="/GDGL/" class="btn btn-app btn-info">
+                    <i class="icon-legal bigger-230"></i>
+                    未验收
+                </a>
+                <a href="/BUG/" class="btn btn-app btn-warning">
+                    <i class="icon-cogs bigger-230"></i>
+                    故障反馈
+                </a>
+            </p>
+        </div>
         <div class="space-12"></div>
         <div class="col-sm-6 content">
             <h3 class="header smaller lighter blue"><i class="icon-bar-chart"></i>&nbsp;人员信息</h3>

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -120,7 +122,7 @@ public class PageBaseGambling : System.Web.UI.Page
     /// <param name="posturl">string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", GetaccessToken());</param>
     /// <param name="postData">josn数据</param>
     /// <returns></returns>
-    public string PostPage(string posturl, string postData, string strUrl,string strCoolin)
+    public string PostPage(string posturl, string postData, string strUrl, string strCoolin, int sTime)
     {
         Stream outstream = null;
         Stream instream = null;
@@ -135,54 +137,25 @@ public class PageBaseGambling : System.Web.UI.Page
             // 设置参数
             request = WebRequest.Create(posturl) as HttpWebRequest;
             CookieContainer cookieContainer = new CookieContainer();
-            request.CookieContainer = cookieContainer;
+            //request.CookieContainer = cookieContainer;
             request.AllowAutoRedirect = true;
             request.Method = "POST";
+            //  request.Date = GetDateTime(sTime);
 
-            //HttpWebRequest rq = (HttpWebRequest)WebRequest.Create("Url");
-            //rq.Method = "GET";
-            //SetHeaderValue(rq.Headers, "Host", "127.0.0.1");
-            //SetHeaderValue(rq.Headers, "Connection", "keep-alive");
-            //SetHeaderValue(rq.Headers, "Accept", "*/*");
-            //SetHeaderValue(rq.Headers, "X-Requested-With", "XMLHttpRequest");
-            //SetHeaderValue(rq.Headers, "User-Agent", "...");
-            //SetHeaderValue(rq.Headers, "Referer", "http://127.0.0.1/index.php?m=Index&a=indexs");
-            //SetHeaderValue(rq.Headers, "Accept-Encoding", "gzip, deflate");
-            //SetHeaderValue(rq.Headers, "Accept-Language", "1.5");
-            //SetHeaderValue(rq.Headers, "Cookie", "This is Cookie");
-            //   SetHeaderValue(request.Headers, "AppCode", "XXX");
-            //HttpWebResponse resp = (HttpWebResponse)rq.GetResponse();
 
-            //using (Stream stream = resp.GetResponseStream())
-            //{
-            //    StreamReader reader = new StreamReader(stream, Encoding.Default);
-            //    string responseString = reader.ReadToEnd();
-            //    MessageBox.Show(responseString);
-            //}
-            request.ContentLength = data.Length;
             SetHeaderValue(request.Headers, "accept", "application/json, text/plain, */*");
             SetHeaderValue(request.Headers, "accept-encoding", "gzip, deflate, br");
             SetHeaderValue(request.Headers, "accept-language", "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6");
-            SetHeaderValue(request.Headers, "content-length", "112");
-
+            request.ContentLength = data.Length;
+            // SetHeaderValue(request.Headers, "content-length", data.Length.ToString());
             request.ContentType = "application/x-www-form-urlencoded";
-
             SetHeaderValue(request.Headers, "cookie", strCoolin);
-            SetHeaderValue(request.Headers, "origin", "112");
-            SetHeaderValue(request.Headers, "content-length", "https://" + strUrl);
+            SetHeaderValue(request.Headers, "origin", "https://" + strUrl);
+            SetHeaderValue(request.Headers, "referer", "https://" + strUrl + "/game/");
             SetHeaderValue(request.Headers, "sec-fetch-dest", "empty");
             SetHeaderValue(request.Headers, "sec-fetch-mode", "cors");
             SetHeaderValue(request.Headers, "sec-fetch-site", "same-origin");
             SetHeaderValue(request.Headers, "user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0");
-            //request.Headers.Add("cookie", strCoolin);
-
-            //request.Headers.Add("origin", "https://" + strUrl);
-
-            //request.Headers.Add("referer", "https://" + strUrl + "/game/");
-            //request.Headers.Add("sec-fetch-dest", "empty");
-            //request.Headers.Add("sec-fetch-mode", "cors");
-            //request.Headers.Add("sec-fetch-site", "same-origin");
-            //request.Headers.Add("user-agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0");
 
             outstream = request.GetRequestStream();
             outstream.Write(data, 0, data.Length);
@@ -191,19 +164,75 @@ public class PageBaseGambling : System.Web.UI.Page
             response = request.GetResponse() as HttpWebResponse;
             //直到request.GetResponse()程序才开始向目标网页发送Post请求
             instream = response.GetResponseStream();
+            //request.AutomaticDecompression = DecompressionMethods.GZip;
             sr = new StreamReader(instream, encoding);
+
             //返回结果网页（html）代码
             string content = sr.ReadToEnd();
-            string err = string.Empty;
 
             return content;
         }
         catch (Exception ex)
         {
             string err = ex.Message;
-            return string.Empty;
+            return err;
         }
     }
+
+    //请求 URL: https://www.sy0002.com/game/getLotteryData.do?_t=1682306782314&gameId=41
+    //请求方法: GET
+    //状态代码: 200 
+    //远程地址: 154.218.13.234:443
+    //引用者策略: strict-origin-when-cross-origin
+    //content-disposition: inline;filename=f.txt
+    //content-encoding: gzip
+    //content-type: text/html; charset=UTF-8
+    //date: Mon, 24 Apr 2023 03:26:23 GMT
+    //guard-cache: BYPASS
+    //guard-store: BYPASS
+    //server: nginx/1.17.3
+    //:authority: www.sy0002.com
+    //:method: GET
+    //:path: /game/getLotteryData.do?_t=1682306782314&gameId=41
+    //:scheme: https
+    //accept: application/json, text/plain, */*
+    //accept-encoding: gzip, deflate, br
+    //accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+    //cookie: x-session-token=zTK3%2F%2FVIna8B9HKQhOjFFhV5J4b9tnPNQAVJGW3cyBSHvdwqOkLWHw%3D%3D; checkCode=efb9f77f-c8f8-4193-84f8-982bacdd6501
+    //referer: https://www.sy0002.com/game/
+    //sec-fetch-dest: empty
+    //sec-fetch-mode: cors
+    //sec-fetch-site: same-origin
+    //user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/112.0.0.0
+    //{"balance":103.648,"unbalancedMoney":4.0,"totalTotalMoney":1.65,"totalMoneyMap":null,"userBetWinList":null,"userBetNew":[{"id":1927033644,"userId":1200405,"userName":"lkjgh688","playId":4144604,"playName":"双","playCateId":446,"betInfo":"","multiple":1,"winCount":null,"money":2.0,"odds":1.95,"rebate":0.0,"addTime":"2023-04-24 11:25:57","turnNum":"2988650","gameId":41,"status":0,"reward":0.0,"rewardRebate":null,"rebateMoney":null,"orderNo":"12230424112557867396446","result":0,"frozenMoney":0.0,"trawMoney":null,"remark":"{\"playName\":\"双\",\"winNums\":\"\",\"odds\":\"1.950\"}","resultMoney":1.9,"openNum":null,"currency":"RMB"},{"id":1927033383,"userId":1200405,"userName":"lkjgh688","playId":4144604,"playName":"双","playCateId":446,"betInfo":"","multiple":1,"winCount":null,"money":2.0,"odds":1.95,"rebate":0.0,"addTime":"2023-04-24 11:25:10","turnNum":"2988650","gameId":41,"status":0,"reward":0.0,"rewardRebate":null,"rebateMoney":null,"orderNo":"12230424112510433198582","result":0,"frozenMoney":0.0,"trawMoney":null,"remark":"{\"playName\":\"双\",\"winNums\":\"\",\"odds\":\"1.950\"}","resultMoney":1.9,"openNum":null,"currency":"RMB"}],"pushMessage":null,"userNoticeMsg":0,"refreshRechType":null,"balanceMap":null,"unbalancedMap":null,"currency":"RMB","maintainStatus":null,"tradingNotice":null,"point":0.0,"refreshGameList":null}
+    // unbalancedMoney: 4 // 待结算金额
+
+    public static string UnzipZippedText(string zippedText)
+    {
+        if (String.IsNullOrEmpty(zippedText))
+        {
+            return String.Empty;
+        }
+        string unzipedText = null;
+        try
+        {
+            byte[] buffer = Convert.FromBase64String(zippedText);
+            MemoryStream ms = new MemoryStream(buffer);
+            GZipStream zipStream = new GZipStream(ms, CompressionMode.Decompress);
+
+            using (StreamReader streamReader = new StreamReader(zipStream))
+            {
+                unzipedText = streamReader.ReadToEnd();
+            }
+        }
+        catch (Exception ex)
+        {
+            unzipedText = String.Empty;
+        }
+
+        return unzipedText;
+    }
+
     public static void SetHeaderValue(WebHeaderCollection header, string name, string value)
     {
         var property = typeof(WebHeaderCollection).GetProperty("InnerCollection", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -327,6 +356,57 @@ public class PageBaseGambling : System.Web.UI.Page
         public bool preIsOpen { get; set; }
         public string serverTime { get; set; }
         public int gameId { get; set; }
+    }
+
+    public class UserBet
+    {
+        public float balance { get; set; }
+        public float unbalancedMoney { get; set; }
+        public float totalTotalMoney { get; set; }
+        public object totalMoneyMap { get; set; }
+        public object userBetWinList { get; set; }
+        public Userbetnew[] userBetNew { get; set; }
+        public object pushMessage { get; set; }
+        public int userNoticeMsg { get; set; }
+        public object refreshRechType { get; set; }
+        public object balanceMap { get; set; }
+        public object unbalancedMap { get; set; }
+        public string currency { get; set; }
+        public object maintainStatus { get; set; }
+        public object tradingNotice { get; set; }
+        public float point { get; set; }
+        public object refreshGameList { get; set; }
+    }
+
+    public class Userbetnew
+    {
+        public int id { get; set; }
+        public int userId { get; set; }
+        public string userName { get; set; }
+        public int playId { get; set; }
+        public string playName { get; set; }
+        public int playCateId { get; set; }
+        public string betInfo { get; set; }
+        public int multiple { get; set; }
+        public object winCount { get; set; }
+        public float money { get; set; }
+        public float odds { get; set; }
+        public float rebate { get; set; }
+        public string addTime { get; set; }
+        public string turnNum { get; set; }
+        public int gameId { get; set; }
+        public int status { get; set; }
+        public float reward { get; set; }
+        public object rewardRebate { get; set; }
+        public object rebateMoney { get; set; }
+        public string orderNo { get; set; }
+        public int result { get; set; }
+        public float frozenMoney { get; set; }
+        public object trawMoney { get; set; }
+        public string remark { get; set; }
+        public float resultMoney { get; set; }
+        public object openNum { get; set; }
+        public string currency { get; set; }
     }
 
 }
