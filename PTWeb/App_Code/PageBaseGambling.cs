@@ -409,4 +409,17 @@ public class PageBaseGambling : System.Web.UI.Page
         public string currency { get; set; }
     }
 
+
+    public class RootobjectFoot
+    {
+        public object[][] u { get; set; }
+        public object l { get; set; }
+        public object[][] n { get; set; }
+        public object e { get; set; }
+        public int lg { get; set; }
+        public int pt { get; set; }
+        public object ps { get; set; }
+        public object d { get; set; }
+    }
+
 }
