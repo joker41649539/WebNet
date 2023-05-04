@@ -38,7 +38,7 @@ public partial class XMFight_MyClass : PageBaseXMFight
                 CheckBoxList1.Visible = false;
                 Vied_Text.Visible = false;
             }
-            LoadClassList();
+           // LoadClassList();
 
             //  MessageBox("", "MyClass|UID：" + Request.Cookies["WeChat_XMFight"]["USERID"].ToString() + " OID:" + Request.Cookies["WeChat_XMFight"]["COPENID"].ToString());
         }

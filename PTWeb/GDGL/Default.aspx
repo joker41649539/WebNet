@@ -21,44 +21,56 @@
                 <li class="pull-right">
                     <a href="/GDGL/GCGDAdd.ASPX" class="btn-new-mail">
                         <span class="btn bt1n-small btn-purple no-border">
-                            <i class=" icon-envelope bigger-130"></i>
+                            <i class=" icon-legal bigger-130"></i>
                             <span class="bigger-110">新建工程工单</span>
                         </span>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="/GDGL/">
-                        <i class="blue icon-inbox bigger-130"></i>
-                        <span class="bigger-110">工程工单</span>
+                    <a data-toggle="tab" href="#inbox">
+                        <i class="blue icon-legal bigger-130"></i>
+                        <span class="bigger-110">所有工程</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/GDGL/GDFinsh.aspx">
-                        <i class="red icon-inbox bigger-130"></i>
-                        <span class="bigger-110">施工中工单</span>
+                    <a data-toggle="tab" href="#Table0">
+                        <i class="red icon-legal bigger-130"></i>
+                        <span class="bigger-110">等待施工</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/GDGL/GDNoFinsh.aspx">
-                        <i class="green icon-inbox bigger-130"></i>
-                        <span class="bigger-110">未完成工单</span>
+                    <a data-toggle="tab" href="#Table2">
+                        <i class="blue icon-legal bigger-130"></i>
+                        <span class="bigger-110">暂停施工</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/GDGL/GDLX.aspx">
-                        <i class="blue icon-inbox bigger-130"></i>
-                        <span class="bigger-110">零星工程工</span>
+                    <a data-toggle="tab" href="#Table3">
+                        <i class="green icon-legal bigger-130"></i>
+                        <span class="bigger-110">正在施工</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/GDGL/GDComplete.aspx">
-                        <i class="blue icon-inbox bigger-130"></i>
+                    <a data-toggle="tab" href="#Table4">
+                        <i class="blue icon-legal bigger-130"></i>
+                        <span class="bigger-110">完成施工</span>
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#Table5">
+                        <i class="blue icon-legal bigger-130"></i>
+                        <span class="bigger-110">未验收</span>
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#Table1">
+                        <i class="blue icon-legal bigger-130"></i>
                         <span class="bigger-110">完整工程</span>
                     </a>
                 </li>
             </ul>
             <div class="tab-content">
-                <div class="widget-box transparent">
+                <div id="inbox" class="tab-pane in active">
                     <div class="widget-header widget-header-flat">
                         <h4 class="lighter"><i class="icon-user"></i>工程工单                </h4>
                         <asp:DropDownList ID="GridView1_DropDownList1" class="btn dropdown-toggle btn-sm  btn-white" runat="server" ClientIDMode="Static">
@@ -95,9 +107,9 @@
                                     <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" SortExpression="SGDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
                                     <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" SortExpression="GCDD" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
                                     <asp:BoundField DataField="GCMC" SortExpression="GCMC" HeaderText="工程名称"></asp:BoundField>
-                                    <asp:BoundField DataField="JFFZR" SortExpression="JFFZR" HeaderText="甲方负责人"></asp:BoundField>
+<%--                                    <asp:BoundField DataField="JFFZR" SortExpression="JFFZR" HeaderText="甲方负责人"></asp:BoundField>
                                     <asp:BoundField DataField="JFDH" SortExpression="FZRDH" HeaderText="甲方电话"></asp:BoundField>
-                                    <asp:BoundField DataField="CNAME" SortExpression="ZDRID" HeaderText="乙方负责人"></asp:BoundField>
+                                    <asp:BoundField DataField="CNAME" SortExpression="ZDRID" HeaderText="乙方负责人"></asp:BoundField>--%>
                                     <asp:BoundField DataField="SumFs" SortExpression="SumFs" HeaderText="状态"></asp:BoundField>
                                 </Columns>
                                 <PagerTemplate>
@@ -124,56 +136,137 @@
                                     </div>
                                 </PagerTemplate>
                             </asp:GridView>
-                            <div id="Div1" runat="server" class="alert alert-success" visible="false">
-                                <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
-                                <h5>预计工期：<asp:TextBox ID="TextBox2" Width="50px" runat="server"></asp:TextBox>
-                                    &nbsp;天&nbsp;&nbsp;<asp:LinkButton runat="server" OnClick="LinkButton2_Click" class="btn btn-white btn-sm" ID="LinkButton2"><i class="icon-save">&nbsp;保 存</i></asp:LinkButton></h5>
-                                <h2>布线人员选择：</h2>
-                                <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatColumns="10">
-                                    <asp:ListItem Value="1">人员1</asp:ListItem>
-                                    <asp:ListItem Value="2">人员2</asp:ListItem>
-                                    <asp:ListItem Value="3">人员3</asp:ListItem>
-                                </asp:CheckBoxList>
-                                <hr />
-                                <h2>安装人员选择：</h2>
-                                <asp:CheckBoxList ID="CheckBoxList2" runat="server" RepeatColumns="10">
-                                    <asp:ListItem Value="1">人员1</asp:ListItem>
-                                    <asp:ListItem Value="2">人员2</asp:ListItem>
-                                    <asp:ListItem Value="3">人员3</asp:ListItem>
-                                </asp:CheckBoxList>
-                                <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="LinkButton1" OnClick="LinkButton1_Click"><i class="icon-save">&nbsp;保 存</i></asp:LinkButton>
-                                <h2>负责人：</h2>
-                                <asp:RadioButtonList AutoPostBack="true" ID="RadioButtonList1" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" RepeatColumns="10" runat="server">
-                                    <asp:ListItem>人员1</asp:ListItem>
-                                    <asp:ListItem>人员2</asp:ListItem>
-                                </asp:RadioButtonList>
-                            </div>
 
                         </div>
                     </div>
                 </div>
+                <div id="Table0" class="tab-pane">
+                    <div class="page-content">
+                        <!--暂停施工 //-->
+                        <div class="widget-main no-padding">
+                            <asp:GridView ID="GridView_GC0" OnSelectedIndexChanging="GridView_GC0_SelectedIndexChanging" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView_GC0_PageIndexChanging" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" ClientIDMode="Static">
+                                <Columns>
+                                    <asp:ButtonField HeaderText="分配权限" CommandName="Select" SortExpression="ID" Text="分配权限" />
+                                    <asp:BoundField DataField="Selected" SortExpression="Selected" HeaderText="工程人数"></asp:BoundField>
+                                    <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" SortExpression="SGDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" SortExpression="GCDD" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:BoundField DataField="GCMC" SortExpression="GCMC" HeaderText="工程名称"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <!--等待施工 //-->
+                    </div>
+                </div>
+                <div id="Table2" class="tab-pane">
+                    <div class="page-content">
+                        <!--暂停施工 //-->
+                        <div class="widget-main no-padding">
+                            <asp:GridView ID="GridView_GC2" OnSelectedIndexChanging="GridView_GC2_SelectedIndexChanging" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView_GC2_PageIndexChanging" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" ClientIDMode="Static">
+                                <Columns>
+                                    <asp:ButtonField HeaderText="分配权限" CommandName="Select" SortExpression="ID" Text="分配权限" />
+                                    <asp:BoundField DataField="Selected" SortExpression="Selected" HeaderText="工程人数"></asp:BoundField>
+                                    <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" SortExpression="SGDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" SortExpression="GCDD" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:BoundField DataField="GCMC" SortExpression="GCMC" HeaderText="工程名称"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <!--等待施工 //-->
+                    </div>
+                </div>
+                <div id="Table3" class="tab-pane">
+                    <div class="page-content">
+                        <!--暂停施工 //-->
+                        <div class="widget-main no-padding">
+                            <asp:GridView ID="GridView_GC3" OnSelectedIndexChanging="GridView_GC3_SelectedIndexChanging" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView_GC3_PageIndexChanging" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" ClientIDMode="Static">
+                                <Columns>
+                                    <asp:ButtonField HeaderText="分配权限" CommandName="Select" SortExpression="ID" Text="分配权限" />
+                                    <asp:BoundField DataField="Selected" SortExpression="Selected" HeaderText="工程人数"></asp:BoundField>
+                                    <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" SortExpression="SGDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" SortExpression="GCDD" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:BoundField DataField="GCMC" SortExpression="GCMC" HeaderText="工程名称"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <!--等待施工 //-->
+                    </div>
+                </div>
+                <div id="Table4" class="tab-pane">
+                    <div class="page-content">
+                        <!--暂停施工 //-->
+                        <div class="widget-main no-padding">
+                            <asp:GridView ID="GridView_GC4" OnSelectedIndexChanging="GridView_GC4_SelectedIndexChanging" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView_GC4_PageIndexChanging" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" ClientIDMode="Static">
+                                <Columns>
+                                    <asp:ButtonField HeaderText="分配权限" CommandName="Select" SortExpression="ID" Text="分配权限" />
+                                    <asp:BoundField DataField="Selected" SortExpression="Selected" HeaderText="工程人数"></asp:BoundField>
+                                    <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" SortExpression="SGDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" SortExpression="GCDD" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:BoundField DataField="GCMC" SortExpression="GCMC" HeaderText="工程名称"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <!--等待施工 //-->
+                    </div>
+                </div>
+                <div id="Table5" class="tab-pane">
+                    <div class="page-content">
+                        <!--暂停施工 //-->
+                        <div class="widget-main no-padding">
+                            <asp:GridView ID="GridView_GC5" OnSelectedIndexChanging="GridView_GC5_SelectedIndexChanging" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView_GC5_PageIndexChanging" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" ClientIDMode="Static">
+                                <Columns>
+                                    <asp:ButtonField HeaderText="分配权限" CommandName="Select" SortExpression="ID" Text="分配权限" />
+                                    <asp:BoundField DataField="Selected" SortExpression="Selected" HeaderText="工程人数"></asp:BoundField>
+                                    <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" SortExpression="SGDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" SortExpression="GCDD" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:BoundField DataField="GCMC" SortExpression="GCMC" HeaderText="工程名称"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <!--等待施工 //-->
+                    </div>
+                </div>
+                <div id="Table1" class="tab-pane">
+                    <div class="page-content">
+                        <!--暂停施工 //-->
+                        <div class="widget-main no-padding">
+                            <asp:GridView ID="GridView_GC1" OnSelectedIndexChanging="GridView_GC1_SelectedIndexChanging" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" OnPageIndexChanging="GridView_GC1_PageIndexChanging" AllowPaging="True" PageSize="<%# Convert.ToInt16(DefaultList) %>" AllowSorting="True" AutoGenerateColumns="False" OnSorting="GridView1_Sorting" DataKeyNames="ID" ClientIDMode="Static">
+                                <Columns>
+                                    <asp:ButtonField HeaderText="分配权限" CommandName="Select" SortExpression="ID" Text="分配权限" />
+                                    <asp:BoundField DataField="Selected" SortExpression="Selected" HeaderText="工程人数"></asp:BoundField>
+                                    <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" SortExpression="SGDH" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" SortExpression="GCDD" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" />
+                                    <asp:BoundField DataField="GCMC" SortExpression="GCMC" HeaderText="工程名称"></asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                        <!--等待施工 //-->
+                    </div>
+                </div>
+                <div id="Div1" runat="server" class="alert alert-success" visible="false">
+                    <button type="button" class="close" data-dismiss="alert"><i class="icon-remove"></i></button>
+                    <h5>预计工期：<asp:TextBox ID="TextBox2" Width="50px" runat="server"></asp:TextBox>
+                        &nbsp;天&nbsp;&nbsp;<asp:LinkButton runat="server" OnClick="LinkButton2_Click" class="btn btn-white btn-sm" ID="LinkButton2"><i class="icon-save">&nbsp;保 存</i></asp:LinkButton></h5>
+                    <h2>布线人员选择：</h2>
+                    <asp:CheckBoxList ID="CheckBoxList1" runat="server" RepeatColumns="10">
+                        <asp:ListItem Value="1">人员1</asp:ListItem>
+                        <asp:ListItem Value="2">人员2</asp:ListItem>
+                        <asp:ListItem Value="3">人员3</asp:ListItem>
+                    </asp:CheckBoxList>
+                    <hr />
+                    <h2>安装人员选择：</h2>
+                    <asp:CheckBoxList ID="CheckBoxList2" runat="server" RepeatColumns="10">
+                        <asp:ListItem Value="1">人员1</asp:ListItem>
+                        <asp:ListItem Value="2">人员2</asp:ListItem>
+                        <asp:ListItem Value="3">人员3</asp:ListItem>
+                    </asp:CheckBoxList>
+                    <asp:LinkButton runat="server" class="btn btn-white btn-sm" ID="LinkButton1" OnClick="LinkButton1_Click"><i class="icon-save">&nbsp;保 存</i></asp:LinkButton>
+                    <h2>负责人：</h2>
+                    <asp:RadioButtonList AutoPostBack="true" ID="RadioButtonList1" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" RepeatColumns="10" runat="server">
+                        <asp:ListItem>人员1</asp:ListItem>
+                        <asp:ListItem>人员2</asp:ListItem>
+                    </asp:RadioButtonList>
+                </div>
             </div>
-            <%-- <script src="/assets/js/jquery-2.0.3.min.js"></script>
-            <script>
-                // 字符替换
-                $("#GridView1 tr").each(function () {
-                    var mtd = $(this).children("td:eq(8)");
-                    if (mtd.text() == 0) {
-                        mtd.html(" <span class=\"label label-success\">等待施工</span>");
-                    }
-                    else if (mtd.text() > 0) {
-                        mtd.html(" <span class=\"label label-danger\">正在施工</span>");
-                    }
-
-                    var mtd = $(this).children("td:eq(1)");
-                    if (mtd.text() > 0) {
-                        mtd.html(" <span class=\"label label-success\">[" + mtd.text() + "] 人</span>");
-                    }
-                    else if (mtd.text() == 1) {
-                        mtd.html(" <span class=\"label label-danger\">未指派</span>");
-                    }
-                });
-            </script>--%>
         </div>
     </div>
 </asp:Content>

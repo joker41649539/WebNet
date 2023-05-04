@@ -122,7 +122,8 @@
                                         <!-- /widget-main -->
 
                                         <div class="toolbar clearfix">
-                                            <div>
+                                            <h4 class="center"><a href="https://beian.miit.gov.cn" class="white" target="_blank">晥ICP备2021004456号</a></h4>
+                                            <%--<div>
                                                 <a href="#" onclick="show_box('forgot-box'); return false;" class="forgot-password-link">
                                                     <i class="icon-arrow-left"></i>
                                                     忘记密码
@@ -133,7 +134,7 @@
                                                 <a href="#" onclick="show_box('signup-box'); return false;" class="user-signup-link">用户注册
 													<i class="icon-arrow-right"></i>
                                                 </a>
-                                            </div>
+                                            </div>--%>
                                         </div>
                                     </div>
                                     <!-- /widget-body -->
@@ -250,7 +251,7 @@
                 </div>
                 <!-- /.row -->
             </div>
-            <h4 class="blue footer-nav"><a href="https://beian.miit.gov.cn" target="_blank">晥ICP备2021004456号</a></h4>
+
         </div>
         <!-- /.main-container -->
 

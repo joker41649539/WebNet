@@ -12,23 +12,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-    <%-- <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/assets/alert/alert.css" />
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
-
-    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
-    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
-    <link rel="stylesheet" href="/assets/css/ace.min.css" />
-
-    <script src='/assets/alert/alert.js'></script>
-    <script src="/assets/js/ace-extra.min.js"></script>
-    <script src='/assets/alert/shCore.js'></script>
-    <script src='/assets/alert/makeSy.js'></script>
-
-    <script src="/assets/js/jquery-2.0.3.min.js"></script>
-    <script src="/assets/js/ace-elements.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>--%>
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/assets/css/ace.min.css" />
@@ -195,7 +178,7 @@
         <script>
             // 字符替换 工程工单使用
             $("#GridView1 tr").each(function () {
-                var mtd = $(this).children("td:eq(8)");
+                var mtd = $(this).children("td:eq(5)");
                 if (mtd.text() == 0) {
                     mtd.html(" <span class=\"label label-success\">等待施工</span>");
                 }

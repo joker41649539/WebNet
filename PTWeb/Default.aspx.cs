@@ -40,14 +40,17 @@ public partial class DefaultPH : PageBase
                         WeChatLoad();
                         //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Ftest.putian.ink%2Fdefault3.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
                         //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Flocalhost:59802%2Fdefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
-
-
                         //https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Fwww.putian.ink%2Fdefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
                     }
 
                     if (Convert.ToInt32(DefaultUser) <= 0)
                     {
                         MessageBox("", "您还未登陆！!!<br/>请先登陆！", "/Login.aspx");
+                        return;
+                    }
+                    else if (Convert.ToInt32(DefaultUser) == 1)
+                    {//彭总登录跳转到BOSS页面
+                        Response.Redirect("/Boss/", false);
                         return;
                     }
                 }

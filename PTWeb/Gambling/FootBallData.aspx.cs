@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Activities.Statements;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -68,6 +70,34 @@ public partial class Gambling_FootBallData : PageBaseGambling
         List<dynamic> secondValue = u[0][1];
         long thirdValue = u[0][2];
         int fourthValue = u[0][3];
+
+        //        ?jo["l"][0][2][1][2][0][0].ToString()
+        //"1572060531"
+        //? jo["l"][0][2][1][2][0][1].ToString()
+        //"萨卡特科卢卡市普拉滕斯俱乐部"
+        //? jo["l"][0][2][1][2][0][2].ToString()
+        //"乔科洛足球俱乐部"
+
+        //{\r\n  \"0\": [\r\n    [\r\n      [\r\n        0.0,\r\n        0.0,\r\n        \"0.0\",\r\n        \"1.429\",\r\n        \"2.910\",\r\n        0,\r\n        0,\r\n        2083504211,\r\n        0,\r\n        475.0,\r\n        1\r\n      ]\r\n    ],\r\n    [\r\n      [\r\n        \"1.5\",\r\n        1.5,\r\n        \"3.660\",\r\n        \"1.290\",\r\n        2083504211,\r\n        0,\r\n        475.0,\r\n        1\r\n      ]\r\n    ],\r\n    [\r\n      \"1.162\",\r\n      \"48.780\",\r\n      \"5.670\",\r\n      2083504211,\r\n      0,\r\n      225.0,\r\n      1\r\n    ],\r\n    0,\r\n    null,\r\n    0,\r\n    0,\r\n    [\r\n      0,\r\n      0\r\n    ],\r\n    5,\r\n    [\r\n      0,\r\n      1\r\n    ],\r\n    [\r\n      0,\r\n      0\r\n    ],\r\n    2\r\n  ]\r\n}
+        
+        
+        //var rep = await client.GetAsync(strURL);
+
+            ////var content = await rep.Content.ReadAsStringAsync();
+            //if (rep.IsSuccessStatusCode)
+            //{
+            //    var data = await rep.Content.ReadAsStreamAsync();
+            //    // 创建 GZipStream 对象，并将压缩数据流传递给它的构造函数
+            //    var decompressedStream = new GZipStream(data, CompressionMode.Decompress);
+
+            //    // 读取解压缩后的数据
+            //    var reader = new StreamReader(decompressedStream);
+            //    var content = await reader.ReadToEndAsync();
+
+
+            //    JObject jo = JObject.Parse(content);
+            //    var str = jo["l"][0].ToList();// [1].ToString();            
+            //}
     }
 
 }

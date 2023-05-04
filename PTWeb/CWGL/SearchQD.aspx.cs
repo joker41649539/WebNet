@@ -22,6 +22,7 @@ public partial class CWGL_SearchQD : PageBase
     private void LoadDefaultData()
     {
         int strBxdID = 0;
+        string sUserName = string.Empty;
         try
         {
             // 获取报销单ID
@@ -32,6 +33,7 @@ public partial class CWGL_SearchQD : PageBase
         {
 
         }
+        sUserName = Request["UserName"];
 
         TextBox_STime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
         TextBox_ETime.Text = System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
@@ -52,11 +54,11 @@ public partial class CWGL_SearchQD : PageBase
                 }
             }
         }
-        TextBox_Name.Text = TextBox_Name.Text.Replace(" ", ";");
-        TextBox_Name.Text = TextBox_Name.Text.Replace("、", ";");
-        TextBox_Name.Text = TextBox_Name.Text.Replace(",", ";");
-        TextBox_Name.Text = TextBox_Name.Text.Replace("，", ";");
-        TextBox_Name.Text = TextBox_Name.Text.Replace("；", ";");
+        TextBox_Name.Text = (sUserName + TextBox_Name.Text).Replace(" ", ";");
+        TextBox_Name.Text = (TextBox_Name.Text).Replace("、", ";");
+        TextBox_Name.Text = (TextBox_Name.Text).Replace(",", ";");
+        TextBox_Name.Text = (TextBox_Name.Text).Replace("，", ";");
+        TextBox_Name.Text = (TextBox_Name.Text).Replace("；", ";");
         LoadQDList();
     }
 
@@ -164,7 +166,6 @@ public partial class CWGL_SearchQD : PageBase
                     {
                         strTemp += "      <span class='label label-info label-sm'>下班</span>";
                     }
-
 
                     strTemp += "      <span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
                     strTemp += "  </div>";

@@ -14,9 +14,9 @@
         </ul>
     </div>
     <div class="col-xs-12">
-        <h3 class="header smaller lighter green">&nbsp;<i class="icon-desktop"></i>&nbsp;&nbsp;快捷功能</h3>
+        <h3 class="header smaller lighter blue">&nbsp;<i class="icon-desktop"></i>&nbsp;&nbsp;快捷功能</h3>
         <p>
-            <asp:LinkButton ID="LinkButton3" PostBackUrl="/Boss/Boss.aspx" class="btn btn-app btn-primary" runat="server"><i class="icon-home bigger-230"></i>
+            <asp:LinkButton ID="LinkButton3" PostBackUrl="/Boss/" class="btn btn-app btn-primary" runat="server"><i class="icon-home bigger-230"></i>
                     主&nbsp;&nbsp;页</asp:LinkButton>
             <a href="/CWGL/SearchQD.aspx" class="btn btn-app btn-info">
                 <i class="icon-globe bigger-230"></i>
@@ -66,7 +66,7 @@
     </div>
 
     <div class="col-sm-12">
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             <h3 class="header smaller lighter blue"><i class="icon-bar-chart"></i>&nbsp;人员信息</h3>
             <div class="input-group">
                 <asp:TextBox ID="TextBox_SETime" ClientIDMode="Static" class="form-control" name="date-range-picker" runat="server"></asp:TextBox>
@@ -76,9 +76,9 @@
             <div class="page-content">
                 <!--人员启用 开始 //-->
                 <div class="widget-main no-padding">
-                    <asp:GridView ID="GridView_Partner" AllowSorting="True" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID">
+                    <asp:GridView ID="GridView_Boss1" AllowSorting="True" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID">
                         <Columns>
-                            <asp:HyperLinkField DataTextField="CName" HeaderText="姓名" SortExpression="CName" />
+                            <asp:HyperLinkField DataTextField="CName" HeaderText="姓名" SortExpression="CName" DataNavigateUrlFormatString="/CWGL/SearchQD.aspx?UserName={0}" DataNavigateUrlFields="CName" />
                             <asp:HyperLinkField DataTextField="QD" HeaderText="最后签到" SortExpression="QD" />
                             <asp:HyperLinkField DataTextField="YesDayBXFS" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="布线分数" SortExpression="YesDayBXFS" />
                             <asp:HyperLinkField DataTextField="AZJF" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="安装分数" SortExpression="AZJF" />
@@ -90,28 +90,79 @@
                 <!--人员启用 结束 //-->
             </div>
         </div>
-        <div class="col-sm-6">
-            <h3 class="header smaller lighter blue"><i class="icon-bar-chart"></i>&nbsp;人员信息1</h3>
-            <div class="input-group">
-                <asp:TextBox ID="TextBox1" ClientIDMode="Static" class="form-control" name="date-range-picker" runat="server"></asp:TextBox>
-                <asp:LinkButton ID="LinkButton2" class="input-group-addon" runat="server"><i class="icon-search bigger-110"></i>&nbsp;查询</asp:LinkButton>
-            </div>
-            <div class="space-10"></div>
-            <div class="page-content">
-                <!--人员启用 开始 //-->
-                <div class="widget-main no-padding">
-                    <asp:GridView ID="GridView1" AllowSorting="True" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID">
-                        <Columns>
-                            <asp:HyperLinkField DataTextField="CName" HeaderText="姓名" SortExpression="CName" />
-                            <asp:HyperLinkField DataTextField="QD" HeaderText="最后签到" SortExpression="QD" />
-                            <asp:HyperLinkField DataTextField="YesDayBXFS" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="布线分数" SortExpression="YesDayBXFS" />
-                            <asp:HyperLinkField DataTextField="AZJF" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="安装分数" SortExpression="AZJF" />
-                            <asp:HyperLinkField DataTextField="YesDayWXFS" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="维保分数" SortExpression="YesDayWXFS" />
-                            <asp:HyperLinkField DataTextField="SumFS" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="总分" SortExpression="SumFS" />
-                        </Columns>
-                    </asp:GridView>
+        <div class="col-sm-7">
+            <h3 class="header smaller lighter blue"><i class="icon-legal"></i>&nbsp;工程信息</h3>
+            <div class="tabbable">
+                <ul id="myTab" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+                    <li class="active">
+                        <a data-toggle="tab" href="#inbox">
+                            <i class="green icon-legal bigger-130"></i>
+                            <span class="bigger-110">施工中</span>&nbsp;<span class="badge badge-success"><asp:Label ID="Label_ZZ" runat="server" Text="0"></asp:Label></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#sent">
+                            <i class="red icon-legal bigger-130"></i>
+                            <span class="bigger-110">暂停中</span>&nbsp;<span class="badge badge-success"><asp:Label ID="Label_ZT" runat="server" Text="0"></asp:Label></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#finsh">
+                            <i class="blue icon-legal bigger-130"></i>
+                            <span class="bigger-110">等待中</span>&nbsp;<span class="badge badge-success"><asp:Label ID="Label_DD" runat="server" Text="0"></asp:Label></span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="inbox" class="tab-pane in active">
+                        <div class="page-content">
+                            <!--正在施工 //-->
+                            <div class="widget-main no-padding">
+                                <asp:GridView ID="GridView_GC3" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID">
+                                    <Columns>
+                                        <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" SortExpression="CName" />
+                                        <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" SortExpression="SGDH" />
+                                        <asp:HyperLinkField DataTextField="CName" HeaderText="施工人员" SortExpression="CName" />
+                                        <asp:HyperLinkField DataTextField="GCMC" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="工程名称" SortExpression="GCMC" />
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                            <!--待处理结束 //-->
+                        </div>
+                    </div>
+                    <div id="sent" class="tab-pane">
+                        <div class="page-content">
+                            <!--暂停施工 //-->
+                            <div class="widget-main no-padding">
+                                <asp:GridView ID="GridView_GC2" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID">
+                                    <Columns>
+                                        <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" SortExpression="GCDD" />
+                                        <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" SortExpression="SGDH" />
+                                        <asp:HyperLinkField DataTextField="Remark" HeaderText="情况说明" SortExpression="Remark" />
+                                        <asp:HyperLinkField DataTextField="GCMC" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="工程名称" SortExpression="GCMC" />
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                            <!--等待施工 //-->
+                        </div>
+                    </div>
+                    <div id="finsh" class="tab-pane">
+                        <div class="page-content">
+                            <!--处理完成开始 //-->
+                            <div class="widget-main no-padding">
+                                <asp:GridView ID="GridView_GC0" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID">
+                                    <Columns>
+                                        <asp:HyperLinkField DataTextField="GCDD" HeaderText="工程地点" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" SortExpression="CName" />
+                                        <asp:HyperLinkField DataTextField="SGDH" HeaderText="手工单号" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/GDGL/GCGDAdd.ASPX?ID={0}" SortExpression="SGDH" />
+                                        <asp:HyperLinkField DataTextField="Remark" HeaderText="情况说明" SortExpression="Remark" />
+                                        <asp:HyperLinkField DataTextField="GCMC" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" HeaderText="工程名称" SortExpression="GCMC" />
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                            <!--处理完成结束 //-->
+                        </div>
+                    </div>
                 </div>
-                <!--人员启用 结束 //-->
             </div>
         </div>
 

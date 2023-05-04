@@ -106,7 +106,30 @@
             </div>
         </div>
     </div>
-    <div class="hr-10"></div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">工程状态</label>
+            <div class="col-sm-9">
+                <asp:RadioButtonList ID="RadioButtonList1" RepeatColumns="6" runat="server">
+                    <asp:ListItem Value="0" Text="&nbsp;等待施工&nbsp;"></asp:ListItem>
+                    <asp:ListItem Value="2" Text="&nbsp;暂停施工&nbsp;"></asp:ListItem>
+                    <asp:ListItem Value="3" Text="&nbsp;正在施工&nbsp;"></asp:ListItem>
+                    <asp:ListItem Value="4" Text="&nbsp;完成施工&nbsp;"></asp:ListItem>
+                    <asp:ListItem Value="5" Text="&nbsp;未验收&nbsp;"></asp:ListItem>
+                    <asp:ListItem Value="1" Text="&nbsp;已完成&nbsp;"></asp:ListItem>
+                </asp:RadioButtonList>
+            </div>
+        </div>
+    </div>
+     <div class="col-xs-12">
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1">状态说明</label>
+            <div class="col-sm-9">
+                <asp:TextBox ID="TextBox1" runat="server" TextMode="MultiLine" placeholder="请输入状态说明" class="col-xs-12 col-sm-12"></asp:TextBox>
+            </div>
+        </div>
+    </div>
+   <div class="hr-10"></div>
     <div class="col-md-offset-3 col-md-9">
         <div class="btn-group">
             <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-danger" runat="server" OnClick="LinkButton3_Click"><i class=" icon-barcode bigger-130"></i> 上一单</asp:LinkButton>
