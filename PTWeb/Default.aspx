@@ -8,12 +8,16 @@
             var temp = document.getElementById("demo").innerHTML;
 
             if (temp == "等待地理位置获取") {
-                // alert("地理位置获取失败，请等待，或者重新打开。");
                 dialog = jqueryAlert({ 'content': '地理位置获取失败，请稍后，或者重新打开。' });
                 return false;
             }
             else if (temp == "签到地址异常。如需签到请进入详细签到，并填写说明原因。") {
                 dialog = jqueryAlert({ 'content': '签到地址异常。如需签到请进入详细签到，并填写说明原因。' });
+                return false;
+            }
+
+            if ($('input:radio:checked').val() == undefined) {
+                dialog = jqueryAlert({ 'content': '请先选择签到类型。' });
                 return false;
             }
         }
@@ -96,6 +100,10 @@
                 }
             });
         });
+        wx.error(function (res) {
+            dialog = jqueryAlert({ 'content': '地理位置获取错误：' + res.content });
+        });
+
     </script>
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Name" ClientIDMode="Static" runat="server" />

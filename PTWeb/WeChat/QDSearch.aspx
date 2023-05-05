@@ -172,6 +172,11 @@
 
             var Remark = document.getElementById("TextBox_Remark").value;
 
+            if ($('input:radio:checked').val() == undefined) {
+                dialog = jqueryAlert({ 'content': '请先选择签到类型。' });
+                return false;
+            }
+
             if (temp == "等待地理位置获取") {
                 dialog = jqueryAlert({ 'content': '地理位置获取失败，请等待，或者重新打开。' });
                 // alert("地理位置获取失败，请等待，或者重新打开。");
@@ -179,6 +184,8 @@
             } else {
                 if (QDRemark) {
                     if (Remark.length > 0) {
+                        $("#GridView_Bug_LinkButton1").attr("disabled", true);
+                        $("#GridView_Bug_LinkButton1").text('数据处理中，请稍后');
                         return true;
                     }
                     else {
@@ -186,12 +193,17 @@
                         return false;
                     }
                 }
+                else {
+                    $("#GridView_Bug_LinkButton1").attr("disabled", true);
+                    $("#GridView_Bug_LinkButton1").text('数据处理中，请稍后');
+                    return true;
+                }
             }
         }
     </script>
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
 
-    <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
+    <asp:HiddenField ID="Hidden_WZ" Value="测试1;测试2;测试3;" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Name" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Screen" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_JD" ClientIDMode="Static" runat="server" />
@@ -275,7 +287,7 @@
         </div>
         <div class="clearfix form-actions">
             <div class="col-md-offset-3 col-md-9">
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return PleaseWaite(); this.setAttribute('disabled', 'disabled')" ID="GridView_Bug_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Bug_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 签 到</asp:LinkButton>
+                <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" OnClientClick="return PleaseWaite();" ID="GridView_Bug_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Bug_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 签 到</asp:LinkButton>
             </div>
         </div>
         <div class="page-content">

@@ -92,11 +92,11 @@
             </div>
         </div>
         <div runat="server" id="FootBut">
-            <ul class="footer-nav text-center">
-                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/Default.aspx"><i class="icon-home"></i>首  页</a></li>
-                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/Remember.aspx"><i class="icon-book"></i>今日学习<asp:Label ID="Label_DayCount" class="badge badge-danger" runat="server" Text="0"></asp:Label></a></li>
-                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/RememberAdd.aspx"><i class="icon-calendar"></i>添加计划</a></li>
-                <li><a class="btn btn-app btn-white btn-xs" href="/Remember/Remembered.aspx"><i class="fab fa-angellist icon"></i>今日完成<asp:Label ID="Label_Finsh" class="badge badge-danger" runat="server" Text="0"></asp:Label></a></li>
+            <ul class="footer-nav2 text-center">
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Remember/Default.aspx"><i class="icon-home"></i>首  页</a></li>
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Remember/Remember.aspx"><i class="icon-book"></i>今日学习<asp:Label ID="Label_DayCount" class="badge badge-danger" runat="server" Text="0"></asp:Label></a></li>
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Remember/RememberAdd.aspx"><i class="icon-calendar"></i>添加计划</a></li>
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Remember/Remembered.aspx"><i class="fab fa-angellist icon"></i>今日完成<asp:Label ID="Label_Finsh" class="badge badge-danger" runat="server" Text="0"></asp:Label></a></li>
             </ul>
         </div>
     </form>

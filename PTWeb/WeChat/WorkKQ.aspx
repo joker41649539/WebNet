@@ -1,6 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="WorkKQ.aspx.cs" Inherits="WeChat_WorkKQ" %>
-
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
@@ -167,78 +165,6 @@
                                 </div>
                             </div>
                             <div class="col-xs-12" runat="server" id="WellList" />
-                            <%-- <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片2</label>
-                                    <div class="col-sm-9" id="preview2">
-                                        <asp:FileUpload ID="FileUpload_TP2" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image2" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片3</label>
-                                    <div class="col-sm-9" id="preview3">
-                                        <asp:FileUpload ID="FileUpload_TP3" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image3" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片4</label>
-                                    <div class="col-sm-9" id="preview4">
-                                        <asp:FileUpload ID="FileUpload_TP4" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image4" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片5</label>
-                                    <div class="col-sm-9" id="preview5">
-                                        <asp:FileUpload ID="FileUpload_TP5" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image5" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片6</label>
-                                    <div class="col-sm-9" id="preview6">
-                                        <asp:FileUpload ID="FileUpload_TP6" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image6" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片7</label>
-                                    <div class="col-sm-9" id="preview7">
-                                        <asp:FileUpload ID="FileUpload_TP7" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image7" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片8</label>
-                                    <div class="col-sm-9" id="preview8">
-                                        <asp:FileUpload ID="FileUpload_TP8" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image8" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传照片9</label>
-                                    <div class="col-sm-9" id="preview9">
-                                        <asp:FileUpload ID="FileUpload_TP9" runat="server" ClientIDMode="Static" capture="camera" value="拍照" accept="image/*" />
-                                        <asp:Image ID="Image9" ClientIDMode="Static" runat="server" />
-                                    </div>
-                                </div>
-                            </div>--%>
                         </div>
                         <div class="clearfix form-actions">
                             <div class="col-md-offset-3 col-md-9">
