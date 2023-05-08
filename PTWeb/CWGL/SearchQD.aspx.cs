@@ -35,6 +35,11 @@ public partial class CWGL_SearchQD : PageBase
         }
         sUserName = Request["UserName"];
 
+        if (sUserName != null)
+        {
+            TextBox_Name.Enabled = false;
+        }
+
         TextBox_STime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
         TextBox_ETime.Text = System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
 

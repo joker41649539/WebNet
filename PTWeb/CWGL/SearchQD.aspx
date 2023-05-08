@@ -73,7 +73,7 @@
             <div class="form-group">
                 <div runat="server" id="UpdateImages"></div>
                 <%--  <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-mini btn-success" runat="server" OnClick="LinkButton1_Click1"><b>保&nbsp;&nbsp;存</b></asp:LinkButton>--%>
-                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-mini" runat="server" OnClick="LinkButton1_Click"><b>查询</b></asp:LinkButton>
+                <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton1" class="btn btn-mini" runat="server" OnClick="LinkButton1_Click"><i class="icon-search"></i><b>查询</b></asp:LinkButton>
             </div>
         </div>
         <div class="page-content">

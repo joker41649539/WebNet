@@ -719,4 +719,10 @@ public partial class WeChat_QDSearch : PageBase
         TimeSpan hoursSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
         return hoursSpan.TotalHours;
     }
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("/CWGL/SearchQD.aspx?UserName=" + UserNAME, false);
+        return;
+    }
 }

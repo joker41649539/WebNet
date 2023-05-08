@@ -18,25 +18,21 @@
         </div>
     </div>
     <div class="col-xs-12">
-        <h5 class="header lighter red"><i class="icon-group"></i>&nbsp;推&nbsp;荐</h5>
+        <h5 class="header red"><i class="icon-group"></i>&nbsp;推&nbsp;荐</h5>
         <div class="well row">
             <div class="col-xs-4">
                 <span class="profile-picture">
                     <img class="editable img-responsive img-rounded" width="100%" src="/images/User01.png" />
                 </span>
-                <%--<div class="width-80 label label-info arrowed-in arrowed-in-right">
-                    <div class="inline position-relative">
-                        <span class="white">陆晓钧</span>
-                    </div>
-                </div>--%>
             </div>
             <div class="col-xs-8">
-                <h4><a href="#" class="left"><b>陆晓钧</b></a>
-                    <span class="label label-warning right pull-right">8.0 分</span>
-                    <a href="#"><i class="icon-globe"></i>&nbsp;1.8&nbsp;km</a></h4>
+                <h4><a href="#" class="left"><b>王菲</b></a>
+                    <span class="label label-warning right pull-right">8.0</span>
+                    <a href="#"><i class="icon-globe"></i>&nbsp;<asp:Label ID="Label_Distance" runat="server" Text="0"></asp:Label>&nbsp;km</a></h4>
                 <p>已服务：&nbsp;162&nbsp; 单</p>
                 <p>
-                    <i class="icon-gift"></i>&nbsp;16
+                    <i class="icon-gift"></i>&nbsp;16&nbsp;
+                    <i class="icon-heart"></i>&nbsp;36
                     <asp:LinkButton ID="LinkButton2" CssClass="btn btn-xs btn-success pull-right" runat="server"><i class="icon-heart-empty"></i>&nbsp;立即预约</asp:LinkButton>
                 </p>
             </div>
@@ -48,8 +44,8 @@
                 </span>
             </div>
             <div class="col-xs-8">
-                <h4><a href="#" class="left"><b>陆晓钧</b></a>
-                    <span class="label label-warning right pull-right">8.0 分</span>
+                <h4><a href="#" class="left"><b>刘若英</b></a>
+                    <span class="label label-warning right pull-right">8.0</span>
                     <a href="#"><i class="icon-globe"></i>&nbsp;1.8&nbsp;km</a></h4>
                 <p>已服务：&nbsp;162&nbsp; 单</p>
                 <p>
@@ -65,8 +61,8 @@
                 </span>
             </div>
             <div class="col-xs-8">
-                <h4><a href="#" class="left"><b>陆晓钧</b></a>
-                    <span class="label label-warning right pull-right">8.0 分</span>
+                <h4><a href="#" class="left"><b>姚程</b></a>
+                    <span class="label label-warning right pull-right">8.0</span>
                     <a href="#"><i class="icon-globe"></i>&nbsp;1.8&nbsp;km</a></h4>
                 <p>已服务：&nbsp;162&nbsp; 单</p>
                 <p>
@@ -89,8 +85,8 @@
                     <span class="label label-warning right pull-right"><i class="icon-group"></i>&nbsp;1567&nbsp;人已预约</span></h4>
                 <p><span class="label label-danger">60 分钟</span></p>
                 <p>
-                    <span class="red bolder bigger-180">￥298</span>&nbsp;<span style="text-decoration: line-through">￥498</span>
-                    <asp:LinkButton ID="LinkButton5" CssClass="btn btn-sm btn-success pull-right" runat="server"><i class="icon-heart-empty"></i>&nbsp;立即预约</asp:LinkButton>
+                    <span class="red bolder bigger-180">￥298</span>&nbsp;<span style="text-decoration: line-through">498</span>
+                    <asp:LinkButton ID="LinkButton5" CssClass="btn btn-xs btn-success pull-right" runat="server"><i class="icon-heart-empty"></i>&nbsp;立即预约</asp:LinkButton>
                 </p>
             </div>
         </div>

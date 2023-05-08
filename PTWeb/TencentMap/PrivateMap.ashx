@@ -290,6 +290,10 @@ public class PrivateMap : IHttpHandler
             Encoding = System.Text.Encoding.UTF8
         })
         {
+            ///https://apis.map.qq.com/ws/place/v1/search?key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX&keyword=%E4%B8%9C%E5%8D%87%E8%8A%B1%E5%9B%AD&boundary=nearby(31.85374,117.30346,1000,1)
+            ///地点搜索             
+
+
             //strZB = "31.85367,117.3034";
             //  https://apis.map.qq.com/place_cloud/search/nearby?key=Q4KBZ-CNBCW-J6ER6-RWZNB-FCVYZ-TWBGX&table_id=0p14UnzPpSeGP5XMT1&location=31.85367,117.3034&radius=200
             /// 私有库查询地址信息

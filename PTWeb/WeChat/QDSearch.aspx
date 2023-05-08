@@ -273,7 +273,6 @@
                     <div class="col-sm-9" id="showUpImg">
                         <input type="file" name="UpImg" id="id-input" capture="camera" accept="image/*" />
                     </div>
-
                     <%--<div class="col-sm-9" id="preview1">
                         <input type="file" name="UpImg" capture="camera" value="拍照" accept="image/*" />
                         <input id="AddImg" type="button" class="btn btn-info" value="+" onclick="add()" />
@@ -286,9 +285,8 @@
             <div class="col-xs-12" runat="server" id="WellList" />
         </div>
         <div class="clearfix form-actions">
-            <div class="col-md-offset-3 col-md-9">
                 <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" OnClientClick="return PleaseWaite();" ID="GridView_Bug_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Bug_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 签 到</asp:LinkButton>
-            </div>
+                <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" ID="LinkButton1" class="btn btn-success pull-right" runat="server" OnClick="LinkButton1_Click"><i class="icon-search bigger-110"></i>历史签到查询</asp:LinkButton>
         </div>
         <div class="page-content">
             <div id="QDList" runat="server" class="timeline-container"></div>
