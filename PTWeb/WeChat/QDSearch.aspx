@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="QDSearch.aspx.cs" Inherits="WeChat_QDSearch" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <script src="/js/jweixin-1.6.0.js"></script>
+    <script src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         var i = 0;// 用于计算ID
         var QDRemark = false; //是否需要写签到说明
@@ -285,8 +285,8 @@
             <div class="col-xs-12" runat="server" id="WellList" />
         </div>
         <div class="clearfix form-actions">
-                <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" OnClientClick="return PleaseWaite();" ID="GridView_Bug_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Bug_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 签 到</asp:LinkButton>
-                <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" ID="LinkButton1" class="btn btn-success pull-right" runat="server" OnClick="LinkButton1_Click"><i class="icon-search bigger-110"></i>历史签到查询</asp:LinkButton>
+            <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" OnClientClick="return PleaseWaite();" ID="GridView_Bug_LinkButton1" class="btn btn-info" runat="server" OnClick="GridView_Bug_LinkButton1_Click"><i class="icon-ok bigger-110"></i> 签 到</asp:LinkButton>
+            <asp:LinkButton UseSubmitBehavior="false" ClientIDMode="Static" ID="LinkButton1" class="btn btn-success pull-right" runat="server" OnClick="LinkButton1_Click"><i class="icon-search bigger-110"></i>历史签到查询</asp:LinkButton>
         </div>
         <div class="page-content">
             <div id="QDList" runat="server" class="timeline-container"></div>

@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
-    <script src="/js/jweixin-1.6.0.js"></script>
+    <script src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         function PleaseWaite() {
             var temp = document.getElementById("demo").innerHTML;

@@ -201,7 +201,7 @@ public partial class GDGL_Default : PageBase
         GridView1.Rows[e.NewSelectedIndex].Cells[3].BackColor = Color.FromName("#CAD3E4");
         GridView1.Rows[e.NewSelectedIndex].Cells[4].BackColor = Color.FromName("#CAD3E4");
         GridView1.Rows[e.NewSelectedIndex].Cells[5].BackColor = Color.FromName("#CAD3E4");
-        GridView1.Rows[e.NewSelectedIndex].Cells[6].BackColor = Color.FromName("#CAD3E4");
+        //   GridView1.Rows[e.NewSelectedIndex].Cells[6].BackColor = Color.FromName("#CAD3E4");
         LoadSGRY(Convert.ToInt32(GridView1.DataKeys[e.NewSelectedIndex].Values[0]));
     }
 

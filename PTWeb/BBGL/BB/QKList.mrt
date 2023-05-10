@@ -12,7 +12,7 @@
     <DataSources isList="true" count="1">
       <主数据 Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
         <Alias>主数据</Alias>
-        <Columns isList="true" count="7">
+        <Columns isList="true" count="10">
           <value>CNAME,System.String</value>
           <value>CTime,System.DateTime</value>
           <value>QDFlag,System.String</value>
@@ -20,19 +20,22 @@
           <value>ZB_Name,System.String</value>
           <value>ZB_WZ,System.String</value>
           <value>Remark,System.String</value>
+          <value>Days,System.String</value>
+          <value>Times,System.String</value>
+          <value>MapID,System.String</value>
         </Columns>
         <CommandTimeout>30</CommandTimeout>
         <Dictionary isRef="1" />
         <Name>主数据</Name>
         <NameInSource>连接</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>Select CNAME,W_KQ.CTime,QDFlag,MDD,ZB_Name,ZB_WZ,W_KQ.Remark from W_KQ,S_USERINFO where UserID=S_USERINFO.ID and W_KQ.CTime between '{STIME}' and  '{ETIME}' order by CNAME,W_KQ.CTime</SqlCommand>
+        <SqlCommand>Select CNAME,CONVERT(VARCHAR(10),W_KQ.CTime,120) Days,CONVERT(VARCHAR(10) ,W_KQ.CTime,108) Times,QDFlag,MDD,ZB_Name,ZB_WZ,W_KQ.Remark,MapID from W_KQ,S_USERINFO where UserID=S_USERINFO.ID and W_KQ.CTime between '{STIME}' and  '{ETIME}' order by CNAME,W_KQ.CTime</SqlCommand>
       </主数据>
     </DataSources>
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Variables isList="true" count="2">
-      <value>,STIME,STIME,,System.String,_x0032_023-05-01,False,False,True</value>
+      <value>,STIME,STIME,,System.String,_x0032_023-04-01,False,False,True</value>
       <value>,ETIME,ETIME,,System.String,_x0032_025-05-31,False,False,True</value>
     </Variables>
   </Dictionary>
@@ -48,12 +51,12 @@
           <Brush>Transparent</Brush>
           <BusinessObjectGuid isNull="true" />
           <ClientRectangle>0,0.4,27.7,1.6</ClientRectangle>
-          <ColumnCount>7</ColumnCount>
-          <Components isList="true" count="14">
+          <ColumnCount>9</ColumnCount>
+          <Components isList="true" count="18">
             <Table主数据_Cell1 Ref="6" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>0,0,3.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9,Bold</Font>
               <HorAlignment>Center</HorAlignment>
@@ -75,7 +78,7 @@
             <Table主数据_Cell2 Ref="7" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,0,3.2,0.8</ClientRectangle>
+              <ClientRectangle>3.2,0,3.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9,Bold</Font>
               <HorAlignment>Center</HorAlignment>
@@ -89,7 +92,7 @@
               <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <ShiftMode>None</ShiftMode>
-              <Text>时间</Text>
+              <Text>日期</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -97,14 +100,53 @@
             <Table主数据_Cell3 Ref="8" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5,0,1.8,0.8</ClientRectangle>
+              <ClientRectangle>6.4,0,3.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,9,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>14</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据_Cell3</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <PrintOn>OnlyFirstPage</PrintOn>
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>时间</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据_Cell3>
+            <Table主数据_Cell4 Ref="9" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>9.6,0,3,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,9,Bold</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>16</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据_Cell4</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>MapID</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据_Cell4>
+            <Table主数据_Cell5 Ref="10" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>12.6,0,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>2</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell3</Name>
+              <Name>Table主数据_Cell5</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Printable>False</Printable>
@@ -115,18 +157,18 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell3>
-            <Table主数据_Cell4 Ref="9" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据_Cell5>
+            <Table主数据_Cell6 Ref="11" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.8,0,3.2,0.8</ClientRectangle>
+              <ClientRectangle>15.6,0,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>3</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell4</Name>
+              <Name>Table主数据_Cell6</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Printable>False</Printable>
@@ -137,18 +179,18 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell4>
-            <Table主数据_Cell5 Ref="10" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据_Cell6>
+            <Table主数据_Cell7 Ref="12" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10,0,5,0.8</ClientRectangle>
+              <ClientRectangle>18.6,0,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>4</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell5</Name>
+              <Name>Table主数据_Cell7</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Printable>False</Printable>
@@ -159,18 +201,18 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell5>
-            <Table主数据_Cell6 Ref="11" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据_Cell7>
+            <Table主数据_Cell8 Ref="13" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15,0,8.8,0.8</ClientRectangle>
+              <ClientRectangle>21.6,0,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>5</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell6</Name>
+              <Name>Table主数据_Cell8</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Printable>False</Printable>
@@ -181,18 +223,18 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell6>
-            <Table主数据_Cell7 Ref="12" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据_Cell8>
+            <Table主数据_Cell9 Ref="14" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.8,0,3.9,0.8</ClientRectangle>
+              <ClientRectangle>24.6,0,3.1,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9,Bold</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>6</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell7</Name>
+              <Name>Table主数据_Cell9</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Printable>False</Printable>
@@ -203,136 +245,178 @@
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell7>
-            <Table主数据_Cell8 Ref="13" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据_Cell9>
+            <Table主数据_Cell10 Ref="15" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0,0.8,1.8,0.8</ClientRectangle>
+              <ClientRectangle>0,0.8,3.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>7</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell8</Name>
+              <Name>Table主数据_Cell10</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>{主数据.CNAME}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell8>
-            <Table主数据_Cell9 Ref="14" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            </Table主数据_Cell10>
+            <Table主数据_Cell11 Ref="16" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>1.8,0.8,3.2,0.8</ClientRectangle>
+              <ClientRectangle>3.2,0.8,3.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
               <ID>8</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell9</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.CTime}</Text>
-              <TextBrush>Black</TextBrush>
-              <TextFormat Ref="15" type="DateFormat" isKey="true">
-                <StringFormat>f</StringFormat>
-              </TextFormat>
-              <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell9>
-            <Table主数据_Cell10 Ref="16" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
-              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>5,0.8,1.8,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>新宋体,9</Font>
-              <HorAlignment>Center</HorAlignment>
-              <ID>9</ID>
-              <JoinCells isList="true" count="0" />
-              <Margins>0,0,0,0</Margins>
-              <Name>Table主数据_Cell10</Name>
-              <Page isRef="4" />
-              <Parent isRef="5" />
-              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.QDFlag}</Text>
-              <TextBrush>Black</TextBrush>
-              <VertAlignment>Center</VertAlignment>
-            </Table主数据_Cell10>
-            <Table主数据_Cell11 Ref="17" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
-              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
-              <Brush>Transparent</Brush>
-              <ClientRectangle>6.8,0.8,3.2,0.8</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Font>新宋体,9</Font>
-              <HorAlignment>Center</HorAlignment>
-              <ID>10</ID>
-              <JoinCells isList="true" count="0" />
-              <Margins>0,0,0,0</Margins>
               <Name>Table主数据_Cell11</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.MDD}</Text>
+              <Text>{主数据.Days}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="17" type="DateFormat" isKey="true">
+                <StringFormat>D</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell11>
             <Table主数据_Cell12 Ref="18" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>10,0.8,5,0.8</ClientRectangle>
+              <ClientRectangle>6.4,0.8,3.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
-              <Font>新宋体,9</Font>
+              <Font>Arial,9</Font>
               <HorAlignment>Center</HorAlignment>
-              <ID>11</ID>
+              <ID>15</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据_Cell12</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.ZB_Name}</Text>
+              <Text>{主数据.Times}</Text>
               <TextBrush>Black</TextBrush>
+              <TextFormat Ref="19" type="TimeFormat" isKey="true">
+                <StringFormat>HH:mm:ss</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell12>
-            <Table主数据_Cell13 Ref="19" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据_Cell13 Ref="20" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>15,0.8,8.8,0.8</ClientRectangle>
+              <ClientRectangle>9.6,0.8,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
-              <ID>12</ID>
+              <ID>17</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据_Cell13</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.ZB_WZ}</Text>
+              <Text>{主数据.MapID}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell13>
-            <Table主数据_Cell14 Ref="20" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+            <Table主数据_Cell14 Ref="21" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>23.8,0.8,3.9,0.8</ClientRectangle>
+              <ClientRectangle>12.6,0.8,3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>新宋体,9</Font>
               <HorAlignment>Center</HorAlignment>
-              <ID>13</ID>
+              <ID>9</ID>
               <JoinCells isList="true" count="0" />
               <Margins>0,0,0,0</Margins>
               <Name>Table主数据_Cell14</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
-              <Text>{主数据.Remark}</Text>
+              <Text>{主数据.QDFlag}</Text>
               <TextBrush>Black</TextBrush>
               <VertAlignment>Center</VertAlignment>
             </Table主数据_Cell14>
+            <Table主数据_Cell15 Ref="22" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.6,0.8,3,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,9</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>10</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据_Cell15</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{主数据.MDD}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据_Cell15>
+            <Table主数据_Cell16 Ref="23" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>18.6,0.8,3,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,9</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>11</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据_Cell16</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{主数据.ZB_Name}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据_Cell16>
+            <Table主数据_Cell17 Ref="24" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>21.6,0.8,3,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,9</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>12</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据_Cell17</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{主数据.ZB_WZ}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据_Cell17>
+            <Table主数据_Cell18 Ref="25" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
+              <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>24.6,0.8,3.1,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>新宋体,9</Font>
+              <HorAlignment>Center</HorAlignment>
+              <ID>13</ID>
+              <JoinCells isList="true" count="0" />
+              <Margins>0,0,0,0</Margins>
+              <Name>Table主数据_Cell18</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
+              <Text>{主数据.Remark}</Text>
+              <TextBrush>Black</TextBrush>
+              <VertAlignment>Center</VertAlignment>
+            </Table主数据_Cell18>
           </Components>
           <Conditions isList="true" count="0" />
           <DataSourceName>主数据</DataSourceName>
@@ -340,7 +424,7 @@
           <HeaderRowsCount>1</HeaderRowsCount>
           <MinHeight>0.4</MinHeight>
           <Name>Table主数据</Name>
-          <NumberID>14</NumberID>
+          <NumberID>18</NumberID>
           <Page isRef="4" />
           <Parent isRef="4" />
           <RowCount>2</RowCount>
@@ -355,13 +439,13 @@
       <PageHeight>21</PageHeight>
       <PageWidth>29.7</PageWidth>
       <Report isRef="0" />
-      <Watermark Ref="21" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+      <Watermark Ref="26" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
         <Font>Arial,100</Font>
         <TextBrush>[50:0:0:0]</TextBrush>
       </Watermark>
     </Page1>
   </Pages>
-  <PrinterSettings Ref="22" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <PrinterSettings Ref="27" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
   <ReferencedAssemblies isList="true" count="8">
     <value>System.Dll</value>
     <value>System.Drawing.Dll</value>
@@ -373,10 +457,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>5/6/2023 4:06:36 PM</ReportChanged>
+  <ReportChanged>5/10/2023 2:12:54 PM</ReportChanged>
   <ReportCreated>5/6/2023 3:23:10 PM</ReportCreated>
   <ReportFile>D:\WebNet\PTWeb\BBGL\BB\QKList.mrt</ReportFile>
-  <ReportGuid>dc70e8cc2259421797235f0a66407d63</ReportGuid>
+  <ReportGuid>66156fec69454c49b6656610f87c34d8</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

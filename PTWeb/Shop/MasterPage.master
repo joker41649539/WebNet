@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Shop_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="/assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/assets/alert/alert.css" />
+
+    <script src='/assets/alert/alert.js'></script>
+    <script src="/assets/js/ace-extra.min.js"></script>
+    <script src='/assets/alert/shCore.js'></script>
+    <script src='/assets/alert/makeSy.js'></script>
+
+    <script src="/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="/assets/js/ace-elements.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/XMFightLogo.ico" media="screen" />
+    <title>SpaServer</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <img src="/images/SpaBanner01.png" class="img-rounded" width="100%" />
+        <div class="row page-content">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <img src="/images/Server.png" class="img-rounded" width="100%" />
+        </div>
+
+        <!-- 主循环 结束-->
+        <div class="row" style="height: 60px;">
+            &nbsp;
+        </div>
+        <!-- 底部代码 开始-->
+        <div runat="server" id="FootBut" style="height: auto;">
+            <ul class="footer-nav2 text-center">
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Default.aspx"><i class="icon-home"></i>首页</a></li>
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Order.aspx"><i class="icon-calendar"></i>订单</a></li>
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/My.aspx"><i class="icon-user"></i>我的</a></li>
+            </ul>
+        </div>
+    </form>
+</body>
+</html>
