@@ -130,6 +130,7 @@
               <Name>Table主数据_Cell4</Name>
               <Page isRef="4" />
               <Parent isRef="5" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>MapID</Text>
               <TextBrush>Black</TextBrush>
@@ -457,10 +458,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>5/10/2023 2:12:54 PM</ReportChanged>
+  <ReportChanged>5/11/2023 8:34:15 AM</ReportChanged>
   <ReportCreated>5/6/2023 3:23:10 PM</ReportCreated>
   <ReportFile>D:\WebNet\PTWeb\BBGL\BB\QKList.mrt</ReportFile>
-  <ReportGuid>66156fec69454c49b6656610f87c34d8</ReportGuid>
+  <ReportGuid>a0663aafe8fe4dc1b1a8fe0010d16586</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

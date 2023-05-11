@@ -5,18 +5,21 @@
         <div class="box">
             <div class="list-item">
                 <div class="item-img">
-                    <img src="/img/01.jpg" alt="">
+                    <a href="/Shop/GoodsInfo.aspx?ID=1">
+                        <img src="/img/01.jpg" alt=""></a>
                 </div>
                 <div class="alert alert-danger">
-                    <h5 id="show" class="center" clientidmode="Static" runat="server">
-                        <span></span>小时<span></span>分<span></span>秒</h5>
+                    <a href="/Shop/GoodsInfo.aspx?ID=1">
+                        <h5 id="show" class="center" clientidmode="Static" runat="server">
+                            <span></span>小时<span></span>分<span></span>秒</h5>
+                    </a>
                 </div>
-                <div class="item-tt">CSS3网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效 - 站长素材</div>
+                <div class="item-tt"><a href="/Shop/GoodsInfo.aspx?ID=1">CSS3网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效 - 站长素材</a></div>
                 <div class="clearfix">
                     <div class="money">￥<span>168</span></div>
                 </div>
                 <div class="pull-right">
-                    <a href="#" class="btn btn-xs btn-success">立即抢购</a>
+                    <a href="/Shop/GoodsInfo.aspx?ID=1" class="btn btn-xs btn-success">立即抢购</a>
                 </div>
             </div>
         </div>
