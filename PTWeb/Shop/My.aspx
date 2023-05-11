@@ -63,7 +63,7 @@
                 <i class="icon-cogs bigger-230"></i>
                 个人设置
             </a>
-            <a href="#" class="btn btn-app btn-inverse">
+            <a href="/Shop/GoodsAdd.aspx" class="btn btn-app btn-inverse">
                 <i class="icon-gift bigger-230"></i>
                 藏品添加
             </a>
@@ -75,7 +75,7 @@
                 <i class="icon-group bigger-230"></i>
                 会员管理
             </a>
-            <a href="#" class="btn btn-app btn-inverse">
+            <a href="/Shop/SysSet.aspx" class="btn btn-app btn-inverse">
                 <i class="icon-cogs bigger-230"></i>
                 系统设置
             </a>
