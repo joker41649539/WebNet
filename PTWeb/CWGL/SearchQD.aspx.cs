@@ -183,7 +183,16 @@ public partial class CWGL_SearchQD : PageBase
                         strTemp += " <span class='label label-warning label-sm'>设备异常</span>";
                     }
 
-                    strTemp += "  <a target='_blank' href='/CWGL/MapTencent.aspx?iJD=" + OP_Mode.Dtv[i]["ZB_WD"] + "&iWD=" + OP_Mode.Dtv[i]["ZB_JD"] + "'><span class='grey'>" + OP_Mode.Dtv[i]["ZB_Name"] + "<br/>" + OP_Mode.Dtv[i]["ZB_WZ"] + "</span></a>";
+                    strTemp += "  <a target='_blank' href='/CWGL/MapTencent.aspx?iJD=" + OP_Mode.Dtv[i]["ZB_WD"] + "&iWD=" + OP_Mode.Dtv[i]["ZB_JD"] + "'><span class='grey'>" + OP_Mode.Dtv[i]["ZB_Name"];
+                    if (OP_Mode.Dtv[i]["MapID"].ToString().Length > 0)
+                    {
+                        strTemp += "<span class='label label-success label-sm'>指定地点</span>";
+                    }
+                    else
+                    {
+                       // strTemp += "<span class='label label-danger label-sm'>地点异常</span>";
+                    }
+                    strTemp += "<br/>" + OP_Mode.Dtv[i]["ZB_WZ"] + "</span></a>";
 
                     strTemp += " </h5>";
                     strTemp += "          <span class='widget-toolbar'>";
@@ -193,7 +202,7 @@ public partial class CWGL_SearchQD : PageBase
                     strTemp += "         </span>";
                     strTemp += "     </div>";
                     strTemp += "     <div class='widget-body'>";
-                    strTemp += "         <div class='widget-main'>";
+                    strTemp += "         <div class='widget-main'>" + OP_Mode.Dtv[i]["MDD"] + "<br/>";
 
                     if (i > 0)
                     {

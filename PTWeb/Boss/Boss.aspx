@@ -13,7 +13,7 @@
             <li class="active"><a href="/Boss/">Boss界面</a></li>
         </ul>
     </div>
-    <div class="col-xs-12">
+    <div class="col-xs-12 center">
         <h3 class="header smaller lighter green">快捷功能</h3>
         <p>
             <asp:LinkButton ID="LinkButton3" PostBackUrl="/Boss/Boss.aspx" class="btn btn-app btn-primary" runat="server"><i class="icon-home bigger-230"></i>

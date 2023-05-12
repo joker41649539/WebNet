@@ -38,9 +38,9 @@
         <Parameters isList="true" count="0" />
         <SqlCommand>Select a.ID,C.kzxm,c.Occurrence,(Select sum(BXJE) from W_BXD1,W_BXD2 where W_BXD1.BXDH=W_BXD2.BXDH and UserName=a.username  and FLAG=6) hzje,(select stuff((select char(10)+becity+'-'+Arrival+' '+convert(nvarchar(max),bxje)+' '+Remark from W_BXD2 where bxdh=a.BXDH for xml path('')),1,1,'')) as mxremark,(Select top 1
 case KZXM when '补助' then '早：' + cast(BreakFirst as nvarchar)+'中：' + cast(ZCBZ as nvarchar)+'晚：' + cast(WCBZ as nvarchar)+'单住：' + cast(ZSBZ as nvarchar)+'多住：' + cast(DRZS as nvarchar) + ' ' +Remark
-when '交通费' then Becity+ '-'+Arrival + ' ' +Remark when '运输费' then Becity+ '-'+Arrival + ' ' +Remark
+when '交通费' then Becity+ '-'+Arrival + ' ' +Remark when '运输费' then Becity+ '-'+Arrival + ' ' +Remark when '加油费' then '开始里程:'+cast(JY1 as nvarchar)+' 结束里程:'+cast(JY2 as nvarchar)+' 实际里程:'+cast(jy2-JY1 as nvarchar)+' 过路过桥费:'+cast(JY3 as nvarchar)+' '+Remark
  else MC+Remark end test from W_BXD2 where ID=c.id) NewRemark,c.TXR,(SELECT stuff((select ','+convert(varchar(25),  W_Examine.UserName) FROM W_Examine,W_BXD1 where djbh=W_BXD1.BXDH and djbh=c.BXDH and OldFlag&gt;0 
-	group by W_Examine.UserName FOR XML PATH('')), 1, 1, '') ) SPR,
+ group by W_Examine.UserName FOR XML PATH('')), 1, 1, '') ) SPR,
 CONVERT(varchar(100), (Select top 1 W_Examine.CTime from W_Examine,W_BXD1 where djbh=W_BXD1.BXDH  and djbh=c.BXDH and NewFlag&gt;1 and NewFlag&lt;=6 and OldFlag&gt;0), 102) SPRSJ,UserName,(Select top 1 id from S_USERINFO where CNAME=a.UserName) UID ,
 (Select BXJE from W_BXD2 where ID=C.ID) ZJE,FLAG,a.LTIME,a.BXDH,a.remark ,c.remark CREMARK from w_bxd1 a,W_BXD2 c
 WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59:59' GROUP BY  a.ID,a.BXDH,UserName,FLAG,a.LTIME,a.remark,c.bxdh,c.KZXM,c.TXR,C.ID,c.Occurrence,c.Remark ORDER BY UID
@@ -720,10 +720,10 @@ WHERE a.BXDH=c.BXDH and flag=6 AND a.LTime bETWEEN '{STIME}' AND '{ETIME}  23:59
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/18/2023 2:42:07 PM</ReportChanged>
+  <ReportChanged>5/12/2023 1:48:46 PM</ReportChanged>
   <ReportCreated>4/6/2021 10:09:27 AM</ReportCreated>
   <ReportFile>D:\WebNet\PTWeb\BBGL\BB\BxdByUser.mrt</ReportFile>
-  <ReportGuid>77da19a9fe85494296649d3ecaaaa040</ReportGuid>
+  <ReportGuid>9736fe749c41482fa5c9b73f932d0837</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

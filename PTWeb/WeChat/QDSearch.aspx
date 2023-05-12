@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="QDSearch.aspx.cs" Inherits="WeChat_QDSearch" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script src="/js/jweixin-1.6.0.js"></script>
     <script src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script type="text/javascript">
         var i = 0;// 用于计算ID

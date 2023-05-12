@@ -19,7 +19,4 @@ public partial class Shop_Default2 : PageBaseShop
             }
         }
     }
-
-    
-    
 }

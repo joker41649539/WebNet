@@ -13,8 +13,8 @@
             <li class="active"><a href="/Boss/">Boss界面</a></li>
         </ul>
     </div>
-    <div class="col-xs-12">
-        <h3 class="header smaller lighter blue">&nbsp;<i class="icon-desktop"></i>&nbsp;&nbsp;快捷功能</h3>
+    <div class="col-xs-12 center">
+        <br />
         <p>
             <asp:LinkButton ID="LinkButton3" PostBackUrl="/Boss/" class="btn btn-app btn-primary" runat="server"><i class="icon-home bigger-230"></i>
                     主&nbsp;&nbsp;页</asp:LinkButton>
@@ -68,11 +68,13 @@
     <div class="col-sm-12">
         <div class="col-sm-5">
             <h3 class="header smaller lighter blue"><i class="icon-bar-chart"></i>&nbsp;人员信息</h3>
-            <div class="input-group">
+            <%--            <div class="input-group">
                 <asp:TextBox ID="TextBox_SETime" ClientIDMode="Static" class="form-control" name="date-range-picker" runat="server"></asp:TextBox>
                 <asp:LinkButton ID="LinkButton1" class="input-group-addon" runat="server"><i class="icon-search bigger-110"></i>&nbsp;查询</asp:LinkButton>
-            </div>
+            </div>--%>
             <div class="space-10"></div>
+            <div class="page-content" runat="server" id="Div_User">
+            </div>
             <div class="page-content">
                 <!--人员启用 开始 //-->
                 <div class="widget-main no-padding">

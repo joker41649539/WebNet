@@ -28,16 +28,21 @@ public partial class Partner_PartnerRemarkAdd : PageBase
         string strTemp = string.Empty;
         try
         {
+//            1、用工费用：
+//2、日均积分能效比：
+//3、能做什么：
+//4、是否粗糙：
+//5、是否斤斤计较：
+//6、干活效率：
+//7、其它说明：
             /// 首次填写 给出默认格式。
-            strTemp = "1、能做什么：\r\n";
-            strTemp += "\r\n";
-            strTemp += "2、是否粗糙：\r\n";
-            strTemp += "3、是否斤斤计较：\r\n";
-            strTemp += "4、干活效率：\r\n";
-            strTemp += "\r\n";
-            strTemp += "5、用工费用：\r\n";
-            strTemp += "\r\n";
-            strTemp += "6、其它说明：\r\n";
+            strTemp = "1、用工费用：\r\n";
+            strTemp += "2、日均积分能效比：\r\n";
+            strTemp += "3、能做什么：\r\n";
+            strTemp += "4、是否粗糙：\r\n";
+            strTemp += "5、是否斤斤计较：\r\n";
+            strTemp += "6、干活效率：\r\n";
+            strTemp += "7、其它说明：\r\n";
 
             int ID = Convert.ToInt32(Request["ID"]);
 

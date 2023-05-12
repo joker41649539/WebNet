@@ -19,4 +19,9 @@ public partial class Shop_Default2 :PageBaseShop
             }
         }
     }
+
+    protected void Button_Save_Click(object sender, EventArgs e)
+    {
+
+    }
 }

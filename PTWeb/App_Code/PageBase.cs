@@ -1211,11 +1211,11 @@ public class PageBase : System.Web.UI.Page
         // WeiXinOpenID = "oDg2PuFTJIO5P0o_Q3KRG_HplGJ0"; Â½Ïþ¾ûµÄ ÆÕÌï¹«ÖÚºÅOPID
         if (sURL.Length == 0)
         {
-            sURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fwww.putian.ink%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            sURL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Fwww.putian.ink%2FDefault.aspx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
         }
         else
         {
-            sURL = string.Format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=http%3A%2F%2Fwww.putian.ink%2F{0}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect", sURL);
+            sURL = string.Format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03159369fc0c71c2&redirect_uri=https%3A%2F%2Fwww.putian.ink%2F{0}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect", sURL);
         }
 
         if (WeiXinOpenID != null)

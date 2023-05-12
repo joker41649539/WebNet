@@ -82,12 +82,12 @@
             <!-- 底部代码 开始-->
             <div runat="server" id="FootBut" style="height: auto;">
                 <ul class="footer-nav text-center">
-                    <li><a class="btn btn-app btn-white btn-xs" href="/Fil/Info.aspx"><i class="icon-home"></i>汇总信息</a></li>
-                    <li><a class="btn btn-app btn-white btn-xs" href="/Fil/Goods.aspx"><i class="icon-bar-chart"></i>产品信息</a></li>
-                    <li><a class="btn btn-app btn-white btn-xs" href="https://filfox.info/zh/address/f063628"><i class="icon-cloud"></i>黑瞳节点</a></li>
+                    <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Fil/Info.aspx"><i class="icon-home"></i>汇总信息</a></li>
+                    <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Fil/Goods.aspx"><i class="icon-bar-chart"></i>产品信息</a></li>
+                    <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="https://filfox.info/zh/address/f063628"><i class="icon-cloud"></i>黑瞳节点</a></li>
                     <%--                    <li><a class="btn btn-app btn-white btn-xs" href="/fIL/Withdrawal.aspx"><i class="icon-credit-card"></i>我要提现</a></li>--%>
-                    <li><a class="btn btn-app btn-white btn-xs" href="/Fil/MyInfo.aspx"><i class="icon-desktop"></i>我的信息</a></li>
-                    <li><a class="btn btn-app btn-white btn-xs" href="/Fil/Help.aspx"><i class="icon-exclamation-sign"></i>帮助信息</a></li>
+                    <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Fil/MyInfo.aspx"><i class="icon-desktop"></i>我的信息</a></li>
+                    <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Fil/Help.aspx"><i class="icon-exclamation-sign"></i>帮助信息</a></li>
                 </ul>
             </div>
             <!-- 底部代码 结束-->

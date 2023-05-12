@@ -24,6 +24,7 @@ public partial class Boss_Default : PageBase
     /// </summary>
     private void LoadPartner()
     {
+        string TempDiv = string.Empty;
         string strSQL = string.Empty;
         /// 日期期限
         string StartTime = System.DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
@@ -44,6 +45,7 @@ public partial class Boss_Default : PageBase
 
         strSQL = "Select *,AZJF+YesDayBXFS+YesDayWXFS SumFS from ";
         strSQL += " (SELECT S_USERINFO.ID,CName,isnull((Select top 1 '['+format(CTime,'yyyy-MM-dd HH:mm')+']'+ZB_Name from W_KQ where UserID=S_USERINFO.ID order by ctime desc),'') QD";
+        strSQL += " ,isnull((Select top 1 MapID from W_KQ where UserID = S_USERINFO.ID order by ctime desc),'') MapID";
         strSQL += " ,isnull((Select sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100) from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and W_GCGD_FS.CTIME between '" + StartTime + "' and '" + EndTime + "' and USERID = S_USERINFO.ID),0) AZJF";
         strSQL += " ,isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS * W_GCGD2.FS / 100) NFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where LTIME between '" + StartTime + "' and '" + EndTime + "' and USERID = S_USERINFO.ID group by GCMXID, UserID) b, W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where LTIME < '" + StartTime + "' and USERID = S_USERINFO.ID group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) YesDayBXFS";
         strSQL += " ,Isnull((Select Sum(SumJF) from W_WXD where Ltime between '" + StartTime + "' and '" + EndTime + "' and W_WXD.WXRY = S_USERINFO.ID and Del = 0 and FLAG = 1),0) YesDayWXFS";
@@ -54,12 +56,73 @@ public partial class Boss_Default : PageBase
             if (OP_Mode.Dtv.Count > 0)
             {//加载待审核
                 /// 设置排序
-                if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+                //if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+                //{
+                //    OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+                //}
+                //GridView_Boss1.DataSource = OP_Mode.Dtv;
+                //GridView_Boss1.DataBind();
+
+                for (int i = 0; i < OP_Mode.Dtv.Count; i++)
                 {
-                    OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+                    TempDiv += "<div class=\"well row\">";
+                    TempDiv += "    <div class=\"col-xs-12\">";
+                    TempDiv += "        <h4><a href=\"/CWGL/SearchQD.aspx?UserName=" + OP_Mode.Dtv[i]["CNAME"].ToString() + "\" class=\"left\"><b>" + OP_Mode.Dtv[i]["CNAME"].ToString() + "</b></a>&nbsp;";
+                    if (Convert.ToInt32(OP_Mode.Dtv[i]["SumFS"]) == 0)
+                    {
+                        TempDiv += " <span class=\"label pull-right\">";
+                    }
+                    else
+                    {
+                        TempDiv += " <span class=\"label label-success pull-right\">";
+                    }
+                    TempDiv += " 昨日积分累计：" + OP_Mode.Dtv[i]["SumFS"].ToString() + "</span></h4>";
+                    TempDiv += "       <h3> <p>";
+                    TempDiv += "            <i class=\"icon-globe\"></i>&nbsp;" + OP_Mode.Dtv[i]["QD"].ToString() + "";
+
+                    if (OP_Mode.Dtv[i]["MapID"].ToString().Length > 0)
+                    {
+                        TempDiv += "            <span class=\"label label-warning\">指定签到点</span>";
+                    }
+                    TempDiv += "        </p> </h3>";
+                    TempDiv += "        <h5>";
+                    if (Convert.ToInt32(OP_Mode.Dtv[i]["YesDayBXFS"]) == 0)
+                    {
+                        TempDiv += " <span class=\"label\">";
+                    }
+                    else
+                    {
+                        TempDiv += " <span class=\"label label-success\">";
+                    }
+                    TempDiv += " 布线：" + OP_Mode.Dtv[i]["YesDayBXFS"].ToString() + "</span>&nbsp;";
+                    if (Convert.ToInt32(OP_Mode.Dtv[i]["AZJF"]) == 0)
+                    {
+                        TempDiv += " <span class=\"label\">";
+                    }
+                    else
+                    {
+                        TempDiv += " <span class=\"label label-success\">";
+                    }
+                    TempDiv += "安装：" + OP_Mode.Dtv[i]["AZJF"].ToString() + "</span>&nbsp;";
+
+                    if (Convert.ToInt32(OP_Mode.Dtv[i]["YesDayWXFS"]) == 0)
+                    {
+                        TempDiv += " <span class=\"label\">";
+                    }
+                    else
+                    {
+                        TempDiv += " <span class=\"label label-success\">";
+                    }
+
+                    TempDiv += "维保：" + OP_Mode.Dtv[i]["YesDayWXFS"].ToString() + "</span></h5>";
+                    TempDiv += "    </div>";
+                    TempDiv += "</div>";
                 }
-                GridView_Boss1.DataSource = OP_Mode.Dtv;
-                GridView_Boss1.DataBind();
+
+                if (TempDiv.Length > 0)
+                {
+                    Div_User.InnerHtml = TempDiv;
+                }
             }
         }
     }

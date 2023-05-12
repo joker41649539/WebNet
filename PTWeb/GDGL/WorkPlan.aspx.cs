@@ -46,7 +46,7 @@ public partial class GDGL_WorkPlan : PageBase
         //string ETime = Convert.ToDateTime(STime).AddDays(-1).ToString("yyyy-MM-dd");
 
         /// 查询工程和布线所有人员名单。
-        strSQL = "SELECT S_USERINFO.ID,CName,GCID,WID,a.UserID,CZRID,nFlag,a.LTime,GCDD,GCMC,a.Remark,case gcid when 0 then '['+nFlag+']'+a.Remark else  '['+nFlag+']'+GCMC end NRemark from S_USERINFO left join (Select GCID,UserID,CZRID,nFlag,W_WorkPlan.LTime,GCDD,GCMC,Remark,W_WorkPlan.ID WID from W_WorkPlan left join W_GCGD1 on GCID= W_GCGD1.id where W_WorkPlan.ltime between '" + STime + "' and '" + STime + "') a on UserID=S_USERINFO.ID,S_YH_QXZ where (FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and (QXZID =3 or QXZID=4)) or FLAG=4 group by S_USERINFO.ID,CNAME,GCID,a.UserID,CZRID,nFlag,a.LTime,GCDD,GCMC,a.Remark,WID order by S_USERINFO.ID";
+        strSQL = "SELECT S_USERINFO.ID,CName,GCID,WID,a.UserID,CZRID,nFlag,a.LTime,GCDD,GCMC,a.Remark,case gcid when 0 then '['+nFlag+']'+a.Remark else  '['+nFlag+']'+GCMC end NRemark from S_USERINFO left join (Select GCID,UserID,CZRID,nFlag,W_WorkPlan.LTime,GCDD,GCMC,W_WorkPlan.Remark,W_WorkPlan.ID WID from W_WorkPlan left join W_GCGD1 on GCID= W_GCGD1.id where W_WorkPlan.ltime between '" + STime + "' and '" + STime + "') a on UserID=S_USERINFO.ID,S_YH_QXZ where (FLAG=0  and S_USERINFO.id=S_YH_QXZ.USERID and (QXZID =3 or QXZID=4)) or FLAG=4 group by S_USERINFO.ID,CNAME,GCID,a.UserID,CZRID,nFlag,a.LTime,GCDD,GCMC,a.Remark,WID order by S_USERINFO.ID";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
