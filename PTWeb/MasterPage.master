@@ -169,8 +169,17 @@
                 <i class="icon-double-angle-up icon-only bigger-110"></i>
             </a>
         </div>
-
-
+        <!-- 主循环 结束-->
+        <div class="row" style="height: 70px;">
+        </div>
+        <!-- 底部代码 开始-->
+        <div style="height: auto;">
+            <ul class="footer-nav2 text-center">
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="javascript:history.back(-1);"><i class="icon-double-angle-left"></i>上一页</a></li>
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Default.aspx"><i class="icon-home"></i>首页</a></li>
+            </ul>
+        </div>
+        <!-- 底部代码 结束-->
 
         <%--     <script src="/js/masonry-docs.min.js"></script>
         <script src="/assets/js/jquery-2.0.3.min.js"></script>--%>

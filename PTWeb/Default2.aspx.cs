@@ -273,51 +273,51 @@ protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
 
 {
 
-    string ID = GridView1.DataKeys[e.RowIndex].Values[0].ToString();
+    //string ID = GridView1.DataKeys[e.RowIndex].Values[0].ToString();
 
-    /// 模块名称
+    ///// 模块名称
 
-    string DB_01 = ((TextBox)GridView1.Rows[e.RowIndex].Cells[1].Controls[0]).Text.ToString().Replace("'", "\"");
+    //string DB_01 = ((TextBox)GridView1.Rows[e.RowIndex].Cells[1].Controls[0]).Text.ToString().Replace("'", "\"");
 
-    string DB_02 = ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString().Replace("'", "\"");
+    //string DB_02 = ((TextBox)GridView1.Rows[e.RowIndex].Cells[2].Controls[0]).Text.ToString().Replace("'", "\"");
 
-    if (!(DB_01.Length > 0))
+    //if (!(DB_01.Length > 0))
 
-    {
+    //{
 
-        MessageBox(GridView1_UpdatePanel1, "", "ID不允许为空！<br/>请认真填写。");
+    //    MessageBox(GridView1_UpdatePanel1, "", "ID不允许为空！<br/>请认真填写。");
 
-        return;
+    //    return;
 
-    }
+    //}
 
-    string strSQL = string.Empty;
+    //string strSQL = string.Empty;
 
-    strSQL = "Update S_Bug SET ID='" + DB_01 + "', Title='" + DB_02 + "', LTIME=GETDATE() WHERE ID=" + ID;
+    //strSQL = "Update S_Bug SET ID='" + DB_01 + "', Title='" + DB_02 + "', LTIME=GETDATE() WHERE ID=" + ID;
 
-    if (OP_Mode.SQLRUN(strSQL))
+    //if (OP_Mode.SQLRUN(strSQL))
 
-    {
+    //{
 
-        MessageBox(GridView1_UpdatePanel1, "", "数据更新成功!");
+    //    MessageBox(GridView1_UpdatePanel1, "", "数据更新成功!");
 
-    }
+    //}
 
-    else
+    //else
 
-    {
+    //{
 
-        MessageBox(GridView1_UpdatePanel1, "", "数据更新失败！<br/>错误：" + OP_Mode.strErrMsg);
+    //    MessageBox(GridView1_UpdatePanel1, "", "数据更新失败！<br/>错误：" + OP_Mode.strErrMsg);
 
-        return;
+    //    return;
 
-    }
+    //}
 
-    GridView1.SelectedIndex = -1;
+    //GridView1.SelectedIndex = -1;
 
-    GridView1.EditIndex = -1;
+    //GridView1.EditIndex = -1;
 
-    Load_GridView1();
+    //Load_GridView1();
 
 }
 

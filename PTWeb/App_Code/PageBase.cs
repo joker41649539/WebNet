@@ -12,8 +12,10 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Script.Serialization;
 using System.Web.UI;
+using System.Windows.Forms;
 using System.Xml;
 using Newtonsoft.Json;
+using Control = System.Web.UI.Control;
 
 /// <summary>
 /// Summary description for PageBase
@@ -1536,26 +1538,50 @@ public class PageBase : System.Web.UI.Page
     /// <returns></returns>
     public string GetJsApiTicket_Woker()
     {
+        string strSQL = String.Empty;
         string jsApiTicket = string.Empty;
+        string MSG = string.Empty;
         using (var client = new System.Net.WebClient()
         {
             Encoding = System.Text.Encoding.UTF8
         })
         {
-            string url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token={0}", GetWorkToken());
-            string data = client.DownloadString(url);
+            strSQL = "SELECT * FROM S_TYDM where ITYDMLB=5 and DATEDIFF(MI, LTIME, GETDATE()) < 0";
 
-            var serializer = new JavaScriptSerializer();
-            var obj = serializer.Deserialize<Dictionary<string, string>>(data);
-
-            if (!obj.TryGetValue("ticket", out jsApiTicket))
+            if (OP_Mode.SQLRUN(strSQL))
             {
+                if (OP_Mode.Dtv.Count > 0)
+                {/// Token 未过期，直接使用
+                    jsApiTicket = OP_Mode.Dtv[0]["CTYDMZ"].ToString();
+                }
+                else
+                { /// Token 已过期，从新读取
+                    string url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token={0}", GetWorkToken());
+                    string data = client.DownloadString(url);
 
-            }
-            else
-            {
+                    var serializer = new JavaScriptSerializer();
+                    var obj = serializer.Deserialize<Dictionary<string, string>>(data);
 
+                    if (!obj.TryGetValue("ticket", out jsApiTicket))
+                    {
+                        foreach (var key in obj.Keys)
+                        {
+                            MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+                        }
+                    }
+                    else
+                    {
+
+                        strSQL = "UPDATE S_TYDM SET CTIME=GETDATE(), LTIME = DATEADD(S," + obj["expires_in"] + ",GETDATE()),CTYDMZ='" + jsApiTicket + "' WHERE ITYDMLB=5";
+
+                        if (OP_Mode.SQLRUN(strSQL))
+                        {
+
+                        }
+                    }
+                }
             }
+
         }
 
         return jsApiTicket;
@@ -1566,28 +1592,50 @@ public class PageBase : System.Web.UI.Page
     /// <returns></returns>
     public string GetJsApiTicket()
     {
+        string strSQL = string.Empty;
+        string MSG = string.Empty;
         string jsApiTicket = string.Empty;
         using (var client = new System.Net.WebClient()
         {
             Encoding = System.Text.Encoding.UTF8
         })
         {
-            string url = string.Format("https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token={0}", GetaccessToken());
-            string data = client.DownloadString(url);
+            strSQL = "SELECT * FROM S_TYDM where ITYDMLB=6 and DATEDIFF(MI, LTIME, GETDATE()) < 0";
 
-            var serializer = new JavaScriptSerializer();
-            var obj = serializer.Deserialize<Dictionary<string, string>>(data);
-
-            if (!obj.TryGetValue("ticket", out jsApiTicket))
+            if (OP_Mode.SQLRUN(strSQL))
             {
+                if (OP_Mode.Dtv.Count > 0)
+                {/// Token 未过期，直接使用
+                    jsApiTicket = OP_Mode.Dtv[0]["CTYDMZ"].ToString();
+                }
+                else
+                { /// Token 已过期，从新读取
+                    string url = string.Format("https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token={0}", GetaccessToken());
+                    string data = client.DownloadString(url);
 
-            }
-            else
-            {
+                    var serializer = new JavaScriptSerializer();
+                    var obj = serializer.Deserialize<Dictionary<string, string>>(data);
 
+                    if (!obj.TryGetValue("ticket", out jsApiTicket))
+                    {
+                        foreach (var key in obj.Keys)
+                        {
+                            MSG += "<br/>" + string.Format("{0}: {1}", key, obj[key]) + "<br/>";
+                        }
+                    }
+                    else
+                    {
+
+                        strSQL = "UPDATE S_TYDM SET CTIME=GETDATE(), LTIME = DATEADD(S," + obj["expires_in"] + ",GETDATE()),CTYDMZ='" + jsApiTicket + "' WHERE ITYDMLB=6";
+
+                        if (OP_Mode.SQLRUN(strSQL))
+                        {
+
+                        }
+                    }
+                }
             }
         }
-
         return jsApiTicket;
     }
 
@@ -1655,7 +1703,17 @@ public class PageBase : System.Web.UI.Page
 
         return rValue;
     }
-
+    /// <summary>
+    /// 计算日期差
+    /// </summary>
+    /// <param name="startTime"></param>
+    /// <param name="endTime"></param>
+    /// <returns></returns>
+    public double DiffDays(DateTime startTime, DateTime endTime)
+    {
+        TimeSpan daysSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
+        return daysSpan.TotalDays;
+    }
     /// <summary>
     /// 缩小/放大图片
     /// </summary>
@@ -1704,5 +1762,42 @@ public class PageBase : System.Web.UI.Page
             originalImage.Dispose();
             return toBitmap;
         }
+    }
+
+    /// <summary>
+    /// 日期转中文星期
+    /// </summary>
+    /// <param name="dt"></param>
+    /// <returns></returns>
+    public string DateToWeekCn(DateTime dt)
+    {
+        string rValue = string.Empty;
+        string week = string.Empty;
+        switch (dt.DayOfWeek.ToString())
+        {
+            case "Monday":
+                week = "星期一";
+                break;
+            case "Tuesday":
+                week = "星期二";
+                break;
+            case "Wednesday":
+                week = "星期三";
+                break;
+            case "Thursday":
+                week = "星期四";
+                break;
+            case "Friday":
+                week = "星期五";
+                break;
+            case "Saturday":
+                week = "星期六";
+                break;
+            case "Sunday":
+                week = "星期日";
+                break;
+        }
+        rValue = week;
+        return rValue;
     }
 }

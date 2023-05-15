@@ -422,6 +422,8 @@
           <Conditions isList="true" count="0" />
           <DataSourceName>主数据</DataSourceName>
           <Filters isList="true" count="0" />
+          <HeaderPrintIfEmpty>False</HeaderPrintIfEmpty>
+          <HeaderPrintOnAllPages>False</HeaderPrintOnAllPages>
           <HeaderRowsCount>1</HeaderRowsCount>
           <MinHeight>0.4</MinHeight>
           <Name>Table主数据</Name>
@@ -458,10 +460,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>5/11/2023 8:34:15 AM</ReportChanged>
+  <ReportChanged>5/15/2023 2:40:07 PM</ReportChanged>
   <ReportCreated>5/6/2023 3:23:10 PM</ReportCreated>
   <ReportFile>D:\WebNet\PTWeb\BBGL\BB\QKList.mrt</ReportFile>
-  <ReportGuid>a0663aafe8fe4dc1b1a8fe0010d16586</ReportGuid>
+  <ReportGuid>91b0b061067c4415bc5aa4030d9243cc</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>

@@ -55,13 +55,6 @@ public partial class Boss_Default : PageBase
         {
             if (OP_Mode.Dtv.Count > 0)
             {//加载待审核
-                /// 设置排序
-                //if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
-                //{
-                //    OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
-                //}
-                //GridView_Boss1.DataSource = OP_Mode.Dtv;
-                //GridView_Boss1.DataBind();
 
                 for (int i = 0; i < OP_Mode.Dtv.Count; i++)
                 {
@@ -122,6 +115,13 @@ public partial class Boss_Default : PageBase
                 if (TempDiv.Length > 0)
                 {
                     Div_User.InnerHtml = TempDiv;
+                    /// 设置排序
+                    if ((!string.IsNullOrEmpty(sortExpression)) && (!string.IsNullOrEmpty(sortDirection)))
+                    {
+                        OP_Mode.Dtv.Sort = string.Format("{0} {1}", sortExpression, sortDirection);
+                    }
+                    GridView_Boss1.DataSource = OP_Mode.Dtv;
+                    GridView_Boss1.DataBind();
                 }
             }
         }
@@ -201,5 +201,24 @@ public partial class Boss_Default : PageBase
                 GridView_GC0.DataBind();
             }
         }
+    }
+
+    protected void GridView_Boss1_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        // 从事件参数获取排序数据列
+        string sortExpression = e.SortExpression.ToString();
+        // 假定为排序方向为“顺序”
+        string sortDirection = "ASC";
+        // “ASC”与事件参数获取到的排序方向进行比较，进行GridView排序方向参数的修改
+        if (sortExpression == this.GridView_Boss1.Attributes["SortExpression"])
+        {
+            //获得下一次的排序状态
+            sortDirection = (this.GridView_Boss1.Attributes["SortDirection"].ToString() == sortDirection ? "DESC" : "ASC");
+        }
+        // 重新设定GridView排序数据列及排序方向
+        this.GridView_Boss1.Attributes["SortExpression"] = sortExpression;
+        this.GridView_Boss1.Attributes["SortDirection"] = sortDirection;
+
+        LoadPartner();
     }
 }

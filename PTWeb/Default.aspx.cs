@@ -22,6 +22,7 @@ public partial class DefaultPH : PageBase
         this.timeStamp = getTimestamp();
         this.nonceStr = getNoncestr();
         this.signature = GenSignature_Woker(this.nonceStr, this.timeStamp);
+        // this.signature = GenSignature(this.nonceStr, this.timeStamp);
         this.DataBind();
         if (!IsPostBack)
         {

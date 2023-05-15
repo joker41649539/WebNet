@@ -136,7 +136,7 @@ public partial class WeChat_QDSearch : PageBase
                         strTemp += "      <span class='label label-info label-sm'>下班</span>";
                     }
 
-                    strTemp += "      <span class='label label-info label-sm'>" + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
+                    strTemp += "      <span class='label label-info label-sm'>" + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("yyyy-MM-dd HH:mm") + "</span>";
                     strTemp += "  </div>";
                     strTemp += "  <div class='widget-box transparent'>";
                     strTemp += "      <div class='widget-header widget-header-small'>";

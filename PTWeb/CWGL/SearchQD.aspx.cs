@@ -172,7 +172,7 @@ public partial class CWGL_SearchQD : PageBase
                         strTemp += "      <span class='label label-info label-sm'>下班</span>";
                     }
 
-                    strTemp += "      <span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
+                    strTemp += "      <span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("MM-dd") + "</span><span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
                     strTemp += "  </div>";
                     strTemp += "  <div class='widget-box transparent'>";
                     strTemp += "      <div class='widget-header widget-header-small'>";
@@ -190,7 +190,7 @@ public partial class CWGL_SearchQD : PageBase
                     }
                     else
                     {
-                       // strTemp += "<span class='label label-danger label-sm'>地点异常</span>";
+                        // strTemp += "<span class='label label-danger label-sm'>地点异常</span>";
                     }
                     strTemp += "<br/>" + OP_Mode.Dtv[i]["ZB_WZ"] + "</span></a>";
 

@@ -31,7 +31,7 @@
         <Name>Data</Name>
         <NameInSource>PT</NameInSource>
         <Parameters isList="true" count="0" />
-        <SqlCommand>Select W_GCGD_FS.AZFS * W_GCGD2.AZFS /100 AZFS,W_GCGD_FS.fs * W_GCGD2.FS / 100 BXFS,xh,Remark,CNAME,W_GCGD1.GCMC,W_GCGD2.SBBH,SBMC,SBXH, W_GCGD_FS.LTIME,W_GCGD2.FS SUMFS,W_GCGD2.AZFS SUMAZFS from W_GCGD_FS,S_USERINFO,W_GCGD1,W_GCGD2 where W_GCGD_FS.LTIME &gt;'{STime}' and  W_GCGD_FS.LTIME &lt;'{ETime}' and CName like '%{CName}%' and GCMC like '%{Project}%' and USERID=S_USERINFO.ID and W_GCGD1.GCDH=W_GCGD2.GCDH and GCMXID=W_GCGD2.ID</SqlCommand>
+        <SqlCommand>Select W_GCGD_FS.AZFS * W_GCGD2.AZFS /100 AZFS,W_GCGD_FS.fs * W_GCGD2.FS / 100 BXFS,xh,W_GCGD_FS.Remark,CNAME,W_GCGD1.GCMC,W_GCGD2.SBBH,SBMC,SBXH, W_GCGD_FS.LTIME,W_GCGD2.FS SUMFS,W_GCGD2.AZFS SUMAZFS from W_GCGD_FS,S_USERINFO,W_GCGD1,W_GCGD2 where W_GCGD_FS.LTIME &gt;'{STime}' and  W_GCGD_FS.LTIME &lt;'{ETime}' and CName like '%{CName}%' and GCMC like '%{Project}%' and USERID=S_USERINFO.ID and W_GCGD1.GCDH=W_GCGD2.GCDH and GCMXID=W_GCGD2.ID</SqlCommand>
       </Data>
     </DataSources>
     <Relations isList="true" count="0" />
@@ -85,6 +85,7 @@
             <TableData_Cell1 Ref="8" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>0,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -95,6 +96,7 @@
               <Name>TableData_Cell1</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>姓名</Text>
               <TextBrush>Black</TextBrush>
@@ -104,6 +106,7 @@
             <TableData_Cell2 Ref="9" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>2.4,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -114,6 +117,7 @@
               <Name>TableData_Cell2</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>工程名称</Text>
               <TextBrush>Black</TextBrush>
@@ -123,6 +127,7 @@
             <TableData_Cell3 Ref="10" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>4.8,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -133,6 +138,7 @@
               <Name>TableData_Cell3</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>设备编号</Text>
               <TextBrush>Black</TextBrush>
@@ -142,6 +148,7 @@
             <TableData_Cell4 Ref="11" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>7.2,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -152,6 +159,7 @@
               <Name>TableData_Cell4</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>设备名称</Text>
               <TextBrush>Black</TextBrush>
@@ -161,6 +169,7 @@
             <TableData_Cell5 Ref="12" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>9.6,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -171,6 +180,7 @@
               <Name>TableData_Cell5</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>设备型号</Text>
               <TextBrush>Black</TextBrush>
@@ -180,6 +190,7 @@
             <TableData_Cell6 Ref="13" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>12,0,2.4,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -190,6 +201,7 @@
               <Name>TableData_Cell6</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>安装总分</Text>
               <TextBrush>Black</TextBrush>
@@ -199,6 +211,7 @@
             <TableData_Cell7 Ref="14" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>14.4,0,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -209,6 +222,7 @@
               <Name>TableData_Cell7</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>安装分数</Text>
               <TextBrush>Black</TextBrush>
@@ -218,6 +232,7 @@
             <TableData_Cell8 Ref="15" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>16.6,0,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -228,6 +243,7 @@
               <Name>TableData_Cell8</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>布线总分</Text>
               <TextBrush>Black</TextBrush>
@@ -237,6 +253,7 @@
             <TableData_Cell9 Ref="16" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>18.8,0,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -247,6 +264,7 @@
               <Name>TableData_Cell9</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>布线分数</Text>
               <TextBrush>Black</TextBrush>
@@ -256,6 +274,7 @@
             <TableData_Cell10 Ref="17" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>21,0,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -266,6 +285,7 @@
               <Name>TableData_Cell10</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>消耗线材</Text>
               <TextBrush>Black</TextBrush>
@@ -275,6 +295,7 @@
             <TableData_Cell11 Ref="18" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>23.2,0,2.2,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -285,6 +306,7 @@
               <Name>TableData_Cell11</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>备注说明</Text>
               <TextBrush>Black</TextBrush>
@@ -294,6 +316,7 @@
             <TableData_Cell12 Ref="19" type="Stimulsoft.Report.Components.Table.StiTableCell" isKey="true">
               <Border>All;[105:105:105];1;Solid;False;4;[105:105:105]</Border>
               <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
               <ClientRectangle>25.4,0,2.3,0.8</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -304,6 +327,7 @@
               <Name>TableData_Cell12</Name>
               <Page isRef="4" />
               <Parent isRef="7" />
+              <PrintOn>OnlyFirstPage</PrintOn>
               <Restrictions>AllowMove, AllowSelect, AllowChange</Restrictions>
               <Text>安装时间</Text>
               <TextBrush>Black</TextBrush>
@@ -537,6 +561,8 @@
           <Conditions isList="true" count="0" />
           <DataSourceName>Data</DataSourceName>
           <Filters isList="true" count="0" />
+          <HeaderPrintIfEmpty>False</HeaderPrintIfEmpty>
+          <HeaderPrintOnAllPages>False</HeaderPrintOnAllPages>
           <HeaderRowsCount>1</HeaderRowsCount>
           <MinHeight>0.4</MinHeight>
           <Name>TableData</Name>
@@ -573,10 +599,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/14/2021 9:17:20 PM</ReportChanged>
+  <ReportChanged>5/15/2023 10:12:45 AM</ReportChanged>
   <ReportCreated>9/2/2020 4:47:41 PM</ReportCreated>
-  <ReportFile>D:\GitWeb\WebNet\PTWeb\BBGL\BB\GCJFCX.mrt</ReportFile>
-  <ReportGuid>9e881c9c94af427cba9512a9bd73dc26</ReportGuid>
+  <ReportFile>D:\WebNet\PTWeb\BBGL\BB\GCJFCX.mrt</ReportFile>
+  <ReportGuid>0f96a0520f4f411183d81a050a4e5cb4</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2013.1.1600</ReportVersion>
