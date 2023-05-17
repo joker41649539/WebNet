@@ -141,7 +141,7 @@ public partial class GDGL_GCMXADD : PageBase
             return;
         }
 
-        if (Convert.ToInt32(Request[ID]) > 0)
+        if (Convert.ToInt32(Request["ID"]) > 0)
         {
             strSQL = "Insert into W_GCGD2 (GCDH,AZWZ,SBBH,SBMC,SBPP,SBXH,JLDW,SL,YQSM,FS,AZFS) values ('" + Label_GCBH.Text + "','" + DB_01 + "','" + DB_02 + "','" + DB_03 + "','" + DB_04 + "','" + DB_05 + "','" + DB_06 + "'," + DB_07 + ",'" + DB_08 + "'," + DB_09 + "," + DB_10 + ")";
             if (OP_Mode.SQLRUN(strSQL))

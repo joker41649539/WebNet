@@ -166,9 +166,7 @@
             <div class="space-10"></div>
             <div class="page-content" runat="server" id="Div_User">
             </div>
-
         </div>
-
     </div>
 </asp:Content>
 

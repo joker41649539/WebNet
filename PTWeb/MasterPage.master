@@ -170,7 +170,7 @@
             </a>
         </div>
         <!-- 主循环 结束-->
-        <div class="row" style="height: 70px;">
+        <div class="row col-xs-12" style="height: 70px;">&nbsp;
         </div>
         <!-- 底部代码 开始-->
         <div style="height: auto;">

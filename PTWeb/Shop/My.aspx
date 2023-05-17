@@ -9,7 +9,7 @@
                     <i class=" icon-credit-card icon-2x blue"></i>
                     &nbsp; 积分
                 </span>
-                <h4 class="bigger pull-right">100.00</h4>
+                <h4 class="bigger pull-right">0.000</h4>
             </div>
 
             <div class="grid3">
@@ -17,7 +17,7 @@
                     <i class="icon-briefcase icon-2x orange"></i>
                     &nbsp; 金豆
                 </span>
-                <h4 class="bigger pull-right">50000.00</h4>
+                <h4 class="bigger pull-right">0.000</h4>
             </div>
             <div class="grid3">
                 <span class="grey">
@@ -31,11 +31,11 @@
     <div class="hr hr8 hr-double"></div>
     <div class="col-xs-12 center">
         <p>
-            <a href="#" class="btn btn-app btn-warning">
+            <a href="/Shop/BankCard.aspx" class="btn btn-app btn-warning">
                 <i class="icon-credit-card bigger-230"></i>
-                佣金中心
+                收款账号
             </a>
-            <a href="#" class="btn btn-app btn-success">
+            <a href="/Shop/Address.aspx" class="btn btn-app btn-success">
                 <i class="icon-globe bigger-230"></i>
                 收货地址
             </a>
@@ -47,7 +47,7 @@
                 <i class="icon-facetime-video bigger-230"></i>
                 新人教程
             </a>
-            <a href="#" class="btn btn-app btn-info">
+            <a href="/Shop/Friends.aspx" class="btn btn-app btn-info">
                 <i class="icon-comments bigger-230"></i>
                 邀请好友
             </a>
@@ -55,7 +55,7 @@
                 <i class="icon-gift bigger-230"></i>
                 提交藏品
             </a>
-            <a href="#" class="btn btn-app btn-purple">
+            <a href="/Shop/Service.aspx" class="btn btn-app btn-purple">
                 <i class="icon-headphones bigger-230"></i>
                 联系客服
             </a>

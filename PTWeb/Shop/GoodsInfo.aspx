@@ -5,20 +5,20 @@
         <img src="/img/01.jpg" class="img-rounded" width="100%" />
     </div>
     <div class="alert alert-success">
-        <h1><b>限时拍卖</b></h1>
+        <h1><b>限时抢购</b></h1>
         <h5 id="show" clientidmode="Static" runat="server">距离结束还剩：  <span></span>小时<span></span>分<span></span>秒</h5>
+        <asp:LinkButton ID="LinkButton1" class="btn btn-danger btn-block" OnClick="LinkButton1_Click" runat="server"><i class="icon-shopping-cart"></i>&nbsp;<b>立即抢购</b></asp:LinkButton>
     </div>
     <div class="well">
-        <h1>(会员专场)网页滚动图片元素动画特效</h1>
-        <p class="lead">
-            CSS3网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效 - 站长素材
-        </p>
         <div class="clearfix">
             <h1 class="red"><b>￥<span>168</span></b>
             </h1>
         </div>
+        <h1>(会员专场)网页滚动图片元素动画特效</h1>
+        <p class="lead">
+            CSS3网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效网页滚动图片元素动画特效 - 站长素材CSS3网页滚动图片元素动画特效 - 站长素材
+        </p>
     </div>
-    <asp:LinkButton ID="LinkButton1" class="btn btn-danger btn-block" OnClick="LinkButton1_Click" runat="server"><i class="icon-shopping-cart"></i>&nbsp;<b>立即抢购</b></asp:LinkButton>
 
     <div class="hr hr8 hr-double"></div>
     <div>

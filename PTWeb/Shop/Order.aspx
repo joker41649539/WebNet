@@ -1,125 +1,77 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Shop/MasterPage.master" AutoEventWireup="true" CodeFile="Order.aspx.cs" Inherits="SpaServer_Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div class="col-xs-12">
-        <div class="tabbable">
-            <ul class="nav nav-tabs" id="myTab3">
-                <li class="active">
-                    <a data-toggle="tab" href="#home3">
-                        <i class="pink icon-credit-card bigger-110"></i>
-                        待付款
-                    </a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#dropdown13">
-                        <i class="blue icon-shopping-cart bigger-110"></i>
-                        待收货
-                    </a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#profile3">
-                        <i class="blue icon-check bigger-110"></i>
-                        已完成
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="home3" class="tab-pane in active">
-                    <div class="well row">
-                        <div class="col-xs-4">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive img-rounded" width="100%" src="/images/User01.png" />
-                            </span>
-                        </div>
-                        <div class="col-xs-8">
-                            <h4><a href="#" class="left"><b>王菲</b></a></h4>
-                            <p>
-                                <i class="icon-gift"></i>&nbsp;16&nbsp;
-                    <i class="icon-heart"></i>&nbsp;36
-                    <asp:LinkButton ID="LinkButton2" CssClass="btn btn-xs btn-success pull-right" runat="server">立即取消</asp:LinkButton>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="well row">
-                        <div class="col-xs-4">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive img-rounded" width="100%" src="/images/User01.png" />
-                            </span>
-                        </div>
-                        <div class="col-xs-8">
-                            <h4><a href="#" class="left"><b>王菲</b></a></h4>
-                            <p>
-                                <i class="icon-gift"></i>&nbsp;16&nbsp;
-                    <i class="icon-heart"></i>&nbsp;36
-                    <asp:LinkButton ID="LinkButton1" CssClass="btn btn-xs btn-success pull-right" runat="server">立即取消</asp:LinkButton>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div id="profile3" class="tab-pane">
-                    <div class="well row">
-                        <div class="col-xs-4">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive img-rounded" width="100%" src="/images/User01.png" />
-                            </span>
-                        </div>
-                        <div class="col-xs-8">
-                            <h4><a href="#" class="left"><b>刘若英</b></a></h4>
-                            <p>
-                                <i class="icon-gift"></i>&nbsp;16&nbsp;
-                    <i class="icon-heart"></i>&nbsp;36
-                            </p>
-                            <asp:LinkButton ID="LinkButton3" CssClass="btn btn-xs btn-success pull-right" runat="server">立即评价</asp:LinkButton>
-                        </div>
-                    </div>
-                </div>
-                <div id="dropdown13" class="tab-pane">
-                    <div class="well row">
-                        <div class="col-xs-4">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive img-rounded" width="100%" src="/images/User01.png" />
-                            </span>
-                        </div>
-                        <div class="col-xs-8">
-                            <h4><a href="#" class="left"><b>刘亦菲</b></a></h4>
-                            <p>
-                                <i class="icon-gift"></i>&nbsp;16&nbsp;
-                    <i class="icon-heart"></i>&nbsp;36
-                            </p>
-                        </div>
-                    </div>
-                    <div class="well row">
-                        <div class="col-xs-4">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive img-rounded" width="100%" src="/images/User01.png" />
-                            </span>
-                        </div>
-                        <div class="col-xs-8">
-                            <h4><a href="#" class="left"><b>刘亦菲</b></a></h4>
-                            <p>
-                                <i class="icon-gift"></i>&nbsp;16&nbsp;
-                    <i class="icon-heart"></i>&nbsp;36
-                            </p>
-                        </div>
-                    </div>
-                    <div class="well row">
-                        <div class="col-xs-4">
-                            <span class="profile-picture">
-                                <img class="editable img-responsive img-rounded" width="100%" src="/images/User01.png" />
-                            </span>
-                        </div>
-                        <div class="col-xs-8">
-                            <h4><a href="#" class="left"><b>刘亦菲</b></a></h4>
-                            <p>
-                                <i class="icon-gift"></i>&nbsp;16&nbsp;
-                    <i class="icon-heart"></i>&nbsp;36
-                            </p>
-                        </div>
-                    </div>
-                </div>
+    <div class="widget-body">
+        <div class="hr hr8 hr-double"></div>
+        <div class="clearfix">
+            <div class="grid3">
+                <span class="grey bigger">
+                    <i class=" icon-credit-card icon-2x blue"></i>
+                    &nbsp; 累计订单
+                </span>
+                <h4 class="bigger pull-right">4.000</h4>
+            </div>
+
+            <div class="grid3">
+                <span class="grey">
+                    <i class="icon-briefcase icon-2x orange"></i>
+                    &nbsp; 金豆消耗
+                </span>
+                <h4 class="bigger pull-right">150</h4>
+            </div>
+            <div class="grid3">
+                <span class="grey">
+                    <i class="icon-briefcase icon-2x purple"></i>
+                    &nbsp; 我的利润
+                </span>
+                <h4 class="bigger pull-right">2800</h4>
             </div>
         </div>
     </div>
-    <div height="90px">&nbsp;</div>
+
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter red"><i class="icon-credit-card"></i>&nbsp;待付款</h3>
+    </div>
+    <div class="col-xs-12 page-content">
+        <div class="well">
+            <h5>202305171547<br />
+                传世古玉<br />
+                ￥1500</h5>
+            <p class="btn-group pull-right">
+                <asp:LinkButton ID="LinkButton1" CssClass="btn btn-sm" OnClick="LinkButton1_Click" runat="server"><i class="icon-ok"></i>&nbsp;付款确认</asp:LinkButton>
+                <asp:LinkButton ID="LinkButton2" CssClass="btn btn-sm btn-danger" PostBackUrl="/Shop/BankCardByUser.aspx" runat="server"><i class="icon-credit-card"></i>&nbsp;收款信息</asp:LinkButton>
+            </p>
+            &nbsp;
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter green"><i class="icon-credit-card"></i>&nbsp;待收款</h3>
+    </div>
+    <div class="col-xs-12 page-content">
+        <div class="well">
+            <h5>202305171547<br />
+                传世古玉<br />
+                ￥1500</h5>
+            <p class="btn-group pull-right">
+                <asp:LinkButton ID="LinkButton3" CssClass="btn btn-sm" OnClick="LinkButton3_Click" runat="server"><i class="icon-ok"></i>&nbsp;收款确认</asp:LinkButton>
+            </p>
+            &nbsp;
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue"><i class="icon-credit-card"></i>&nbsp;已完成订单</h3>
+    </div>
+    <div class="col-xs-12 page-content">
+        <div class="well">
+            <h5>202305171547<br />
+                传世古玉<br />
+                ￥1500</h5>
+        </div>
+        <div class="well">
+            <h5>202305171947<br />
+                传世玉手镯<br />
+                ￥2500</h5>
+        </div>
+    </div>
 </asp:Content>
 
