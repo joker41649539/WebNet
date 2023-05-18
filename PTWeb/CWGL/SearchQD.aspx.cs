@@ -23,6 +23,7 @@ public partial class CWGL_SearchQD : PageBase
     {
         int strBxdID = 0;
         string sUserName = string.Empty;
+        string sDays = string.Empty;
         try
         {
             // 获取报销单ID
@@ -34,15 +35,22 @@ public partial class CWGL_SearchQD : PageBase
 
         }
         sUserName = Request["UserName"];
-
+        sDays = Request["Day"];
         if (sUserName != null)
         {
             TextBox_Name.Enabled = false;
         }
 
-        TextBox_STime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
-        TextBox_ETime.Text = System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
-
+        if (sDays != null)
+        {
+            TextBox_STime.Text = Convert.ToDateTime(sDays).ToString("yyyy-MM-dd");
+            TextBox_ETime.Text = Convert.ToDateTime(sDays).AddDays(1).ToString("yyyy-MM-dd");
+        }
+        else
+        {
+            TextBox_STime.Text = System.DateTime.Now.ToString("yyyy-MM-dd");
+            TextBox_ETime.Text = System.DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+        }
         string strSQL = string.Empty;
 
         if (strBxdID > 0)

@@ -12,7 +12,7 @@
         </div>
         <div class="col-xs-12">
             <div class="form-group">
-                <h3><b>回购时长</b></h3>
+                <h3><b>抢购时长</b></h3>
                 <div class="col-sm-9">
                     <asp:TextBox ID="TextBox2" ClientIDMode="Static" runat="server" placeholder="请输入多少秒后自动回购" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-xs-12">
             <div class="form-group">
-                <h3><b>回购账号设置</b></h3>
+                <h3><b>抢购账号设置</b></h3>
                 <div class="col-sm-9">
                     <asp:TextBox ID="TextBox3" ClientIDMode="Static" runat="server" placeholder="请输入用于回购的账号(用';'隔开)" class="col-xs-12 col-sm-12"></asp:TextBox>
                 </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="col-xs-12">
         <br />
-        <asp:HyperLink ID="HyperLink2" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;确认系统设置</asp:HyperLink>
+        <asp:LinkButton ID="LinkButton1" OnClick="LinkButton1_Click" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;确认系统设置</asp:LinkButton>
         <br />
     </div>
 </asp:Content>

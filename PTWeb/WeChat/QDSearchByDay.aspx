@@ -1,6 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="QDSearchByDay.aspx.cs" Inherits="WeChat_QDSearchByDay" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <%--    .DataGridFixedHeader  
+{
+  POSITION:   relative   ;  
+  TOP:   expression(this.offsetParent.scrollTop);
+  BACKGROUND-COLOR:   blue   ;
+  height:25px;
+  color:#ffffff;
+  text-align:center   ;
+  vertical-align:middle;
+  font-weight:bold;
+  font-size:13px;
+  background-color:#5D7B9D;
+  }--%>
+
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -27,11 +41,12 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12">
+    <div class="row">
         <div class="page-content">
             <!--人员启用 开始 //-->
             <div class="widget-main no-padding">
-                <asp:GridView ID="GridView_KQByDay" AllowSorting="True" ClientIDMode="Static" runat="server" AutoGenerateColumns="false" DataKeyNames="ID">
+                <asp:GridView ID="GridView_KQByDay" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" ColumnAutoWidth="false" AllowSorting="True" ClientIDMode="Static" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" Width="100px">
+                    <RowStyle Width="120px" />
                 </asp:GridView>
             </div>
             <!--人员启用 结束 //-->

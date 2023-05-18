@@ -44,17 +44,45 @@ public partial class Login : PageBaseShop
 
         string strSQL = " Update Shop_UserInfo set Ltime=getdate() where PhoneNo='" + Db_user + "' and PassWordNo='" + Db_PassWord + "' AND FLAG=0 ";
 
-        strSQL += "  Select * from Shop_UserInfo where PhoneNo='" + Db_user + "' and PassWordNo='" + Db_PassWord + "' AND FLAG=0 ";
+        strSQL += "  Select *,(Select Count(ID) From Shop_Address where UserNo=Shop_UserInfo.PhoneNo) AddressCount from Shop_UserInfo where PhoneNo='" + Db_user + "' and PassWordNo='" + Db_PassWord + "' AND FLAG=0 ";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
             {
+                string sIMGWeChat = string.Empty;
+                string sIMGPay = string.Empty;
+                string sBankName = string.Empty;
+                string sBankStart = string.Empty;
+                string sBankID = string.Empty;
+                double GoldCount = 0;
+                bool BankMSG = false;
+                bool AddressMSG = false;
+                int AddressCount = 0;
+
+                sIMGWeChat = OP_Mode.Dtv[0]["WeChatImg"].ToString();
+                sIMGPay = OP_Mode.Dtv[0]["PayImg"].ToString();
+                sBankName = OP_Mode.Dtv[0]["BankName"].ToString();
+                sBankStart = OP_Mode.Dtv[0]["BankStart"].ToString();
+                sBankID = OP_Mode.Dtv[0]["BankID"].ToString();
+                AddressCount = Convert.ToInt32(OP_Mode.Dtv[0]["AddressCount"]);
+                GoldCount = Convert.ToDouble(OP_Mode.Dtv[0]["GoldCount"]);
+
+                if (sIMGWeChat.Length > 0 || sIMGPay.Length > 0 || (sBankID.Length + sBankName.Length + sBankID.Length) > 0)
+                {
+                    BankMSG = true;
+                }
+                if (AddressCount > 0)
+                {
+                    AddressMSG = true;
+                }
+
                 /// 执行登录操作
                 /// 
                 /// 把登录信息写入到COOKIE里
-                Response.Cookies["Shop"]["PhoneNo"] = Db_user;
-                MessageBox("", "登录成功！<br>欢迎" + OP_Mode.Dtv[0]["NickName"].ToString().Trim() + "回来。", "/Shop/");
+                ResponseCokie(Db_user, BankMSG, AddressMSG, GoldCount);
+
+                MessageBox("", "登录成功！<br>欢迎 [" + Db_user + "] 回来。", "/Shop/");
             }
             else
             {

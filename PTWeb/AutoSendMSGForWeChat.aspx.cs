@@ -25,6 +25,7 @@ public partial class AutoSendMSGForWeChat : PageBase
         //1、如有未安排工作计划的人，将人员信息推送给谢丰，让其安排其工作
 
         string WeiXinOpenID = "oDg2PuPqe4Er_3cN9KV3jAlyuYM4";/// 小希的 普田公众号OPID，应该是用谢丰OPID
+        string NotOpenID = "oDg2PuJWASl9-zcN5NcEHV8OU3Kg"; /// 去除戴国平
 
         string strSQL = string.Empty;
         // 查询工程和布线所有人员名单。
@@ -42,7 +43,7 @@ public partial class AutoSendMSGForWeChat : PageBase
         int MinJF = 200;
         /// 工程+施工人员 当前积分数统计
         strSQL = "Select ID,CNAME,OpenID,cOpenID,AZJF,NowBXFS,NowWXFS,AZJF+NowBXFS+NowWXFS SumFS from  (SELECT S_USERINFO.ID,CName,OpenID,cOpenID ,isnull((Select sum(W_GCGD2.AZFS * W_GCGD_FS.AZFS / 100) from W_GCGD_FS, W_GCGD2 where GCMXID = W_GCGD2.ID and W_GCGD_FS.azfs > 0 and W_GCGD_FS.CTIME  between CONVERT(VARCHAR(10),GETDATE(),120)+' 00:00:00' and CONVERT(VARCHAR(10),GETDATE(),120)+' 23:59:59' and USERID = S_USERINFO.ID),0) AZJF ,isnull((Select sum(NFS - ISNULL(OFS, 0)) SumBXFS from(select CEILING(a.FS * W_GCGD2.FS / 100) NFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where LTIME  between CONVERT(VARCHAR(10),GETDATE(),120)+' 00:00:00' and CONVERT(VARCHAR(10),GETDATE(),120)+' 23:59:59' and USERID = S_USERINFO.ID group by GCMXID, UserID) b, W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) aa left join(select CEILING(a.FS * W_GCGD2.FS / 100) OFS, GCMXID from W_GCGD_FS_BXList a, (Select max(ID) bid from W_GCGD_FS_BXList where LTIME < CONVERT(VARCHAR(10),GETDATE(),120)+' 00:00:00' and USERID = S_USERINFO.ID group by GCMXID, UserID) b,W_GCGD2 where a.ID = bid and a.GCMXID = W_GCGD2.ID) bb on aa.GCMXID = bb.GCMXID),0) NowBXFS ,Isnull((Select Sum(SumJF) from W_WXD where Ltime  between CONVERT(VARCHAR(10),GETDATE(),120)+' 00:00:00' and CONVERT(VARCHAR(10),GETDATE(),120)+' 23:59:59' and W_WXD.WXRY = S_USERINFO.ID and Del = 0 and FLAG = 1),0) NowWXFS from S_USERINFO,S_YH_QXZ where (FLAG = 0  and S_USERINFO.id = S_YH_QXZ.USERID and(QXZID = 3 or QXZID = 4)) or FLAG=4 group by S_USERINFO.ID,CNAME,SSDZ,OpenID,cOpenID ) aa ";
-        strSQL += " where AZJF+NowBXFS+NowWXFS<" + MinJF + " and OpenID is not null"; // 累计分数小于 200分 开始消息推送
+        strSQL += " where AZJF+NowBXFS+NowWXFS<" + MinJF + " and OpenID is not null and OpenID!='" + NotOpenID + "'"; // 累计分数小于 200分 开始消息推送
 
         if (OP_Mode.SQLRUN(strSQL, "SendMSG"))
         {

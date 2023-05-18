@@ -9,22 +9,22 @@
                     <i class=" icon-credit-card icon-2x blue"></i>
                     &nbsp; 累计订单
                 </span>
-                <h4 class="bigger pull-right">4.000</h4>
+                <h4 class="bigger pull-right">4.00</h4>
             </div>
 
             <div class="grid3">
                 <span class="grey">
                     <i class="icon-briefcase icon-2x orange"></i>
-                    &nbsp; 金豆消耗
+                    &nbsp; 金豆
                 </span>
-                <h4 class="bigger pull-right">150</h4>
+                <h4 class="bigger pull-right">150.00</h4>
             </div>
             <div class="grid3">
                 <span class="grey">
                     <i class="icon-briefcase icon-2x purple"></i>
                     &nbsp; 我的利润
                 </span>
-                <h4 class="bigger pull-right">2800</h4>
+                <h4 class="bigger pull-right">2800.00</h4>
             </div>
         </div>
     </div>

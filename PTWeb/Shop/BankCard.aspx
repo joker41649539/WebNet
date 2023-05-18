@@ -1,6 +1,55 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Shop/MasterPage.master" AutoEventWireup="true" CodeFile="BankCard.aspx.cs" Inherits="Shop_Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <script type="text/javascript">
+        function checkWeChat() {// 强制要求单人住宿超过80，多人住宿超过100 上传付款截图
+            var rValue = true;
+            var input = document.getElementById("id-input0").value;
+
+            if (input.length <= 0) {
+                rValue = false;
+                dialog = jqueryAlert({ 'content': "请先选择微信收款码。" });
+            }
+            return rValue;
+        }
+        function checkPay() {// 强制要求单人住宿超过80，多人住宿超过100 上传付款截图
+            var rValue = true;
+            var input = document.getElementById("id-input1").value;
+
+            if (input.length <= 0) {
+                rValue = false;
+                dialog = jqueryAlert({ 'content': "请先选择支付宝收款码。" });
+            }
+            return rValue;
+        }
+        function checkBank() {// 强制要求单人住宿超过80，多人住宿超过100 上传付款截图
+            var rValue = true;
+            var BankName = document.getElementById("TextBox1").value;
+            var BankStart = document.getElementById("TextBox2").value;
+            var BankID = document.getElementById("TextBox3").value;
+            var MSG = "";
+            var i = 0;
+            if (BankName.length <= 0) {
+                i++
+                rValue = false;
+                MSG += i.toString() + "、银行名称必须填写。<br>";
+            }
+            if (BankStart.length <= 0) {
+                i++
+                rValue = false;
+                MSG += i.toString() + "、银行的开户行必须填写。<br>";
+            }
+            if (BankID.length <= 0) {
+                i++
+                rValue = false;
+                MSG += i.toString() + "、银行账号必须填写。<br>";
+            }
+            if (MSG.length > 0) {
+                dialog = jqueryAlert({ 'content': MSG.substring(0, MSG.length - 4) });
+            }
+            return rValue;
+        }
+    </script>
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
@@ -8,12 +57,12 @@
                 <div class="col-sm-9">
                     <input type="file" name="UpImg" id="id-input0" accept="image/*" />
                 </div>
-                <img src="/img/01.jpg" class="img-rounded width-100" />
+                <asp:Image ID="Image_WeChat" class="img-rounded width-100" runat="server" />
             </div>
         </div>
         <div class="col-xs-12">
             <br />
-            <asp:HyperLink ID="HyperLink2" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;保存(更换)微信收款码</asp:HyperLink>
+            <asp:LinkButton ID="LinkButton_WeChat" OnClientClick="return checkWeChat()" OnClick="LinkButton_WeChat_Click" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;保存(更换)微信收款码</asp:LinkButton>
             <br />
         </div>
         <div class="col-xs-12">
@@ -22,12 +71,12 @@
                 <div class="col-sm-9">
                     <input type="file" name="UpImg" id="id-input1" accept="image/*" />
                 </div>
-                <img src="/img/02.jpg" class="img-rounded width-100" />
+                <asp:Image ID="Image_Pay" class="img-rounded width-100" runat="server" />
             </div>
         </div>
         <div class="col-xs-12">
             <br />
-            <asp:HyperLink ID="HyperLink3" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;保存(更换)支付宝收款码</asp:HyperLink>
+            <asp:LinkButton ID="LinkButton_Pay" OnClientClick="return checkPay()" OnClick="LinkButton_Pay_Click" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;保存(更换)支付宝收款码</asp:LinkButton>
             <br />
         </div>
         <div class="col-xs-12">
@@ -52,7 +101,7 @@
         </div>
         <div class="col-xs-12">
             <br />
-            <asp:HyperLink ID="HyperLink1" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;保存(更新)银行卡号</asp:HyperLink>
+            <asp:LinkButton ID="LinkButton_Bank" OnClientClick="return checkBank()" OnClick="LinkButton_Bank_Click" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;保存(更新)银行卡号</asp:LinkButton>
             <br />
         </div>
         <br />
@@ -65,7 +114,7 @@
         jQuery(function ($) {
             $('#id-input0,#id-input1').ace_file_input({
                 style: 'well',
-                btn_choose: '点击上传图片',
+                btn_choose: '点击上传图片更换',
                 btn_change: null,
                 no_icon: 'icon-cloud-upload',
                 droppable: true,

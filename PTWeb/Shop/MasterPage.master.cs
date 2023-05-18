@@ -16,7 +16,39 @@ public partial class Shop_MasterPage : System.Web.UI.MasterPage
     {
         if (!IsPostBack)
         {
-            MessageBox("1、您的收货地址信息未完善。<br>2、您的收款银行未完善。<br>3、您的金豆余额不足，请充值。");
+            DefaultMSG();// MessageBox("1、您的收货地址信息未完善。<br>2、您的收款银行未完善。<br>3、您的金豆余额不足，请充值。<br>4、PhoneNo:" + DefaultUser);
+        }
+    }
+
+    private void DefaultMSG()
+    {
+        try
+        {
+            int i = 0;
+            string strMSG = string.Empty;
+            if (!Convert.ToBoolean(Request.Cookies["Shop"]["BankMsg"]))
+            {
+                i++;
+                strMSG += i + "、您的收款银行未完善。<br>";
+            }
+            if (!Convert.ToBoolean(Request.Cookies["Shop"]["AddressMsg"]))
+            {
+                i++;
+                strMSG += i + "、您的收货地址信息未完善。<br>";
+            }
+            if (Convert.ToDouble(Request.Cookies["Shop"]["GoldCount"]) < 10)
+            {
+                i++;
+                strMSG += i + "、您的金豆余额不足，请充值。<br>";
+            }
+            if (strMSG.Length > 4)
+            {
+                MessageBox(strMSG.Substring(0, strMSG.Length - 4));
+            }
+        }
+        catch
+        {
+
         }
     }
 
