@@ -64,7 +64,7 @@
         <div class="col-xs-12">
             <br />
             <asp:LinkButton ID="LinkButton1" OnClientClick="return check();" OnClick="LinkButton1_Click" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;确认添加新地址</asp:LinkButton>
-            <br />
+            <div class="hr hr8 hr-double"></div>
         </div>
     </div>
 </asp:Content>

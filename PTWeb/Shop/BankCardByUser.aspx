@@ -27,6 +27,7 @@
                     <h4>XXXX XXXX XXXX XXXX</h4>
                 </div>
             </div>
+            <div class="hr hr8 hr-double"></div>
         </div>
     </div>
 </asp:Content>

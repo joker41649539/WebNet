@@ -92,11 +92,37 @@ public partial class SpaServer_Default2 : PageBaseShop
 
     private void LoadData()
     {
-        string strSQL = "Select GoldCount,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo),0) Bance,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance>0),0) BanceA,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance<0),0) BanceD from Shop_Userinfo where PhoneNo='" + DefaultUser + "' and FLAG=0";
+        string strSQL = "Select *,(Select Count(ID) From Shop_Address where UserNo=Shop_UserInfo.PhoneNo) AddressCount,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo),0) Bance,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance>0),0) BanceA,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance<0),0) BanceD from Shop_Userinfo where PhoneNo='" + DefaultUser + "' and FLAG=0";
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
             {
+                double GoldCount = 0;
+                bool BankMSG = false;
+                bool AddressMSG = false;
+                int AddressCount = 0;
+                string sIMGWeChat = string.Empty;
+                string sIMGPay = string.Empty;
+                string sBankName = string.Empty;
+                string sBankStart = string.Empty;
+                string sBankID = string.Empty;
+                sIMGWeChat = OP_Mode.Dtv[0]["WeChatImg"].ToString();
+                sIMGPay = OP_Mode.Dtv[0]["PayImg"].ToString();
+                sBankName = OP_Mode.Dtv[0]["BankName"].ToString();
+                sBankStart = OP_Mode.Dtv[0]["BankStart"].ToString();
+                sBankID = OP_Mode.Dtv[0]["BankID"].ToString();
+                AddressCount = Convert.ToInt32(OP_Mode.Dtv[0]["AddressCount"]);
+                GoldCount = Convert.ToDouble(OP_Mode.Dtv[0]["GoldCount"]);
+
+                if (sIMGWeChat.Length > 0 || sIMGPay.Length > 0 || (sBankID.Length + sBankName.Length + sBankID.Length) > 0)
+                {
+                    BankMSG = true;
+                }
+                if (AddressCount > 0)
+                {
+                    AddressMSG = true;
+                }
+
                 int iGolds = Convert.ToInt32(OP_Mode.Dtv[0]["GoldCount"]);
                 int iBance = Convert.ToInt32(OP_Mode.Dtv[0]["Bance"]);
                 int iBanceA = Convert.ToInt32(OP_Mode.Dtv[0]["BanceA"]);
@@ -109,8 +135,9 @@ public partial class SpaServer_Default2 : PageBaseShop
                 }
                 else
                 {
+                    ResponseCokie(DefaultUser, BankMSG, AddressMSG, GoldCount);
 
-                    Label2.Text = iBanceA.ToString("0.00");
+                    Label2.Text = iGolds.ToString("0.000");
 
                 }
             }

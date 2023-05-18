@@ -10,7 +10,7 @@
                     &nbsp; 积分
                 </span>
                 <h4 class="bigger pull-right">
-                    <asp:Label ID="Label1" runat="server" Text="0.00"></asp:Label>
+                    <asp:Label ID="Label1" runat="server" Text="0.000"></asp:Label>
                 </h4>
             </div>
 
@@ -20,7 +20,7 @@
                     &nbsp; 金豆
                 </span>
                 <h4 class="bigger pull-right">
-                    <asp:Label ID="Label2" runat="server" Text="0.00"></asp:Label>
+                    <asp:Label ID="Label2" runat="server" Text="0.000"></asp:Label>
                 </h4>
             </div>
             <div class="grid3">
@@ -29,7 +29,7 @@
                     &nbsp; 卡卷
                 </span>
                 <h4 class="bigger pull-right">
-                    <asp:Label ID="Label3" runat="server" Text="0.00"></asp:Label>
+                    <asp:Label ID="Label3" runat="server" Text="0.000"></asp:Label>
                 </h4>
             </div>
         </div>

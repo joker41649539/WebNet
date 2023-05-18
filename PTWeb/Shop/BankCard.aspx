@@ -102,9 +102,8 @@
         <div class="col-xs-12">
             <br />
             <asp:LinkButton ID="LinkButton_Bank" OnClientClick="return checkBank()" OnClick="LinkButton_Bank_Click" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;保存(更新)银行卡号</asp:LinkButton>
-            <br />
+            <div class="hr hr8 hr-double"></div>
         </div>
-        <br />
     </div>
     <%-- 文件上传样式需要--%>
     <script src="/assets/js/bootstrap.min.js"></script>

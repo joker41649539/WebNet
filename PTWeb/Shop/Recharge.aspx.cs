@@ -61,6 +61,15 @@ public partial class Shop_Default2 : PageBaseShop
                         Label2.Text = iBanceA.ToString("0.00");
                         Label3.Text = iBanceD.ToString("0.00");
                         HiddenField_PhoneNo.Value = strPhonNo;
+                        strSQL = "Select * from shop_Gold where UserNo='" + strPhonNo + "' order by cTime desc";
+                        if (OP_Mode.SQLRUN(strSQL))
+                        {
+                            if (OP_Mode.Dtv.Count > 0)
+                            {
+                                GridView1.DataSource = OP_Mode.Dtv;
+                                GridView1.DataBind();
+                            }
+                        }
                     }
                 }
                 else
@@ -91,7 +100,7 @@ public partial class Shop_Default2 : PageBaseShop
             {
                 string strOperatorIP = GetIPToString();
 
-                string strSQL = " Insert into Shop_Gold (UserNo,Bance,Operator,OperatorIP) values('" + HiddenField_PhoneNo.Value + "'," + TextBox_GoldCount.Text.Replace("'", "") + ",'" + DefaultUser + "','" + strOperatorIP + "')";
+                string strSQL = " Insert into Shop_Gold (UserNo,Bance,Operator,OperatorIP,Event) values('" + HiddenField_PhoneNo.Value + "'," + TextBox_GoldCount.Text.Replace("'", "") + ",'" + DefaultUser + "','" + strOperatorIP + "','充值')";
                 strSQL += " Update Shop_Userinfo set GoldCount=GoldCount+" + TextBox_GoldCount.Text.Replace("'", "") + " where PhoneNo='" + HiddenField_PhoneNo.Value + "' and FLAG=0";
                 strSQL += " Select GoldCount,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo),0) Bance,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance>0),0) BanceA,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance<0),0) BanceD from Shop_Userinfo where PhoneNo='" + HiddenField_PhoneNo.Value + "' and FLAG=0";
 

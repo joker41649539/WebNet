@@ -8,6 +8,7 @@
     </div>
     <div class="col-xs-12">
         <asp:LinkButton ID="LinkButton3" CssClass="btn btn-block btn-success" PostBackUrl="/Shop/AddressNew.aspx" runat="server"><i class="icon-globe"></i>&nbsp;添加新地址</asp:LinkButton>
+        <div class="hr hr8 hr-double"></div>
     </div>
 </asp:Content>
 

@@ -42,7 +42,7 @@ public partial class Login : PageBaseShop
             return;
         }
 
-        string strSQL = " Update Shop_UserInfo set Ltime=getdate() where PhoneNo='" + Db_user + "' and PassWordNo='" + Db_PassWord + "' AND FLAG=0 ";
+        string strSQL = " Update Shop_UserInfo set LTime=getdate() where PhoneNo='" + Db_user + "' and PassWordNo='" + Db_PassWord + "' AND FLAG=0 ";
 
         strSQL += "  Select *,(Select Count(ID) From Shop_Address where UserNo=Shop_UserInfo.PhoneNo) AddressCount from Shop_UserInfo where PhoneNo='" + Db_user + "' and PassWordNo='" + Db_PassWord + "' AND FLAG=0 ";
 
