@@ -77,24 +77,14 @@
 </head>
 <body>
     <form id="form1" runat="server" enctype="multipart/form-data">
-        <%-- <div class="wrapper">
-            <ul>
-                <li style="z-index: 2;">
-                    <img src="/images/SpaBanner02.jpg" class="img-rounded" width="100%" /></li>
-                <li style="z-index: 1;">
-                    <img src="/images/SpaBanner01.png" class="img-rounded" width="100%" /></li>
-            </ul>
-            <ol1 style="z-index: 3;">
-                <li1 class="current">1</li1>
-                <li1>2</li1>
-            </ol1>
-        </div>--%>
-
         <img src="/images/SpaBanner01.png" class="img-rounded" width="100%" />
         <div class="row page-content">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-            <img src="/images/Server.png" class="img-rounded" width="100%" />
+            <div class="col-xs-12">
+                <div class="hr hr8 hr-double"></div>
+                <img src="/images/Server.png" class="img-rounded" width="100%" />
+            </div>
         </div>
 
         <!-- 主循环 结束-->
@@ -108,44 +98,9 @@
                 <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Order.aspx"><i class="icon-calendar"></i>订单</a></li>
                 <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/QA.aspx"><i class="icon-comments-alt"></i>问答</a></li>
                 <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/My.aspx"><i class="icon-user"></i>我的</a></li>
-<%--                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Login.aspx"><i class="icon-key"></i>登录</a></li>--%>
+                <%--                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Login.aspx"><i class="icon-key"></i>登录</a></li>--%>
             </ul>
         </div>
     </form>
 </body>
-<script type="text/javascript">
-    //设置一个定时器，用于图片自动播放、每次播放的时间
-    let timer = null,
-        //设置下标变量
-        index = 0,
-        //获取所有存放图片的li
-        $ulist = $(".wrapper ul li"),
-        //获取所有存放小圆标的li
-        $olist = $(".wrapper ol li");
-    //设置定时器的变量
-    timer = setInterval(autoPlay, 4000);
-    //设置一个自动播放的函数
-    function autoPlay() {
-        //每调用一次，下标+1，主要作用是记录下标，让图与下面的小圆标对应
-        index++;
-        //size（）是指list集合中元素的个数
-        if (index == $olist.size()) {//设置最后一张图的条件
-            index = 0;
-        }
-        //给当前的小圆标增加样式、给其他小圆标清除样式
-        $olist.eq(index).addClass("current").siblings().removeClass("current");
-        //让当前图片淡入，其他图片淡出
-        $ulist.eq(index).fadeIn(1000).siblings().fadeOut(1000);
-    }
-    //给小圆标设置鼠标移入事件，清除定时器，下标变为当前下标-1；调用一次自动播放函数
-    $olist.mouseenter(function () {
-        clearInterval(timer);
-        index = $(this).index() - 1;
-        autoPlay();
-    }).mouseleave(function () {
-        //调用自动播放函数，每两秒执行一次
-        timer = setInterval(autoPlay, 4000);
-    })
-</script>
-
 </html>

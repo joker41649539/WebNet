@@ -3,23 +3,56 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script type="text/javascript">
         function check() {
-            var rValue = false;
+            var rValue = true;
             var Title = document.getElementById("TextBox_Name").value;
             var Price = document.getElementById("TextBox_Price").value;
             var Time = document.getElementById("TextBox_Time").value;
             var Remark = document.getElementById("TextBox_Remark").value;
             var BigImage = document.getElementById("id-input0").value;
             var InfoImage = document.getElementById("id-input1").value;
+            var i = 0;
+            var message = "";
 
             var float = /^(-?\d+)(\.\d+)?$/; // 浮点数正则表达式 ([0-9][0-9])
             var regTime = /^([0-2][0-9]):([0-5][0-9])$/;
 
-            dialog = jqueryAlert({ 'content': "时间格式：" + regTime.test(Time) });
 
-            //if (float.test(Price) == false) {
-            //    dialog = jqueryAlert({ 'content': "单价必须为数字。" });
-            //    var rValue = false;
-            //}
+            //  dialog = jqueryAlert({ 'content': "时间格式：" + float.test(Price) + " " + Price });
+
+
+            if (Title.length <= 0) {
+                i++;
+                rValue = false;
+                message += i + "、商品标题必须填写！<br>";
+            }
+            if (Price.length <= 0 || !float.test(Price)) {
+                i++;
+                rValue = false;
+                message += i + "、商品单价必须正确填写！<br>";
+            }
+            if (Time.length <= 0 || !regTime.test(Time)) {
+                i++;
+                rValue = false;
+                message += i + "、抢购时间必须正确填写(例 09:50)！<br>";
+            }
+            if (Remark.length <= 0) {
+                i++;
+                rValue = false;
+                message += i + "、商品说明必须填写！<br>";
+            }
+            if (BigImage.length <= 0) {
+                i++;
+                rValue = false;
+                message += i + "、商品大图必须上传！<br>";
+            }
+            if (InfoImage.length <= 0) {
+                i++;
+                rValue = false;
+                message += i + "、商品详细图片必须上传！<br>";
+            }
+            if (!rValue) {
+                dialog = jqueryAlert({ 'content': message.substring(0, message.length - 4) });
+            }
             return rValue;
         }
 
@@ -112,9 +145,7 @@
             </div>
         </div>
         <div class="col-xs-12">
-            <asp:Button ID="Button_Save" OnClick="Button_Save_Click" OnClientClick="return check();" CssClass="btn btn-block btn-success" runat="server" Text="确定添加" />
-            <p>&nbsp;</p>
-            <br />
+            <asp:LinkButton ID="LinkButton1" OnClick="Button_Save_Click" OnClientClick="return check();" CssClass="btn btn-block btn-success" runat="server"><i class="icon-save"></i>&nbsp;确定保存</asp:LinkButton>
         </div>
 
         <%-- 文件上传样式需要--%>

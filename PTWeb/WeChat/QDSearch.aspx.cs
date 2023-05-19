@@ -136,7 +136,7 @@ public partial class WeChat_QDSearch : PageBase
                         strTemp += "      <span class='label label-info label-sm'>下班</span>";
                     }
 
-                    strTemp += "      <span class='label label-info label-sm'>" + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("yyyy-MM-dd HH:mm") + "</span>";
+                    strTemp += "      <span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("MM-dd") + "</span><span class='label label-info label-sm'> " + Convert.ToDateTime(OP_Mode.Dtv[i]["CTime"]).ToString("HH:mm") + "</span>";
                     strTemp += "  </div>";
                     strTemp += "  <div class='widget-box transparent'>";
                     strTemp += "      <div class='widget-header widget-header-small'>";
@@ -236,6 +236,16 @@ public partial class WeChat_QDSearch : PageBase
         string strGCMC = string.Empty;
         string strMapID = string.Empty;
         string strSGDH = string.Empty;
+
+        DateTime dt = DateTime.Now;
+
+        DateTime dt2 = Convert.ToDateTime(Hidden_Time.Value);
+
+        if (DiffMinutes(dt2, dt) > 10)
+        { // 如果超过10分钟，则不允许签到。需要重新刷新页面
+            MessageBox("", "位置信息获取超时，页面即将刷新。<br/>请刷新后重试。", "/WeChat/QDSearch.aspx");
+            return;
+        }
 
         if (strWZ.Length > 2)
         {

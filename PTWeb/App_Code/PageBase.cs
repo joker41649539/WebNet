@@ -1714,6 +1714,18 @@ public class PageBase : System.Web.UI.Page
         TimeSpan daysSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
         return daysSpan.TotalDays;
     }
+
+    /// <summary>
+    /// 计算日期差
+    /// </summary>
+    /// <param name="startTime"></param>
+    /// <param name="endTime"></param>
+    /// <returns></returns>
+    public double DiffMinutes(DateTime startTime, DateTime endTime)
+    {
+        TimeSpan daysSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
+        return daysSpan.TotalMinutes;
+    }
     /// <summary>
     /// 缩小/放大图片
     /// </summary>

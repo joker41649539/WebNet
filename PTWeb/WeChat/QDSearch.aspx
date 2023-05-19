@@ -93,6 +93,7 @@
                                 document.getElementById("demo").innerHTML = arr1[0] + ";" + arr1[1]; //+ "[" + responseData.innerHTML + "]";
                                 document.getElementById("Hidden_JD").value = res.longitude; // 精度赋值
                                 document.getElementById("Hidden_WD").value = res.latitude; // 维度赋值
+                                document.getElementById("Hidden_Time").value = getNowDate(); // 获取当前时间
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -201,6 +202,18 @@
                 }
             }
         }
+        function getNowDate() {
+            var myDate = new Date;
+            var year = myDate.getFullYear(); //获取当前年
+            var mon = myDate.getMonth() + 1; //获取当前月
+            var date = myDate.getDate(); //获取当前日
+            var hours = myDate.getHours(); //获取当前小时
+            var minutes = myDate.getMinutes(); //获取当前分钟
+            // var seconds = myDate.getSeconds(); //获取当前秒
+            var now = year + "-" + mon + "-" + date + " " + hours + ":" + minutes;//+ ":" + seconds;
+            return now;
+        }
+
     </script>
     <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&libraries=drawing,geometry,autocomplete,convertor"></script>
 
@@ -209,6 +222,7 @@
     <asp:HiddenField ID="Hidden_Screen" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_JD" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_WD" ClientIDMode="Static" runat="server" />
+    <asp:HiddenField ID="Hidden_Time" ClientIDMode="Static" runat="server" />
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>

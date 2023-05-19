@@ -85,6 +85,7 @@
                                 document.getElementById("Hidden_Screen").value = "[" + screen.width + "]*[" + screen.height + "]";
                                 document.getElementById("Hidden_JD").value = res.longitude; // 精度赋值
                                 document.getElementById("Hidden_WD").value = res.latitude; // 维度赋值
+                                document.getElementById("Hidden_Time").value = getNowDate(); // 获取当前时间
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -105,12 +106,25 @@
             dialog = jqueryAlert({ 'content': '地理位置获取错误：' + res.content });
         });
 
+        function getNowDate() {
+            var myDate = new Date;
+            var year = myDate.getFullYear(); //获取当前年
+            var mon = myDate.getMonth() + 1; //获取当前月
+            var date = myDate.getDate(); //获取当前日
+            var hours = myDate.getHours(); //获取当前小时
+            var minutes = myDate.getMinutes(); //获取当前分钟
+            // var seconds = myDate.getSeconds(); //获取当前秒
+            var now = year + "-" + mon + "-" + date + " " + hours + ":" + minutes;//+ ":" + seconds;
+            return now;
+        }
+
     </script>
     <asp:HiddenField ID="Hidden_WZ" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Name" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_Screen" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_JD" ClientIDMode="Static" runat="server" />
     <asp:HiddenField ID="Hidden_WD" ClientIDMode="Static" runat="server" />
+    <asp:HiddenField ID="Hidden_Time" ClientIDMode="Static" runat="server" />
     <div class="breadcrumbs" id="breadcrumbs">
         <ul class="breadcrumb">
             <li>
@@ -284,11 +298,11 @@
             <h1><i class="icon-bullhorn"></i>工作计划</h1>
         </div>
         <asp:GridView ID="GridView_WorkPlan" ClientIDMode="Static" runat="server" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="False" DataKeyNames="ID,WID">
-            <Columns>
+            <columns>
                 <asp:BoundField DataField="NRemark" SortExpression="NRemark" HeaderText="说明"></asp:BoundField>
                 <asp:BoundField DataField="GCDD" SortExpression="GCDD" HeaderText="地点"></asp:BoundField>
                 <asp:BoundField DataField="LTime" DataFormatString="{0:yyyy-MM-dd}" ItemStyle-CssClass="hidden-480" HeaderStyle-CssClass="hidden-480" SortExpression="lt" HeaderText="日期"></asp:BoundField>
-            </Columns>
+            </columns>
         </asp:GridView>
     </div>
 </asp:Content>

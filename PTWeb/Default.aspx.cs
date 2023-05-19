@@ -191,6 +191,16 @@ public partial class DefaultPH : PageBase
         string strMapID = string.Empty;
         string strSGDH = string.Empty;
 
+        DateTime dt = DateTime.Now;
+
+        DateTime dt2 = Convert.ToDateTime(Hidden_Time.Value);
+
+        if (DiffMinutes(dt2, dt) > 10)
+        { // 如果超过10分钟，则不允许签到。
+            MessageBox("", "位置信息获取超时，页面即将刷新。<br/>请刷新后重试。", "/Default.aspx");
+            return;
+        }
+
         if (strWZ.Length > 2)
         {
             strMapID = strWZ[2];

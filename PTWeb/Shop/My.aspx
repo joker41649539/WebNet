@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Shop/MasterPage.master" AutoEventWireup="true" CodeFile="My.aspx.cs" Inherits="SpaServer_Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <h1><b><asp:Label ID="Label4" runat="server" Text=""></asp:Label></b></h1>
     <div class="col-xs-12">
         <div class="hr hr8 hr-double"></div>
         <div class="clearfix">
@@ -83,7 +84,6 @@
             <i class="icon-cogs bigger-230"></i>
             系统设置
         </a>
-        <div class="hr hr8 hr-double"></div>
     </div>
 </asp:Content>
 

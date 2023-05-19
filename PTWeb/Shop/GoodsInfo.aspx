@@ -32,7 +32,6 @@
         <img src="/img/05.jpg" class="img-rounded" width="100%" />
         <img src="/img/06.jpg" class="img-rounded" width="100%" />
     </div>
-    <div class="hr hr8 hr-double"></div>
     <script>
         ShowTime("show", "2023-06-10 23:00");
         function ShowTime(DivID, Time) {

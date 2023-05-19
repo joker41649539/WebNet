@@ -34,6 +34,8 @@ public partial class SpaServer_Default2 : PageBaseShop
         strTempHtml += "    <i class=\"icon-comments bigger-230\"></i>邀请好友</a>";
         strTempHtml += "<a href=\"/Shop/Service.aspx\" class=\"btn btn-app btn-purple\">";
         strTempHtml += "    <i class=\"icon-headphones bigger-230\"></i>联系客服</a>";
+        strTempHtml += "<a href=\"/Shop/Login.aspx\" class=\"btn btn-app\">";
+        strTempHtml += "    <i class=\"icon-key bigger-230\"></i>切换账号</a>";
 
         string strSQL = "Select cast( ModuleID as nvarchar)+';' from Shop_Module,Shop_UserInfo where Shop_Module.PhoneNo='" + DefaultUser + "' and Shop_Module.PhoneNo=Shop_UserInfo.PhoneNo and FLAG=0 for xml PATH('')";
 
@@ -60,6 +62,9 @@ public partial class SpaServer_Default2 : PageBaseShop
                     {
                         strTempHtml += "<a href=\"/Shop/Recharge.aspx\" class=\"btn btn-app btn-inverse\">";
                         strTempHtml += "    <i class=\"icon-briefcase bigger-230\"></i>金豆充值</a>";
+
+                        strTempHtml += "<a href=\"/Shop/CreatHtml.aspx\" class=\"btn btn-app btn-inverse\">";
+                        strTempHtml += "    <i class=\"icon-desktop bigger-230\"></i>生成HTML</a>";
                     }
 
                     id = Array.IndexOf(arrModul, "1");
@@ -92,6 +97,7 @@ public partial class SpaServer_Default2 : PageBaseShop
 
     private void LoadData()
     {
+        Label4.Text = DefaultUser;
         string strSQL = "Select *,(Select Count(ID) From Shop_Address where UserNo=Shop_UserInfo.PhoneNo) AddressCount,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo),0) Bance,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance>0),0) BanceA,isnull((Select sum(Bance) from shop_Gold where UserNo=Shop_Userinfo.PhoneNo and bance<0),0) BanceD from Shop_Userinfo where PhoneNo='" + DefaultUser + "' and FLAG=0";
         if (OP_Mode.SQLRUN(strSQL))
         {
