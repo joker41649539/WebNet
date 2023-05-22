@@ -12,8 +12,8 @@ public partial class SpaServer_Default : PageBaseShop
     {
         if (!IsPostBack)
         {
-
+            Response.Redirect("/Shop/Html/", false);
+            return;
         }
     }
-
 }

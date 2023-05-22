@@ -25,10 +25,10 @@
             // dialog = jqueryAlert({ 'content': "文本1：" + one.value + " 文本2：" + two.value + " 合计：" + SumYF1 + " 选中：" + check1[0].checked });
             // 选中为市内车费  反之为市外车费
             if (check1[0].checked) {
-                SumYF1 = Math.ceil(0.8 * SumYF1 + parseInt(three.value));
+                SumYF1 = (0.8 * SumYF1 + parseInt(three.value)).toFixed(2);
             }
             else {
-                SumYF1 = Math.ceil(1.2 * SumYF1 + parseInt(three.value));
+                SumYF1 = (1.2 * SumYF1 + parseInt(three.value)).toFixed(2);
             }
 
             if (SumYF1 > 0) {
@@ -100,11 +100,11 @@
         <div class="modal-dialog ">
             <div class="modal-content">
                 <asp:GridView ID="GridView_Examine" AutoGenerateColumns="False" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" runat="server">
-                    <Columns>
+                    <columns>
                         <asp:BoundField DataField="UserName" SortExpression="UserName" HeaderText="操作人"></asp:BoundField>
                         <asp:BoundField DataField="CTime" SortExpression="CTime" DataFormatString="{0:yyyy-MM-dd}" HeaderText="操作时间"></asp:BoundField>
                         <asp:BoundField DataField="Remark" SortExpression="Remark" HeaderText="说明信息"></asp:BoundField>
-                    </Columns>
+                    </columns>
                 </asp:GridView>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info"
@@ -376,10 +376,10 @@
     <div class="hr-10"></div>
     <div class="btn-group">
         <%--        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="GridView_YZ_LinkButton1" class="btn btn-info" runat="server"><i class="icon-save bigger-110"></i> 保  存</asp:LinkButton>--%>
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return check();" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i> 提  交</asp:LinkButton>
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Return" class="btn btn-pink" runat="server" OnClick="LinkButton4_Click"><i class="icon-undo bigger-110"></i> 退  回</asp:LinkButton>
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"> <i class=" icon-trash bigger-110"></i>删  除</asp:LinkButton>
-        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-grey" runat="server" OnClick="LinkButton3_Click1"> <i class=" icon-search bigger-110"></i>审批记录</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="return check();" ID="LinkButton_Next" class="btn btn-success" runat="server" OnClick="LinkButton2_Click"><i class="icon-ok bigger-110"></i>提  交</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Return" class="btn btn-pink" runat="server" OnClick="LinkButton4_Click"><i class="icon-undo bigger-110"></i>退  回</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton_Del" class="btn btn-danger" runat="server" OnClick="LinkButton1_Click"><i class=" icon-trash bigger-110"></i>删  除</asp:LinkButton>
+        <asp:LinkButton UseSubmitBehavior="false" OnClientClick="this.setAttribute('disabled', 'disabled')" ID="LinkButton3" class="btn btn-grey" runat="server" OnClick="LinkButton3_Click1"><i class=" icon-search bigger-110"></i>审批记录</asp:LinkButton>
         <asp:HyperLink ID="HyperLink1" class="btn btn-info" runat="server" Target="_blank">查看轨迹</asp:HyperLink>
     </div>
     <script src="/assets/js/date-time/bootstrap-datepicker.min.js"></script>
@@ -391,6 +391,6 @@
             });
         });
     </script>
-</div>
+    </div>
     </div>
 </asp:Content>

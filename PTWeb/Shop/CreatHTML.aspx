@@ -86,7 +86,6 @@
     <div class="col-xs-12">
         <div class="space"></div>
         <asp:LinkButton runat="server" ID="LinkButton1" OnClientClick="return check();" OnClick="LinkButton1_Click" CssClass="btn btn-success btn-block"><i class="icon-desktop"></i>&nbsp;创建静态页面</asp:LinkButton>
-        <div class="hr hr-double"></div>
     </div>
 </asp:Content>
 
