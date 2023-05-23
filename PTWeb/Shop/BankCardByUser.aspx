@@ -6,7 +6,7 @@
             <div class="form-group">
                 <h3><b>微信收款码</b></h3>
                 <div class="col-sm-9">
-                    <img src="/img/01.jpg" class="img-rounded width-100" />
+                    <asp:Image ID="Image_WeChat" class="img-rounded width-100" runat="server" />
                 </div>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="form-group">
                 <h3><b>支付宝收款码</b></h3>
                 <div class="col-sm-9">
-                    <img src="/img/02.jpg" class="img-rounded width-100" />
+                    <asp:Image ID="Image_Pay" class="img-rounded width-100" runat="server" />
                 </div>
             </div>
         </div>
@@ -22,12 +22,14 @@
             <div class="form-group">
                 <h3><b>银行卡信息</b></h3>
                 <div class="col-sm-9">
-                    <h4>中国银行</h4>
-                    <h4>安徽合肥分行</h4>
-                    <h4>XXXX XXXX XXXX XXXX</h4>
+                    <h4>
+                        <asp:Label ID="Label1" runat="server" Text="银行名字"></asp:Label></h4>
+                    <h4>
+                        <asp:Label ID="Label2" runat="server" Text="开户行"></asp:Label></h4>
+                    <h4>
+                        <asp:Label ID="Label3" runat="server" Text="账号"></asp:Label></h4>
                 </div>
             </div>
-            <div class="hr hr8 hr-double"></div>
         </div>
     </div>
 </asp:Content>

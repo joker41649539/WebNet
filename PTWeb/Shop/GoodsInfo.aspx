@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <script>
         // 创建 WebSocket 连接
+        //const socket = new WebSocket('ws://106.225.208.54:8090/ws');
         const socket = new WebSocket('ws://127.0.0.1:8090/ws');
         var BConnect = false;
         // 监听连接事件
@@ -12,26 +13,25 @@
         });
         socket.onerror = function (e) {
             BConnect = false;
-           // dialog = jqueryAlert({ 'content': "连接服务器出错。请稍后再试。" });
+            // dialog = jqueryAlert({ 'content': "连接服务器出错。请稍后再试。" });
         }//连接出错
-        var Msg = "";
+
         // 监听接收消息事件
         socket.addEventListener('message', (event) => {
-            if (event.data == "ok") {
-                alert("抢购成功。");
-                window.location.replace("/Shop/BankCardByUser.aspx?id=202305221436521")
-                // dialog = jqueryAlert({ 'title': '提示', 'content': "抢购成功。", 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } });
-                // return;
-            }
-            else {
-                alert("抢购失败，下次请早。");
-                // dialog = jqueryAlert({ 'title': '提示', 'content': "抢购失败，下次请早。", 'modal': true, 'buttons': { '确定': function () { dialog.destroy(); dialog.close(); } } });
-                // return;
-            }
             //const messages = document.getElementById('messages');
             //const li = document.createElement('li');
             //li.textContent = event.data;
             //messages.appendChild(li);
+
+            // alert("测试下消息");
+             alert(event.data);
+            //if (event.data == "ok") {
+            //    alert("抢购成功。");
+            //    window.location.replace("/Shop/BankCardByUser.aspx?id=202305221436521")
+            //}
+            //else {
+            //    alert(event.data);
+            //}
         });
 
         // 发送消息
@@ -39,7 +39,7 @@
             // const input = document.getElementById('messageInput');
             //   const message = input.value;
             if (BConnect) {
-                const message = "18019961118,2023052214474010.html";
+                const message = "18019961118,202305221030411.html";
                 socket.send(message);
             }
             else {

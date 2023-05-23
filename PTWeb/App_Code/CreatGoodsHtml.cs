@@ -119,12 +119,40 @@ public class CreatGoodsHtml
         str += "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/images/XMFightLogo.ico\" media=\"screen\" />";
         str += "<title>@Title</title></head>";//标题
         str += "<body>";
-        str += "<form method=\"post\" action=\"./GoodsInfo.aspx?ID=1\" id=\"form1\" enctype=\"multipart/form-data\">";
+        str += "<form method=\"post\" id=\"form1\">";
+
+        str += "<script>";
+        str += " var url = window.location.href;";
+        str += " url = url.substring(url.lastIndexOf('tml/') + 4);";
+        str += " var strcookie = document.cookie;";
+        str += " var rValue = false;";
+        str += " var UserNo = strcookie.substring(strcookie.lastIndexOf(\"PhoneNo=\") + 8, strcookie.lastIndexOf(\"PhoneNo=\") + 19);";
+        str += " var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\\d{8})$/;";
+        str += " if (!myreg.test(UserNo)) {";
+        str += "    dialog = jqueryAlert({ 'title': '提 示', 'content': \"您还未登录<br>请先登录。\", 'modal': true, 'buttons': { '确定': function () { location.href = \"/Shop/Login.aspx\"; } } })";
+        str += " }";
+        str += " const socket = new WebSocket('@Server');";///服务器 ws://127.0.0.1:8090/ws
+        str += " var BConnect = false;";
+        str += "  socket.addEventListener('open', (event) => {BConnect = true;});";
+        str += "  socket.onerror = function (e) {BConnect = false;};";
+        str += "  socket.addEventListener('message', (event) => {";
+        str += "    if (event.data == \"ok\") {";
+        str += "      dialog = jqueryAlert({ 'title': '提 示', 'content': \"恭喜，抢购成功。<br>请在一小时内付款。\", 'modal': true, 'buttons': { '确定': function () { location.href = \"/Shop/BankCardByUser.aspx?id=\" + url; } } })";
+        str += "    }";
+        str += "    else {";
+        str += "      dialog = jqueryAlert({ 'content': event.data });";
+        str += "    }});";
+        str += " function sendMessage() {";
+        str += "   if (BConnect) {const message = UserNo + \",\" + url;socket.send(message);}";
+        str += "   else {dialog = jqueryAlert({ 'content': \"连接服务器出错。<br/>请稍后刷新重试。\" });}";
+        str += "}";
+        str += "</script>";
+     
         str += "<img src=\"/images/SpaBanner01.png\" class=\"img-rounded\" width=\"100%\" />";
         str += "<div class=\"row page-content\">";
         str += "<div class=\"center\"><img src=\"/Shop/img/@BigImg\" class=\"img-rounded\" width=\"100%\" /></div>";//商品大图
         str += "<div class=\"alert alert-success\"><h1><b>限时抢购</b></h1><h5 id=\"show\">距离开始还有：  <span></span>小时<span></span>分<span></span>秒</h5>";
-        str += "<a class=\"btn btn-danger btn-block\" ID=\"LinkButton1\" href=\"#\"><i class=\"icon-shopping-cart\"></i>&nbsp;<b>立即抢购</b></a></div>";
+        str += "<a class=\"btn btn-danger btn-block\" onclick=\"sendMessage();\" ID=\"LinkButton1\" href=\"#\"><i class=\"icon-shopping-cart\"></i>&nbsp;<b>立即抢购</b></a></div>";
         str += "<div class=\"well\">";
         str += " <div class=\"clearfix\">";
         str += "  <h1 class=\"red\"><b>￥<span>@Price</span></b></h1>";//单价
@@ -234,7 +262,7 @@ public class CreatGoodsHtml
     /// <param name="strContent"></param>
     /// <param name="strSTime"></param>
     /// <returns></returns>
-    public static string WriteFile(int strID, string strTitle, string strBigImg, string strPrice, string strIntroduction, string strContent, string strSTime)
+    public static string WriteFile(int strID, string strTitle, string strBigImg, string strPrice, string strIntroduction, string strContent, string strSTime,string strServer)
     {
 
         string path = HttpContext.Current.Server.MapPath(".") + "/html/";//文件输出目录
@@ -256,6 +284,7 @@ public class CreatGoodsHtml
         str = str.Replace("@Introduction", strIntroduction);
         str = str.Replace("@Content", strContent);
         str = str.Replace("@STime", strSTime);
+        str = str.Replace("@Server", strServer);
 
         // 写文件
 

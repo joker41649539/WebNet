@@ -57,6 +57,7 @@ public partial class Shop_Default2 : PageBaseShop
         string strBatch = DateTime.Now.ToString("yyyyMMddHHmmss");// 操作批次号
         DateTime strDT = DateTime.Now;
         int GoodsCount = 0;
+        string strServer = TextBox_Server.Text;
         string strSQL = "Select *,isnull((Select top 1 price from shop_goodsPrice where goodsid=Shop_Goods.ID order by Ctime desc),Price) NewPrice,(Select SetValue from Shop_SysSet where id=4) zz from Shop_Goods where Flag=0";
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -88,7 +89,7 @@ public partial class Shop_Default2 : PageBaseShop
                     strDT = Convert.ToDateTime(Convert.ToDateTime(TextBox_Stime.Text).AddDays(1).ToString("yyyy-MM-dd HH:mm"));
                 }
 
-                strHtml = CreatGoodsHtml.WriteFile(Convert.ToInt32(strID), strTitle, strBigImg, (Convert.ToDouble(strPrice) * strZZ).ToString("0.00"), strRemark, strImageInfo1, strDT.ToString("yyyy-MM-dd HH:mm"));
+                strHtml = CreatGoodsHtml.WriteFile(Convert.ToInt32(strID), strTitle, strBigImg, (Convert.ToDouble(strPrice) * strZZ).ToString("0.00"), strRemark, strImageInfo1, strDT.ToString("yyyy-MM-dd HH:mm"), strServer);
                 strSQL += " Insert into Shop_GoodsPrice (GoodsID,HtmlID,StartTime,Price,Operator,Batch) values (" + strID + ",'" + strHtml + "','" + strDT + "'," + (Convert.ToDouble(strPrice) * strZZ).ToString() + ",'" + DefaultUser + "','" + strBatch + "')";
             }
             strSQL += " Select shop_goodsPrice.Price,HtmlID,GoodsID,shop_goodsPrice.StartTime,Title,Remark,BigImg from shop_goodsPrice,Shop_Goods where Batch='" + strBatch + "' and GoodsID=Shop_Goods.ID and Flag=0";
