@@ -30,13 +30,13 @@ public partial class Shop_Default2 : PageBaseShop
 
     private void LoadData(string strHTMLID)
     {
-        string strSQL = "Select * from Shop_UserInfo where id=(Select Max(UserID) from Shop_UserGoods where GoodsPriceID=(Select ID from Shop_GoodsPrice where HtmlID='" + strHTMLID + "') and Flag=1)";
+        string strSQL = "Select Shop_UserGoods.ID,BigImg,Title,Shop_GoodsPrice.Price,PhoneNo,CName,BankID,BankName,BankStart,WeChatImg,PayImg,GoldCount,Voucher from Shop_UserGoods,Shop_GoodsPrice,Shop_UserInfo,Shop_Goods where Shop_UserGoods.GoodsPriceID=Shop_GoodsPrice.HtmlID and HolderID=Shop_UserInfo.PhoneNo and GoodsID=Shop_Goods.ID and GoodsPriceID='" + strHTMLID + "' and UserID='" + DefaultUser + "'";
 
         if (OP_Mode.SQLRUN(strSQL))
         {
             if (OP_Mode.Dtv.Count > 0)
             {
-                if (OP_Mode.Dtv[0]["PayImg"].ToString().Length > 0)
+                if (OP_Mode.Dtv[0]["WeChatImg"].ToString().Length > 0)
                 {
                     Image_WeChat.ImageUrl = "/Shop/img/" + OP_Mode.Dtv[0]["WeChatImg"].ToString();
                 }
@@ -44,15 +44,57 @@ public partial class Shop_Default2 : PageBaseShop
                 {
                     Image_Pay.ImageUrl = "/Shop/img/" + OP_Mode.Dtv[0]["PayImg"].ToString();
                 }
-                Label1.Text = OP_Mode.Dtv[0]["BankName"].ToString();
-                Label2.Text = OP_Mode.Dtv[0]["BankStart"].ToString();
-                Label3.Text = OP_Mode.Dtv[0]["BankID"].ToString();
+                Label1.Text = "银行：" + OP_Mode.Dtv[0]["BankName"].ToString();
+                Label2.Text = "开户行：" + OP_Mode.Dtv[0]["BankStart"].ToString();
+                Label3.Text = "账号：" + OP_Mode.Dtv[0]["BankID"].ToString();
+                Label4.Text = "姓名：" + OP_Mode.Dtv[0]["CName"].ToString();
+                HyperLink_Tel.Text = OP_Mode.Dtv[0]["PhoneNo"].ToString();
+                HyperLink_Tel.NavigateUrl = "tel:" + OP_Mode.Dtv[0]["PhoneNo"].ToString();
+                Label_Title.Text = OP_Mode.Dtv[0]["Title"].ToString();
+                Label_Price.Text = OP_Mode.Dtv[0]["Price"].ToString();
+                Image_BigImg.ImageUrl = "/Shop/img/" + OP_Mode.Dtv[0]["BigImg"].ToString();
+                HiddenField_ID.Value = OP_Mode.Dtv[0]["ID"].ToString();
+                if (OP_Mode.Dtv[0]["Voucher"].ToString().Length > 0)
+                {
+                    Image1.ImageUrl = "/Shop/img/" + OP_Mode.Dtv[0]["Voucher"].ToString();
+                }
             }
             else
             {
-                MessageBox("无主商品，跳转到系统管理员收款账号。");
+                MessageBox("", "未查询到付款信息，请重试。", "/Shop/html/");
             }
         }
     }
 
+
+    protected void LinkButton_Up_Click(object sender, EventArgs e)
+    {
+        if (Convert.ToInt32(HiddenField_ID.Value) > 0)
+        {
+            HttpPostedFile f = Request.Files[0];
+            string strImg = UploadTPs(f, 0, "Voucher");
+            if (strImg.Length > 0 & DefaultUser != null)
+            {
+                string strSQL = "Update Shop_UserGoods Set Voucher='" + strImg + "',Flag=2,VoucherTime=getdate(),LTime=getdate() where ID=" + HiddenField_ID.Value + "";
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    MessageBox("付款截图上传成功，并且状态更新为待确认。<br/>请等待卖家发货。");
+                    string strHtml = Request["id"];
+                    if (strHtml != null)
+                    {
+                        LoadData(strHtml);
+                    }
+                    else
+                    {
+                        MessageBox("", "参数错误。", "/Shop/html/");
+                    }
+                    return;
+                }
+            }
+        }
+        else
+        {
+            MessageBox("", "未查询到付款信息，请重试。", "/Shop/html/");
+        }
+    }
 }

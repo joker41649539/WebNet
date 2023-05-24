@@ -9,29 +9,34 @@
                     <i class=" icon-credit-card icon-2x blue"></i>
                     &nbsp; 累计订单
                 </span>
-                <h4 class="bigger pull-right">4.00</h4>
+                <h4 class="bigger pull-right">
+                    <asp:Label ID="Label_Sum" runat="server" Text="0.00"></asp:Label>
+                </h4>
             </div>
 
             <div class="grid3">
                 <span class="grey">
                     <i class="icon-briefcase icon-2x orange"></i>
-                    &nbsp; 金豆
+                    &nbsp; 我的金豆
                 </span>
                 <h4 class="bigger pull-right">
-                    <asp:Label ID="Label1" runat="server" Text="0.000"></asp:Label></h4>
+                    <asp:Label ID="Label_GoldCount" runat="server" Text="0.000"></asp:Label>
+                </h4>
             </div>
             <div class="grid3">
                 <span class="grey">
                     <i class="icon-briefcase icon-2x purple"></i>
                     &nbsp; 我的利润
                 </span>
-                <h4 class="bigger pull-right">2800.00</h4>
+                <h4 class="bigger pull-right">
+                    <asp:Label ID="Label_LR" runat="server" Text="0.00"></asp:Label>
+                </h4>
             </div>
         </div>
     </div>
 
     <div class="col-xs-12">
-        <h3 class="header smaller lighter red"><i class="icon-credit-card"></i>&nbsp;待付款</h3>
+        <h3 class="header smaller lighter red"><i class="icon-credit-card"></i>&nbsp;我待付款</h3>
     </div>
     <div class="col-xs-12 page-content" runat="server" id="Well0">
         <div class="well">
@@ -46,7 +51,7 @@
         </div>
     </div>
     <div class="col-xs-12">
-        <h3 class="header smaller lighter green"><i class="icon-credit-card"></i>&nbsp;待收款</h3>
+        <h3 class="header smaller lighter green"><i class="icon-credit-card"></i>&nbsp;待卖家确认</h3>
     </div>
     <div class="col-xs-12 page-content" runat="server" id="Well2">
         <div class="well">
@@ -59,6 +64,21 @@
             &nbsp;--%>
         </div>
     </div>
+        <div class="col-xs-12">
+        <h3 class="header smaller lighter pink"><i class="icon-credit-card"></i>&nbsp;我卖出的</h3>
+    </div>
+    <div class="col-xs-12 page-content" runat="server" id="Div_My">
+        <div class="well">
+            <%--<h5>202305171547<br />
+                传世古玉<br />
+                ￥1500</h5>
+            <p class="btn-group pull-right">
+                <asp:LinkButton ID="LinkButton3" CssClass="btn btn-sm" OnClick="LinkButton3_Click" runat="server"><i class="icon-ok"></i>&nbsp;收款确认</asp:LinkButton>
+            </p>
+            &nbsp;--%>
+        </div>
+    </div>
+
     <div class="col-xs-12">
         <h3 class="header smaller lighter blue"><i class="icon-credit-card"></i>&nbsp;已完成订单</h3>
     </div>

@@ -17,7 +17,7 @@ public partial class Shop_Default2 : PageBaseShop
             }
             else
             {
-               // MessageBox("", "您还未登录，无法查看该页面。", "/Shop/Login.aspx");
+                // MessageBox("", "您还未登录，无法查看该页面。", "/Shop/Login.aspx");
             }
         }
     }
@@ -30,6 +30,7 @@ public partial class Shop_Default2 : PageBaseShop
         string sBankName = string.Empty;
         string sBankStart = string.Empty;
         string sBankID = string.Empty;
+        string strCNmae = string.Empty;
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -44,10 +45,11 @@ public partial class Shop_Default2 : PageBaseShop
                 sBankName = OP_Mode.Dtv[0]["BankName"].ToString();
                 sBankStart = OP_Mode.Dtv[0]["BankStart"].ToString();
                 sBankID = OP_Mode.Dtv[0]["BankID"].ToString();
+                strCNmae = OP_Mode.Dtv[0]["CName"].ToString();
                 AddressCount = Convert.ToInt32(OP_Mode.Dtv[0]["AddressCount"]);
                 GoldCount = Convert.ToDouble(OP_Mode.Dtv[0]["GoldCount"]);
 
-                if (sIMGWeChat.Length > 0 || sIMGPay.Length > 0 || (sBankID.Length + sBankName.Length + sBankID.Length) > 0)
+                if (sIMGWeChat.Length > 0 || sIMGPay.Length > 0 || (sBankID.Length + sBankName.Length + sBankID.Length + strCNmae.Length) > 0)
                 {
                     BankMSG = true;
                 }
@@ -71,6 +73,7 @@ public partial class Shop_Default2 : PageBaseShop
                 TextBox1.Text = sBankName;
                 TextBox2.Text = sBankStart;
                 TextBox3.Text = sBankID;
+                TextBox4.Text = strCNmae;
             }
         }
     }
@@ -112,10 +115,11 @@ public partial class Shop_Default2 : PageBaseShop
         string sBankName = TextBox1.Text.Replace("'", "");
         string sBankStart = TextBox2.Text.Replace("'", "");
         string sBankID = TextBox3.Text.Replace("'", "");
+        string sCName = TextBox4.Text.Replace("'", "");
 
-        if (sBankName.Length > 0 && sBankStart.Length > 0 && sBankID.Length > 0)
+        if (sBankName.Length > 0 && sBankStart.Length > 0 && sBankID.Length > 0 & sCName.Length > 0)
         {
-            string strSQL = "Update Shop_UserInfo Set BankName='" + sBankName + "',BankStart='" + sBankStart + "',BankID='" + sBankID + "',LTime=getdate() where PhoneNo='" + DefaultUser + "' and Flag=0";
+            string strSQL = "Update Shop_UserInfo Set BankName='" + sBankName + "',CName='" + sCName + "',BankStart='" + sBankStart + "',BankID='" + sBankID + "',LTime=getdate() where PhoneNo='" + DefaultUser + "' and Flag=0";
             if (OP_Mode.SQLRUN(strSQL))
             {
                 MessageBox("银行账号更新成功。");

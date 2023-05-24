@@ -27,8 +27,14 @@
             var BankName = document.getElementById("TextBox1").value;
             var BankStart = document.getElementById("TextBox2").value;
             var BankID = document.getElementById("TextBox3").value;
+            var CName = document.getElementById("TextBox4").value;
             var MSG = "";
             var i = 0;
+            if (CName.length <= 0) {
+                i++
+                rValue = false;
+                MSG += i.toString() + "、收款人姓名必须填写。<br>";
+            }
             if (BankName.length <= 0) {
                 i++
                 rValue = false;
@@ -80,6 +86,12 @@
             <br />
         </div>
         <div class="col-xs-12">
+            <div class="form-group">
+                <h3><b>收款人</b></h3>
+                <div class="col-sm-9">
+                    <asp:TextBox ID="TextBox4" ClientIDMode="Static" runat="server" placeholder="请输入收款人姓名" class="col-xs-12 col-sm-12"></asp:TextBox>
+                </div>
+            </div>
             <div class="form-group">
                 <h3><b>银行名称</b></h3>
                 <div class="col-sm-9">

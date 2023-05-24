@@ -20,12 +20,61 @@ public partial class Shop_MasterPage : System.Web.UI.MasterPage
         }
     }
 
+    private void loadData(string Db_user)
+    {
+        string strSQL = "  Select *,(Select Count(ID) From Shop_Address where UserNo=Shop_UserInfo.PhoneNo) AddressCount from Shop_UserInfo where PhoneNo='" + Db_user + "' AND FLAG=0 ";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                string sIMGWeChat = string.Empty;
+                string sIMGPay = string.Empty;
+                string sBankName = string.Empty;
+                string sBankStart = string.Empty;
+                string sBankID = string.Empty;
+                double GoldCount = 0;
+                bool BankMSG = false;
+                bool AddressMSG = false;
+                int AddressCount = 0;
+
+                sIMGWeChat = OP_Mode.Dtv[0]["WeChatImg"].ToString();
+                sIMGPay = OP_Mode.Dtv[0]["PayImg"].ToString();
+                sBankName = OP_Mode.Dtv[0]["BankName"].ToString();
+                sBankStart = OP_Mode.Dtv[0]["BankStart"].ToString();
+                sBankID = OP_Mode.Dtv[0]["BankID"].ToString();
+                AddressCount = Convert.ToInt32(OP_Mode.Dtv[0]["AddressCount"]);
+                GoldCount = Convert.ToDouble(OP_Mode.Dtv[0]["GoldCount"]);
+
+                if (sIMGWeChat.Length > 0 || sIMGPay.Length > 0 || (sBankID.Length + sBankName.Length + sBankID.Length) > 0)
+                {
+                    BankMSG = true;
+                }
+                if (AddressCount > 0)
+                {
+                    AddressMSG = true;
+                }
+
+                /// 执行登录操作
+                /// 
+                /// 把登录信息写入到COOKIE里
+                ResponseCokie(Db_user, BankMSG, AddressMSG, GoldCount);
+            }
+        }
+    }
+
     private void DefaultMSG()
     {
         try
         {
             int i = 0;
             string strMSG = string.Empty;
+
+            if (Request.Cookies["Shop"]["PhoneNo"] != null)
+            {
+                loadData(Request.Cookies["Shop"]["PhoneNo"].ToString());
+            }
+
             if (!Convert.ToBoolean(Request.Cookies["Shop"]["BankMsg"]))
             {
                 i++;
@@ -153,4 +202,16 @@ public partial class Shop_MasterPage : System.Web.UI.MasterPage
         ScriptManager.RegisterStartupScript(UpdatePanel, this.GetType(), "sKey", "$('#MSG').modal('show');$(function () {$('#MSG').on('hide.bs.modal', function () {setTimeout(parent.location.href = '" + sURL + "', 0);})});", true);
 
     }
+
+    /// <summary>
+    /// 写入Cookie 判断是否填写过信息
+    /// </summary>
+    public void ResponseCokie(string PhonNo, bool BankMsg, bool AddressMsg, double GoldCount)
+    {
+        Response.Cookies["Shop"]["PhoneNo"] = PhonNo;
+        Response.Cookies["Shop"]["BankMsg"] = BankMsg.ToString();
+        Response.Cookies["Shop"]["AddressMsg"] = AddressMsg.ToString();
+        Response.Cookies["Shop"]["GoldCount"] = GoldCount.ToString();
+    }
+
 }

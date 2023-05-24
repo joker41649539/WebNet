@@ -77,7 +77,7 @@
 </head>
 <body>
     <form id="form1" runat="server" enctype="multipart/form-data">
-        <img src="/images/SpaBanner01.png" class="img-rounded" width="100%" />
+        <img src="/images/SpaBaner01.png" class="img-rounded" width="100%" />
         <div class="row page-content">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
@@ -86,7 +86,6 @@
                 <img src="/images/Server.png" class="img-rounded" width="100%" />
             </div>
         </div>
-
         <!-- 主循环 结束-->
         <div class="row" style="height: 70px;">
             &nbsp;

@@ -80,7 +80,7 @@
         <div class="form-group">
             <h3><b>时间间隔</b></h3>
             <div class="col-sm-9">
-                <asp:TextBox ID="TextBox_Interval" ClientIDMode="Static" runat="server" placeholder="请输入时间间隔(分钟)" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <asp:TextBox ID="TextBox_Interval" ClientIDMode="Static" runat="server" Text="1" placeholder="请输入时间间隔(分钟)" class="col-xs-12 col-sm-12"></asp:TextBox>
             </div>
         </div>
     </div>
@@ -88,7 +88,7 @@
         <div class="form-group">
             <h3><b>WS服务器</b></h3>
             <div class="col-sm-9">
-                <asp:TextBox ID="TextBox_Server" ClientIDMode="Static" runat="server" text="ws://127.0.0.1:8090/ws" placeholder="ws://127.0.0.1:8090/ws" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <asp:TextBox ID="TextBox_Server" ClientIDMode="Static" runat="server" text="ws://202.111.192.174:8090/ws" placeholder="ws://127.0.0.1:8090/ws" class="col-xs-12 col-sm-12"></asp:TextBox>
             </div>
         </div>
     </div>

@@ -47,7 +47,7 @@ public class CreatGoodsHtml
         str += "<title>特惠大抢购</title></head>";
         str += "<body>";
         str += "<form method=\"post\" id=\"form1\">";
-        str += "<img src=\"/images/SpaBanner01.png\" class=\"img-rounded\" width=\"100%\" />";
+        str += "<img src=\"/images/SpaBaner01.png\" class=\"img-rounded\" width=\"100%\" />";
         str += "<div class=\"row page-content\">";
 
         str += "<div id=\"masonry\" class=\"container-fluid list\">";
@@ -127,6 +127,7 @@ public class CreatGoodsHtml
         str += " var strcookie = document.cookie;";
         str += " var rValue = false;";
         str += " var UserNo = strcookie.substring(strcookie.lastIndexOf(\"PhoneNo=\") + 8, strcookie.lastIndexOf(\"PhoneNo=\") + 19);";
+        str += " var GoldCount = strcookie.substring(strcookie.lastIndexOf(\"GoldCount=\") + 10, strcookie.length);if (Number(GoldCount) >= 0) { if (GoldCount < Math.ceil(@Price * @Gas)) { dialog = jqueryAlert({ 'content': '<i class=\"icon-warning-sign icon-3x red\"></i><br>您的金豆不够支付该商品，请先充值。<br>预计需要：' + Math.ceil(@Price * @Gas) }) } } ;";
         str += " var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\\d{8})$/;";
         str += " if (!myreg.test(UserNo)) {";
         str += "    dialog = jqueryAlert({ 'title': '提 示', 'content': \"您还未登录<br>请先登录。\", 'modal': true, 'buttons': { '确定': function () { location.href = \"/Shop/Login.aspx\"; } } })";
@@ -147,8 +148,8 @@ public class CreatGoodsHtml
         str += "   else {dialog = jqueryAlert({ 'content': \"连接服务器出错。<br/>请稍后刷新重试。\" });}";
         str += "}";
         str += "</script>";
-     
-        str += "<img src=\"/images/SpaBanner01.png\" class=\"img-rounded\" width=\"100%\" />";
+
+        str += "<img src=\"/images/SpaBaner01.png\" class=\"img-rounded\" width=\"100%\" />";
         str += "<div class=\"row page-content\">";
         str += "<div class=\"center\"><img src=\"/Shop/img/@BigImg\" class=\"img-rounded\" width=\"100%\" /></div>";//商品大图
         str += "<div class=\"alert alert-success\"><h1><b>限时抢购</b></h1><h5 id=\"show\">距离开始还有：  <span></span>小时<span></span>分<span></span>秒</h5>";
@@ -262,7 +263,7 @@ public class CreatGoodsHtml
     /// <param name="strContent"></param>
     /// <param name="strSTime"></param>
     /// <returns></returns>
-    public static string WriteFile(int strID, string strTitle, string strBigImg, string strPrice, string strIntroduction, string strContent, string strSTime,string strServer)
+    public static string WriteFile(int strID, string strTitle, string strBigImg, string strPrice, string strIntroduction, string strContent, string strSTime, string strServer, string strGas)
     {
 
         string path = HttpContext.Current.Server.MapPath(".") + "/html/";//文件输出目录
@@ -285,6 +286,7 @@ public class CreatGoodsHtml
         str = str.Replace("@Content", strContent);
         str = str.Replace("@STime", strSTime);
         str = str.Replace("@Server", strServer);
+        str = str.Replace("@Gas", strGas);
 
         // 写文件
 
