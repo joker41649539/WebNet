@@ -82,7 +82,6 @@
             </div>
             <hr />
             <asp:LinkButton ID="LinkButton2" OnClick="LinkButton2_Click" CssClass="btn btn-block btn-danger" runat="server"><i class="icon-briefcase"></i>&nbsp;确认充值</asp:LinkButton>
-            <div class="hr hr8 hr-double"></div>
         </div>
         <div class="col-xs-12">
             <asp:GridView class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="false" ID="GridView1" runat="server">
@@ -93,7 +92,6 @@
                     <asp:BoundField DataField="CTime" DataFormatString="{0: yyyy-MM-dd HH:mm}" HeaderText="时间"></asp:BoundField>
                 </Columns>
             </asp:GridView>
-            <div class="hr hr8 hr-double"></div>
         </div>
     </div>
 </asp:Content>

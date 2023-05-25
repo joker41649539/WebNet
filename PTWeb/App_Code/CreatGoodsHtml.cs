@@ -44,14 +44,13 @@ public class CreatGoodsHtml
         str += "<script src='/assets/js/ace-elements.min.js'></script>";
         str += "<script src='/assets/js/bootstrap.min.js'></script>";
         str += "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/images/XMFightLogo.ico\" media=\"screen\" />";
-        str += "<title>特惠大抢购</title></head>";
+        str += "<title>秒杀时刻</title></head>";
         str += "<body>";
+        str += "<style type=\"text/css\">.box {width: 49.5%;}</style>";
         str += "<form method=\"post\" id=\"form1\">";
         str += "<img src=\"/images/SpaBaner01.png\" class=\"img-rounded\" width=\"100%\" />";
         str += "<div class=\"row page-content\">";
-
         str += "<div id=\"masonry\" class=\"container-fluid list\">";
-
         str += "@GoodsList";/// Goods列表
         str += "</div>";
         str += "<script src=\"/js/masonry-docs.min.js\"></script>";

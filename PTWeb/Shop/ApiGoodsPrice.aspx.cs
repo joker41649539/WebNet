@@ -68,12 +68,12 @@ public partial class Shop_ApiGoodsPrice : PageBaseShop
         strSQL += "     if @Gas > 0";
         strSQL += "      begin";
         strSQL += "        Select @Holder=isnull((Select UserID from Shop_UserGoods where GoodsPriceID=(Select top 1 HtmlID from Shop_GoodsPrice where GoodsID=a.GoodsID and HtmlID!=a.HtmlID order by Ctime desc) and Flag=1),0) from Shop_GoodsPrice a where HtmlID=@GoodID";
-        //strSQL += "          if @Holder = '0'";
-        //strSQL += "            begin";
-        //strSQL += "              set @Holder='" + SysPhoneNo[n] + "'";
-        //strSQL += "            end";
-        strSQL += "         update Shop_UserInfo set GoldCount=GoldCount-(Select CEILING((Price* CONVERT(decimal(18,4),(Select SetValue from Shop_SysSet where id=1)))) Gas from Shop_GoodsPrice where HtmlID=@GoodID) where PhoneNo=@PhoneNo ";// 更新用户数据
-        strSQL += "         Insert into Shop_Gold (UserNo,Bance,Operator,Event) Select @PhoneNo,-1*(Select CEILING((Price* CONVERT(decimal(18,4),(Select SetValue from Shop_SysSet where id=1)))) Gas from Shop_GoodsPrice where HtmlID=@GoodID),'System',@GoodID ";//插入金豆数据
+        strSQL += "          if @Holder = '0'";
+        strSQL += "            begin";
+        strSQL += "              set @Holder='" + SysPhoneNo[n] + "'";
+        strSQL += "            end";
+        strSQL += "         update Shop_UserInfo set GoldCount=GoldCount-(Select CEILING((Price* CONVERT(decimal(18,4),(Select SetValue from Shop_SysSet where id=1)))) Gas from Shop_GoodsPrice where HtmlID='" + GoodsID + "') where PhoneNo='" + PhoneNo + "' ";// 更新用户数据
+        strSQL += "         Insert into Shop_Gold (UserNo,Bance,Operator,Event,OperatorIP) Select '" + PhoneNo + "',-1*(Select CEILING((Price* CONVERT(decimal(18,4),(Select SetValue from Shop_SysSet where id=1)))) Gas from Shop_GoodsPrice where HtmlID='" + GoodsID + "'),'System','" + GoodsID + "','ApiIP' ";//插入金豆数据
         strSQL += "         insert into Shop_UserGoods(GoodsPriceID, UserID, HolderID) select @GoodID,(Select PhoneNo From Shop_UserInfo where PhoneNo = @PhoneNo and Flag=0),@Holder";
         strSQL += "     end";
         strSQL += "   end";

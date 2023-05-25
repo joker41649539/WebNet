@@ -14,7 +14,6 @@
                     <asp:Label ID="Label1" runat="server" Text="0.000"></asp:Label>
                 </h4>
             </div>
-
             <div class="grid3">
                 <span class="grey">
                     <i class="icon-briefcase icon-2x orange"></i>

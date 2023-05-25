@@ -68,7 +68,6 @@ public partial class Shop_Default2 : PageBaseShop
             MessageBox("用户状态更新失败。");
             return;
         }
-
     }
 
     protected void LinkButton1_Click(object sender, EventArgs e)

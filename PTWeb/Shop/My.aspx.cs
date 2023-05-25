@@ -47,13 +47,16 @@ public partial class SpaServer_Default2 : PageBaseShop
 
                 if (arrModul.Length > 0)
                 {
-
                     int id = Array.IndexOf(arrModul, "2");
 
                     if (id != -1)
                     {
                         strTempHtml += "<a href=\"/Shop/GoodsAdd.aspx\" class=\"btn btn-app btn-inverse\">";
                         strTempHtml += "    <i class=\"icon-gift bigger-230\"></i>藏品添加</a>";
+                        strTempHtml += "<a href=\"/Shop/GoodsList.aspx\" class=\"btn btn-app btn-inverse\">";
+                        strTempHtml += "    <i class=\"icon-gift bigger-230\"></i>藏品管理</a>";
+                        strTempHtml += "<a href=\"/Shop/GoodsRecordsAll.aspx\" class=\"btn btn-app btn-inverse\">";
+                        strTempHtml += "    <i class=\"icon-gift bigger-230\"></i>交易记录</a>";
                     }
 
                     id = Array.IndexOf(arrModul, "4");
@@ -62,6 +65,9 @@ public partial class SpaServer_Default2 : PageBaseShop
                     {
                         strTempHtml += "<a href=\"/Shop/Recharge.aspx\" class=\"btn btn-app btn-inverse\">";
                         strTempHtml += "    <i class=\"icon-briefcase bigger-230\"></i>金豆充值</a>";
+ 
+                        strTempHtml += "<a href=\"/Shop/GoldRecords.aspx\" class=\"btn btn-app btn-inverse\">";
+                        strTempHtml += "    <i class=\"icon-briefcase bigger-230\"></i>金豆记录</a>";
 
                         strTempHtml += "<a href=\"/Shop/CreatHtml.aspx\" class=\"btn btn-app btn-inverse\">";
                         strTempHtml += "    <i class=\"icon-desktop bigger-230\"></i>生成HTML</a>";
@@ -87,8 +93,7 @@ public partial class SpaServer_Default2 : PageBaseShop
                 }
             }
         }
-
-        strTempHtml += "<div class=\"hr hr8 hr-double\"></div>";
+      //  strTempHtml += "<div class=\"hr hr8 hr-double\"></div>";
         if (strTempHtml.Length > 0)
         {
             Div_AppBtn.InnerHtml = strTempHtml;

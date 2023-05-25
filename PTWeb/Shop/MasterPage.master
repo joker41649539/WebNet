@@ -30,50 +30,7 @@
     <script src="/assets/js/bootstrap.min.js"></script>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/XMFightLogo.ico" media="screen" />
-    <title>SpaServer</title>
-    <%--  <style type="text/css">
-        .wrapper {
-            max-width: 100%;
-            height: auto !important;
-            height: 150px;
-            min-height: 150px;
-            margin:auto;
-            overflow: hidden;
-            position: relative;
-        }
-
-        ul {
-            position: relative;
-        }
-
-            ul li {
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-        ol1 {
-            position: absolute;
-            right: 0;
-            bottom: 10px;
-            width: 100%;
-        }
-
-            ol1 li1 {
-                float: left;
-                width: 20px;
-                height: 20px;
-                margin: 0 5px;
-                text-align: center;
-                border-radius: 50%;
-                cursor: default;
-                background-color: #abc;
-            }
-
-                ol1 li1.current {
-                    background-color: pink;
-                }
-    </style>--%>
+    <title>急速秒杀</title>
 </head>
 <body>
     <form id="form1" runat="server" enctype="multipart/form-data">

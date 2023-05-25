@@ -25,7 +25,6 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <div class="hr hr8 hr-double"></div>
     </div>
     <script src="/assets/js/jquery-2.0.3.min.js"></script>
     <script>

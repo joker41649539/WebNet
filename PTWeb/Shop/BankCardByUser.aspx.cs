@@ -72,6 +72,7 @@ public partial class Shop_Default2 : PageBaseShop
         if (Convert.ToInt32(HiddenField_ID.Value) > 0)
         {
             HttpPostedFile f = Request.Files[0];
+
             string strImg = UploadTPs(f, 0, "Voucher");
             if (strImg.Length > 0 & DefaultUser != null)
             {
