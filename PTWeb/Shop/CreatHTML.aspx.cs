@@ -94,46 +94,54 @@ public partial class Shop_Default2 : PageBaseShop
                 strHtml = CreatGoodsHtml.WriteFile(Convert.ToInt32(strID), strTitle, strBigImg, (Convert.ToDouble(strPrice) * strZZ).ToString("0.00"), strRemark, strImageInfo1, strDT.ToString("yyyy-MM-dd HH:mm"), strServer, strGas.ToString());
                 strSQL += " Insert into Shop_GoodsPrice (GoodsID,HtmlID,StartTime,Price,Operator,Batch) values (" + strID + ",'" + strHtml + "','" + strDT + "'," + (Convert.ToDouble(strPrice) * strZZ).ToString() + ",'" + DefaultUser + "','" + strBatch + "')";
             }
-            strSQL += " Select shop_goodsPrice.Price,HtmlID,GoodsID,shop_goodsPrice.StartTime,Title,Remark,BigImg from shop_goodsPrice,Shop_Goods where Batch='" + strBatch + "' and GoodsID=Shop_Goods.ID and Flag=0";
-            string strGoodsGtml = string.Empty, strShowTime = string.Empty;
             if (strSQL.Length > 0)
             {
                 if (OP_Mode.SQLRUN(strSQL))
                 {
-                    if (OP_Mode.Dtv.Count == GoodsCount)
-                    {
-                        for (int i = 0; i < GoodsCount; i++)
-                        {
-                            strGoodsGtml += "<div class=\"box\">";
-                            strGoodsGtml += "  <div class=\"list-item\">";
-                            strGoodsGtml += "  <div class=\"item-img\">";
-                            strGoodsGtml += "  <a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\">";//href
-                            strGoodsGtml += "  <img src=\"/Shop/img/" + OP_Mode.Dtv[i]["BigImg"].ToString() + "\" alt=\"\"></a>";//img
-                            strGoodsGtml += "  </div>";
-                            strGoodsGtml += "  <div class=\"alert alert-danger\">";
-                            strGoodsGtml += " <a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\">";
-                            strGoodsGtml += "<h5 id=\"show" + OP_Mode.Dtv[i]["GoodsID"].ToString() + "\" class=\"center\">";//ShowID
-                            strGoodsGtml += "<span></span>小时<span></span>分<span></span>秒</h5></a></div>";
-                            strGoodsGtml += " <div class=\"item-tt\"><a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\">" + OP_Mode.Dtv[i]["Title"].ToString() + "</a></div>";//Remark
-                            strGoodsGtml += "<div class=\"clearfix\"><div class=\"money\">￥<span>" + OP_Mode.Dtv[i]["Price"].ToString() + "</span></div></div>";//Price
-                            strGoodsGtml += "<div class=\"pull-right\"><a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\" class=\"btn btn-xs btn-success\">立即抢购</a></div>";//href
-                            strGoodsGtml += "</div></div>";
-
-                            strShowTime += "ShowTime(\"show" + OP_Mode.Dtv[i]["GoodsID"].ToString() + "\", \"" + OP_Mode.Dtv[i]["StartTime"].ToString() + "\");";
-
-                            CreatGoodsHtml.WriteIndex(strGoodsGtml, strShowTime);
-                        }
-
-                        MessageBox("<i class=\"icon-warning-sign green bigger-300\"><i/><br><h5>页面生成成功。<h5/>");
-                        LoadData();
-                    }
-                    else
-                    {
-                        MessageBox("", "<i class=\"icon-warning-sign red bigger-300\"><i/><br><h5>生成失败，请重试<h5/>");
-                        return;
-                    }
+                    MessageBox("<i class=\"icon-warning-sign green bigger-300\"><i/><br><h5>页面生成成功。<h5/>");
+                    LoadData();
                 }
             }
+            //strSQL += " Select shop_goodsPrice.Price,HtmlID,GoodsID,shop_goodsPrice.StartTime,Title,Remark,BigImg from shop_goodsPrice,Shop_Goods where Batch='" + strBatch + "' and GoodsID=Shop_Goods.ID and Flag=0";
+            //string strGoodsGtml = string.Empty, strShowTime = string.Empty;
+            //if (strSQL.Length > 0)
+            //{
+            //    if (OP_Mode.SQLRUN(strSQL))
+            //    {
+            //        if (OP_Mode.Dtv.Count == GoodsCount)
+            //        {
+            //            for (int i = 0; i < GoodsCount; i++)
+            //            {
+            //                strGoodsGtml += "<div class=\"box\">";
+            //                strGoodsGtml += "  <div class=\"list-item\">";
+            //                strGoodsGtml += "  <div class=\"item-img\">";
+            //                strGoodsGtml += "  <a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\">";//href
+            //                strGoodsGtml += "  <img src=\"/Shop/img/" + OP_Mode.Dtv[i]["BigImg"].ToString() + "\" alt=\"\"></a>";//img
+            //                strGoodsGtml += "  </div>";
+            //                strGoodsGtml += "  <div class=\"alert alert-danger\">";
+            //                strGoodsGtml += " <a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\">";
+            //                strGoodsGtml += "<h5 id=\"show" + OP_Mode.Dtv[i]["GoodsID"].ToString() + "\" class=\"center\">";//ShowID
+            //                strGoodsGtml += "<span></span>小时<span></span>分<span></span>秒</h5></a></div>";
+            //                strGoodsGtml += " <div class=\"item-tt\"><a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\">" + OP_Mode.Dtv[i]["Title"].ToString() + "</a></div>";//Remark
+            //                strGoodsGtml += "<div class=\"clearfix\"><div class=\"money\">￥<span>" + OP_Mode.Dtv[i]["Price"].ToString() + "</span></div></div>";//Price
+            //                strGoodsGtml += "<div class=\"pull-right\"><a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\" class=\"btn btn-xs btn-success\">立即抢购</a></div>";//href
+            //                strGoodsGtml += "</div></div>";
+
+            //                strShowTime += "ShowTime(\"show" + OP_Mode.Dtv[i]["GoodsID"].ToString() + "\", \"" + OP_Mode.Dtv[i]["StartTime"].ToString() + "\");";
+
+            //                CreatGoodsHtml.WriteIndex(strGoodsGtml, strShowTime);
+            //            }
+
+            //            MessageBox("<i class=\"icon-warning-sign green bigger-300\"><i/><br><h5>页面生成成功。<h5/>");
+            //            LoadData();
+            //        }
+            //        else
+            //        {
+            //            MessageBox("", "<i class=\"icon-warning-sign red bigger-300\"><i/><br><h5>生成失败，请重试<h5/>");
+            //            return;
+            //        }
+            //    }
+            //}
         }
     }
 }

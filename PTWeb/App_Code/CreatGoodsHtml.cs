@@ -75,7 +75,7 @@ public class CreatGoodsHtml
         str += "  var show = document.getElementById(DivID).getElementsByTagName(\"span\");";
         str += "   setInterval(function () {";
         str += "   var timeing = new Date();";
-        str += "   var time = new Date(Time);";
+        str += "   var time = new Date(Time.replace(/-/g, '/'));";
         str += "   var num = time.getTime() - timeing.getTime();";
         str += "   if (num <= 0) {";
         str += "    show[0].innerHTML = 0;";
@@ -170,7 +170,7 @@ public class CreatGoodsHtml
         str += "  var show = document.getElementById(DivID).getElementsByTagName(\"span\");";
         str += "   setInterval(function () {";
         str += "   var timeing = new Date();";
-        str += "   var time = new Date(Time);";
+        str += "   var time = new Date(Time.replace(/-/g, '/'));";
         str += "   var num = time.getTime() - timeing.getTime();";
         str += "   if (num <= 0) {";
         str += "    show[0].innerHTML = 0;";
@@ -189,7 +189,7 @@ public class CreatGoodsHtml
         str += " </div><div class=\"row\" style=\"height: 60px;\">&nbsp;</div>";
         str += "<div id=\"FootBut\" style=\"height: auto;\">";
         str += " <ul class=\"footer-nav2 text-center\">";
-        str += " <li class=\"width-100\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/Shop/Html/index.html\"><i class=\"icon-home\"></i>首页</a></li>";
+        str += " <li class=\"width-100\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/Shop/Default.aspx\"><i class=\"icon-home\"></i>首页</a></li>";
         str += " <li class=\"width-100\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/Shop/Order.aspx\"><i class=\"icon-calendar\"></i>订单</a></li>";
         str += " <li class=\"width-100\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/Shop/QA.aspx\"><i class=\"icon-comments-alt\"></i>问答</a></li>";
         str += " <li class=\"width-100\"><a class=\"btn btn-app btn-white btn-xs\" href=\"/Shop/My.aspx\"><i class=\"icon-user\"></i>我的</a></li>";

@@ -4,7 +4,8 @@
     <script>
         // 创建 WebSocket 连接
         //const socket = new WebSocket('ws://106.225.208.54:8090/ws');
-        const socket = new WebSocket('ws://127.0.0.1:8090/ws');
+        //const socket = new WebSocket('wss://202.111.192.174/wss');
+        const socket = new WebSocket('ws://127.0.0.1/ws');
         var BConnect = false;
         // 监听连接事件
         socket.addEventListener('open', (event) => {

@@ -222,14 +222,14 @@ public partial class CWGL_SearchQD : PageBase
 
                     strTemp += OP_Mode.Dtv[i]["Remark"];
 
-                    if (OP_Mode.Dtv[i]["GCSGBH"].ToString().Length > 0)
-                    {
-                        strTemp += ";" + OP_Mode.Dtv[i]["GCSGBH"];
-                    }
-                    if (OP_Mode.Dtv[i]["GCMC"].ToString().Length > 0)
-                    {
-                        strTemp += ";" + OP_Mode.Dtv[i]["GCMC"];
-                    }
+                    //if (OP_Mode.Dtv[i]["GCSGBH"].ToString().Length > 0)
+                    //{
+                    //    strTemp += ";" + OP_Mode.Dtv[i]["GCSGBH"];
+                    //}
+                    //if (OP_Mode.Dtv[i]["GCMC"].ToString().Length > 0)
+                    //{
+                    //    strTemp += ";" + OP_Mode.Dtv[i]["GCMC"];
+                    //}
 
                     strImages = OP_Mode.Dtv[i]["Image1"].ToString().Split(';');
                     for (int j = 0; j < strImages.Length; j++)

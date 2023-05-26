@@ -1,7 +1,35 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Shop/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="SpaServer_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <div id="masonry" class="container-fluid list">
+    <style type="text/css">
+        .box {
+            width: 49.5%;
+        }
+    </style>
+    <div class="col-sm-12" runat="server" id="Div_Date">
+        <ul class="pagination center">
+            <li>
+                <a href="#">05-26 10:00</a>
+            </li>
+            <li>
+                <a href="#">05-26 10:00</a>
+            </li>
+            <li class="active">
+                <a href="#">05-26 10:00</a>
+            </li>
+            <li>
+                <a href="#">05-26 10:00</a>
+            </li>
+            <li>
+                <a href="#">05-26 10:00</a>
+            </li>
+            <li>
+                <a href="#">05-26 10:00</a>
+            </li>
+        </ul>
+    </div>
+    <div class="space-10"></div>
+    <div id="masonry" clientidmode="Static" class="container-fluid list" runat="server">
         <div class="box">
             <div class="list-item">
                 <div class="item-img">
@@ -152,14 +180,11 @@
         });
     </script>
     <script>
-        ShowTime("show", "2023-05-10 23:00");
-        ShowTime("H1", "2023-05-11 23:59");
-        ShowTime("H2", "2023-05-12 23:59");
         function ShowTime(DivID, Time) {
             var show = document.getElementById(DivID).getElementsByTagName("span");
             setInterval(function () {
                 var timeing = new Date();
-                var time = new Date(Time);
+                var time = new Date(Time.replace(/-/g, '/'));
                 var num = time.getTime() - timeing.getTime();
                 if (num <= 0) {
                     show[0].innerHTML = 0;

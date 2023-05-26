@@ -222,7 +222,7 @@ public partial class DefaultPH : PageBase
         }
         else
         {
-            string strSQL = "Insert into W_KQ (Userid,QDFlag,ZB_JD,ZB_WD,ZB_WZ,CTIME,Screen,MDD,Remark,ZB_Name,MapID,GCSGBH,GCMC) values (" + DefaultUser + ",'" + RadioButtonList1.SelectedValue + "'," + strJD + "," + strWD + ",'" + strWZ[0] + "',getdate(),'" + strScreen + "','','快速签到','" + strName + "','" + strMapID + "','" + strSGDH + "','" + strGCMC + "')";
+            string strSQL = "Insert into W_KQ (Userid,QDFlag,ZB_JD,ZB_WD,ZB_WZ,CTIME,Screen,MDD,Remark,ZB_Name,MapID,GCSGBH,GCMC) values (" + DefaultUser + ",'" + RadioButtonList1.SelectedValue + "'," + strJD + "," + strWD + ",'" + strWZ[0] + "',getdate(),'" + strScreen + "','','快速签到'" + strSGDH + strGCMC + ",'" + strName + "','" + strMapID + "','" + strSGDH + "','" + strGCMC + "')";
             if (OP_Mode.SQLRUN(strSQL))
             {
                 MessageBox("", "签到成功。", "/WeChat/QDSearch.aspx");

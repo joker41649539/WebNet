@@ -50,7 +50,7 @@
         <!-- 底部代码 开始  icon-warning-sign red bigger-300-->
         <div runat="server" id="FootBut" style="height: auto;">
             <ul class="footer-nav2 text-center">
-                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Html/index.html"><i class="icon-home"></i>首页</a></li>
+                <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Default.aspx"><i class="icon-home"></i>首页</a></li>
                 <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/Order.aspx"><i class="icon-calendar"></i>订单</a></li>
                 <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/QA.aspx"><i class="icon-comments-alt"></i>问答</a></li>
                 <li class="width-100"><a class="btn btn-app btn-white btn-xs" href="/Shop/My.aspx"><i class="icon-user"></i>我的</a></li>
