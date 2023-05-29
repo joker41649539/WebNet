@@ -96,9 +96,9 @@ public partial class Shop_ApiGoodsPrice : PageBaseShop
                     }
                     else
                     {
-                        if ((Convert.ToInt32(OP_Mode.Dtv[0]["ID"]) > 0))
+                        if ((OP_Mode.Dtv[0]["ID"].ToString().Length > 0))
                         {
-                            if (Convert.ToInt32(OP_Mode.Dtv[0]["ID"]) > 0)
+                            if (OP_Mode.Dtv[0]["ID"].ToString().Length > 0)
                             { // 商品购买成功。
                                 rValue = "{\"Msg\":\"商品已抢购成功。\",\"errMsg\":\"ok\"}";
                             }

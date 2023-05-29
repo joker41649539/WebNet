@@ -241,6 +241,10 @@ public partial class Shop_Default2 : PageBaseShop
                 MessageBox("<i class=\"icon-warning-sign green bigger-300\"><i/><br><h5>页面生成成功。<h5/>");
                 LoadData();
             }
+            else
+            {
+                MessageBox("<i class=\"icon-warning-sign red bigger-300\"><i/><br><h5>页面生成失败。<h5/>");
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class Shop_MasterPage : System.Web.UI.MasterPage
 {
-    public static string DefaultConStr = "Data Source=hds316158156.my3w.com;Initial Catalog=hds316158156_db;User Id=hds316158156;Password=joK12141649539";
+    public static string DefaultConStr = "Data Source=223.244.20.182;Initial Catalog=Rapid;User Id=joker24;Password=joK12141649539!";
 
     public static OpMode OP_Mode = new OpMode(DefaultConStr, 0);
 
