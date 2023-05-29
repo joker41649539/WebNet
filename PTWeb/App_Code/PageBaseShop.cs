@@ -22,7 +22,7 @@ using Encoder = System.Drawing.Imaging.Encoder;
 /// </summary>
 public class PageBaseShop : System.Web.UI.Page
 {
-    public static string DefaultConStr = "Data Source=hds316158156.my3w.com;Initial Catalog=hds316158156_db;User Id=hds316158156;Password=joK12141649539";
+    public static string DefaultConStr = "Data Source=223.244.20.182;Initial Catalog=Rapid;User Id=joker24;Password=joK12141649539!";
 
     public static OpMode OP_Mode = new OpMode(DefaultConStr, 0);
 

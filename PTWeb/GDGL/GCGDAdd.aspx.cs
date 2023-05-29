@@ -664,4 +664,9 @@ public partial class GDGL_GCGDAdd : PageBase
 
         return rValue;
     }
+
+    protected void flag0_Click(object sender, EventArgs e)
+    {
+        MessageBox("状态0");
+    }
 }

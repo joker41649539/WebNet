@@ -64,9 +64,28 @@
             </div>
         </div>
         <div class="hr hr8 hr-double"></div>
-        <h4>最后生成时间:
-            <asp:Label ID="Label4" runat="server" Text="2023-01-01 18:00"></asp:Label>
-        </h4>
+        <div class="col-sm-12" runat="server" id="Div_Date">
+            <ul class="pagination center">
+                <li>
+                    <a href="#">05-26 10:00</a>
+                </li>
+                <li>
+                    <a href="#">05-26 10:00</a>
+                </li>
+                <li class="active">
+                    <a href="#">05-26 10:00</a>
+                </li>
+                <li>
+                    <a href="#">05-26 10:00</a>
+                </li>
+                <li>
+                    <a href="#">05-26 10:00</a>
+                </li>
+                <li>
+                    <a href="#">05-26 10:00</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="col-xs-12">
         <div class="form-group">
@@ -88,9 +107,28 @@
         <div class="form-group">
             <h3><b>WS服务器</b></h3>
             <div class="col-sm-9">
-                <asp:TextBox ID="TextBox_Server" ClientIDMode="Static" runat="server" text="ws://202.111.192.174:8090/ws" placeholder="ws://127.0.0.1:8090/ws" class="col-xs-12 col-sm-12"></asp:TextBox>
+                <asp:TextBox ID="TextBox_Server" ClientIDMode="Static" runat="server" Text="ws://223.244.20.182:8090/ws" placeholder="ws://127.0.0.1:8090/ws" class="col-xs-12 col-sm-12"></asp:TextBox>
             </div>
         </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="space"></div>
+        <asp:GridView DataKeyNames="ID,Title,BigImg,NewPrice,Remark,InfoImg,zz,Gas" class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="false" ID="GridView_Goods" ClientIDMode="Static" runat="server">
+            <Columns>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:CheckBox runat="server" Checked='<%# Bind("Selected") %>' ID="CheckBox1"></asp:CheckBox>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Image runat="server" CssClass="img-rounded width-100" ImageUrl='<%# Eval("BigImg", "/Shop/Img/{0}") %>' ID="Image1"></asp:Image>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:HyperLinkField DataTextField="Title" SortExpression="Title" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Shop/GoodsRecords.aspx?id={0}" HeaderText="名称"></asp:HyperLinkField>
+                <asp:HyperLinkField DataTextField="NewPrice" SortExpression="NewPrice" DataNavigateUrlFields="ID" DataNavigateUrlFormatString="/Shop/GoodsRecords.aspx?id={0}" HeaderText="最近单价"></asp:HyperLinkField>
+            </Columns>
+        </asp:GridView>
     </div>
     <div class="col-xs-12">
         <div class="space"></div>

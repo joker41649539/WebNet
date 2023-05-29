@@ -103,6 +103,10 @@ public partial class SpaServer_Default : PageBaseShop
                 masonry.InnerHtml = strGoodsGtml;
                 this.Page.ClientScript.RegisterStartupScript(typeof(string), "", "<script language=JavaScript>" + strShowTime + "</script>");
             }
+            else
+            {
+                masonry.InnerHtml = "<h1>暂没有任何藏品。</h1>";
+            }
         }
 
     }
