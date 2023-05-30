@@ -4,27 +4,8 @@
     <script type="text/javascript">
         function check() {// 强制要求单人住宿超过80，多人住宿超过100 上传付款截图
             var rValue = true;
-            var phone = jQuery("#TextBox_PhoneNo").val();
-            var i = 0;
-            var message = "";
-            var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;
-            if (phone == '') {
-                i++;
-                rValue = false;
-                message += i + "、手机号码不能为空！<br>";
-            } else if (phone.length != 11) {
-                i++;
-                rValue = false;
-                message += i + "、请输入有效的手机号码！<br";
-            } else if (!myreg.test(phone)) {
-                i++;
-                rValue = false;
-                message += i + "、请输入有效的手机号码！<br";
-            }
-
-            if (!rValue) {
-                dialog = jqueryAlert({ 'content': message.substring(0, message.length - 4) });
-            }
+            $("#LinkButton2").attr("disabled", true);
+            dialog = jqueryAlert({ 'content': "<i class=\"icon-coffee icon-3x green\"></i><br/>数据处理中，请勿刷新页面<br/>请耐心等待。" });
             return rValue;
         }
     </script>
@@ -38,7 +19,7 @@
                 </div>
             </div>
             <hr />
-            <asp:LinkButton ID="LinkButton1" OnClick="LinkButton1_Click" OnClientClick="return check();" CssClass="btn btn-block btn-success" runat="server"><i class="icon-search"></i>&nbsp;信息查询</asp:LinkButton>
+            <asp:LinkButton ID="LinkButton1" OnClick="LinkButton1_Click" CssClass="btn btn-block btn-success" runat="server"><i class="icon-search"></i>&nbsp;信息查询</asp:LinkButton>
         </div>
         <div class="col-xs-12">
             <div class="hr hr8 hr-double"></div>
@@ -81,7 +62,7 @@
                 </div>
             </div>
             <hr />
-            <asp:LinkButton ID="LinkButton2" OnClick="LinkButton2_Click" CssClass="btn btn-block btn-danger" runat="server"><i class="icon-briefcase"></i>&nbsp;确认充值</asp:LinkButton>
+            <asp:LinkButton ID="LinkButton2" ClientIDMode="Static" OnClientClick="return check();" OnClick="LinkButton2_Click" CssClass="btn btn-block btn-danger" runat="server"><i class="icon-briefcase"></i>&nbsp;确认充值</asp:LinkButton>
         </div>
         <div class="col-xs-12">
             <asp:GridView class="table table-striped table-bordered table-hover no-margin-bottom no-border-top" AutoGenerateColumns="false" ID="GridView1" runat="server">

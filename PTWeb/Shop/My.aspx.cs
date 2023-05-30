@@ -81,13 +81,19 @@ public partial class SpaServer_Default2 : PageBaseShop
                         strTempHtml += "    <i class=\"icon-group bigger-230\"></i>会员管理</a>";
                     }
 
-
                     id = Array.IndexOf(arrModul, "3");
 
                     if (id != -1)
                     {
                         strTempHtml += "<a href=\"/Shop/SysSet.aspx\" class=\"btn btn-app btn-inverse\">";
                         strTempHtml += "    <i class=\"icon-cogs bigger-230\"></i>系统设置</a>";
+                    }
+                    id = Array.IndexOf(arrModul, "5");
+
+                    if (id != -1)
+                    {
+                        strTempHtml += "<a href=\"/Shop/AllBuying.aspx\" class=\"btn btn-app btn-inverse\">";
+                        strTempHtml += "    <i class=\"icon-shopping-cart bigger-230\"></i>一键抢购</a>";
                     }
 
                 }

@@ -84,7 +84,7 @@ public partial class SpaServer_Default2 : PageBaseShop
             }
         }
 
-        strSQL = "Select Shop_UserGoods.ID,HtmlID,Shop_GoodsPrice.Price,Title,BigImg from Shop_UserGoods,Shop_GoodsPrice,Shop_Goods where GoodsPriceID=Shop_GoodsPrice.HtmlID and Shop_Goods.ID=GoodsID and UserID='" + DefaultUser + "' and Shop_UserGoods.Flag=2";// 待收款
+        strSQL = "Select Shop_UserGoods.ID,HtmlID,Shop_GoodsPrice.Price,Title,BigImg from Shop_UserGoods,Shop_GoodsPrice,Shop_Goods where Shop_UserGoods.GoodsPriceID=Shop_GoodsPrice.HtmlID and Shop_Goods.ID=Shop_GoodsPrice.GoodsID and UserID='" + DefaultUser + "' and Shop_UserGoods.Flag=2";// 待收款
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -115,7 +115,9 @@ public partial class SpaServer_Default2 : PageBaseShop
             }
         }
 
-        strSQL = "Select Shop_UserGoods.ID,HtmlID,Shop_GoodsPrice.Price,Title,BigImg,Shop_UserGoods.Flag from Shop_UserGoods,Shop_GoodsPrice,Shop_Goods where GoodsPriceID=Shop_GoodsPrice.HtmlID and Shop_Goods.ID=GoodsID and HolderID='" + DefaultUser + "' order by Shop_UserGoods.Flag desc,Shop_UserGoods.Ltime desc";// 我卖出的
+        strSQL = "Select Shop_UserGoods.ID,HtmlID,a.Price,Title,BigImg,Shop_UserGoods.Flag,isnull((Select Top 1 Price from Shop_GoodsPrice where GoodsID=a.GoodsID and CTime<a.Ctime order by Shop_GoodsPrice.ID desc),Shop_Goods.Price) oldprice from Shop_UserGoods,Shop_GoodsPrice a,Shop_Goods where GoodsPriceID=a.HtmlID and Shop_Goods.ID=GoodsID and HolderID='" + DefaultUser + "' order by Shop_UserGoods.Flag desc,Shop_UserGoods.Ltime desc";// 我卖出的
+
+        Double SumLR = 0;
 
         if (OP_Mode.SQLRUN(strSQL))
         {
@@ -125,6 +127,7 @@ public partial class SpaServer_Default2 : PageBaseShop
                 strTempHtml = string.Empty;
                 for (int i = 0; i < OP_Mode.Dtv.Count; i++)
                 {
+                    SumLR += Convert.ToDouble(OP_Mode.Dtv[i]["Price"]) - Convert.ToDouble(OP_Mode.Dtv[i]["oldprice"]);
                     strHtmlID = OP_Mode.Dtv[i]["HtmlID"].ToString();
                     iFlag = Convert.ToInt32(OP_Mode.Dtv[i]["Flag"].ToString());
                     strTempHtml += "<div class=\"well row\">";
@@ -149,6 +152,7 @@ public partial class SpaServer_Default2 : PageBaseShop
                     strTempHtml += " <h5>" + strHtmlID.Substring(0, strHtmlID.Length - 5) + "</h5>";
                     strTempHtml += " <h5>" + OP_Mode.Dtv[i]["Title"].ToString() + "</h5>";
                     strTempHtml += " <h3 class=\"red\">" + OP_Mode.Dtv[i]["Price"].ToString() + "</h3>";
+                    strTempHtml += " <h4 class=\"red\">本单利润：" + (Convert.ToDouble(OP_Mode.Dtv[i]["Price"]) - Convert.ToDouble(OP_Mode.Dtv[i]["oldPrice"])).ToString("0.00") + "</h4>";
                     if (iFlag == 2)
                     {
                         strTempHtml += " <p class=\"btn-group pull-right\">";
@@ -158,6 +162,7 @@ public partial class SpaServer_Default2 : PageBaseShop
                     strTempHtml += " </div>";
                     strTempHtml += "</div>";
                 }
+                Label_LR.Text = SumLR.ToString("0.00");
                 Div_My.InnerHtml = strTempHtml;
             }
         }

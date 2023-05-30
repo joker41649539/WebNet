@@ -32,7 +32,7 @@
             }
 
             if (SumYF1 > 0) {
-                SumYF.innerHTML = parseInt(two.value) - parseInt(one.value);
+                SumYF.innerHTML = parseInt(two.value).toFixed(2) - parseInt(one.value).toFixed(2);
                 document.getElementById("TextBox_Num").value = SumYF1;
             }
             else {

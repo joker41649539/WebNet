@@ -42,7 +42,20 @@ public partial class Shop_ApiGoodsPrice : PageBaseShop
         //     insert into Shop_UserGoods(GoodsPriceID, UserID) select(Select ID from Shop_GoodsPrice where HtmlID = @GoodID) ,(Select ID From Shop_UserInfo where PhoneNo = @PhoneNo)
         //	end
         //end
+
+        string strSQL = string.Empty;
+
         string[] SysPhoneNo = { "13966668241", "18755165777", "18019961118" };// 随机用户ID
+        strSQL = "Select SetValue from Shop_SysSet where id=3";
+
+        if (OP_Mode.SQLRUN(strSQL))
+        {
+            if (OP_Mode.Dtv.Count > 0)
+            {
+                SysPhoneNo = OP_Mode.Dtv[0][0].ToString().Split(';');
+            }
+        }
+
         Random ran = new Random();
         int n = ran.Next(SysPhoneNo.Length);
         // SysPhoneNo[n]
@@ -50,7 +63,7 @@ public partial class Shop_ApiGoodsPrice : PageBaseShop
         string rValue = "{\"Msg\":\"未知错误。\",\"errMsg\":\"error\"}";
         //1、判断商品是否存在。是否被销售过。
         //都不存在的话，添加记录
-        string strSQL = "declare @GoodsCount int";
+        strSQL = "declare @GoodsCount int";
         strSQL += " declare @ByCount int";
         strSQL += " declare @Gas int";
         strSQL += " declare @Holder varchar(50)";

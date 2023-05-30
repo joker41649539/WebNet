@@ -89,7 +89,7 @@ public partial class CWGL_Default2 : PageBase
                         RadioChanged();
 
                         Label_CName.Text = OP_Mode.Dtv[0]["UserName"].ToString();
-                        Label_Sumje.Text = OP_Mode.Dtv[0]["ZJE"].ToString();
+                        Label_Sumje.Text = Convert.ToDouble(OP_Mode.Dtv[0]["ZJE"]).ToString("0.00");
 
                         //if (Convert.ToDouble(OP_Mode.Dtv[0]["ZJE"]) > 0)
                         //{/// 总金额大于0 也允许修改报销类型。
@@ -375,14 +375,14 @@ public partial class CWGL_Default2 : PageBase
         {
             if (JY == 0)
             {
-                WellList.InnerHtml += "市外里程 开始里程：" + JY1 + " 到达里程： " + JY2 + " 累计里程: " + (JY2 - JY1).ToString() + "<br/>过路过桥费：" + JY3 + " 加油费：" + ((JY2 - JY1) * 0.8).ToString();
+                WellList.InnerHtml += "市外里程 开始里程：" + JY1 + " 到达里程： " + JY2 + " 累计里程: " + (JY2 - JY1).ToString() + "<br/>过路过桥费：" + JY3 + " 加油费：" + ((JY2 - JY1) * 0.8).ToString("0.00");
             }
             else
             {
-                WellList.InnerHtml += "市内里程 开始里程：" + JY1 + " 到达里程： " + JY2 + " 累计里程: " + (JY2 - JY1).ToString() + "<br/>过路过桥费：" + JY3 + " 加油费：" + ((JY2 - JY1) * 1.2).ToString();
+                WellList.InnerHtml += "市内里程 开始里程：" + JY1 + " 到达里程： " + JY2 + " 累计里程: " + (JY2 - JY1).ToString() + "<br/>过路过桥费：" + JY3 + " 加油费：" + ((JY2 - JY1) * 1.2).ToString("0.00");
             }
         }
-        WellList.InnerHtml += " <br/>总金额：" + strNum + " ";
+        WellList.InnerHtml += " <br/>总金额：" + strNum.ToString("0.00") + " ";
         if (strRemark2.Length > 0)
         {
             WellList.InnerHtml += " 备注说明：" + strRemark2 + " ";
@@ -897,7 +897,7 @@ public partial class CWGL_Default2 : PageBase
                         }
                         AddImagesShow(imageName, imageName2, imageName3, strSTime, strKZXM, strTXR, strMC, strBecity, strArrival, strNum, strRemark2, db_Bk, Db_ZC, DB_WC, Db_ZS, DB_DRZS, Convert.ToInt32(OP_Mode.Dtv[0]["ID"]), true, Convert.ToInt32(OP_Mode.Dtv[0]["JY"]), Convert.ToDouble(OP_Mode.Dtv[0]["JY1"]), Convert.ToDouble(OP_Mode.Dtv[0]["JY2"]), Convert.ToDouble(OP_Mode.Dtv[0]["JY3"]));
                         ClearTextbox();
-                        Label_Sumje.Text = (Convert.ToDouble(Label_Sumje.Text) + strNum).ToString();
+                        Label_Sumje.Text = Convert.ToDouble(Convert.ToDouble(Label_Sumje.Text) + strNum).ToString("0.00");
                     }
                     else
                     {

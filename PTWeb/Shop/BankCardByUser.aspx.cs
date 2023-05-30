@@ -27,9 +27,15 @@ public partial class Shop_Default2 : PageBaseShop
             }
         }
     }
+    public int Tempi = 0;
 
     private void LoadData(string strHTMLID)
     {
+        if (Tempi > 1)
+        {
+            MessageBox("", "未查询到付款信息，请重试。", "/Shop/");
+            return;
+        }
         string strSQL = "Select Shop_UserGoods.ID,BigImg,Title,Shop_GoodsPrice.Price,PhoneNo,CName,BankID,BankName,BankStart,WeChatImg,PayImg,GoldCount,Voucher from Shop_UserGoods,Shop_GoodsPrice,Shop_UserInfo,Shop_Goods where Shop_UserGoods.GoodsPriceID=Shop_GoodsPrice.HtmlID and HolderID=Shop_UserInfo.PhoneNo and GoodsID=Shop_Goods.ID and GoodsPriceID='" + strHTMLID + "' and UserID='" + DefaultUser + "'";
 
         if (OP_Mode.SQLRUN(strSQL))
@@ -60,8 +66,31 @@ public partial class Shop_Default2 : PageBaseShop
                 }
             }
             else
-            {
-                MessageBox("", "未查询到付款信息，请重试。", "/Shop/html/");
+            {// 更新付款信息
+
+                strSQL = "Select SetValue from Shop_SysSet where id=3";
+                if (OP_Mode.SQLRUN(strSQL))
+                {
+                    string[] arrUsers = OP_Mode.Dtv[0][0].ToString().Split(';');
+                    if (arrUsers.Length <= 0)
+                    {
+                        MessageBox("未设置抢购人员，请先设置。");
+                        return;
+                    }
+                    Random ran = new Random();
+                    int n = ran.Next(arrUsers.Length);
+                    strSQL = " Update Shop_UserGoods set HolderID='" + arrUsers[n] + "' where GoodsPriceID='" + strHTMLID + "' and  UserID='" + DefaultUser + "'";
+                    if (OP_Mode.SQLRUN(strSQL))
+                    {
+                        Tempi++;
+                        LoadData(strHTMLID);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox("", "未查询到付款信息，请重试。", "/Shop/");
+                }
             }
         }
     }

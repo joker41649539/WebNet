@@ -69,7 +69,7 @@ public partial class Shop_Default2 : PageBaseShop
                 }
                 else
                 {
-                    if (i + 1 == OP_Mode.Dtv.Count)
+                    if (i + 1 == OP_Mode.Dtv.Count & !bSave)
                     {
                         TempHtml = TempHtml.Replace("class=\"active\"", "") + "<li class=\"active\">";
                         NDate = Convert.ToDateTime(OP_Mode.Dtv[i]["StartTime"]).ToString("yyyy-MM-dd HH:mm:ss");

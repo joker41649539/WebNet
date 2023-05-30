@@ -57,7 +57,7 @@ public partial class SpaServer_Default : PageBaseShop
                 }
                 else
                 {
-                    if (i + 1 == OP_Mode.Dtv.Count)
+                    if (i + 1 == OP_Mode.Dtv.Count & !bSave)
                     {
                         TempHtml = TempHtml.Replace("class=\"active\"", "") + "<li class=\"active\">";
                         NDate = Convert.ToDateTime(OP_Mode.Dtv[i]["StartTime"]).ToString("yyyy-MM-dd HH:mm:ss");
@@ -77,7 +77,7 @@ public partial class SpaServer_Default : PageBaseShop
 
         string strGoodsGtml = string.Empty;
         string strShowTime = string.Empty;
-        strSQL = "Select Title,HtmlID,GoodsID,Shop_GoodsPrice.Price,Shop_GoodsPrice.StartTime,BigImg from Shop_GoodsPrice,Shop_Goods where Shop_GoodsPrice.StartTime ='" + NDate + "' and Shop_GoodsPrice.GoodsID=Shop_Goods.ID ORDER BY NEWID()";
+        strSQL = "Select Title,HtmlID,GoodsID,Shop_GoodsPrice.Price,Shop_GoodsPrice.StartTime,BigImg,(Select count(ID) from Shop_UserGoods where GoodsPriceID=Shop_GoodsPrice.HtmlID) Buys from Shop_GoodsPrice,Shop_Goods where Shop_GoodsPrice.StartTime ='" + NDate + "' and Shop_GoodsPrice.GoodsID=Shop_Goods.ID ORDER BY NEWID()";
         if (OP_Mode.SQLRUN(strSQL))
         {
             for (int i = 0; i < OP_Mode.Dtv.Count; i++)
@@ -94,7 +94,17 @@ public partial class SpaServer_Default : PageBaseShop
                 strGoodsGtml += "<span></span>小时<span></span>分<span></span>秒</h5></a></div>";
                 strGoodsGtml += " <div class=\"item-tt\"><a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\">" + OP_Mode.Dtv[i]["Title"].ToString() + "</a></div>";//Remark
                 strGoodsGtml += "<div class=\"clearfix\"><div class=\"money\">￥<span>" + OP_Mode.Dtv[i]["Price"].ToString() + "</span></div></div>";//Price
-                strGoodsGtml += "<div class=\"pull-right\"><a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\" class=\"btn btn-xs btn-success\">立即抢购</a></div>";//href
+                strGoodsGtml += "<div class=\"pull-right\"><a href=\"/Shop/Html/" + OP_Mode.Dtv[i]["HtmlID"].ToString() + "\" ";
+
+                if (Convert.ToInt32(OP_Mode.Dtv[i]["Buys"]) <= 0)
+                {
+                    strGoodsGtml += "class=\"btn btn-xs btn-success\">立即抢购";
+                }
+                else
+                {
+                    strGoodsGtml += "class=\"btn btn-xs btn-danger\">已被抢购";
+                }
+                strGoodsGtml += "</a></div>";//href
                 strGoodsGtml += "</div></div>";
                 strShowTime += "ShowTime(\"show" + OP_Mode.Dtv[i]["GoodsID"].ToString() + "\", \"" + OP_Mode.Dtv[i]["StartTime"].ToString() + "\");";
             }

@@ -25,12 +25,7 @@ public partial class Shop_Default2 : PageBaseShop
         }
     }
 
-    /// <summary>
-    /// 依据手机号查询数据
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    protected void LinkButton1_Click(object sender, EventArgs e)
+    private void LoadData()
     {
         string strPhonNo = TextBox_PhoneNo.Text.Replace("'", "");
         HiddenField_PhoneNo.Value = "";
@@ -83,6 +78,16 @@ public partial class Shop_Default2 : PageBaseShop
     }
 
     /// <summary>
+    /// 依据手机号查询数据
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        LoadData();
+    }
+
+    /// <summary>
     /// 确认充值
     /// </summary>
     /// <param name="sender"></param>
@@ -130,6 +135,8 @@ public partial class Shop_Default2 : PageBaseShop
                             HiddenField_PhoneNo.Value = "";
                             MessageBox("", "恭喜，账号充值成功。");
                             TextBox_GoldCount.Text = "";
+                            LoadData();
+
                         }
                     }
                     else
