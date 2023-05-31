@@ -58,11 +58,16 @@
             function Regcheck() {
                 var rValue = true;
                 var phone = jQuery("#TextBox_PhoneNo").val();
+                var Select = $("#CheckBox1").get(0).checked;
                 var message = "";
                 var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0]{1})|(15[0-3]{1})|(15[5-9]{1})|(18[0-9]{1}))+\d{8})$/;
+                if (!Select) {
+                    rValue = false;
+                    message = "请先阅读用户协议！<br>并同意条款。";
+                }
                 if (phone == '') {
                     rValue = false;
-                    message = "手机号码不能为空！";
+                    message += "<br>手机号码不能为空！";
                 } else if (phone.length != 11) {
                     rValue = false;
                     message += "<br/>请输入有效的手机号码！";
@@ -90,8 +95,33 @@
                 }
                 return rValue;
             }
+            ///打开维修内容选择框
+            function OpenSelect() {
+                $("#Select").modal('show');
+                return false
+            };
         </script>
         <asp:HiddenField ID="HiddenField_CodeNo" runat="server" />
+        <div class="modal fade" id="Select" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="page-content">
+                        <h2 class="center">用户协议</h2>
+                        欢迎使用我们的秒杀平台。<br />
+                        在使用本平台前，请仔细阅读以下条款和条件。<br />
+                        通过使用本平台，表示同意遵守以下条款和条件：<br />
+                        1.所有商品均为二手商品，售出后不接受退货和换货。<br />
+                        2.商品的状态和质量在抢购前会进行详细描述请您在出价前仔细阅读商品描述。<br />
+                        3.本平台不对商品的状态和质量承担任何责任。<br />
+                        4.如果买家发现商品状态与描述不符，请在收到商品后24小时内联系卖家解决问题。<br />
+                        5.如果买家和卖家之间出现争议，双方应尽力协商解决。如果无法协商解决，可以通过仲裁或法律诉讼解决。<br />
+                        <span class="red">感谢您使用我们的秒杀平台。如果您有任何问题或疑问，请随时联系我们的客服团队。</span>
+                        <h6 class="grey">本平台享有最终解释权</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="main-container">
             <div class="main-content">
                 <div class="row">
@@ -134,12 +164,18 @@
                                                     </span>
                                                 </label>
                                                 <label class="block clearfix">
+                                                    推荐人电话：
+                                                    <span class="block input-icon input-icon-right">
+                                                        <asp:TextBox ClientIDMode="Static" ID="TextBox_Parent" class="form-control" placeholder="请输入推荐人电话号码(可不填)" runat="server"></asp:TextBox>
+                                                        <i class="icon-group"></i>
+                                                    </span>
+                                                </label>
+                                                <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
                                                         <asp:TextBox type="password" ClientIDMode="Static" ID="TextBox_Password" class="form-control" placeholder="密码" runat="server"></asp:TextBox>
                                                         <i class="icon-lock"></i>
                                                     </span>
                                                 </label>
-
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
                                                         <asp:TextBox type="password" ClientIDMode="Static" ID="TextBox_Password2" class="form-control" placeholder="确认密码" runat="server"></asp:TextBox>
@@ -147,12 +183,12 @@
                                                     </span>
                                                 </label>
 
-                                                <%--  <label class="block">
-                                                    <input type="checkbox" class="ace" />
+                                                <label class="block">
+                                                    <asp:CheckBox ID="CheckBox1" ClientIDMode="Static" class="ace" runat="server" />
                                                     <span class="lbl">&nbsp;我同意
-															<a href="#">用户协议</a>
+                                                        <asp:LinkButton ID="LinkButton2" OnClientClick="return OpenSelect()" runat="server">用户协议</asp:LinkButton>
                                                     </span>
-                                                </label>--%>
+                                                </label>
 
                                                 <div class="space-24"></div>
 

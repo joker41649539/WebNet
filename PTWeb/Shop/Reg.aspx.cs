@@ -9,7 +9,10 @@ public partial class Shop_Reg : PageBaseShop
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!IsPostBack)
+        {
+            TextBox_Parent.Text = Request["Parent"];
+        }
     }
 
     protected void Button_SendCode_Click(object sender, EventArgs e)
@@ -83,17 +86,17 @@ public partial class Shop_Reg : PageBaseShop
         strSQL += "     IF @ICOUNT> 0"; // 验证码正确
         strSQL += "     BEGIN";
 
-        strSQL += "     Insert into Shop_UserInfo (PhoneNo,NickName,PassWordNo) values ('" + strPhoneNo + "','" + strPhoneNo + "','" + strPass + "')";
+        strSQL += "     Insert into Shop_UserInfo (PhoneNo,NickName,PassWordNo,Parent) values ('" + strPhoneNo + "','" + strPhoneNo + "','" + strPass + "','" + TextBox_Parent.Text + "')";
         strSQL += "     Select '恭喜，注册成功。' MSG, 'true' T";
         strSQL += "     END";
         strSQL += "     ELSE";
         strSQL += "     BEGIN";
-        strSQL += "         Select '验证码错误，请仔细查阅。' MSG, 'false' T";
+        strSQL += "         Select '1' MSG, 'false' T";
         strSQL += "     END";
         strSQL += " END";
         strSQL += " ELSE";
         strSQL += " BEGIN";
-        strSQL += "   Select '此号码已经注册过了，不能再注册了。' MSG, 'false' T";
+        strSQL += "   Select '2' MSG, 'false' T";
         strSQL += " END";
 
         if (OP_Mode.SQLRUN(strSQL))
@@ -105,12 +108,21 @@ public partial class Shop_Reg : PageBaseShop
                     /// 注册成功，需要写入Cooke
                     Response.Cookies["Shop"]["PhoneNo"] = strPhoneNo;
 
-                    MessageBox("", OP_Mode.Dtv[0]["MSG"].ToString(), "/Shop/");
+                    MessageBox("", "恭喜，注册成功。", "/Shop/");
                     return;
                 }
                 else
                 {
-                    MessageBox("", OP_Mode.Dtv[0]["MSG"].ToString());
+                    string strMSG = string.Empty;
+                    if (OP_Mode.Dtv[0]["MSG"].ToString() == "1")
+                    {
+                        strMSG = "验证码错误，请仔细查阅。";
+                    }
+                    else if (OP_Mode.Dtv[0]["MSG"].ToString() == "2")
+                    {
+                        strMSG = "此号码已经注册过了，不能再注册了。";
+                    }
+                    MessageBox("", strMSG);
                     return;
                 }
             }

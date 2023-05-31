@@ -23,11 +23,12 @@ public partial class SpaServer_Default2 : PageBaseShop
     {
         string strTempHtml = string.Empty;
 
-
         strTempHtml += "<a href=\"/Shop/BankCard.aspx\" class=\"btn btn-app btn-warning\">";
         strTempHtml += "    <i class=\"icon-credit-card bigger-230\"></i>收款账号</a>";
         strTempHtml += "<a href=\"/Shop/Address.aspx\" class=\"btn btn-app btn-success\">";
         strTempHtml += "    <i class=\"icon-globe bigger-230\"></i>收货地址</a>";
+        strTempHtml += "<a href=\"/Shop/Agent.aspx\" class=\"btn btn-app btn-primary\">";
+        strTempHtml += "    <i class=\"icon-bar-chart bigger-230\"></i>代理信息</a>";
         strTempHtml += "<a href=\"#\" class=\"btn btn-app btn-pink\">";
         strTempHtml += "    <i class=\"icon-facetime-video bigger-230\"></i>新人教程</a>";
         strTempHtml += "<a href=\"/Shop/Friends.aspx\" class=\"btn btn-app btn-info\">";

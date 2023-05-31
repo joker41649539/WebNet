@@ -454,6 +454,89 @@ public class PageBaseShop : System.Web.UI.Page
         return rValue;
     }
 
+    /// <summary>
+    /// 生成带二维码的专属推广图片
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public string Draw(string strPhoneNo, string eCodeUrl)
+    {
+        //背景图片
+        string path = Server.MapPath(@"/Shop/Img/NullEcode.png");
+        //string eCodeUrl = Server.MapPath(@"/Shop/Img/Ecode.png");
+        System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(path);
+
+        //处理二维码图片大小 240*240px
+        System.Drawing.Image qrCodeImage = ReduceImage(eCodeUrl, 500, 500);
+
+        //处理头像图片大小 100*100px
+        // System.Drawing.Image titleImage = ReduceImage(strHeadImageUrl, 50, 50);
+        using (Graphics g = Graphics.FromImage(imgSrc))
+        {
+            //画专属推广二维码
+            g.DrawImage(qrCodeImage, new Rectangle(130,//X坐标
+            280,//y坐标
+            qrCodeImage.Width,
+            qrCodeImage.Height),
+            0, 0, qrCodeImage.Width, qrCodeImage.Height, GraphicsUnit.Pixel);
+
+            //画头像
+            // g.DrawImage(titleImage, 240 / 2 - 25, 240 / 2 - 25, titleImage.Width, titleImage.Height);
+        }
+        string imageName = strPhoneNo + "Code.jpg";
+        string newpath = Server.MapPath(@"/Shop/Img/" + imageName);
+        imgSrc.Save(newpath, System.Drawing.Imaging.ImageFormat.Jpeg);
+        return imageName;
+    }
+    /// <summary>
+    /// 缩小/放大图片
+    /// </summary>
+    /// <param name="url">图片网络地址</param>
+    /// <param name="toWidth">缩小/放大宽度</param>
+    /// <param name="toHeight">缩小/放大高度</param>
+    /// <returns></returns>
+    public System.Drawing.Image ReduceImage(string url, int toWidth, int toHeight)
+    {
+        WebRequest request = WebRequest.Create(url);
+        WebResponse response = request.GetResponse();
+        Stream responseStream = response.GetResponseStream();
+
+        System.Drawing.Image originalImage = System.Drawing.Image.FromStream(responseStream);
+        if (toWidth <= 0 && toHeight <= 0)
+        {
+            return originalImage;
+        }
+        else if (toWidth > 0 && toHeight > 0)
+        {
+            if (originalImage.Width < toWidth && originalImage.Height < toHeight)
+                return originalImage;
+        }
+        else if (toWidth <= 0 && toHeight > 0)
+        {
+            if (originalImage.Height < toHeight)
+                return originalImage;
+            toWidth = originalImage.Width * toHeight / originalImage.Height;
+        }
+        else if (toHeight <= 0 && toWidth > 0)
+        {
+            if (originalImage.Width < toWidth)
+                return originalImage;
+            toHeight = originalImage.Height * toWidth / originalImage.Width;
+        }
+        System.Drawing.Image toBitmap = new Bitmap(toWidth, toHeight);
+        using (Graphics g = Graphics.FromImage(toBitmap))
+        {
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            g.Clear(Color.Transparent);
+            g.DrawImage(originalImage,
+                        new Rectangle(0, 0, toWidth, toHeight),
+                        new Rectangle(0, 0, originalImage.Width, originalImage.Height),
+                        GraphicsUnit.Pixel);
+            originalImage.Dispose();
+            return toBitmap;
+        }
+    }
     public class Rootobject
     {
         public string ip { get; set; }

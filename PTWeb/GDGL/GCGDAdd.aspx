@@ -164,7 +164,7 @@
                         </li>
                     </ul>
                 </div>
-                <!-- /btn-group -->
+                <!-- /btn-group -->A 0.5 0.03 0.02
                 <asp:RadioButtonList ID="RadioButtonList1" RepeatColumns="6" runat="server">
                     <asp:ListItem Value="0" Text="&nbsp;等待施工&nbsp;"></asp:ListItem>
                     <asp:ListItem Value="2" Text="&nbsp;暂停施工&nbsp;"></asp:ListItem>
